@@ -1,3 +1,10 @@
+# [2.8.0](https://github.com/energietransitie/NeedForHeat-app/compare/v2.7.0...v2.8.0) (2023-06-14)
+
+
+### Features
+
+* release new version ([394bfc1](https://github.com/energietransitie/NeedForHeat-app/commit/394bfc1960e8bc92b85ba60665120a224b6dc244))
+
 # [2.7.0](https://github.com/Need-for-Heat/need-for-heat/compare/v2.6.4...v2.7.0) (2023-06-06)
 
 
