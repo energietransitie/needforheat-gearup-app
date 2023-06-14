@@ -1,0 +1,67 @@
+{
+  "expo": {
+    "name": "NeedForHeat",
+    "slug": "need-for-heat",
+    "scheme": "nfh",
+    "version": "2.7.0",
+    "owner": "nfh",
+    "jsEngine": "hermes",
+    "privacy": "hidden",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "nl.windesheim.energietransitie.warmtewachter",
+      "associatedDomains": ["applinks:energietransitiewindesheim.page.link"],
+      "infoPlist": {
+        "NSBluetoothAlwaysUsageDescription": "This app needs Bluetooth to connect to the sensor.",
+        "NSBluetoothPeripheralUsageDescription": "This app needs Bluetooth to connect to the sensor.",
+        "NSLocationWhenInUseUsageDescription": "This app needs location access to list nearby Wifi networks.",
+        "NSCameraUsageDescription": "This app needs camera access to scan QR codes."
+      },
+      "config": {
+        "usesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "icon": "./assets/icon.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "nl.windesheim.energietransitie.warmtewachter",
+      "permissions": ["BLUETOOTH", "BLUETOOTH_ADMIN", "BLUETOOTH_SCAN", "BLUETOOTH_CONNECT", "CAMERA"]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "724cbb02-b449-4206-afe0-d708a749f118"
+      }
+    },
+    "plugins": [
+      "@react-native-firebase/app",
+      "react-native-wifi-reborn",
+      "./legacy-packaging",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 31,
+            "targetSdkVersion": 31,
+            "minSdkVersion": 23,
+            "kotlinVersion": "1.6.10"
+          }
+        }
+      ]
+    ]
+  }
+}

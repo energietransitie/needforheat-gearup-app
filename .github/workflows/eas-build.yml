@@ -1,0 +1,49 @@
+name: EAS Build
+
+# Run after the creation of a tag starting with "v"
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+    name: EAS Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Check for EXPO_TOKEN
+        run: |
+          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
+            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: yarn
+
+      - name: Setup EAS
+        run: yarn global add expo-cli eas-cli
+
+      - uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.GH_SSH_KEY }}
+
+      - name: Install dependencies
+        run: yarn install --production
+
+      - name: Setup environment file
+        run: |
+          echo "API_URL=${{ secrets.NFH_API_URL }}" > .env
+
+      - name: Build app
+        working-directory: apps/expo
+        run: eas build --platform all --profile production --non-interactive --no-wait
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}

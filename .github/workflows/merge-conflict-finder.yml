@@ -1,0 +1,15 @@
+name: Merge Conflict Finder
+
+# Run on every Pull Request and subsequent pushes to the PR
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  merge_conflict_job:
+    runs-on: ubuntu-latest
+    name: Find merge conflicts
+    steps:
+      - uses: actions/checkout@v2
+      - name: Merge Conflict finder
+        uses: olivernybroe/action-conflict-finder@v4.0

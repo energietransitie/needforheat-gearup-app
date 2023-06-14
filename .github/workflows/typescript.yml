@@ -1,0 +1,21 @@
+name: Typescript
+on: [pull_request]
+jobs:
+  typescript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.GH_SSH_KEY }}
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: TypeScript
+        run: yarn ci:tsc

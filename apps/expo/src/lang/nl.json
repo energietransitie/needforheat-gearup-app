@@ -1,0 +1,327 @@
+{
+  "screens": {
+    "measurements": {
+      "title": "Metingen",
+      "device_list": {
+        "placeholder": "Selecteer een apparaat"
+      },
+      "graph": {
+        "timespan": "Afgelopen {{count}} {{unit}}",
+        "no_devices": "Er zijn geen apparaten gekoppeld",
+        "no_property": "Selecteer een attribuut",
+        "no_data": "Geen data"
+      },
+      "property_sheet": {
+        "title": "Selecteer een attribuut"
+      }
+    },
+    "device_overview": {
+      "title": "Apparaten",
+      "device_list": {
+        "device_info": {
+          "last_seen": "Laatst gezien op {{date}}",
+          "no_data": "Nog geen data ontvangen"
+        },
+        "reset_device": "Resetten",
+        "empty_collection": "Er zijn nog geen apparaten geïnstalleerd."
+      },
+      "building_list": {
+        "placeholder": "Selecteer een gebouw",
+        "building_info": {
+          "name": "Gebouw #{{id}}"
+        }
+      }
+    },
+    "home_stack": {
+      "title": "Home",
+      "activate_device": {
+        "title": "Apparaat activeren",
+        "status_indicator": {
+          "loading": "Apparaatinformatie ophalen...",
+          "working": "Apparaat activeren op server...",
+          "error": "Er is een fout opgetreden bij het activeren van het meetapparaatje. Probeer het opnieuw."
+        },
+        "activated": "Apparaat geactiveeerd!",
+        "alert": {
+          "unknown_error": "Er is een fout opgetreden bij het activeren van het apparaat.",
+          "no_building": "Uw account is niet gekoppeld aan een gebouw.",
+          "already_activated": "Dit meetapparaat is al geactiveerd op een ander account."
+        }
+      },
+      "already_invited": {
+        "title": "Reeds uitgenodigd",
+        "expanded_title": "Ik heb al een uitnodiging",
+        "description": "In de uitnodigingsmail die u heeft ontvangen staat een activatielink. Klik op deze link om te beginnen met de installatie van uw meetapparaten."
+      },
+      "add_device": {
+        "title": "Apparaat toevoegen",
+        "status_indicator": {
+          "working": "Apparaat informatie aan het laden...",
+          "error": "Er is een fout opgetreden tijdens het laden van apparaatinformatie. Scan de QR-code opnieuw."
+        }
+      },
+      "connect": {
+        "title": "Verbinden met apparaat",
+        "status": {
+          "connected": "Verbonden met {{name}}",
+          "connecting": "Verbinden met {{name}}..."
+        },
+        "alert": {
+          "unknown_error": "Er is een fout opgetreden tijdens het verbinden met het apparaat.",
+          "retry": "Opnieuw proberen"
+        }
+      },
+      "home": {
+        "title": "NeedForHeat",
+        "buttons": {
+          "add_device": "Apparaat toevoegen"
+        },
+        "authenticated": {
+          "title": "Scan een QR-code",
+          "description": "Scan de QR-code van een nieuw meetapparaatje. Deze staat op het e-ink scherm van het meetapparatje of op een sticker (kijk ook op de achterkant)."
+        },
+        "unauthenticated": {
+          "title": "NeedForHeat",
+          "subtitle": "App voor deelnemers aan onderzoek van het Lectoraat Energietransitie van Hogeschool Windesheim",
+          "description": "U kunt deze app pas gebruiken na een uitnodiging voor een onderzoek met een persoonlijke activatielink.",
+          "already_invited": "Ik heb zo'n uitnodiging"
+        }
+      },
+      "provision": {
+        "title": "Apparaat toevoegen",
+        "timeline": {
+          "steps": {
+            "connecting": {
+              "title": "Zoeken",
+              "description": "Zoeken naar {{device_name}}"
+            },
+            "activating": {
+              "title": "Activeren",
+              "description": "Activeren {{device_name}}"
+            },
+            "provisioning": {
+              "title": "Configureren",
+              "description": "Configureren op {{network_name}}"
+            },
+            "receiving": {
+              "title": "Afronden",
+              "description": "Wachten op eerste gegevens van {{device_name}}"
+            }
+          }
+        },
+        "success": {
+          "title": "Apparaat succesvol toegevoegd",
+          "message": "Het apparaat is toegevoegd en de onderzoeksserver heeft gegevens ontvangen op {{date}}."
+        },
+        "provisioning_error": {
+          "title": "Er is een fout opgetreden",
+          "message": "Er is een fout opgetreden tijdens het configureren van uw apparaat. Start het meetapparaatje opnieuw en probeer opnieuw."
+        },
+        "wifi_error": {
+          "title": "Er is iets fouts gegaan tijdens het verbinden met het wifinetwerk",
+          "message": "Is uw wifiwachtwoord wel correct? Bent u wel in de buurt van het apparaat?"
+        },
+        "measurements_error": {
+          "title": "Geen gegevens ontvangen",
+          "message": "Na lang wachten hebben we nog steeds geen gegevens van het apparaat ontvangen."
+        }
+      },
+      "qr_scanner": {
+        "title": "QR-code scanner",
+        "errors": {
+          "no_permission": "Geen cameratoestemming",
+          "invalid_qr": "De QR-code is geen geldige QR-code voor een meetapparaatje.",
+          "mismatched_device_name": "Het apparaat dat u probeert te activeren is niet hetzelfde als het apparaat dat u zojuist heeft gescand.",
+          "unknown_error": "Er is een fout opgetreden tijdens het scannen van de QR-code."
+        }
+      },
+      "search_device": {
+        "title": "Apparaat zoeken",
+        "errors": {
+          "bluetooth": {
+            "request_failed": "Er is een fout opgetreden bij het aanvragen van Bluetooth-machtigingen.",
+            "enable_failed": "Er is een fout opgetreden bij het inschakelen van Bluetooth."
+          }
+        },
+        "bluetooth": {
+          "enabling": "Bluetooth inschakelen...",
+          "alert": {
+            "title": "Bluetooth toestemming",
+            "message": "Deze app gebruikt Bluetooth, maar registreert uw locatie niet. Op Android valt Bluetooth onder locatiediensten. Daarom krijgt u zo een vraag over locatie.",
+            "button": "Oké, vraag maar!"
+          },
+          "error": {
+            "title": "Er is een fout opgetreden.",
+            "message": "Zorg ervoor dat Bluetooth is ingeschakeld en probeer opnieuw."
+          }
+        },
+        "scanning": {
+          "message": "Aan het zoeken naar {{name}}...",
+          "found": "Apparaat {{name}} gevonden!",
+          "not_found": {
+            "title": "Apparaat {{name}} kon niet worden gevonden.",
+            "message": "Zorg ervoor dat het apparaat in de buurt van uw smartphone is. Zoek opnieuw met onderstaande knop."
+          }
+        },
+        "scan": "Scannen",
+        "open_settings": "Open instellingen"
+      },
+      "wifi_overview": {
+        "title": "Verbinden met wifi",
+        "status_indicator": {
+          "loading": "wifinetwerken laden...",
+          "unexpected_loading": "Het laden van wifinetwerken duurt langer dan verwacht, even geduld...",
+          "error": "Er is een fout opgetreden tijdens het laden van wifinetwerken."
+        },
+        "alerts": {
+          "fetch_error": {
+            "title": "Fout",
+            "message": "Er is een fout opgetreden tijdens het laden van wifinetwerken. De verbinding met het apparaat is mogelijk verbroken."
+          },
+          "known_network": {
+            "title": "Opgeslagen wachtwoord gebruiken?",
+            "message": "Wilt u het eerder gebruikte wachtwoord gebruiken voor het netwerk {{name}}?",
+            "buttons": {
+              "yes": "Opgeslagen wachtwoord gebruiken"
+            }
+          },
+          "password": {
+            "title": "Wachtwoord",
+            "message": "Voer het wachtwoord voor het netwerk in"
+          },
+          "connect": {
+            "connect_to_network": "Verbind met wifinetwerk {{name}}",
+            "hidden_wifi": {
+              "title": "Fout",
+              "message": "Kan geen verbinding maken met verborgen wifinetwerken"
+            },
+            "invalid_wifi": {
+              "title": "Fout",
+              "message": "Dit meetapparaatje kan geen verbinding maken met WPA2 Enterprise- of WPA3-netwerken."
+            }
+          }
+        }
+      }
+    },
+    "info_stack": {
+      "title": "Info",
+      "info": {
+        "title": "Info",
+        "unsuported_url_alert": {
+          "title": "Niet-ondersteunde URL",
+          "message": "De URL {{url}} word niet ondersteund."
+        }
+      },
+      "about": {
+        "title": "Over deze app"
+      },
+      "faq": {
+        "title": "Veelgestelde vragen"
+      },
+      "privacy": {
+        "title": "Privacyverklaring"
+      }
+    },
+    "settings_stack": {
+      "title": "Instellingen",
+      "settings_screen": {
+        "title": "Instellingen",
+        "app_language": "Taal selecteren",
+        "wifi_passwords": {
+          "title": "Opgeslagen wifiwachtwoorden verwijderen",
+          "message": "Weet u het zeker? Na het verwijderen van de opgeslagen wifiwachtwoorden uit deze app zult u bij het koppelen van een nieuw meetapparaat het wifiwachtwoord opnieuw moeten intypen.",
+          "toast": "wifiwachtwoorden succesvol verwijderd"
+        },
+        "session_token": {
+          "title": "Sessie-token resetten",
+          "message": "Weet u het zeker? Dit is een debug-voorziening. Na de reset moet u de app heractiveren met een persoonlijke activatielink.",
+          "toast": "Sessie-token succesvol verwijderd"
+        },
+        "app_info": "App versie: {{version}} | Build: {{build}}",
+        "external_providers": "Verbind online databronnen"
+      },
+      "external_provider_screen": {
+        "title": "Online databronnen",
+        "state": {
+          "not_connected": "Verbind",
+          "connected": "Verbonden"
+        },
+        "description": {
+          "not_connected": "Verbinden met {{name}}",
+          "connected": "Verbonden met {{name}}"
+        }
+      }
+    }
+  },
+  "hooks": {
+    "property_translation": {
+      "roomTemp": "Temperatuur",
+      "CO2concentration": "CO2 concentratie",
+      "relativeHumidity": "Luchtvochtigheid",
+      "countPresence": "Aanwezigheid"
+    },
+    "bluetooth_permission": {
+      "not_granted": "Bluetooth-machtigingen zijn niet verleend. Zorg ervoor dat de app Bluetooth-machtigingen heeft en probeer opnieuw."
+    },
+    "external_links": {
+      "not_supported": "Uw smartphone biedt geen ondersteuning voor het openen van externe links.",
+      "confirmation": {
+        "title": "Externe link openen",
+        "description": "U staat op het punt een link buiten de applicatie te openen. Wil je doorgaan?\n\nURL: {{url}}",
+        "confirm": "Open"
+      }
+    }
+  },
+  "providers": {
+    "user_provider": {
+      "activate": {
+        "title": "Account activeren",
+        "message": "Even geduld terwijl uw account geactiveerd wordt."
+      },
+      "activate_success": {
+        "title": "Account geactiveerd",
+        "message": "Uw account is succesvol geactiveerd."
+      },
+      "activate_error": {
+        "title": "Accountactivatiefout",
+        "message": "De activatielink is ongeldig."
+      }
+    }
+  },
+  "components": {
+    "wifi_network_list": {
+      "empty_collection": "Geen wifinetwerken gevonden."
+    },
+    "manual_content": {
+      "loading": "Handleiding laden...",
+      "error": "De handleiding kon niet worden geladen. Neem contact op met de maker van het meetapparaatje voor meer informatie of ga verder op eigen risico."
+    },
+    "status_indicator": {
+      "loading": "Aan het laden...",
+      "error": "Er is een fout opgetreden."
+    }
+  },
+  "common": {
+    "cancel": "Annuleren",
+    "delete": "Verwijderen",
+    "reset": "Reset",
+    "add": "Toevoegen",
+    "connect": "Verbinden",
+    "no": "Nee",
+    "yes": "Ja",
+    "retry": "Opnieuw proberen",
+    "back_to_home": "Terug naar home",
+    "go_back": "Ga terug",
+    "password": "Wachtwoord",
+    "error": "Error",
+    "unknown_error": "Er is een onbekende fout opgetreden.",
+    "units": {
+      "seconds": "seconden",
+      "minutes": "minuten",
+      "hours": "uren",
+      "days": "dagen",
+      "months": "maanden",
+      "years": "jaren"
+    }
+  }
+}

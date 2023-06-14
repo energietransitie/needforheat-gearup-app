@@ -1,0 +1,327 @@
+{
+  "screens": {
+    "measurements": {
+      "title": "Measurements",
+      "device_list": {
+        "placeholder": "Select a device"
+      },
+      "graph": {
+        "timespan": "Past {{count}} {{unit}}",
+        "no_devices": "No devices are paired",
+        "no_property": "Select a property",
+        "no_data": "No data"
+      },
+      "property_sheet": {
+        "title": "Select a property"
+      }
+    },
+    "device_overview": {
+      "title": "Devices",
+      "device_list": {
+        "device_info": {
+          "last_seen": "Last seen at {{date}}",
+          "no_data": "No data received yet"
+        },
+        "reset_device": "Reset",
+        "empty_collection": "There are no devices set up yet."
+      },
+      "building_list": {
+        "placeholder": "Select a building",
+        "building_info": {
+          "name": "Building #{{id}}"
+        }
+      }
+    },
+    "home_stack": {
+      "title": "Home",
+      "activate_device": {
+        "title": "Activate device",
+        "status_indicator": {
+          "loading": "Loading device information...",
+          "working": "Activating device on server...",
+          "error": "An error occurred while activating the measurement device. Please try again."
+        },
+        "activated": "Device activated!",
+        "alert": {
+          "unknown_error": "An error occurred while activating the device.",
+          "no_building": "Your account is not associated with a building.",
+          "already_activated": "This measurement device was already activated on another account."
+        }
+      },
+      "already_invited": {
+        "title": "Already invited",
+        "expanded_title": "I was invited previously",
+        "description": "The invitation email you received contains an activation link. Click on this link to start installing your measuring devices."
+      },
+      "add_device": {
+        "title": "Add device",
+        "status_indicator": {
+          "working": "Loading device information...",
+          "error": "An error occurred while loading device information. Scan the QR code again."
+        }
+      },
+      "connect": {
+        "title": "Connect to device",
+        "status": {
+          "connected": "Connected to {{name}}",
+          "connecting": "Connecting to {{name}}..."
+        },
+        "alert": {
+          "unknown_error": "An error occurred while connecting to the measurement device.",
+          "retry": "Try again"
+        }
+      },
+      "home": {
+        "title": "NeedForHeat",
+        "buttons": {
+          "add_device": "Add device"
+        },
+        "authenticated": {
+          "title": "Scan a QR-code",
+          "description": "Scan the QR code of a new measurement device. It can be found on the e-ink screen or on a sticker on (the back of) the device."
+        },
+        "unauthenticated": {
+          "title": "NeedForHeat",
+          "subtitle": "App for participants in a study of Research Group Energy Transition of Windesheim University of Applied Sciences",
+          "description": "You can only use this app after receiving an invitation for a study with a personal activation link.",
+          "already_invited": "I have such an invitation"
+        }
+      },
+      "provision": {
+        "title": "Adding a device",
+        "timeline": {
+          "steps": {
+            "connecting": {
+              "title": "Searching",
+              "description": "Searching {{device_name}}"
+            },
+            "activating": {
+              "title": "Activating",
+              "description": "Activating {{device_name}}"
+            },
+            "provisioning": {
+              "title": "Configuring",
+              "description": "Configuring on {{network_name}}"
+            },
+            "receiving": {
+              "title": "Finalizing",
+              "description": "Waiting for first data from {{device_name}}"
+            }
+          }
+        },
+        "success": {
+          "title": "Device added successfully",
+          "message": "The measurement device was added and the research server received data from it on {{date}}."
+        },
+        "provisioning_error": {
+          "title": "An error occurred",
+          "message": "An error occurred while configuring your device. Restart the measurement device and try again."
+        },
+        "wifi_error": {
+          "title": "Something went wrong while connecting the wifi network",
+          "message": "Please make sure the password is correct and you are in proximity of the device."
+        },
+        "measurements_error": {
+          "title": "No data was received",
+          "message": "Even after a long wait, no data was received from the device."
+        }
+      },
+      "qr_scanner": {
+        "title": "QR scanner",
+        "errors": {
+          "no_permission": "No camera permission",
+          "invalid_qr": "The QR code is not a valid QR code for a measurement device.",
+          "mismatched_device_name": "The device name in the QR code does not match the name of the device you are trying to reset.",
+          "unknown_error": "An error occurred while scanning the QR code."
+        }
+      },
+      "search_device": {
+        "title": "Search device",
+        "errors": {
+          "bluetooth": {
+            "request_failed": "An error occurred while requesting Bluetooth permissions.",
+            "enable_failed": "An error occurred while enabling Bluetooth."
+          }
+        },
+        "bluetooth": {
+          "enabling": "Enabling Bluetooth...",
+          "alert": {
+            "title": "Bluetooth permission",
+            "message": "This app uses Bluetooth, but does not register your location. On Android devices, Bluetooth is considered part of location services. That's why you will get a question about location.",
+            "button": "Okay, go ahead!"
+          },
+          "error": {
+            "title": "An error occurred.",
+            "message": "Please make sure Bluetooth is enabled and try again."
+          }
+        },
+        "scanning": {
+          "message": "Searching for {{name}}...",
+          "found": "Device {{name}} found!",
+          "not_found": {
+            "title": "Device {{name}} was not found.",
+            "message": "Please make sure that the measurement device is near your smartphone. Searching again with the button below."
+          }
+        },
+        "scan": "Scan",
+        "open_settings": "Open settings"
+      },
+      "wifi_overview": {
+        "title": "Connect to wifi",
+        "status_indicator": {
+          "loading": "Loading wifi networks...",
+          "unexpected_loading": "Loading wifi networks is taking longer than expected, please wait...",
+          "error": "An error has occurred while loading wifi networks."
+        },
+        "alerts": {
+          "fetch_error": {
+            "title": "Error",
+            "message": "An error occurred while loading wifi networks. The connection to the device might have been lost."
+          },
+          "known_network": {
+            "title": "Use stored password?",
+            "message": "Do you want to use the password stored previously for this network {{name}}?",
+            "buttons": {
+              "yes": "Use stored password"
+            }
+          },
+          "password": {
+            "title": "Password",
+            "message": "Enter the password for the network"
+          },
+          "connect": {
+            "connect_to_network": "Connect to wifi network {{name}}",
+            "hidden_wifi": {
+              "title": "Error",
+              "message": "Cannot connect to hidden wifi networks"
+            },
+            "invalid_wifi": {
+              "title": "Error",
+              "message": "This measurement device can not connect to WPA2 Enterprise or WPA3 networks."
+            }
+          }
+        }
+      }
+    },
+    "info_stack": {
+      "title": "Info",
+      "info": {
+        "title": "Info",
+        "unsuported_url_alert": {
+          "title": "Unsupported URL",
+          "message": "The URL {{url}} is not supported."
+        }
+      },
+      "about": {
+        "title": "About"
+      },
+      "faq": {
+        "title": "FAQ"
+      },
+      "privacy": {
+        "title": "Privacy Policy"
+      }
+    },
+    "settings_stack": {
+      "title": "Settings",
+      "settings_screen": {
+        "title": "Settings",
+        "app_language": "Select app language",
+        "external_providers": "Connect online data sources",
+        "wifi_passwords": {
+          "title": "Delete stored wifi passwords",
+          "message": "Are you sure? After removing the stored wifi passwords from this app, you will have to enter the password again when you want to add a new measurement device.",
+          "toast": "Succesfully deleted stored wifi passwords"
+        },
+        "session_token": {
+          "title": "Reset session token",
+          "message": "Are you sure? This is a debug feature. After the reset, you need to re-activate the app using a personal invitation link.",
+          "toast": "Succesfully reset session token"
+        },
+        "app_info": "App version: {{version}} | Build: {{build}}"
+      },
+      "external_provider_screen": {
+        "title": "Online data sources",
+        "state": {
+          "connected": "Connected",
+          "not_connected": "Connect"
+        },
+        "description": {
+          "not_connected": "Connect to {{name}}",
+          "connected": "Connected to {{name}}"
+        }
+      }
+    }
+  },
+  "hooks": {
+    "property_translation": {
+      "roomTemp": "Temperature",
+      "CO2concentration": "CO2 concentration",
+      "relativeHumidity": "Humidity",
+      "countPresence": "Presence"
+    },
+    "bluetooth_permission": {
+      "not_granted": "Bluetooth permission is not granted. Please grant the permission and try again."
+    },
+    "external_links": {
+      "not_supported": "Your device does not support opening external links.",
+      "confirmation": {
+        "title": "Open external link",
+        "description": "You are going to open a link outside the application, are you sure?\n\nURL: {{url}}",
+        "confirm": "Open"
+      }
+    }
+  },
+  "providers": {
+    "user_provider": {
+      "activate": {
+        "title": "Activating account",
+        "message": "Please wait while your account is being activated."
+      },
+      "activate_success": {
+        "title": "Account activated",
+        "message": "Your account was successfully activated."
+      },
+      "activate_error": {
+        "title": "Account activation error",
+        "message": "The activation link is invalid."
+      }
+    }
+  },
+  "components": {
+    "wifi_network_list": {
+      "empty_collection": "No wifi networks found."
+    },
+    "manual_content": {
+      "loading": "Loading manual...",
+      "error": "The manual could not be loaded. Contact the device manufacturer for more information or continue at your own risk."
+    },
+    "status_indicator": {
+      "loading": "Loading...",
+      "error": "An error has occurred."
+    }
+  },
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "reset": "Reset",
+    "add": "Add",
+    "connect": "Connect",
+    "no": "No",
+    "yes": "Yes",
+    "retry": "Try again",
+    "back_to_home": "Back to home",
+    "go_back": "Go back",
+    "password": "Password",
+    "error": "Error",
+    "unknown_error": "An unknown error has occurred.",
+    "units": {
+      "seconds": "seconds",
+      "minutes": "minutes",
+      "hours": "hours",
+      "days": "days",
+      "months": "months",
+      "years": "years"
+    }
+  }
+}

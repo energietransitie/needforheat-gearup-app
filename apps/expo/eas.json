@@ -1,0 +1,38 @@
+{
+  "cli": {
+    "version": ">= 3.4.1",
+    "promptToConfigurePushNotifications": false
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "m-medium"
+      }
+    },
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      },
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "m-medium",
+        "enterpriseProvisioning": "adhoc"
+      }
+    },
+    "production": {
+      "ios": {
+        "resourceClass": "m-medium"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "ascAppId": "1563201993",
+        "appleTeamId": "7CD4V7QB9J"
+      }
+    }
+  }
+}
