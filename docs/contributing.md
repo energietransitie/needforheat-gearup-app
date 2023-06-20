@@ -6,7 +6,7 @@ Make sure you have read the [Developing - Getting Started](./docs/developing.md)
 
 ## Creating an issue
 
-If you have found a bug, room for improvement, missing documentation or have a question you can create an issue on [github](https://github.com/Need-for-Heat/need-for-heat/issues). <!-- TODO: update repository link upon transfer --> Make sure to write as much details as possible in the description of your issue. That way, other contributors will be more easily able to understand and help.
+If you have found a bug, room for improvement, missing documentation or have a question you can create an issue on [github](https://github.com/Need-for-Heat/need-for-heat/issues). Make sure to write as much details as possible in the description of your issue. That way, other contributors will be more easily able to understand and help.
 
 ## Changing or adding code
 
