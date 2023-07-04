@@ -94,6 +94,7 @@ Thanks also go to:
 Product owner:
 
 - Nick van Ravenzwaaij - [@n-vr](https://github.com/n-vr)
+- Henri ter Hofte - [@henriterhofte](https://github.com/henriterhofte) - Twitter [@HeNRGi](https://twitter.com/HeNRGi)
 
 We use and gratefully acknowlegde the efforts of the makers of the following source code and libraries:
 
