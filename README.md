@@ -10,6 +10,8 @@ This repository contains the source code for the NeedForHeat app for both Androi
 
 - [General info](#general-info)
 - [Installing the app](#installing-the-app)
+- [Deploying](#deploying)
+- [Developing](#developing)
 - [Features](#features)
 - [Contributing](#contributing)
 - [Status](#status)
@@ -32,6 +34,14 @@ The app currently supports the following languages:
 LTS version is available in both the Apple App Store and Google Play Store. For beta versions an invite is required. To receive an invite please contact [@henriterhofte](https://github.com/henriterhofte). Please include in your request the email address of the Apple ID or Google account that's being used on the device you wish to install the app.
 
 To deploy and successfully use the app you need to have received an e-mail with a proper Firebase Dynamic Link and you need be in the possession of at least one Twomes measurement device.
+
+## Deploying
+
+Documentation for deplying can be found [here](/docs/store-update.md).
+
+## Developing
+
+Documentation for developing can be found [here](/docs/developing.md).
 
 ## Features
 
