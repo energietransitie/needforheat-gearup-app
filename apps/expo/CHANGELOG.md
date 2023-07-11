@@ -1,3 +1,10 @@
+## [2.8.1](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.8.0...v2.8.1) (2023-07-11)
+
+
+### Bug Fixes
+
+* change CO2 to CO₂ in translations ([dc22f57](https://github.com/energietransitie/twomes-app-needforheat/commit/dc22f57cf8cc406bd248f14911449cb526691a6e))
+
 # [2.8.0](https://github.com/energietransitie/NeedForHeat-app/compare/v2.7.0...v2.8.0) (2023-06-14)
 
 

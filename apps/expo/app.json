@@ -3,7 +3,7 @@
     "name": "NeedForHeat",
     "slug": "need-for-heat",
     "scheme": "nfh",
-    "version": "2.8.0",
+    "version": "2.8.1",
     "owner": "nfh",
     "jsEngine": "hermes",
     "privacy": "hidden",
