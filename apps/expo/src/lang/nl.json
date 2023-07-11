@@ -256,7 +256,7 @@
   "hooks": {
     "property_translation": {
       "roomTemp": "Temperatuur",
-      "CO2concentration": "CO2 concentratie",
+      "CO2concentration": "CO₂ concentratie",
       "relativeHumidity": "Luchtvochtigheid",
       "countPresence": "Aanwezigheid"
     },
