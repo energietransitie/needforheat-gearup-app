@@ -3,8 +3,8 @@ import { decode } from "html-entities";
 import { useTranslation as useI18nTranslation } from "react-i18next";
 
 const LANGUAGES = {
-  en: "English",
-  nl: "Nederlands",
+  en-US: "English",
+  nl-NL: "Nederlands",
 } as const;
 
 export type LanguageCode = keyof typeof LANGUAGES;
