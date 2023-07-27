@@ -12,8 +12,8 @@ import AppRouter from "./src/components/routers/AppRouter";
 import Providers from "./src/providers";
 
 import { useOnAppStateChange } from "@/hooks/useOnAppStateChange";
-import LANG_EN from "@/lang/en.json";
-import LANG_NL from "@/lang/nl.json";
+import LANG_EN_US from "@/lang/en-US.json";
+import LANG_NL_NL from "@/lang/nl-NL.json";
 import { LanguageDetector } from "@/lib/languageDetector";
 
 i18n
@@ -21,10 +21,10 @@ i18n
   .use(initReactI18next)
   .init({
     compatibilityJSON: "v3",
-    fallbackLng: "en",
+    fallbackLng: "en-US",
     resources: {
-      en: { translation: { ...LANG_EN } },
-      nl: { translation: { ...LANG_NL } },
+      "en-US": { translation: { ...LANG_EN_US } },
+      "nl-NL": { translation: { ...LANG_NL_NL } },
     },
     react: {
       useSuspense: false,

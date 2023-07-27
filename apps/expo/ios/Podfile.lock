@@ -481,11 +481,11 @@ PODS:
     - GoogleUtilities/AppDelegateSwizzler
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.8.0):
+  - RNGestureHandler (2.12.0):
     - React-Core
   - RNPermissions (3.6.1):
     - React-Core
-  - RNReanimated (2.12.0):
+  - RNReanimated (2.17.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -843,9 +843,9 @@ SPEC CHECKSUMS:
   RNBluetoothStateManager: ae6a26260cbdf1827b58bd3bcc563527d61e6488
   RNFBApp: dd22a306a31189e99126a35962498c83b06520ab
   RNFBDynamicLinks: 31246d22f0bcda1b3022b89c97483fc079cc3025
-  RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
+  RNGestureHandler: dec4645026e7401a0899f2846d864403478ff6a5
   RNPermissions: dcdb7b99796bbeda6975a6e79ad519c41b251b1c
-  RNReanimated: 95fde05503235f14cd4a0cf526ffbad3d54af688
+  RNReanimated: 3203c8caf6a283e0cb58fdf2d76612a57f58ee66
   RNScreens: f3230dd008a7d0ce5c0a8bc78ff12cf2315bda24
   RNSVG: 07dbd870b0dcdecc99b3a202fa37c8ca163caec2
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
