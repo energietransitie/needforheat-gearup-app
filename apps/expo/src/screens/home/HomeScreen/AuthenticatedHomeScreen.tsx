@@ -31,7 +31,7 @@ export default function AuthenticatedHomeScreen() {
         title={t("screens.home_stack.home.buttons.add_device")}
         onPress={onPressAddDevice}
         icon={{
-          name: "camera-outline",
+          name: "qr-code-outline",
           type: "ionicon",
           color: theme.colors.white,
         }}

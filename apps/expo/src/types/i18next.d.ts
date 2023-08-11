@@ -1,13 +1,13 @@
 import "i18next";
-import LANG_EN from "@/lang/en.json";
-import LANG_NL from "@/lang/nl.json";
+import LANG_EN_US from "@/lang/en-US.json";
+import LANG_NL_NL from "@/lang/nl-NL.json";
 
 declare module "i18next" {
   interface CustomTypeOptions {
     defaultNS: "translation";
     resources: {
-      en: typeof LANG_EN;
-      nl: typeof LANG_NL;
+      en: typeof LANG_EN_US;
+      nl: typeof LANG_NL_NL;
     };
   }
 }

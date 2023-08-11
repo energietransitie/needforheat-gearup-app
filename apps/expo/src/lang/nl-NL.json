@@ -54,7 +54,7 @@
         "description": "In de uitnodigingsmail die u heeft ontvangen staat een activatielink. Klik op deze link om te beginnen met de installatie van uw meetapparaten."
       },
       "add_device": {
-        "title": "Apparaat toevoegen",
+        "title": "Apparaat verbinden",
         "status_indicator": {
           "working": "Apparaat informatie aan het laden...",
           "error": "Er is een fout opgetreden tijdens het laden van apparaatinformatie. Scan de QR-code opnieuw."
@@ -74,7 +74,7 @@
       "home": {
         "title": "NeedForHeat",
         "buttons": {
-          "add_device": "Apparaat toevoegen"
+          "add_device": "Apparaat installeren"
         },
         "authenticated": {
           "title": "Scan een QR-code",
@@ -88,7 +88,7 @@
         }
       },
       "provision": {
-        "title": "Apparaat toevoegen",
+        "title": "Apparaat verbinden",
         "timeline": {
           "steps": {
             "connecting": {
@@ -110,8 +110,8 @@
           }
         },
         "success": {
-          "title": "Apparaat succesvol toegevoegd",
-          "message": "Het apparaat is toegevoegd en de onderzoeksserver heeft gegevens ontvangen op {{date}}."
+          "title": "Apparaat succesvol verbonden",
+          "message": "Het apparaat is verbonden en de onderzoeksserver heeft gegevens ontvangen op {{date}}."
         },
         "provisioning_error": {
           "title": "Er is een fout opgetreden",
@@ -182,7 +182,7 @@
             "title": "Opgeslagen wachtwoord gebruiken?",
             "message": "Wilt u het eerder gebruikte wachtwoord gebruiken voor het netwerk {{name}}?",
             "buttons": {
-              "yes": "Opgeslagen wachtwoord gebruiken"
+              "yes": "Ja, gebruik het"
             }
           },
           "password": {
@@ -313,7 +313,7 @@
     "back_to_home": "Terug naar home",
     "go_back": "Ga terug",
     "password": "Wachtwoord",
-    "error": "Error",
+    "error": "Fout",
     "unknown_error": "Er is een onbekende fout opgetreden.",
     "units": {
       "seconds": "seconden",

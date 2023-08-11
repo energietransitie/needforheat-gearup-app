@@ -6,10 +6,10 @@ The translations in the NeedForHeat app are done using the [react-i18next](https
 
 ## Modifying a translation
 
-Modifying a translation can be done very quickly. Navigate to the [lang](../apps/expo/src/lang/) folder and open your language's corresponding translation file (`en.json` for English, `nl.json` for Dutch, etc.). Find the translation key in the code. Go to the corresponding key and change the value. For example, changing the title of the home stack for the English translation can be done like this:
+Modifying a translation can be done very quickly. Navigate to the [lang](../apps/expo/src/lang/) folder and open your language's corresponding translation file (`en-US.json` for English, `nl-NL.json` for Dutch, etc.). Find the translation key in the code. Go to the corresponding key and change the value. For example, changing the title of the home stack for the English translation can be done like this:
 
 1. Find the translation key in the code. In this case it's: `screens.home_stack.title`.
-2. Open `en.json`
+2. Open `en-US.json`
 3. Navigate to `screens`, then to `home_stack` and finally `title`.
 4. Change the value behind `title` to the new translation.
 5. The translation will update automatically (if hot reloading is enabled).
@@ -49,9 +49,9 @@ These steps have to be done **only** when adding a new language. To add a new la
 
 ```ts
 const LANGUAGES = {
-  en: "English",
-  nl: "Nederlands",
-  af: "Afrikaans",
+  "en-US": "English",
+  "nl-NL": "Nederlands",
+  "de-DE": "Deutsch",
 } as const;
 ```
 
