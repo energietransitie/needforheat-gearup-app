@@ -43,12 +43,27 @@ export default function AddDeviceScreen({ navigation, route }: AddDeviceScreenPr
     <Box padded style={{ flex: 1 }}>
       <ManualContent manualUrl={device?.device_type?.installation_manual_url} />
       <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
-        <Button containerStyle={{ flex: 1 }} title={t("common.cancel")} color="grey2" onPress={onCancel} />
+        <Button
+          containerStyle={{ flex: 1 }}
+          title={t("common.cancel")}
+          color="grey2"
+          onPress={onCancel}
+          icon={{
+            name: "close-outline",
+            type: "ionicon",
+            color: theme.colors.white,
+          }}
+        />
         <Button
           containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
-          title={t("common.add")}
+          title={t("common.connect")}
           color="primary"
           onPress={onAddDevice}
+          icon={{
+            name: "wifi-outline",
+            type: "ionicon",
+            color: theme.colors.white,
+          }}
         />
       </Box>
     </Box>

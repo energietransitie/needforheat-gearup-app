@@ -40,17 +40,17 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
   const data: InfoItem[] = [
     {
       title: t("screens.info_stack.about.title"),
-      uri: "https://www.energietransitiewindesheim.nl/assendorp2021/about",
+      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/info",
       icon: "book-outline",
     },
     {
       title: t("screens.info_stack.faq.title"),
-      uri: "https://www.energietransitiewindesheim.nl/assendorp2021/FAQ",
+      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/faq",
       icon: "help-circle-outline",
     },
     {
       title: t("screens.info_stack.privacy.title"),
-      uri: "https://www.energietransitiewindesheim.nl/assendorp2021/privacy",
+      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/privacy",
       icon: "shield",
     },
   ];
