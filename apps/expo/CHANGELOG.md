@@ -1,3 +1,17 @@
+# [2.9.0](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.8.1...v2.9.0) (2023-08-11)
+
+
+### Bug Fixes
+
+* update rn-gesture-handler and reanimated ([d911025](https://github.com/energietransitie/twomes-app-needforheat/commit/d911025451e0ed4bb5a14f8f6349c2c8bfa1ea74))
+
+
+### Features
+
+* add icons to connect and cancel buttons ([53024f1](https://github.com/energietransitie/twomes-app-needforheat/commit/53024f14931ff0732df231e6a786c80a35a22cfc))
+* change icon of connect button to QR-code ([a76d33f](https://github.com/energietransitie/twomes-app-needforheat/commit/a76d33fb8cddb3ffdd40a5f4d33f885c14569cff))
+* update links ([bdfa254](https://github.com/energietransitie/twomes-app-needforheat/commit/bdfa254ecebe70a9c53945d7235ace0f4dc4b18d))
+
 ## [2.8.1](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.8.0...v2.8.1) (2023-07-11)
 
 
