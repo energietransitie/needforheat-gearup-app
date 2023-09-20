@@ -13,6 +13,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@gorhom/bottom-sheet": "4",
     "@react-native-community/netinfo": "9.3.7",
     "@react-native-firebase/app": "17.3.2",
@@ -82,7 +83,7 @@
     "@testing-library/react-native": "12.0.0",
     "@total-typescript/ts-reset": "0.4.2",
     "@types/base-64": "1.0.0",
-    "@types/jest": "29.5.0",
+    "@types/jest": "^29.5.5",
     "@types/react": "18.0.14",
     "@types/react-native": "0.70.6",
     "@types/react-native-svg-charts": "5.0.12",

@@ -37,15 +37,17 @@
   "devDependencies": {
     "eslint": "8.0.0",
     "eslint-config-nfh": "*",
-    "prettier": "latest",
+    "prettier": "^3.0.3",
     "ts-node": "10.9.1",
     "tsconfig-paths": "4.1.2",
-    "turbo": "latest"
+    "turbo": "^1.10.14"
   },
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6"
+  },
   "resolutions": {
     "**/@octokit/plugin-retry": "4.1.3"
   },
