@@ -46,7 +46,9 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "typescript": "4.9.3"
+  },
   "resolutions": {
     "**/@octokit/plugin-retry": "4.1.3"
   },
