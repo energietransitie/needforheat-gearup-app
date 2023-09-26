@@ -3,10 +3,12 @@ import { Button, ListItem, makeStyles, useTheme } from "@rneui/themed";
 import { TouchableHighlight, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
+import { MANUAL_URL } from "@env";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useOpenExternalLink } from "@/hooks/useOpenExternalLink";
 import { BuildingDeviceResponse } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
+import { useEffect, useState } from "react";
 
 type WifiNetworkListItemProps = {
   item: BuildingDeviceResponse;
@@ -20,11 +22,29 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   const { openUrl } = useOpenExternalLink();
   const { theme } = useTheme();
   const style = useStyles();
-  const { t } = useTranslation();
+  const { t, resolvedLanguage } = useTranslation();
+  const [data, setData] = useState(null); // Initialize data state variable
 
   const onReset = (close: () => void) => {
     navigate("QrScannerScreen", { expectedDeviceName: item.name });
     close();
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`${MANUAL_URL}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const fetchedData = await response.json();
+      setData(fetchedData); 
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   const openHelpUrl = () => openUrl(item.device_type.info_url);
@@ -51,7 +71,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           ) : (
             <Icon name="cloud-offline-outline" color="red" size={16} />
           )}
-          {` ${item.name}`}
+          {resolvedLanguage === "nl-NL" ? data?.["nl-NL"] : data?.["en-US"]}
         </ListItem.Title>
         <ListItem.Subtitle>
           {item.latest_upload
