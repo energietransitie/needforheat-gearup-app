@@ -8,10 +8,21 @@ import useLayoutWidth from "@/hooks/useLayoutWidth";
 
 type ManualContentProps = {
   manualUrl?: string;
+  languageHeader?: string;
 };
 
-export default function ManualContent({ manualUrl }: ManualContentProps) {
+export default function ManualContent({ manualUrl, languageHeader }: ManualContentProps) {
   const [onLayout, width] = useLayoutWidth();
+
+  const headers = new Headers();
+  if (languageHeader) {
+    headers.append("Accept-Language", languageHeader);
+  }
+
+  const headersObject: Record<string, string> = {};
+  headers.forEach((value: string, key: string | number) => {
+    headersObject[key] = value;
+  });
 
   return (
     <ScrollView
@@ -30,7 +41,7 @@ export default function ManualContent({ manualUrl }: ManualContentProps) {
           remoteErrorView={() => <RemoteErrorView />}
           remoteLoadingView={() => <RemoteLoadingView />}
           contentWidth={width}
-          source={{ uri: manualUrl }}
+          source={{ uri: manualUrl, headers: headersObject }}
         />
       )}
     </ScrollView>
