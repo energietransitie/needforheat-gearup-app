@@ -3,7 +3,7 @@
     "name": "NeedForHeat",
     "slug": "need-for-heat",
     "scheme": "nfh",
-    "version": "2.9.0",
+    "version": "2.9.1",
     "owner": "nfh",
     "jsEngine": "hermes",
     "privacy": "hidden",
@@ -18,11 +18,15 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "nl.windesheim.energietransitie.warmtewachter",
-      "associatedDomains": ["applinks:energietransitiewindesheim.page.link"],
+      "associatedDomains": [
+        "applinks:energietransitiewindesheim.page.link"
+      ],
       "infoPlist": {
         "NSBluetoothAlwaysUsageDescription": "This app needs Bluetooth to connect to the sensor.",
         "NSBluetoothPeripheralUsageDescription": "This app needs Bluetooth to connect to the sensor.",
@@ -40,7 +44,13 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "nl.windesheim.energietransitie.warmtewachter",
-      "permissions": ["BLUETOOTH", "BLUETOOTH_ADMIN", "BLUETOOTH_SCAN", "BLUETOOTH_CONNECT", "CAMERA"]
+      "permissions": [
+        "BLUETOOTH",
+        "BLUETOOTH_ADMIN",
+        "BLUETOOTH_SCAN",
+        "BLUETOOTH_CONNECT",
+        "CAMERA"
+      ]
     },
     "extra": {
       "eas": {

@@ -1,3 +1,10 @@
+## [2.9.1](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.9.0...v2.9.1) (2023-08-11)
+
+
+### Bug Fixes
+
+* downgrade rn-gesture-handler and reanimated ([80122e7](https://github.com/energietransitie/twomes-app-needforheat/commit/80122e726b992bb151fe2064ecf1624906da1f97))
+
 # [2.9.0](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.8.1...v2.9.0) (2023-08-11)
 
 

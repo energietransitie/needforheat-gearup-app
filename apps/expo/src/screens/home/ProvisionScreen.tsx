@@ -1,7 +1,8 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, Text, useTheme } from "@rneui/themed";
 import { useEffect } from "react";
-
+import { enUS, nl } from 'date-fns/locale';
+import { format } from 'date-fns';
 import DelayedButton from "@/components/common/DelayedButton";
 import Timeline from "@/components/common/Timeline";
 import Box from "@/components/elements/Box";
@@ -16,9 +17,8 @@ type ProvisionScreenProps = NativeStackScreenProps<HomeStackParamList, "Provisio
 
 export default function ProvisionScreen({ navigation, route }: ProvisionScreenProps) {
   const { theme } = useTheme();
-
   const { device, network, password, proofOfPossession } = route.params;
-  const { t } = useTranslation();
+  const { t, resolvedLanguage } = useTranslation();
   const {
     provisionDevice,
     isLoading: isProvisioning,
@@ -83,6 +83,24 @@ export default function ProvisionScreen({ navigation, route }: ProvisionScreenPr
     });
   };
 
+  const locales: Record<string, Locale> = {
+    'en-US': enUS,
+    'nl-NL': nl,
+  };
+
+  function formatDateAndTime(date?: Date) {
+    const inputDate = date || new Date();
+    const locale = locales[resolvedLanguage] || enUS;
+
+    let formatString = 'cccccc LLLL d HH:mm yyy';
+
+    if (resolvedLanguage === 'nl-NL') {
+      formatString = 'cccccc d LLLL HH:mm yyy';
+    }
+
+    return format(inputDate, formatString, { locale });
+  }
+
   useEffect(() => {
     if (isProvisioningSuccess) {
       storeWifiNetwork({ ...network, password });
@@ -107,7 +125,7 @@ export default function ProvisionScreen({ navigation, route }: ProvisionScreenPr
             <StatusMessage
               label={t("screens.home_stack.provision.success.title")}
               message={t("screens.home_stack.provision.success.message", {
-                date: latestMeasurement!.toLocaleString(),
+                date: latestMeasurement ? formatDateAndTime(latestMeasurement) : formatDateAndTime(),
               })}
             />
           ) : isWifiError ? (

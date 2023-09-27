@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "need-for-heat",
+    "slug": "need-for-heat",
+    "version": "0.0.0",
+    "sdkVersion": "47.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ]
+  }
+}
