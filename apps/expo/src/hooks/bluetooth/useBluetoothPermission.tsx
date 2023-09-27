@@ -16,15 +16,25 @@ const BLUETOOTH_PERMISSIONS = Platform.select<Permission[]>({
 export default function useBluetoothPermission() {
   const { t } = useTranslation();
 
-  const requestBluetoothPermission = async () => {
-    const hasBluetoothPermission = await checkBluetoothPermission();
-    if (hasBluetoothPermission) return;
+  // const requestBluetoothPermission = async () => {
+  //   const hasBluetoothPermission = await checkBluetoothPermission();
+  //   if (hasBluetoothPermission) return;
 
-    // Request permissions if not granted
-    const requestStatusses = await requestMultiple(BLUETOOTH_PERMISSIONS);
-    if (Object.values(requestStatusses).some(status => status !== "granted")) {
-      throw new Error(t("hooks.bluetooth_permission.not_granted"));
-    }
+  //   // Request permissions if not granted
+  //   const requestStatusses = await requestMultiple(BLUETOOTH_PERMISSIONS);
+  //   if (Object.values(requestStatusses).some(status => status !== "granted")) {
+  //     throw new Error(t("hooks.bluetooth_permission.not_granted"));
+  //   }
+  // };
+
+  // const checkBluetoothPermission = async () => {
+  //   const checkStatusses = await checkMultiple(BLUETOOTH_PERMISSIONS);
+  //   return Object.values(checkStatusses).every(status => status === "granted");
+  // };
+
+  const requestBluetoothPermission = async () => {
+    // For testing purposes, always return that permissions have been granted.
+    return true;
   };
 
   const checkBluetoothPermission = async () => {
