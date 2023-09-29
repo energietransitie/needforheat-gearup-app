@@ -1,6 +1,44 @@
 # iOS development
 
-When developing for iOS you need to have a Mac with Xcode installed. You can find more information about the setup [here](https://docs.expo.io/workflow/ios-simulator/).
+When developing for iOS you need to have a Mac with Xcode and Ruby 3.1.0 installed. You can find more information about the setup [here](https://docs.expo.io/workflow/ios-simulator/).
+
+## Ruby
+To install Cocoapods, Ruby is required. MacOS comes with a built-in version of Ruby that might not match the required version of this project. To install the correct version of Ruby, you can use `rbenv` using `homebrew`. If you don't have homebrew, you can learn more at [brew.sh](https://brew.sh/).
+
+To install `rbenv` you can run the following command:
+```bash
+brew install rbenv
+```
+Then, install the correct version of Ruby (3.1.0) using `rbenv`:
+```bash
+rbenv install 3.1.0
+```
+After installing Ruby, you can set the global version of Ruby to 3.1.0:
+```bash
+rbenv global 3.1.0
+```
+You can verify that the correct version of Ruby is installed by running:
+```bash
+ruby -v
+```
+This should output something along the lines of `ruby 3.1.0p0 (2021-12-25 revision 123456) [x86_64-darwin20]`.
+
+If this isn't the case, check where your Ruby version is coming from by running `which ruby`. If this is not the version you just installed, you can run `rbenv init` to get instructions on how to fix this.
+
+If that doesn't work, try eval
+```bash
+eval "$(rbenv init -)"
+```
+and then run `which ruby` again.
+
+### Pods
+
+After installing Ruby correctly, you can install the required pods by running the following command in the `ios` directory:
+```bash
+cd /apps/expo/ios
+
+pod install
+```
 
 After getting the prerequisites installed you can start the development server with the following command:
 
