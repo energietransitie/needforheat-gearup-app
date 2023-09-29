@@ -35,6 +35,7 @@ export default function MeasurementsScreen() {
   const hasMultipleDevices = (devices?.length ?? 0) > 1;
 
   const deviceDropdownDisabled = !buildingId || !hasMultipleDevices;
+  const ComleteUrl = MANUAL_URL + devices?.[0]?.device_type.name;
 
   useEffect(() => {
     fetchData();
@@ -48,7 +49,7 @@ export default function MeasurementsScreen() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`${MANUAL_URL}`);
+      const response = await fetch(`${ComleteUrl}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

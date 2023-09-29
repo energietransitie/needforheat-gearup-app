@@ -24,7 +24,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   const style = useStyles();
   const { t, resolvedLanguage } = useTranslation();
   const [data, setData] = useState(null); // Initialize data state variable
-
+  const CompleteURL = MANUAL_URL + item.device_type.name;
   const onReset = (close: () => void) => {
     navigate("QrScannerScreen", { expectedDeviceName: item.name });
     close();
@@ -36,7 +36,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`${MANUAL_URL}`);
+      const response = await fetch(`${CompleteURL}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
