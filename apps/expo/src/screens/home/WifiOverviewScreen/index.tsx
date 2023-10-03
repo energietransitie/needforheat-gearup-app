@@ -1,7 +1,7 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect, useRef, useState } from "react";
-import { Alert } from "react-native";
+import { Alert, BackHandler } from "react-native";
 
 import WifiNetworkList from "./WifiNetworkList";
 import WifiConnectBottomSheet from "./_wifiConnectBottomSheet";
@@ -33,8 +33,16 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
     isRefetching,
   } = useWifiNetworks(device.deviceName);
 
-  // Disable going back to prevent unexpected behaviour
-  useDisableBackButton(true);
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
+      navigation.goBack();
+      navigation.goBack();
+      navigation.goBack();
+      return true;
+    });
+    return () => backHandler.remove();
+  }, [navigation]);
+
 
   const onProvision = (network: WifiEntry, password?: string) => {
     bottomSheetRef.current?.close();
