@@ -1,5 +1,4 @@
 import { createNativeStackNavigator, NativeStackNavigationOptions } from "@react-navigation/native-stack";
-
 import useTranslation from "@/hooks/translation/useTranslation";
 import ActivateDeviceScreen from "@/screens/home/ActivateDeviceScreen";
 import AddDeviceScreen from "@/screens/home/AddDeviceScreen";
@@ -11,6 +10,9 @@ import QrScannerScreen from "@/screens/home/QrScannerScreen";
 import SearchDeviceScreen from "@/screens/home/SearchDeviceScreen";
 import WifiOverviewScreen from "@/screens/home/WifiOverviewScreen";
 import { HomeStackParamList } from "@/types/navigation";
+import { useNavigation } from "@react-navigation/native";
+import { HeaderBackButton } from '@react-navigation/elements'
+import { Platform } from "react-native";
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -21,6 +23,7 @@ const disableNavigation: Partial<NativeStackNavigationOptions> = {
 
 export default function HomeRouter() {
   const { t } = useTranslation();
+  const navigation = useNavigation();
 
   return (
     <HomeStack.Navigator initialRouteName="HomeScreen">
@@ -70,6 +73,18 @@ export default function HomeRouter() {
         options={{
           title: t("screens.home_stack.wifi_overview.title"),
           ...disableNavigation,
+          headerLeft: Platform.OS === 'ios' ? (
+            () => (
+              <HeaderBackButton
+                labelVisible={true}
+                onPress={() => {
+                  navigation.goBack();
+                  navigation.goBack();
+                  navigation.goBack();
+                }}
+              />
+            )
+          ) : undefined,
         }}
         component={WifiOverviewScreen}
       />
