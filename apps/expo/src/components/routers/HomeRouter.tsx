@@ -44,7 +44,7 @@ export default function HomeRouter() {
       />
       <HomeStack.Screen
         name="AddDeviceScreen"
-        options={{ title: t("screens.home_stack.add_device.title") }}
+        options={{ title: t("screens.home_stack.add_device.title"), ...disableNavigation }}
         component={AddDeviceScreen}
       />
       <HomeStack.Screen

@@ -1,8 +1,7 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useEffect, useRef, useState } from "react";
-import { Alert } from "react-native";
-import { BackHandler } from "react-native";
+import { Alert, BackHandler } from "react-native";
 
 import WifiNetworkList from "./WifiNetworkList";
 import WifiConnectBottomSheet from "./_wifiConnectBottomSheet";
