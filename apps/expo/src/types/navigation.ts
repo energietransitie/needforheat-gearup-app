@@ -23,7 +23,7 @@ export type HomeStackParamList = {
     network: WifiEntry;
     proofOfPossession: string;
     password?: string;
-  };
+  }
 };
 
 export type InfoStackParamList = {
