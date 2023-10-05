@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchDevice } from "@/api/device";
 import { Maybe } from "@/types";
 
-export default function useReceivingMeasurements(deviceName: string, retries = 5) {
+export default function useReceivingMeasurements(deviceName: string, retries = 5, openedTimestamp: Date) {
   const [count, setCount] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -20,8 +20,9 @@ export default function useReceivingMeasurements(deviceName: string, retries = 5
           const latestMeasurement = data?.latest_upload;
 
           console.log("latestTimestamp", latestMeasurement);
+          console.log("openedTimestamp", openedTimestamp);
 
-          if (latestMeasurement) {
+          if (latestMeasurement && latestMeasurement > openedTimestamp) {
             setLatestMeasurement(latestMeasurement);
             setIsLoading(false);
             setCount(null);
