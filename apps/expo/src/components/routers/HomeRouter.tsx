@@ -2,6 +2,7 @@ import { createNativeStackNavigator, NativeStackNavigationOptions } from "@react
 import useTranslation from "@/hooks/translation/useTranslation";
 import ActivateDeviceScreen from "@/screens/home/ActivateDeviceScreen";
 import AddDeviceScreen from "@/screens/home/AddDeviceScreen";
+import DeviceOverviewScreen from "@/screens/DeviceOverviewScreen";
 import AlreadyInvitedScreen from "@/screens/home/AlreadyInvitedScreen";
 import ConnectScreen from "@/screens/home/ConnectScreen";
 import HomeScreen from "@/screens/home/HomeScreen";
@@ -64,7 +65,6 @@ export default function HomeRouter() {
         name="ConnectScreen"
         options={{
           title: t("screens.home_stack.connect.title"),
-          ...disableNavigation,
         }}
         component={ConnectScreen}
       />

@@ -17,6 +17,10 @@
     },
     "device_overview": {
       "title": "Devices",
+      "buttons": {
+        "data_sources": "Online data sources",
+        "install_device": "Install Device"
+      },
       "device_list": {
         "device_info": {
           "last_seen": "Last seen at {{date}}",
