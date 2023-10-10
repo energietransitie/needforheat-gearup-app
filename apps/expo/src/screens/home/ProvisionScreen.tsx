@@ -33,7 +33,7 @@ export default function ProvisionScreen({ navigation, route }: ProvisionScreenPr
     isSuccess: isReceivingMeasurements,
     isError: isReceivingMeasurementsError,
     isLoading: isReceivingMeasurementsLoading,
-  } = useReceivingMeasurements(device.deviceName, 15);
+  } = useReceivingMeasurements(device.deviceName, 15, new Date());
 
   const { storeWifiNetwork } = useStoredWifiNetworks();
 
