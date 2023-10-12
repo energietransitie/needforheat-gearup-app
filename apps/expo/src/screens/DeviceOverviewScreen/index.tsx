@@ -5,15 +5,15 @@ import { useContext, useRef, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
-import BuildingBottomSheet from "../../components/common/bottomSheets/BuildingBottomSheet";
 import DeviceList from "./_deviceList";
+import BuildingBottomSheet from "../../components/common/bottomSheets/BuildingBottomSheet";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
 import Box from "@/components/elements/Box";
 import Screen from "@/components/elements/Screen";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
-import { RootStackParamList, SettingsStackParamList } from "@/types/navigation";
+import { RootStackParamList } from "@/types/navigation";
 
 type DeviceOverviewScreenProps = NativeStackScreenProps<RootStackParamList, "DeviceOverview">;
 
@@ -64,18 +64,7 @@ export default function DeviceOverviewScreen({ navigation, route }: DeviceOvervi
             ) : null}
           </>
         )}
-        <View style={{ flexDirection: "row", justifyContent: "space-between", maxWidth: "100%", width: "100%" }}>
-          <Button 
-            title={t("screens.device_overview.buttons.install_device")} 
-            onPress={() => navigation.navigate("Home")} 
-          />
-          <Button
-            title={t("screens.device_overview.buttons.data_sources")}
-            onPress={() => navigation.navigate('Settings', {screen:'ExternalProviderScreen'})
-          }
-          />        
-        </View>
       </Box>
-    </Screen >
+    </Screen>
   );
 }
