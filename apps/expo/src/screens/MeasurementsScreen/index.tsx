@@ -84,7 +84,9 @@ export default function MeasurementsScreen() {
                 ? t("screens.device_overview.building_list.building_info.name", { id: buildingId })
                 : t("screens.device_overview.building_list.placeholder")}
             </Text>
-            <Icon name="chevron-down" size={16} />
+            {hasMultipleBuildings &&
+              <Icon name="chevron-down" size={16} />
+            }
           </TouchableOpacity>
           <TouchableOpacity
             disabled={deviceDropdownDisabled}
