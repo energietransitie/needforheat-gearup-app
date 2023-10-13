@@ -65,14 +65,17 @@
         }
       },
       "connect": {
-        "title": "Verbinden met apparaat",
+        "title": "Time-out verbinden",
+        "title_timeout": "Probleem met verbinden",
         "status": {
           "connected": "Verbonden met {{name}}",
           "connecting": "Verbinden met {{name}}..."
         },
         "alert": {
           "unknown_error": "Er is een fout opgetreden tijdens het verbinden met het apparaat.",
-          "retry": "Opnieuw proberen"
+          "retry": "Opnieuw proberen",
+          "timeout": "Het apparaat kan niet verbinden. Herstart de app!",
+          "Exit": "Sluiten"
         }
       },
       "home": {

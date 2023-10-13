@@ -66,13 +66,16 @@
       },
       "connect": {
         "title": "Connect to device",
+        "title_timeout": "Connection Timeout",
         "status": {
           "connected": "Connected to {{name}}",
           "connecting": "Connecting to {{name}}..."
         },
         "alert": {
           "unknown_error": "An error occurred while connecting to the measurement device.",
-          "retry": "Try again"
+          "retry": "Try again",
+          "timeout": "The device could not be connected. Please restart the app!",
+          "Exit": "Exit"
         }
       },
       "home": {
