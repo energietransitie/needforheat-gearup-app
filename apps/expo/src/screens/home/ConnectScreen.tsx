@@ -72,11 +72,6 @@ export default function ConnectScreen({ navigation, route }: ConnectScreenProps)
     );
   };
 
-
-  const exitApp = () => {
-    throw {};
-  }
-
   useEffect(() => {
     if (focused) {
       connectToDevice(

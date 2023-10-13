@@ -65,7 +65,7 @@
         }
       },
       "connect": {
-        "title": "Time-out verbinden",
+        "title": "Verbinden met apparaat",
         "title_timeout": "Probleem met verbinden",
         "status": {
           "connected": "Verbonden met {{name}}",
