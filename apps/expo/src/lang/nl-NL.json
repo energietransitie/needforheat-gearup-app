@@ -16,7 +16,7 @@
       }
     },
     "device_overview": {
-      "title": "Apparaten",
+      "title": "Apparaten en Online Data Bronnen",
       "buttons": {
         "data_sources": "Online data bronnen",
         "install_device": "Apparaat Toevoegen"

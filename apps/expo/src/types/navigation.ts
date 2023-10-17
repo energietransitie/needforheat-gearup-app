@@ -14,6 +14,7 @@ export type HomeStackParamList = {
   AlreadyInvitedScreen: undefined;
   QrScannerScreen: { expectedDeviceName: string } | undefined;
   AddDeviceScreen: { qrData: SensorQrCode };
+  AddOnlineDataSourceScreen: undefined;
   SearchDeviceScreen: { deviceName: string; proofOfPossession: string };
   ActivateDeviceScreen: { qrData: SensorQrCode };
   ConnectScreen: { device: BleDeviceType; proofOfPossession: string };
@@ -24,6 +25,7 @@ export type HomeStackParamList = {
     proofOfPossession: string;
     password?: string;
   };
+  DeviceOverviewScreen: undefined;
 };
 
 export type InfoStackParamList = {

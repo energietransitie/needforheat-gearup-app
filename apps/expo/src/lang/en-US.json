@@ -16,7 +16,7 @@
       }
     },
     "device_overview": {
-      "title": "Devices",
+      "title": "Devices and Online Data Sources",
       "buttons": {
         "data_sources": "Online data sources",
         "install_device": "Install Device"

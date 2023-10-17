@@ -9,7 +9,7 @@ import SettingsRouter from "./SettingsRouter";
 
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
-import DeviceOverviewScreen from "@/screens/DeviceOverviewScreen";
+import DeviceOverviewScreen from "@/screens/home/DeviceOverviewScreen";
 import MeasurementsScreen from "@/screens/MeasurementsScreen";
 import { RootStackParamList } from "@/types/navigation";
 
