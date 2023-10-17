@@ -30,6 +30,8 @@ export default function ExternalProviderListItem(props: ExternalProviderListItem
       item.cloud_feed.scope
     )}&state=${state}`;
 
+    console.log("redirectUrl", redirectUrl);
+
     await openUrl(redirectUrl, false).then(() => setLoading(false));
   };
 

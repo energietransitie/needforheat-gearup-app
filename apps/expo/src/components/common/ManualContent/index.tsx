@@ -1,5 +1,6 @@
 import { ScrollView } from "react-native";
 import RenderHtml from "react-native-render-html";
+import { Text } from "react-native";
 
 import RemoteErrorView from "./_remoteErrorView";
 import RemoteLoadingView from "./_remoteLoadingView";
@@ -12,7 +13,7 @@ type ManualContentProps = {
 };
 
 export default function ManualContent({ manualUrl, languageHeader }: ManualContentProps) {
-  const [onLayout, width] = useLayoutWidth();
+  // const [onLayout, width] = useLayoutWidth();
 
   const headers = new Headers();
   if (languageHeader) {
@@ -30,19 +31,21 @@ export default function ManualContent({ manualUrl, languageHeader }: ManualConte
       contentContainerStyle={{
         alignItems: "center",
         minHeight: "90%",
+        marginLeft: "4%",
+        paddingRight: "4%",
       }}
-      onLayout={onLayout}
       persistentScrollbar
     >
       {!manualUrl ? (
         <RemoteErrorView />
       ) : (
-        <RenderHtml
-          remoteErrorView={() => <RemoteErrorView />}
-          remoteLoadingView={() => <RemoteLoadingView />}
-          contentWidth={width}
-          source={{ uri: manualUrl, headers: headersObject }}
-        />
+        <>
+          <RenderHtml
+            remoteErrorView={() => <RemoteErrorView />}
+            remoteLoadingView={() => <RemoteLoadingView />}
+            source={{ uri: manualUrl, headers: headersObject }}
+          />
+        </>
       )}
     </ScrollView>
   );

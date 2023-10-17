@@ -39,6 +39,7 @@ export default function AddDeviceScreen({ navigation, route }: AddDeviceScreenPr
     );
   }
 
+
   return (
     <Box padded style={{ flex: 1 }}>
       <ManualContent manualUrl={device?.device_type?.installation_manual_url} languageHeader={resolvedLanguage} />

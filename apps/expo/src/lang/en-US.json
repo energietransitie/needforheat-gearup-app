@@ -18,8 +18,8 @@
     "device_overview": {
       "title": "Devices and Online Data Sources",
       "buttons": {
-        "data_sources": "Online data sources",
-        "install_device": "Install Device"
+        "add_enelogic": "Connect Enelogic",
+        "install_device": "Add new device"
       },
       "device_list": {
         "device_info": {
@@ -37,7 +37,7 @@
       }
     },
     "home_stack": {
-      "title": "Home",
+      "title": "Sources",
       "activate_device": {
         "title": "Activate device",
         "status_indicator": {
@@ -96,6 +96,7 @@
       },
       "provision": {
         "title": "Connecting a device",
+        "enelogic": "Connect Enelogic",
         "timeline": {
           "steps": {
             "connecting": {
@@ -234,7 +235,6 @@
       "settings_screen": {
         "title": "Settings",
         "app_language": "Select app language",
-        "external_providers": "Connect online data sources",
         "wifi_passwords": {
           "title": "Delete stored Wi-Fi passwords",
           "message": "Are you sure? After removing the stored Wi-Fi passwords from this app, you will have to enter the password again when you want to add a new measurement device.",

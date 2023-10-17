@@ -18,7 +18,7 @@ import { RootStackParamList } from "@/types/navigation";
 
 type DeviceOverviewScreenProps = NativeStackScreenProps<RootStackParamList, "DeviceOverview">;
 
-export default function DeviceOverviewScreen({ navigation, route }: DeviceOverviewScreenProps) {
+export default function DeviceOverviewScreen() {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const { user, isLoading } = useContext(UserContext);
@@ -28,6 +28,12 @@ export default function DeviceOverviewScreen({ navigation, route }: DeviceOvervi
   const [buildingId, setBuildingId] = useState<number | undefined>(buildings[0]?.id);
 
   const hasMultipleBuildings = buildings.length > 1;
+
+
+  //Enelogic stuff
+  const [loading, setLoading] = useState(false);
+  //https://enelogic.com/oauth/v2/auth?response_type=code&client_id=10321_iee4evob2rcw4scc4wcwos448ogcwkgocoswwwkkow4wcckk4&redirect_uri=nfh%3A%2F%2Fcallback%3Fprovider%3D1&scope=account&state=TODO
+
 
   return (
     <Screen>

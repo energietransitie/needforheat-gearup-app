@@ -16,9 +16,9 @@
       }
     },
     "device_overview": {
-      "title": "Apparaten en Online Data Bronnen",
+      "title": "Apparaten en Online Databronnen",
       "buttons": {
-        "data_sources": "Online data bronnen",
+        "add_enelogic": "Enelogic Toevoegen",
         "install_device": "Apparaat Toevoegen"
       },
       "device_list": {
@@ -37,7 +37,7 @@
       }
     },
     "home_stack": {
-      "title": "Home",
+      "title": "Bronnen",
       "activate_device": {
         "title": "Apparaat activeren",
         "status_indicator": {
@@ -96,6 +96,7 @@
       },
       "provision": {
         "title": "Apparaat verbinden",
+        "enelogic": "Enelogic verbinden",
         "timeline": {
           "steps": {
             "connecting": {

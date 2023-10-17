@@ -31,7 +31,7 @@ export default function HomeRouter() {
     <HomeStack.Navigator initialRouteName="HomeScreen">
       <HomeStack.Screen
         name="HomeScreen"
-        options={{ title: t("screens.home_stack.home.title") }}
+        options={{ title: t("screens.device_overview.title") }}
         component={HomeScreen}
       />
       <HomeStack.Screen
@@ -100,7 +100,7 @@ export default function HomeRouter() {
       <HomeStack.Screen
         name="AddOnlineDataSourceScreen"
         options={{
-          title: t("screens.home_stack.provision.title"),
+          title: t("screens.home_stack.provision.enelogic"),
           ...disableNavigation,
         }}
         component={AddOnlineDataSourceScreen}

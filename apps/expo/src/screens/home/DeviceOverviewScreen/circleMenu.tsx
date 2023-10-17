@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { HomeStackParamList } from "@/types/navigation";
+import { useTranslation } from 'react-i18next';
 
 const CircleMenu = () => {
     const [showSubMenu, setShowSubMenu] = useState(false);
+    const { t } = useTranslation();
 
     const toggleSubMenu = () => {
         setShowSubMenu(!showSubMenu);
@@ -13,15 +15,24 @@ const CircleMenu = () => {
 
     const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
 
+    const MenuItem = ({ icon, iconText }: { icon: string, iconText: string}) => (
+        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+            <Text style={{ color: 'black', width: '45%', textAlign: 'right', marginRight: '5%' }}>{t(iconText)}</Text>
+            <View style={styles.menuItem}>
+                <Icon name={icon} size={30} color="white" />
+            </View>
+        </View>
+    );
+
     return (
         <View style={styles.container}>
             {showSubMenu && (
                 <View style={styles.subMenu}>
-                    <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
-                        <MenuItem icon="qr-code-outline" iconText='Scan QR Code' />
+                    <TouchableOpacity onPress={() => navigation.navigate('QrScannerScreen')}>
+                        <MenuItem icon="qr-code-outline" iconText='screens.device_overview.buttons.install_device' />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate('AddOnlineDataSourceScreen')}>
-                        <MenuItem icon="link-outline" iconText='Enelogic toevoegen' />
+                        <MenuItem icon="link-outline" iconText='screens.device_overview.buttons.add_enelogic' />
                     </TouchableOpacity>
                 </View>
             )}
@@ -50,15 +61,6 @@ const CircleMenu = () => {
         </View >
     );
 };
-
-const MenuItem = ({ icon, iconText }: { icon: string, iconText: string}) => (
-    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
-        <Text style={{ color: 'black', width: '45%', textAlign: 'right', marginRight: '5%' }}>{iconText}</Text>
-        <View style={styles.menuItem}>
-            <Icon name={icon} size={30} color="white" />
-        </View>
-    </View>
-);
 
 const styles = StyleSheet.create({
     container: {

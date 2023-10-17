@@ -28,13 +28,13 @@ export default function AppRouter() {
         options={{
           title: t("screens.home_stack.title"),
           tabBarIcon: ({ color, size }) => {
-            return <Ionicons name="home-outline" size={size} color={color} />;
+            return <Ionicons name="list-outline" size={size} color={color} />;
           },
         }}
       />
       {isAuthed ? (
         <>
-          <Tab.Screen
+          {/* <Tab.Screen
             name="DeviceOverview"
             component={DeviceOverviewScreen}
             options={{
@@ -44,7 +44,7 @@ export default function AppRouter() {
                 return <Ionicons name="list-outline" size={size} color={color} />;
               },
             }}
-          />
+          /> */}
           <Tab.Screen
             name="Measurements"
             component={MeasurementsScreen}
