@@ -13,28 +13,23 @@ const CircleMenu = () => {
 
     const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
 
-    const handleMenuItemClick = (itemLabel: string) => {
-
-        if (itemLabel === 'Add Device') {
-            navigation.navigate('HomeScreen');
-        } else if (itemLabel === 'Add EneLogic') {
-            navigation.navigate('AddOnlineDataSourceScreen');
-        }
-    };
-
     return (
         <View style={styles.container}>
             {showSubMenu && (
                 <View style={styles.subMenu}>
-                    <TouchableOpacity onPress={() => handleMenuItemClick('Add Device')}>
-                        <MenuItem icon="add-outline" label="Add Device" />
+                    <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+                        <MenuItem icon="qr-code-outline" iconText='Scan QR Code' />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleMenuItemClick('Add EneLogic')}>
-                        <MenuItem icon="add-outline" label="Add EneLogic" />
+                    <TouchableOpacity onPress={() => navigation.navigate('AddOnlineDataSourceScreen')}>
+                        <MenuItem icon="link-outline" iconText='Enelogic toevoegen' />
                     </TouchableOpacity>
                 </View>
             )}
-            <TouchableOpacity onPress={toggleSubMenu}>
+            <TouchableOpacity onPress={toggleSubMenu}
+            style={{ 
+                display: 'flex',
+                alignItems: 'flex-end'
+             }}>
                 <View
                     style={{
                         width: 80,
@@ -46,9 +41,9 @@ const CircleMenu = () => {
                     }}
                 >
                     {showSubMenu ? (
-                        <Text style={{ color: 'white', fontSize: 30 }}>X</Text>
+                        <Icon name="close-outline" size={50} color="white" />
                     ) : (
-                        <Text style={{ color: 'white', fontSize: 30 }}>+</Text>
+                        <Icon name="add-outline" size={50} color="white" />
                     )}
                 </View>
             </TouchableOpacity>
@@ -56,10 +51,12 @@ const CircleMenu = () => {
     );
 };
 
-const MenuItem = ({ icon, label }: { icon: string; label: string }) => (
-    <View style={styles.menuItem}>
-        <Icon name={icon} size={30} color="green" />
-        <Text>{label}</Text>
+const MenuItem = ({ icon, iconText }: { icon: string, iconText: string}) => (
+    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+        <Text style={{ color: 'black', width: '45%', textAlign: 'right', marginRight: '5%' }}>{iconText}</Text>
+        <View style={styles.menuItem}>
+            <Icon name={icon} size={30} color="white" />
+        </View>
     </View>
 );
 
@@ -71,6 +68,7 @@ const styles = StyleSheet.create({
     subMenu: {
         flexDirection: 'column',
         justifyContent: 'center',
+        alignItems: 'flex-end',
         margin: 10,
     },
     menuItem: {
