@@ -27,8 +27,7 @@ export default function AddOnlineDataSourceScreen({ navigation, route }: AddOnli
     }
 
     const onConnectEnelogic = async () => {
-        //do something
-        console.log("connect enelogic");
+        console.log("Connect Enelogic");
         setLoading(true);
 
         const state = (Math.floor(Math.random() * 9000000000) + 1000000000).toString();

@@ -16,12 +16,11 @@ const CircleMenu = () => {
 
   const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
 
-  const MenuItem = ({ icon, iconText }: { icon: string; iconText: any }) => {
-    const translatedText: string = t(iconText) as string;
+  const MenuItem = ({ icon, iconText }: { icon: string; iconText: string }) => {
 
     return (
       <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
-        <Text style={{ color: "black", width: "45%", textAlign: "right", marginRight: "5%" }}>{translatedText}</Text>
+        <Text style={{ color: "black", width: "45%", textAlign: "right", marginRight: "5%" }}>{iconText}</Text>
         <View style={styles.menuItem}>
           <Icon name={icon} size={30} color="white" />
         </View>
@@ -34,10 +33,10 @@ const CircleMenu = () => {
       {showSubMenu && (
         <View style={styles.subMenu}>
           <TouchableOpacity onPress={() => navigation.navigate("QrScannerScreen")}>
-            <MenuItem icon="qr-code-outline" iconText="screens.device_overview.buttons.install_device" />
+            <MenuItem icon="qr-code-outline" iconText={t('screens.device_overview.buttons.install_device')} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate("AddOnlineDataSourceScreen")}>
-            <MenuItem icon="link-outline" iconText="screens.device_overview.buttons.add_enelogic" />
+            <MenuItem icon="link-outline" iconText={t('screens.device_overview.buttons.add_enelogic')} />
           </TouchableOpacity>
         </View>
       )}

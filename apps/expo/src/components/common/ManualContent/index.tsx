@@ -12,7 +12,7 @@ type ManualContentProps = {
 };
 
 export default function ManualContent({ manualUrl, languageHeader }: ManualContentProps) {
-  // const [onLayout, width] = useLayoutWidth();
+  const [onLayout, width] = useLayoutWidth();
 
   const headers = new Headers();
   if (languageHeader) {
@@ -44,6 +44,7 @@ export default function ManualContent({ manualUrl, languageHeader }: ManualConte
             remoteErrorView={() => <RemoteErrorView />}
             remoteLoadingView={() => <RemoteLoadingView />}
             source={{ uri: manualUrl, headers: headersObject }}
+            contentWidth={width}
           />
         </>
       )}
