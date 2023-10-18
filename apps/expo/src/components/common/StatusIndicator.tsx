@@ -48,6 +48,7 @@ const useStyles = makeStyles({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: "50%",
   },
   defaultText: {
     marginTop: 16,

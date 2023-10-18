@@ -6,7 +6,7 @@ import { TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import DeviceList from "./_deviceList";
-import CircleMenu from './circleMenu';
+import CircleMenu from "./circleMenu";
 import BuildingBottomSheet from "../../../components/common/bottomSheets/BuildingBottomSheet";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
@@ -29,15 +29,9 @@ export default function DeviceOverviewScreen() {
 
   const hasMultipleBuildings = buildings.length > 1;
 
-
-  //Enelogic stuff
-  const [loading, setLoading] = useState(false);
-  //https://enelogic.com/oauth/v2/auth?response_type=code&client_id=10321_iee4evob2rcw4scc4wcwos448ogcwkgocoswwwkkow4wcckk4&redirect_uri=nfh%3A%2F%2Fcallback%3Fprovider%3D1&scope=account&state=TODO
-
-
   return (
     <Screen>
-      <Box style={{ flex: 1 }} padded>
+      <Box style={{ flex: 1, justifyContent: "center", alignItems: "center" }} padded>
         {isLoading || !buildingId ? (
           <StatusIndicator isLoading isError={!buildingId} />
         ) : (
@@ -61,7 +55,7 @@ export default function DeviceOverviewScreen() {
                   <Icon name="chevron-down" size={16} />
                 </TouchableOpacity>
               ) : null}
-              <View style={{ flex: 1, justifyContent: 'flex-start' }}>
+              <View style={{ flex: 1, justifyContent: "flex-start" }}>
                 <DeviceList buildingId={buildingId} />
               </View>
               {hasMultipleBuildings ? (
@@ -71,15 +65,13 @@ export default function DeviceOverviewScreen() {
                   onBuildingSelect={setBuildingId}
                 />
               ) : null}
-              <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                <CircleMenu />
-              </View>
             </View>
           </>
-
         )}
-
       </Box>
-    </Screen >
+      <View style={{ position: "absolute", bottom: 10, right: 10 }}>
+        <CircleMenu />
+      </View>
+    </Screen>
   );
 }
