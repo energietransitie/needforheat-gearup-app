@@ -3,6 +3,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useTheme } from "@rneui/themed";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, Text } from "react-native";
+import RNExitApp from "react-native-exit-app";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import Box from "@/components/elements/Box";
@@ -10,7 +11,6 @@ import useDeviceConnect from "@/hooks/device/useDeviceConnect";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useDisableBackButton } from "@/hooks/useDisableBackButton";
 import { HomeStackParamList } from "@/types/navigation";
-import RNExitApp from 'react-native-exit-app';
 
 type ConnectScreenProps = NativeStackScreenProps<HomeStackParamList, "ConnectScreen">;
 
@@ -55,7 +55,6 @@ export default function ConnectScreen({ navigation, route }: ConnectScreenProps)
     }, 500);
   };
 
-
   const ConnectIcon = () => {
     return isConnected ? (
       <Ionicons name="checkmark" size={32} color={theme.colors.success} />
@@ -79,7 +78,7 @@ export default function ConnectScreen({ navigation, route }: ConnectScreenProps)
           onDeviceConnected();
           clearTimeout(connectionTimeout);
         },
-        (error) => {
+        error => {
           onError(error);
           clearTimeout(connectionTimeout);
         }
@@ -88,14 +87,17 @@ export default function ConnectScreen({ navigation, route }: ConnectScreenProps)
       const connectionTimeout = setTimeout(() => {
         setConnectionAttempted(true);
         if (!isConnected) {
-          Alert.alert(`${t("screens.home_stack.connect.title_timeout")}`, `${t("screens.home_stack.connect.alert.timeout")}`, [
-            {
-              text: t("screens.home_stack.connect.alert.Exit"),
-              onPress: () => {
-                exitTheApp();
+          Alert.alert(
+            `${t("screens.home_stack.connect.title_timeout")}`,
+            `${t("screens.home_stack.connect.alert.timeout")}`,
+            [
+              {
+                text: t("screens.home_stack.connect.alert.Exit"),
+                onPress: () => {
+                  exitTheApp();
+                },
               },
-            },
-          ]
+            ]
           );
         }
       }, 20000);
@@ -104,6 +106,7 @@ export default function ConnectScreen({ navigation, route }: ConnectScreenProps)
         clearTimeout(connectionTimeout);
       };
     }
+    return undefined;
   }, [focused]);
 
   return (

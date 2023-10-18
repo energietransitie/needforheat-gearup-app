@@ -1,6 +1,5 @@
-import { ScrollView } from "react-native";
+import { ScrollView, Text } from "react-native";
 import RenderHtml from "react-native-render-html";
-import { Text } from "react-native";
 
 import RemoteErrorView from "./_remoteErrorView";
 import RemoteLoadingView from "./_remoteLoadingView";
