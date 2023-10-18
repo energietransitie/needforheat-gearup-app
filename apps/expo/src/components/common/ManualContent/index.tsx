@@ -31,8 +31,9 @@ export default function ManualContent({ manualUrl, languageHeader }: ManualConte
       contentContainerStyle={{
         alignItems: "center",
         minHeight: "90%",
-        marginLeft: "4%",
+        marginLeft: "3%",
         paddingRight: "4%",
+        paddingLeft: "7%",
       }}
       persistentScrollbar
     >
