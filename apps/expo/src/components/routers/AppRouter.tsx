@@ -9,7 +9,7 @@ import SettingsRouter from "./SettingsRouter";
 
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
-import DeviceOverviewScreen from "@/screens/DeviceOverviewScreen";
+import DeviceOverviewScreen from "@/screens/home/DeviceOverviewScreen";
 import MeasurementsScreen from "@/screens/MeasurementsScreen";
 import { RootStackParamList } from "@/types/navigation";
 
@@ -22,19 +22,19 @@ export default function AppRouter() {
 
   return (
     <Tab.Navigator screenOptions={{ headerShown: false, tabBarActiveTintColor: theme.colors.primary }}>
+      <Tab.Screen
+        name="Home"
+        component={HomeRouter}
+        options={{
+          title: t("screens.home_stack.title"),
+          tabBarIcon: ({ color, size }) => {
+            return <Ionicons name="list-outline" size={size} color={color} />;
+          },
+        }}
+      />
       {isAuthed ? (
         <>
-          <Tab.Screen
-            name="Home"
-            component={HomeRouter}
-            options={{
-              title: t("screens.home_stack.title"),
-              tabBarIcon: ({ color, size }) => {
-                return <Ionicons name="home-outline" size={size} color={color} />;
-              },
-            }}
-          />
-          <Tab.Screen
+          {/* <Tab.Screen
             name="DeviceOverview"
             component={DeviceOverviewScreen}
             options={{
@@ -44,7 +44,7 @@ export default function AppRouter() {
                 return <Ionicons name="list-outline" size={size} color={color} />;
               },
             }}
-          />
+          /> */}
           <Tab.Screen
             name="Measurements"
             component={MeasurementsScreen}

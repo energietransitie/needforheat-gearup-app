@@ -16,9 +16,9 @@
       }
     },
     "device_overview": {
-      "title": "Apparaten",
+      "title": "Apparaten en Online Databronnen",
       "buttons": {
-        "data_sources": "Online data bronnen",
+        "add_enelogic": "Enelogic Toevoegen",
         "install_device": "Apparaat Toevoegen"
       },
       "device_list": {
@@ -37,7 +37,7 @@
       }
     },
     "home_stack": {
-      "title": "Home",
+      "title": "Bronnen",
       "activate_device": {
         "title": "Apparaat activeren",
         "status_indicator": {
@@ -66,13 +66,16 @@
       },
       "connect": {
         "title": "Verbinden met apparaat",
+        "title_timeout": "Probleem met verbinden",
         "status": {
           "connected": "Verbonden met {{name}}",
           "connecting": "Verbinden met {{name}}..."
         },
         "alert": {
           "unknown_error": "Er is een fout opgetreden tijdens het verbinden met het apparaat.",
-          "retry": "Opnieuw proberen"
+          "retry": "Opnieuw proberen",
+          "timeout": "Het apparaat kan niet verbinden. Herstart de app!",
+          "Exit": "Sluiten"
         }
       },
       "home": {
@@ -93,6 +96,7 @@
       },
       "provision": {
         "title": "Apparaat verbinden",
+        "enelogic": "Enelogic verbinden",
         "timeline": {
           "steps": {
             "connecting": {

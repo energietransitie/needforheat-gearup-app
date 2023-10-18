@@ -2,7 +2,7 @@ import { createNativeStackNavigator, NativeStackNavigationOptions } from "@react
 import useTranslation from "@/hooks/translation/useTranslation";
 import ActivateDeviceScreen from "@/screens/home/ActivateDeviceScreen";
 import AddDeviceScreen from "@/screens/home/AddDeviceScreen";
-import DeviceOverviewScreen from "@/screens/DeviceOverviewScreen";
+import DeviceOverviewScreen from "@/screens/home/DeviceOverviewScreen";
 import AlreadyInvitedScreen from "@/screens/home/AlreadyInvitedScreen";
 import ConnectScreen from "@/screens/home/ConnectScreen";
 import HomeScreen from "@/screens/home/HomeScreen";
@@ -14,6 +14,7 @@ import { HomeStackParamList } from "@/types/navigation";
 import { useNavigation } from "@react-navigation/native";
 import { HeaderBackButton } from '@react-navigation/elements'
 import { Platform } from "react-native";
+import AddOnlineDataSourceScreen from "@/screens/home/AddOnlineDataSourceScreen";
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -30,7 +31,7 @@ export default function HomeRouter() {
     <HomeStack.Navigator initialRouteName="HomeScreen">
       <HomeStack.Screen
         name="HomeScreen"
-        options={{ title: t("screens.home_stack.home.title") }}
+        options={{ title: t("screens.device_overview.title") }}
         component={HomeScreen}
       />
       <HomeStack.Screen
@@ -95,6 +96,14 @@ export default function HomeRouter() {
           ...disableNavigation,
         }}
         component={ProvisionScreen}
+      />
+      <HomeStack.Screen
+        name="AddOnlineDataSourceScreen"
+        options={{
+          title: t("screens.home_stack.provision.enelogic"),
+          ...disableNavigation,
+        }}
+        component={AddOnlineDataSourceScreen}
       />
     </HomeStack.Navigator>
   );
