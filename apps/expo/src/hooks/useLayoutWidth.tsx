@@ -8,7 +8,6 @@ export default function useLayoutWidth(defaultWidth = 0): UseLayoutReturnType {
 
   function onLayout(event: LayoutChangeEvent): void {
     if (event.nativeEvent.layout.width === width) return;
-
     setWidth(event.nativeEvent.layout.width);
   }
 

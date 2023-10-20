@@ -28,7 +28,6 @@ buildscript {
         classpath('com.facebook.react:react-native-gradle-plugin')
         classpath('de.undercouch:gradle-download-task:5.0.1')
         classpath('com.google.gms:google-services:4.3.15')
-
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -73,3 +72,4 @@ allprojects {
 def expoCameraMavenPath = new File(["node", "--print", "require.resolve('expo-camera/package.json')"].execute(null, rootDir).text.trim(), "../android/maven")
 allprojects { repositories { maven { url(expoCameraMavenPath) } } }
 // @generated end expo-camera-import
+

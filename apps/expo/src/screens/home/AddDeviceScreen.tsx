@@ -15,7 +15,7 @@ export default function AddDeviceScreen({ navigation, route }: AddDeviceScreenPr
   const { theme } = useTheme();
 
   const { data: device, isFetching, isError } = useDevice(qrData.name);
-  const { t } = useTranslation();
+  const { t, resolvedLanguage } = useTranslation();
 
   const onAddDevice = () => {
     navigation.navigate("SearchDeviceScreen", {
@@ -39,9 +39,10 @@ export default function AddDeviceScreen({ navigation, route }: AddDeviceScreenPr
     );
   }
 
+
   return (
     <Box padded style={{ flex: 1 }}>
-      <ManualContent manualUrl={device?.device_type?.installation_manual_url} />
+      <ManualContent manualUrl={device?.device_type?.installation_manual_url} languageHeader={resolvedLanguage} />
       <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
         <Button
           containerStyle={{ flex: 1 }}

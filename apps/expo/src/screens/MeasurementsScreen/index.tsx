@@ -4,7 +4,7 @@ import { Text, makeStyles } from "@rneui/themed";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ScrollView, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-
+import { MANUAL_URL } from "@env";
 import DeviceGraph from "./_deviceGraph";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
@@ -18,7 +18,7 @@ import { UserContext } from "@/providers/UserProvider";
 
 export default function MeasurementsScreen() {
   const styles = useStyles();
-  const { t } = useTranslation();
+  const { t, resolvedLanguage } = useTranslation();
   const { user, isLoading } = useContext(UserContext);
 
   const buildingBottomSheetRef = useRef<BottomSheetModal>(null);
@@ -29,13 +29,16 @@ export default function MeasurementsScreen() {
 
   const { data: devices } = useDevices(buildingId ?? 0);
   const [deviceName, setDeviceName] = useState<string | undefined>();
+  const [data, setData] = useState(null); // Initialize data state variable
 
   const hasMultipleBuildings = buildings.length > 1;
   const hasMultipleDevices = (devices?.length ?? 0) > 1;
 
   const deviceDropdownDisabled = !buildingId || !hasMultipleDevices;
+  const ComleteUrl = MANUAL_URL + devices?.[0]?.device_type.name;
 
   useEffect(() => {
+    fetchData();
     // Set device name to first device in list when devices are loaded
     if (devices?.length) {
       setDeviceName(devices[0].name);
@@ -43,6 +46,19 @@ export default function MeasurementsScreen() {
       setDeviceName(undefined);
     }
   }, [devices]);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`${ComleteUrl}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const fetchedData = await response.json();
+      setData(fetchedData); 
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   if (isLoading || !buildingId) {
     return (
@@ -68,14 +84,16 @@ export default function MeasurementsScreen() {
                 ? t("screens.device_overview.building_list.building_info.name", { id: buildingId })
                 : t("screens.device_overview.building_list.placeholder")}
             </Text>
-            <Icon name="chevron-down" size={16} />
+            {hasMultipleBuildings &&
+              <Icon name="chevron-down" size={16} />
+            }
           </TouchableOpacity>
           <TouchableOpacity
             disabled={deviceDropdownDisabled}
             style={[styles.dropdown, deviceDropdownDisabled ? { opacity: 0.5 } : null]}
             onPress={() => deviceBottomSheetRef.current?.present()}
           >
-            <Text>{deviceName ?? t("screens.measurements.graph.no_devices")}</Text>
+            <Text>{resolvedLanguage === "nl-NL" ? data?.["nl-NL"] : data?.["en-US"] ?? t("screens.measurements.graph.no_devices")}</Text>
             <Icon name="chevron-down" size={16} />
           </TouchableOpacity>
 

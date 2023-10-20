@@ -16,7 +16,11 @@
       }
     },
     "device_overview": {
-      "title": "Devices",
+      "title": "Devices and Online Data Sources",
+      "buttons": {
+        "add_enelogic": "Connect Enelogic",
+        "install_device": "Add new device"
+      },
       "device_list": {
         "device_info": {
           "last_seen": "Last seen at {{date}}",
@@ -33,7 +37,7 @@
       }
     },
     "home_stack": {
-      "title": "Home",
+      "title": "Sources",
       "activate_device": {
         "title": "Activate device",
         "status_indicator": {
@@ -62,13 +66,16 @@
       },
       "connect": {
         "title": "Connect to device",
+        "title_timeout": "Connection Timeout",
         "status": {
           "connected": "Connected to {{name}}",
           "connecting": "Connecting to {{name}}..."
         },
         "alert": {
           "unknown_error": "An error occurred while connecting to the measurement device.",
-          "retry": "Try again"
+          "retry": "Try again",
+          "timeout": "The device could not be connected. Please restart the app!",
+          "Exit": "Exit"
         }
       },
       "home": {
@@ -89,6 +96,7 @@
       },
       "provision": {
         "title": "Connecting a device",
+        "enelogic": "Connect Enelogic",
         "timeline": {
           "steps": {
             "connecting": {
@@ -227,7 +235,6 @@
       "settings_screen": {
         "title": "Settings",
         "app_language": "Select app language",
-        "external_providers": "Connect online data sources",
         "wifi_passwords": {
           "title": "Delete stored Wi-Fi passwords",
           "message": "Are you sure? After removing the stored Wi-Fi passwords from this app, you will have to enter the password again when you want to add a new measurement device.",

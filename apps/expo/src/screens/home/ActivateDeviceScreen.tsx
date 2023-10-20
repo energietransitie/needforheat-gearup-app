@@ -73,7 +73,7 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
   const isLoading = isFetching || isMutating;
 
   // Disable going back while the device is being activated
-  useDisableBackButton(isLoading);
+  useDisableBackButton(true);
 
   // Refetch device information when the screen is focused again
   useEffect(() => {

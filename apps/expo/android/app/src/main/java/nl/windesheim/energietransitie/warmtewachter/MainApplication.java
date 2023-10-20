@@ -19,6 +19,7 @@ import expo.modules.ReactNativeHostWrapper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import com.github.wumke.RNExitApp.RNExitAppPackage;
 
 public class MainApplication extends Application implements ReactApplication {
   private final ReactNativeHost mReactNativeHost = new ReactNativeHostWrapper(
@@ -40,7 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
         }
 
         @Override
-        protected String getJSMainModuleName() {
+        protected String getJSMainModuleName() { 
           return "index";
         }
       });
@@ -56,6 +57,7 @@ public class MainApplication extends Application implements ReactApplication {
       return mReactNativeHost;
     }
   }
+
 
   @Override
   public void onCreate() {

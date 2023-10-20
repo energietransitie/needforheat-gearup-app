@@ -1,8 +1,9 @@
 import { useIsFocused } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useTheme } from "@rneui/themed";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, Text } from "react-native";
+import RNExitApp from "react-native-exit-app";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import Box from "@/components/elements/Box";
@@ -19,9 +20,11 @@ export default function ConnectScreen({ navigation, route }: ConnectScreenProps)
   const { t } = useTranslation();
   const { theme } = useTheme();
   const { isConnected, connectToDevice } = useDeviceConnect({ device, proofOfPossession });
+  const [connectionAttempted, setConnectionAttempted] = useState(false);
+  const exitTheApp = () => RNExitApp.exitApp();
 
   // Disable going back while connecting to prevent unexpected behaviour
-  useDisableBackButton(true);
+  useDisableBackButton(false);
 
   const onSearch = () => {
     navigation.navigate("SearchDeviceScreen", {
@@ -70,8 +73,40 @@ export default function ConnectScreen({ navigation, route }: ConnectScreenProps)
 
   useEffect(() => {
     if (focused) {
-      connectToDevice(onDeviceConnected, onError);
+      connectToDevice(
+        () => {
+          onDeviceConnected();
+          clearTimeout(connectionTimeout);
+        },
+        error => {
+          onError(error);
+          clearTimeout(connectionTimeout);
+        }
+      );
+
+      const connectionTimeout = setTimeout(() => {
+        setConnectionAttempted(true);
+        if (!isConnected) {
+          Alert.alert(
+            `${t("screens.home_stack.connect.title_timeout")}`,
+            `${t("screens.home_stack.connect.alert.timeout")}`,
+            [
+              {
+                text: t("screens.home_stack.connect.alert.Exit"),
+                onPress: () => {
+                  exitTheApp();
+                },
+              },
+            ]
+          );
+        }
+      }, 20000);
+
+      return () => {
+        clearTimeout(connectionTimeout);
+      };
     }
+    return undefined;
   }, [focused]);
 
   return (

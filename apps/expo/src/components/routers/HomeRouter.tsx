@@ -1,8 +1,8 @@
 import { createNativeStackNavigator, NativeStackNavigationOptions } from "@react-navigation/native-stack";
-
 import useTranslation from "@/hooks/translation/useTranslation";
 import ActivateDeviceScreen from "@/screens/home/ActivateDeviceScreen";
 import AddDeviceScreen from "@/screens/home/AddDeviceScreen";
+import DeviceOverviewScreen from "@/screens/home/DeviceOverviewScreen";
 import AlreadyInvitedScreen from "@/screens/home/AlreadyInvitedScreen";
 import ConnectScreen from "@/screens/home/ConnectScreen";
 import HomeScreen from "@/screens/home/HomeScreen";
@@ -11,6 +11,10 @@ import QrScannerScreen from "@/screens/home/QrScannerScreen";
 import SearchDeviceScreen from "@/screens/home/SearchDeviceScreen";
 import WifiOverviewScreen from "@/screens/home/WifiOverviewScreen";
 import { HomeStackParamList } from "@/types/navigation";
+import { useNavigation } from "@react-navigation/native";
+import { HeaderBackButton } from '@react-navigation/elements'
+import { Platform } from "react-native";
+import AddOnlineDataSourceScreen from "@/screens/home/AddOnlineDataSourceScreen";
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -21,12 +25,13 @@ const disableNavigation: Partial<NativeStackNavigationOptions> = {
 
 export default function HomeRouter() {
   const { t } = useTranslation();
+  const navigation = useNavigation();
 
   return (
     <HomeStack.Navigator initialRouteName="HomeScreen">
       <HomeStack.Screen
         name="HomeScreen"
-        options={{ title: t("screens.home_stack.home.title") }}
+        options={{ title: t("screens.device_overview.title") }}
         component={HomeScreen}
       />
       <HomeStack.Screen
@@ -41,7 +46,7 @@ export default function HomeRouter() {
       />
       <HomeStack.Screen
         name="AddDeviceScreen"
-        options={{ title: t("screens.home_stack.add_device.title") }}
+        options={{ title: t("screens.home_stack.add_device.title"), ...disableNavigation }}
         component={AddDeviceScreen}
       />
       <HomeStack.Screen
@@ -61,7 +66,6 @@ export default function HomeRouter() {
         name="ConnectScreen"
         options={{
           title: t("screens.home_stack.connect.title"),
-          ...disableNavigation,
         }}
         component={ConnectScreen}
       />
@@ -70,6 +74,18 @@ export default function HomeRouter() {
         options={{
           title: t("screens.home_stack.wifi_overview.title"),
           ...disableNavigation,
+          headerLeft: Platform.OS === 'ios' ? (
+            () => (
+              <HeaderBackButton
+                labelVisible={true}
+                onPress={() => {
+                  navigation.goBack();
+                  navigation.goBack();
+                  navigation.goBack();
+                }}
+              />
+            )
+          ) : undefined,
         }}
         component={WifiOverviewScreen}
       />
@@ -80,6 +96,14 @@ export default function HomeRouter() {
           ...disableNavigation,
         }}
         component={ProvisionScreen}
+      />
+      <HomeStack.Screen
+        name="AddOnlineDataSourceScreen"
+        options={{
+          title: t("screens.home_stack.provision.enelogic"),
+          ...disableNavigation,
+        }}
+        component={AddOnlineDataSourceScreen}
       />
     </HomeStack.Navigator>
   );

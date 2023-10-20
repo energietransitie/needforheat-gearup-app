@@ -85,15 +85,6 @@ export default function SettingsScreen() {
         bottomSheetRef.current?.present();
       },
     },
-    ...(isAuthed
-      ? [
-          {
-            title: t("screens.settings_stack.settings_screen.external_providers"),
-            value: "",
-            onPress: () => settingsNavigation.navigate("ExternalProviderScreen"),
-          },
-        ]
-      : []),
     {
       title: t("screens.settings_stack.settings_screen.wifi_passwords.title"),
       value: "",

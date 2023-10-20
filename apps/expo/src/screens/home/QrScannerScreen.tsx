@@ -4,6 +4,7 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { BarCodeScanningResult, Camera } from "expo-camera";
 import { useEffect, useState } from "react";
 import { Alert, Text } from "react-native";
+import { makeStyles } from "@rneui/themed";
 
 import Box from "@/components/elements/Box";
 import { InvalidQrCodeException } from "@/exceptions/InvalidQrCodeException";
@@ -21,6 +22,8 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const { t } = useTranslation();
   const hasPermission = permission?.granted;
+  const styles = useStyles();
+
 
   const onError = (error?: string) => {
     Alert.alert("Error", error ?? t("screens.home_stack.qr_scanner.errors.unknown_error"), [
@@ -69,6 +72,8 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
     <Box center>
       {hasPermission ? (
         <>
+          <Text style={styles.title}>{t("screens.home_stack.home.authenticated.title")}</Text>
+          <Text style={styles.description}>{t("screens.home_stack.home.authenticated.description")}</Text>
           {focused && (
             <Camera
               onBarCodeScanned={scanned ? undefined : onBarCodeScanned}
@@ -76,7 +81,7 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
                 barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
               }}
               ratio="16:9"
-              style={{ flex: 1, height: "100%", width: "100%" }}
+              style={{ flex: 1, width: "100%", height: "100%", }}
             />
           )}
         </>
@@ -86,3 +91,18 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
     </Box>
   );
 }
+
+
+const useStyles = makeStyles(theme => ({
+  title: {
+    marginTop: theme.spacing.xl,
+    fontFamily: "RobotoBold",
+    fontSize: 24,
+    paddingHorizontal: theme.spacing.lg,
+  },
+  description: {
+    marginTop: theme.spacing.md,
+    marginBottom: theme.spacing.xl,
+    paddingHorizontal: theme.spacing.lg,
+  },
+}));
