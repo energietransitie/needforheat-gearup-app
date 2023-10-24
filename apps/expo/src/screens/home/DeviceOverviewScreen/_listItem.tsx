@@ -59,10 +59,10 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     const inputDate = date || new Date();
     const locale = locales[resolvedLanguage] || enUS;
 
-    let formatString = 'cccccc, LLL, d, yyy HH:mm';
+    let formatString = 'cccccc, LLL d yyy HH:mm';
 
     if (resolvedLanguage === 'nl-NL') {
-      formatString = 'cccccc d LLLL yyy HH:mm';
+      formatString = 'cccccc d LLL yyy HH:mm';
     }
 
     return format(inputDate, formatString, { locale });
