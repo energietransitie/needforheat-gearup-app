@@ -7,11 +7,9 @@ import Box from "@/components/elements/Box";
 import useDevice from "@/hooks/device/useDevice";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { HomeStackParamList } from "@/types/navigation";
-import { MANUAL_URL } from "@env";
 import { useState } from "react";
-
 import ExternalProviderListItem from "../settings/ExternalProviderScreen/_externalProviderListItem";
-import { setAuthState } from "@/constants";
+import { setAuthState, MANUAL_URL } from "@/constants";
 import { useOpenExternalLink } from "@/hooks/useOpenExternalLink";
 
 type AddOnlineDataSourceScreen = NativeStackScreenProps<HomeStackParamList, "AddOnlineDataSourceScreen">;
