@@ -92,7 +92,7 @@ export default function ProvisionScreen({ navigation, route }: ProvisionScreenPr
     const inputDate = date || new Date();
     const locale = locales[resolvedLanguage] || enUS;
 
-    let formatString = 'cccccc, LLL d yyy HH:mm';
+    let formatString = 'cccccc, LLL d, yyy HH:mm';
 
     if (resolvedLanguage === 'nl-NL') {
       formatString = 'cccccc d LLL yyy HH:mm';
