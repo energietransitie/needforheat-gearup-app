@@ -3,7 +3,7 @@ import { Button, ListItem, makeStyles, useTheme } from "@rneui/themed";
 import { TouchableHighlight, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
-import { MANUAL_URL } from "@env";
+import { MANUAL_URL } from "@/constants";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useOpenExternalLink } from "@/hooks/useOpenExternalLink";
 import { BuildingDeviceResponse } from "@/types/api";
@@ -41,7 +41,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
         throw new Error('Network response was not ok');
       }
       const fetchedData = await response.json();
-      setData(fetchedData); 
+      setData(fetchedData);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -76,8 +76,8 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
         <ListItem.Subtitle>
           {item.latest_upload
             ? t("screens.device_overview.device_list.device_info.last_seen", {
-                date: item.latest_upload?.toLocaleString(),
-              })
+              date: item.latest_upload?.toLocaleString(),
+            })
             : t("screens.device_overview.device_list.device_info.no_data")}
         </ListItem.Subtitle>
       </ListItem.Content>

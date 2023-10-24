@@ -4,7 +4,6 @@ import { Text, makeStyles } from "@rneui/themed";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ScrollView, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { MANUAL_URL } from "@env";
 import DeviceGraph from "./_deviceGraph";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
@@ -15,6 +14,7 @@ import Screen from "@/components/elements/Screen";
 import useDevices from "@/hooks/device/useDevices";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
+import { MANUAL_URL } from "@/constants";
 
 export default function MeasurementsScreen() {
   const styles = useStyles();
