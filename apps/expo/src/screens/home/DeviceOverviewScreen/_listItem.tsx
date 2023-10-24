@@ -2,6 +2,8 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Button, ListItem, makeStyles, useTheme } from "@rneui/themed";
 import { TouchableHighlight, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { enUS, nl } from 'date-fns/locale';
+import { format } from 'date-fns';
 
 import { MANUAL_URL } from "@/constants";
 import useTranslation from "@/hooks/translation/useTranslation";
@@ -47,6 +49,25 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     }
   };
 
+
+  const locales: Record<string, Locale> = {
+    'en-US': enUS,
+    'nl-NL': nl,
+  };
+
+  function formatDateAndTime(date?: Date) {
+    const inputDate = date || new Date();
+    const locale = locales[resolvedLanguage] || enUS;
+
+    let formatString = 'cccccc, LLL, d, yyy HH:mm';
+
+    if (resolvedLanguage === 'nl-NL') {
+      formatString = 'cccccc d LLLL yyy HH:mm';
+    }
+
+    return format(inputDate, formatString, { locale });
+  }
+
   const openHelpUrl = () => openUrl(item.device_type.info_url);
 
   return (
@@ -76,7 +97,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
         <ListItem.Subtitle>
           {item.latest_upload
             ? t("screens.device_overview.device_list.device_info.last_seen", {
-              date: item.latest_upload?.toLocaleString(),
+              date: formatDateAndTime(item.latest_upload),
             })
             : t("screens.device_overview.device_list.device_info.no_data")}
         </ListItem.Subtitle>
