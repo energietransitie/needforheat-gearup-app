@@ -90,12 +90,12 @@ export default function SettingsScreen() {
       value: "",
       onPress: onDeleteWifiPasswords,
     },
-    {
-      title: t("screens.settings_stack.settings_screen.session_token.title"),
-      value: "",
-      onPress: onResetSessionToken,
-      isDangerous: true,
-    },
+    // {
+    //   title: t("screens.settings_stack.settings_screen.session_token.title"),
+    //   value: "",
+    //   onPress: onResetSessionToken,
+    //   isDangerous: true,
+    // },
   ];
 
   return (

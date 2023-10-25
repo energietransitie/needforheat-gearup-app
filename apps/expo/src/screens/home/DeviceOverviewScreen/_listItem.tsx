@@ -32,6 +32,9 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     close();
   };
 
+  // false so it won't open the pop-up but it will open the URL
+  const openHelpUrl = () => openUrl(item.device_type.info_url, false);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -67,8 +70,6 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
 
     return format(inputDate, formatString, { locale });
   }
-
-  const openHelpUrl = () => openUrl(item.device_type.info_url);
 
   return (
     <ListItem.Swipeable
