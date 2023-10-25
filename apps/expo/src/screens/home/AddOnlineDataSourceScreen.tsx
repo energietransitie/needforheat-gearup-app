@@ -94,18 +94,20 @@ export default function AddOnlineDataSourceScreen({ navigation, route }: AddOnli
         <Box padded style={{ flex: 1 }}>
             <ManualContent manualUrl={MANUAL_URL + "enelogic/installation/generic/"} languageHeader={resolvedLanguage} />
             <Box style={{ flexDirection: "column", marginTop: 16, width: "100%", justifyContent: 'center' }}>
-                <Button
-                    title={t("common.cancel")}
-                    color="grey2"
-                    onPress={onCancel}
-                    icon={{
-                        name: "close-outline",
-                        type: "ionicon",
-                        color: theme.colors.white,
-                    }}
-                    buttonStyle={{ width: "100%" }}
-                    containerStyle={{ width: "100%" }}
-                />
+                {data?.some((item) => !item.connected) && (
+                    <Button
+                        title={t("common.cancel")}
+                        color="grey2"
+                        onPress={onCancel}
+                        icon={{
+                            name: "close-outline",
+                            type: "ionicon",
+                            color: theme.colors.white,
+                        }}
+                        buttonStyle={{ width: "100%" }}
+                        containerStyle={{ width: "100%" }}
+                    />
+                )}
                 {isFetching ? (
                     <Box padded center>
                         <StatusIndicator isLoading />
@@ -118,6 +120,4 @@ export default function AddOnlineDataSourceScreen({ navigation, route }: AddOnli
             </Box>
         </Box>
     );
-
-
 }
