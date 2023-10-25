@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, Text, useTheme } from "@rneui/themed";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { enUS, nl } from 'date-fns/locale';
 import { format } from 'date-fns';
 import DelayedButton from "@/components/common/DelayedButton";
@@ -17,7 +17,7 @@ type ProvisionScreenProps = NativeStackScreenProps<HomeStackParamList, "Provisio
 
 export default function ProvisionScreen({ navigation, route }: ProvisionScreenProps) {
   const { theme } = useTheme();
-  const { device, network, password, proofOfPossession } = route.params;
+  const { device, network, password, proofOfPossession, device_TypeName } = route.params;
   const { t, resolvedLanguage } = useTranslation();
   const {
     provisionDevice,
@@ -43,14 +43,14 @@ export default function ProvisionScreen({ navigation, route }: ProvisionScreenPr
     {
       title: t("screens.home_stack.provision.timeline.steps.connecting.title"),
       description: t("screens.home_stack.provision.timeline.steps.connecting.description", {
-        device_name: device.deviceName,
+        device_name: device_TypeName,
       }),
       finished: true,
     },
     {
       title: t("screens.home_stack.provision.timeline.steps.activating.title"),
       description: t("screens.home_stack.provision.timeline.steps.activating.description", {
-        device_name: device.deviceName,
+        device_name: device_TypeName,
       }),
       finished: true,
     },
@@ -66,7 +66,7 @@ export default function ProvisionScreen({ navigation, route }: ProvisionScreenPr
     {
       title: t("screens.home_stack.provision.timeline.steps.receiving.title"),
       description: t("screens.home_stack.provision.timeline.steps.receiving.description", {
-        device_name: device.deviceName,
+        device_name: device_TypeName,
       }),
       finished: isReceivingMeasurements,
       loading: isReceivingMeasurementsLoading,
@@ -80,6 +80,7 @@ export default function ProvisionScreen({ navigation, route }: ProvisionScreenPr
     navigation.navigate("SearchDeviceScreen", {
       deviceName: device.deviceName,
       proofOfPossession,
+      device_TypeName,
     });
   };
 
@@ -87,6 +88,7 @@ export default function ProvisionScreen({ navigation, route }: ProvisionScreenPr
     'en-US': enUS,
     'nl-NL': nl,
   };
+
 
   function formatDateAndTime(date?: Date) {
     const inputDate = date || new Date();

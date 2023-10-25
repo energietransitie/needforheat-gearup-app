@@ -1,7 +1,7 @@
 import { useIsFocused } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useTheme } from "@rneui/themed";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, Alert, Text } from "react-native";
 import RNExitApp from "react-native-exit-app";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -11,13 +11,15 @@ import useDeviceConnect from "@/hooks/device/useDeviceConnect";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useDisableBackButton } from "@/hooks/useDisableBackButton";
 import { HomeStackParamList } from "@/types/navigation";
+import useDevice from "@/hooks/device/useDevice";
+import { MANUAL_URL } from "@/constants";
 
 type ConnectScreenProps = NativeStackScreenProps<HomeStackParamList, "ConnectScreen">;
 
 export default function ConnectScreen({ navigation, route }: ConnectScreenProps) {
-  const { device, proofOfPossession } = route.params;
+  const { device, proofOfPossession, device_TypeName } = route.params;
   const focused = useIsFocused();
-  const { t } = useTranslation();
+  const { t, resolvedLanguage } = useTranslation();
   const { theme } = useTheme();
   const { isConnected, connectToDevice } = useDeviceConnect({ device, proofOfPossession });
   const [connectionAttempted, setConnectionAttempted] = useState(false);
@@ -30,6 +32,7 @@ export default function ConnectScreen({ navigation, route }: ConnectScreenProps)
     navigation.navigate("SearchDeviceScreen", {
       deviceName: device.deviceName,
       proofOfPossession,
+      device_TypeName,
     });
   };
 
@@ -51,7 +54,7 @@ export default function ConnectScreen({ navigation, route }: ConnectScreenProps)
 
   const onDeviceConnected = () => {
     setTimeout(() => {
-      navigation.navigate("WifiOverviewScreen", { device, proofOfPossession });
+      navigation.navigate("WifiOverviewScreen", { device, proofOfPossession, device_TypeName });
     }, 500);
   };
 
@@ -65,9 +68,9 @@ export default function ConnectScreen({ navigation, route }: ConnectScreenProps)
 
   const ConnectText = () => {
     return isConnected ? (
-      <Text>{t("screens.home_stack.connect.status.connected", { name: device.deviceName })}</Text>
+      <Text>{t("screens.home_stack.connect.status.connected", { name: device_TypeName })}</Text>
     ) : (
-      <Text>{t("screens.home_stack.connect.status.connecting", { name: device.deviceName })}</Text>
+      <Text>{t("screens.home_stack.connect.status.connecting", { name: device_TypeName })}</Text>
     );
   };
 

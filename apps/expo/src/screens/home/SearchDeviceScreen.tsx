@@ -16,6 +16,8 @@ import { useDisableBackButton } from "@/hooks/useDisableBackButton";
 import { BleDeviceType } from "@/types";
 import { HomeStackParamList } from "@/types/navigation";
 import { withTimeout } from "@/utils/withTimeout";
+import useDevice from "@/hooks/device/useDevice";
+import { MANUAL_URL } from "@/constants";
 
 const useStyles = makeStyles(theme => ({
   text: {
@@ -30,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 type SearchDeviceScreenProps = NativeStackScreenProps<HomeStackParamList, "SearchDeviceScreen">;
 
 export default function SearchDeviceScreen({ navigation, route }: SearchDeviceScreenProps) {
-  const { deviceName, proofOfPossession } = route.params;
+  const { deviceName, proofOfPossession, device_TypeName } = route.params;
   const styles = useStyles();
   const { requestBluetoothPermission, checkBluetoothPermission } = useBluetoothPermission();
   const {
@@ -41,7 +43,7 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
   const [devices, setDevices] = useState<BleDeviceType[]>([]);
   const [isScanning, setIsScanning] = useState(false);
   const [isError, setIsError] = useState(false);
-  const { t } = useTranslation();
+  const { t, resolvedLanguage } = useTranslation();
   const focused = useIsFocused();
   const { theme } = useTheme();
 
@@ -57,7 +59,7 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
         text: t("screens.home_stack.search_device.open_settings"),
         onPress: () => {
           // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
-          openSettings().catch(e => {});
+          openSettings().catch(e => { });
         },
       },
     ]);
@@ -69,15 +71,15 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
     Alert.alert("Error", err, [
       Platform.OS === "ios"
         ? {
-            text: "OK",
-          }
+          text: "OK",
+        }
         : {
-            text: "Open settings",
-            onPress: () => {
-              // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
-              BluetoothStateManager.openSettings().catch(e => {});
-            },
+          text: "Open settings",
+          onPress: () => {
+            // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
+            BluetoothStateManager.openSettings().catch(e => { });
           },
+        },
     ]);
   };
 
@@ -145,13 +147,14 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
     }
   };
 
-  const onConnect = (device: BleDeviceType, proofOfPossession: string) => {
+  const onConnect = (device: BleDeviceType, proofOfPossession: string, device_TypeName: any) => {
     // Before connecting to the device, navigate to the activation screen
     // to register the device on the server
     setTimeout(() => {
       navigation.navigate("ConnectScreen", {
         device,
         proofOfPossession,
+        device_TypeName,
       });
     }, 500);
   };
@@ -159,7 +162,7 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
   useEffect(() => {
     // If the qrData.name exists in the devices list, connect to it
     if (targetDevice) {
-      onConnect(targetDevice, proofOfPossession);
+      onConnect(targetDevice, proofOfPossession, device_TypeName);
     }
   }, [devices]);
 
@@ -207,7 +210,7 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
               <>
                 <ActivityIndicator size="large" />
                 <Text style={styles.text}>
-                  {t("screens.home_stack.search_device.scanning.message", { name: deviceName })}
+                  {t("screens.home_stack.search_device.scanning.message", { name: device_TypeName })}
                 </Text>
               </>
             )}
@@ -215,7 +218,7 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
               <>
                 <Ionicons name="help-circle-outline" size={32} color={theme.colors.error} />
                 <Text style={styles.text}>
-                  {t("screens.home_stack.search_device.scanning.not_found.title", { name: deviceName })}
+                  {t("screens.home_stack.search_device.scanning.not_found.title", { name: device_TypeName })}
                 </Text>
                 <Text style={[styles.text, styles.secondaryText]}>
                   {t("screens.home_stack.search_device.scanning.not_found.message")}
@@ -226,7 +229,7 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
               <>
                 <Ionicons name="checkmark" size={32} color={theme.colors.success} />
                 <Text style={styles.text}>
-                  {t("screens.home_stack.search_device.scanning.found", { name: deviceName })}
+                  {t("screens.home_stack.search_device.scanning.found", { name: device_TypeName })}
                 </Text>
               </>
             )}

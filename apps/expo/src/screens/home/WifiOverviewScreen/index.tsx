@@ -19,7 +19,7 @@ import { HomeStackParamList } from "@/types/navigation";
 type WifiOverviewScreenProps = NativeStackScreenProps<HomeStackParamList, "WifiOverviewScreen">;
 
 export default function WifiOverviewScreen({ navigation, route }: WifiOverviewScreenProps) {
-  const { device, proofOfPossession } = route.params;
+  const { device, proofOfPossession, device_TypeName } = route.params;
   const [selectedNetwork, setSelectedNetwork] = useState<Maybe<WifiEntry>>(null);
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const { t } = useTranslation();
@@ -52,6 +52,7 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
       proofOfPossession,
       network,
       password,
+      device_TypeName
     });
   };
 
@@ -59,6 +60,7 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
     navigation.navigate("SearchDeviceScreen", {
       deviceName: device.deviceName,
       proofOfPossession,
+      device_TypeName
     });
   };
 
