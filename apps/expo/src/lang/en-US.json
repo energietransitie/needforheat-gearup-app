@@ -16,7 +16,7 @@
       }
     },
     "device_overview": {
-      "title": "Devices and Online Data Sources",
+      "title": "Data Sources",
       "buttons": {
         "add_enelogic": "Connect Enelogic",
         "install_device": "Add new device"
@@ -27,7 +27,7 @@
           "no_data": "No data received yet"
         },
         "reset_device": "Reset",
-        "empty_collection": "There are no devices set up yet."
+        "empty_collection": "No data sources added yet."
       },
       "building_list": {
         "placeholder": "Select a building",

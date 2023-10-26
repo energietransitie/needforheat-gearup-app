@@ -16,7 +16,7 @@
       }
     },
     "device_overview": {
-      "title": "Apparaten en Online Databronnen",
+      "title": "Databronnen",
       "buttons": {
         "add_enelogic": "Enelogic Toevoegen",
         "install_device": "Apparaat Toevoegen"
@@ -27,7 +27,7 @@
           "no_data": "Nog geen data ontvangen"
         },
         "reset_device": "Resetten",
-        "empty_collection": "Er zijn nog geen apparaten geïnstalleerd."
+        "empty_collection": "Er zijn nog geen databronnen toegevoegd."
       },
       "building_list": {
         "placeholder": "Selecteer een gebouw",

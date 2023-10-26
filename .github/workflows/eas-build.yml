@@ -36,7 +36,7 @@ jobs:
           ssh-private-key: ${{ secrets.GH_SSH_KEY }}
 
       - name: Install dependencies
-        run: yarn install --production
+        run: sudo yarn install --production
 
       - name: Setup environment file
         run: |

@@ -1,3 +1,15 @@
+## [2.9.2](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.9.1...v2.9.2) (2023-10-20)
+
+
+### Bug Fixes
+
+* bugs, works on iOS ([dd5c2cb](https://github.com/energietransitie/twomes-app-needforheat/commit/dd5c2cbd9371674ab45b4e474c3f2778eba924e8))
+* CSS changes made when device is not found the css is still fine ([42db3a0](https://github.com/energietransitie/twomes-app-needforheat/commit/42db3a0496c8bc467516da0dbf95ab0b29158f73))
+* fixed that title was wrong for language NL ([4922f27](https://github.com/energietransitie/twomes-app-needforheat/commit/4922f271391ccc64393e988c89aa5f6eb4832c3c))
+* remove iPad and Mac build targets. ([0aa5723](https://github.com/energietransitie/twomes-app-needforheat/commit/0aa57239382cb85bd67bd208eaf444e5dc4f1981))
+* Small padding for manuals and also removed connecting with enelogic from settings screen ([4c7c960](https://github.com/energietransitie/twomes-app-needforheat/commit/4c7c960298bc52957b760b3113d523585b294d88))
+* Use device type display name instead of name in GUI ([4720aa5](https://github.com/energietransitie/twomes-app-needforheat/commit/4720aa53e60bd3ffbb6302e3af85612c08afd6a5))
+
 ## [2.9.1](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.9.0...v2.9.1) (2023-08-11)
 
 
