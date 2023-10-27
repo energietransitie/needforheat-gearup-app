@@ -15,15 +15,16 @@ export type HomeStackParamList = {
   QrScannerScreen: { expectedDeviceName: string } | undefined;
   AddDeviceScreen: { qrData: SensorQrCode };
   AddOnlineDataSourceScreen: undefined;
-  SearchDeviceScreen: { deviceName: string; proofOfPossession: string };
+  SearchDeviceScreen: { deviceName: string; proofOfPossession: string; device_TypeName: any };
   ActivateDeviceScreen: { qrData: SensorQrCode };
-  ConnectScreen: { device: BleDeviceType; proofOfPossession: string };
-  WifiOverviewScreen: { device: BleDeviceType; proofOfPossession: string };
+  ConnectScreen: { device: BleDeviceType; proofOfPossession: string; device_TypeName: any };
+  WifiOverviewScreen: { device: BleDeviceType; proofOfPossession: string; device_TypeName: any };
   ProvisionScreen: {
     device: BleDeviceType;
     network: WifiEntry;
     proofOfPossession: string;
     password?: string;
+    device_TypeName: any
   };
   DeviceOverviewScreen: undefined;
 };

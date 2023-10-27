@@ -4,7 +4,7 @@ import { Text, makeStyles } from "@rneui/themed";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ScrollView, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { MANUAL_URL } from "@env";
+import { MANUAL_URL } from "@/constants";
 import DeviceGraph from "./_deviceGraph";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
@@ -26,39 +26,43 @@ export default function MeasurementsScreen() {
 
   const buildings = user?.buildings ?? [];
   const [buildingId, setBuildingId] = useState<number | undefined>(buildings[0]?.id);
-
   const { data: devices } = useDevices(buildingId ?? 0);
-  const [deviceName, setDeviceName] = useState<string | undefined>();
-  const [data, setData] = useState(null); // Initialize data state variable
+  const [deviceIdentifierName, setDeviceIdentifierName] = useState<string | undefined>();
+  const [fetchedData, setFetchedData] = useState(null);
 
+  const [displayName, setDisplayName] = useState<string | null>(null);
+
+  const [deviceId, setDeviceId] = useState<number>();
   const hasMultipleBuildings = buildings.length > 1;
   const hasMultipleDevices = (devices?.length ?? 0) > 1;
-
+  const CompleteURL = devices && devices.length > 0 ? MANUAL_URL + devices[0].device_type.name : '';
   const deviceDropdownDisabled = !buildingId || !hasMultipleDevices;
-  const ComleteUrl = MANUAL_URL + devices?.[0]?.device_type.name;
 
   useEffect(() => {
-    fetchData();
-    // Set device name to first device in list when devices are loaded
     if (devices?.length) {
-      setDeviceName(devices[0].name);
-    } else {
-      setDeviceName(undefined);
+      setDeviceIdentifierName(devices[0].name);
+      setDeviceId(devices[0].id);
     }
+
   }, [devices]);
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`${ComleteUrl}`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const fetchedData = await response.json();
-      setData(fetchedData); 
-    } catch (error) {
-      console.error('Error fetching data:', error);
+  useEffect(() => {
+    if (CompleteURL) {
+      fetch(CompleteURL)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setFetchedData(data);
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
     }
-  };
+  }, [CompleteURL, resolvedLanguage]);
 
   if (isLoading || !buildingId) {
     return (
@@ -93,16 +97,18 @@ export default function MeasurementsScreen() {
             style={[styles.dropdown, deviceDropdownDisabled ? { opacity: 0.5 } : null]}
             onPress={() => deviceBottomSheetRef.current?.present()}
           >
-            <Text>{resolvedLanguage === "nl-NL" ? data?.["nl-NL"] : data?.["en-US"] ?? t("screens.measurements.graph.no_devices")}</Text>
+            <Text>
+              {displayName === null ? (fetchedData?.[resolvedLanguage] || t("screens.measurements.graph.no_devices")) : displayName || t("screens.measurements.graph.no_devices")}
+            </Text>
             <Icon name="chevron-down" size={16} />
           </TouchableOpacity>
 
           {/* Data of last 14, 30 & 90 days */}
-          {buildingId && deviceName ? (
+          {buildingId && deviceIdentifierName ? (
             <>
-              <DeviceGraph deviceName={deviceName} />
-              <DeviceGraph deviceName={deviceName} dayRange={30} />
-              <DeviceGraph deviceName={deviceName} dayRange={90} />
+              <DeviceGraph deviceName={deviceIdentifierName} />
+              <DeviceGraph deviceName={deviceIdentifierName} dayRange={30} />
+              <DeviceGraph deviceName={deviceIdentifierName} dayRange={90} />
             </>
           ) : null}
 
@@ -114,8 +120,10 @@ export default function MeasurementsScreen() {
           <DeviceBottomSheet
             bottomSheetRef={deviceBottomSheetRef}
             buildingId={buildingId}
-            deviceName={deviceName}
-            onDeviceSelect={setDeviceName}
+            deviceName={deviceIdentifierName}
+            onDeviceIdentifier={setDisplayName}
+            onDisplayName={setDeviceIdentifierName}
+            onDeviceId={setDeviceId}
           />
         </Box>
       </ScrollView>

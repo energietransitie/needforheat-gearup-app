@@ -4,27 +4,92 @@ import { ListItem, Text } from "@rneui/themed";
 
 import useDevices from "@/hooks/device/useDevices";
 import useTranslation from "@/hooks/translation/useTranslation";
+import { MANUAL_URL } from "@/constants";
+import { useEffect, useState } from "react";
 
 type DeviceBottomSheetProps = {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
   deviceName?: string;
   buildingId: number;
-  onDeviceSelect: (name: string) => void;
+  onDeviceId?: (id: number) => void;
+  onDeviceIdentifier: (name: string) => void;
+  onDisplayName: (name: string) => void;
 };
+
+interface DeviceDataResponse {
+  id: number;
+  name: string;
+}
 
 export default function DeviceBottomSheet({
   bottomSheetRef,
   deviceName,
   buildingId,
-  onDeviceSelect,
+  onDeviceIdentifier,
+  onDisplayName,
+  onDeviceId,
 }: DeviceBottomSheetProps) {
   const { data: devices } = useDevices(buildingId);
-  const { t } = useTranslation();
+  const { t, resolvedLanguage } = useTranslation();
+  const [deviceDataResponses, setDeviceDataResponses] = useState<Array<DeviceDataResponse>>([]);
+  const [checkId, setCheckId] = useState<number | null>(devices?.[0]?.id ?? null);
 
-  const onPress = (name: string) => {
-    onDeviceSelect(name);
+  const onPress = (id: number) => {
+    const selectedDeviceGlobalName = devices?.find(device => device.id === id);
+    setCheckId(id);
+
+    if (onDeviceId) {
+      onDeviceId(id);
+    }
+
+    if (selectedDeviceGlobalName) {
+      const selectedDeviceGlobalNameFunc = selectedDeviceGlobalName.name;
+      onDisplayName(selectedDeviceGlobalNameFunc);
+    }
+
+    const selectedDevice = deviceDataResponses.find(device => device.id === id);
+    if (selectedDevice) {
+      const selectedDeviceName = selectedDevice.name;
+      onDeviceIdentifier(selectedDeviceName);
+      bottomSheetRef.current?.dismiss();
+    }
+
     bottomSheetRef.current?.dismiss();
   };
+
+  const fetchDeviceData = async () => {
+    if (devices) {
+      try {
+        const deviceDataPromises = devices.map(async (device) => {
+          const response = await fetch(`${MANUAL_URL + device.device_type.name}`);
+          if (response.ok) {
+            const data = await response.json();
+            return { id: device.id, name: data[resolvedLanguage] };
+          } else {
+            console.error(`Error fetching device data for ${device.name}: ${response.statusText}`);
+            return null;
+          }
+        });
+
+        const deviceDataResults = await Promise.all(deviceDataPromises);
+
+        const filteredResults: Array<DeviceDataResponse> = deviceDataResults.filter(
+          (result): result is DeviceDataResponse => result !== null
+        );
+
+        setDeviceDataResponses(filteredResults);
+
+      } catch (error) {
+        console.error("Error fetching device data", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (devices) {
+      fetchDeviceData();
+    }
+  }, [devices, resolvedLanguage]);
 
   return (
     <BottomSheetModal
@@ -34,9 +99,9 @@ export default function DeviceBottomSheet({
       backdropComponent={props => <BottomSheetBackdrop {...props} pressBehavior="close" disappearsOnIndex={-1} />}
     >
       <BottomSheetScrollView>
-        {devices?.map(device => (
-          <ListItem key={device.id} onPress={() => onPress(device.name)} Component={TouchableOpacity}>
-            <Text bold={deviceName === device.name}>{device.name}</Text>
+        {deviceDataResponses?.map(device => (
+          <ListItem key={device.id} onPress={() => onPress(device.id)} Component={TouchableOpacity}>
+            <Text bold={checkId === device.id}>{device.name}</Text>
           </ListItem>
         ))}
       </BottomSheetScrollView>
