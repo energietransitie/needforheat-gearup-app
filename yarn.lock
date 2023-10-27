@@ -11459,9 +11459,9 @@ react-native-dotenv@3.4.8:
   dependencies:
     dotenv "^16.0.3"
 
-"react-native-esp-idf-provisioning@git+https://github.com/energietransitie/twomes-app-needforheat-eup.git":
+"react-native-esp-idf-provisioning@ssh://git@github.com/energietransitie/NeedForHeat-esp-idf-provisioning":
   version "0.1.0"
-  resolved "git+https://github.com/energietransitie/twomes-app-needforheat-eup.git#b4806311fbbe98fcccef583ef1b2181e68042bd8"
+  resolved "ssh://git@github.com/energietransitie/NeedForHeat-esp-idf-provisioning#b4806311fbbe98fcccef583ef1b2181e68042bd8"
 
 react-native-exit-app@^1.1.0:
   version "1.1.0"
