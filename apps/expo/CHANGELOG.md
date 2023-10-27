@@ -1,3 +1,30 @@
+## [2.9.2](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.9.1...v2.9.2) (2023-10-27)
+
+
+### Bug Fixes
+
+* bugs, works on iOS ([dd5c2cb](https://github.com/energietransitie/twomes-app-needforheat/commit/dd5c2cbd9371674ab45b4e474c3f2778eba924e8))
+* changed the formatting for NL and English last seen and also 4 tick page the date the device is connected ([1530d95](https://github.com/energietransitie/twomes-app-needforheat/commit/1530d95f347343fd5637c56baf9cd54c95f76c4c))
+* CSS changes made when device is not found the css is still fine ([42db3a0](https://github.com/energietransitie/twomes-app-needforheat/commit/42db3a0496c8bc467516da0dbf95ab0b29158f73))
+* device names on measurement screens now gives the user-friendly names, aswell as on the DeviceBottomSheet where user can select other devices ([a06d71b](https://github.com/energietransitie/twomes-app-needforheat/commit/a06d71b4fc00808feb239be30697b1d8614c62ba))
+* enelogic was not connecting because no record in the database. ([4904d13](https://github.com/energietransitie/twomes-app-needforheat/commit/4904d13dbb240a199c8710e40ae14fb9bd16eb8b))
+* feedback on formatting implemented ([eb946f6](https://github.com/energietransitie/twomes-app-needforheat/commit/eb946f689ad5bdc5c9db869cc18b8db1d0232b2f))
+* fixed that title was wrong for language NL ([4922f27](https://github.com/energietransitie/twomes-app-needforheat/commit/4922f271391ccc64393e988c89aa5f6eb4832c3c))
+* forgot , at provision screen ([b77f5bc](https://github.com/energietransitie/twomes-app-needforheat/commit/b77f5bc1e65c710853456fe6e1c4ef244d5d123a))
+* latest fix for formatting checked with Nick van Ravenzwaaij ([26861e5](https://github.com/energietransitie/twomes-app-needforheat/commit/26861e5a0e10dc6b6fec7f798def2b1d896d6a5e))
+* Names when connecting are changes they are now the correct names we wan' to show based on language ([74cd49f](https://github.com/energietransitie/twomes-app-needforheat/commit/74cd49f907abf150c5de289eaca534117564eecd))
+* remove iPad and Mac build targets. ([0aa5723](https://github.com/energietransitie/twomes-app-needforheat/commit/0aa57239382cb85bd67bd208eaf444e5dc4f1981))
+* remove opening external link pop-up when opening faq at ? when clicking on device, also removed  session_token from settings screen ([8cc38dc](https://github.com/energietransitie/twomes-app-needforheat/commit/8cc38dc85f7f27a37533a1e4e4bddf615dc65aac))
+* removed MANUAL_URL from env and added in constants this should fix the problem loading in the URL's ([6bc56c5](https://github.com/energietransitie/twomes-app-needforheat/commit/6bc56c5f7d1ca31482fd4e83a1c508de94e7a06d))
+* removed the cancel button when already connected with Enelogic we don't need to show this, when not connected we add this option ([b26e4e1](https://github.com/energietransitie/twomes-app-needforheat/commit/b26e4e19019cd30e1c598b5434f0ecb276daf932))
+* Small padding for manuals and also removed connecting with enelogic from settings screen ([4c7c960](https://github.com/energietransitie/twomes-app-needforheat/commit/4c7c960298bc52957b760b3113d523585b294d88))
+* Use device type display name instead of name in GUI ([4720aa5](https://github.com/energietransitie/twomes-app-needforheat/commit/4720aa53e60bd3ffbb6302e3af85612c08afd6a5))
+
+
+### Reverts
+
+* Revert "Merge remote-tracking branch 'origin/Improve_UI_Flow' into fix_back_button_on_connect_wifi_screen" ([7c56dd6](https://github.com/energietransitie/twomes-app-needforheat/commit/7c56dd646933569de31017694776dd4067ac6be8))
+
 ## [2.9.2](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.9.1...v2.9.2) (2023-10-20)
 
 
