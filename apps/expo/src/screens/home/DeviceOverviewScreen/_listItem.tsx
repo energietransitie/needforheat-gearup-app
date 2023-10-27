@@ -2,8 +2,10 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Button, ListItem, makeStyles, useTheme } from "@rneui/themed";
 import { TouchableHighlight, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { enUS, nl } from 'date-fns/locale';
+import { format } from 'date-fns';
 
-import { MANUAL_URL } from "@env";
+import { MANUAL_URL } from "@/constants";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useOpenExternalLink } from "@/hooks/useOpenExternalLink";
 import { BuildingDeviceResponse } from "@/types/api";
@@ -30,6 +32,9 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     close();
   };
 
+  // false so it won't open the pop-up but it will open the URL
+  const openHelpUrl = () => openUrl(item.device_type.info_url, false);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -41,13 +46,30 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
         throw new Error('Network response was not ok');
       }
       const fetchedData = await response.json();
-      setData(fetchedData); 
+      setData(fetchedData);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
-  const openHelpUrl = () => openUrl(item.device_type.info_url);
+
+  const locales: Record<string, Locale> = {
+    'en-US': enUS,
+    'nl-NL': nl,
+  };
+
+  function formatDateAndTime(date?: Date) {
+    const inputDate = date || new Date();
+    const locale = locales[resolvedLanguage] || enUS;
+
+    let formatString = 'cccccc, LLL d, yyy HH:mm';
+
+    if (resolvedLanguage === 'nl-NL') {
+      formatString = 'cccccc d LLL yyy HH:mm';
+    }
+
+    return format(inputDate, formatString, { locale });
+  }
 
   return (
     <ListItem.Swipeable
@@ -76,8 +98,8 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
         <ListItem.Subtitle>
           {item.latest_upload
             ? t("screens.device_overview.device_list.device_info.last_seen", {
-                date: item.latest_upload?.toLocaleString(),
-              })
+              date: formatDateAndTime(item.latest_upload),
+            })
             : t("screens.device_overview.device_list.device_info.no_data")}
         </ListItem.Subtitle>
       </ListItem.Content>
