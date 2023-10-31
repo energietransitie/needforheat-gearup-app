@@ -18,8 +18,8 @@
     "device_overview": {
       "title": "Databronnen",
       "buttons": {
-        "add_enelogic": "Enelogic Toevoegen",
-        "install_device": "Apparaat Toevoegen"
+        "add_enelogic": "Enelogic toevoegen",
+        "install_device": "Meetapparaatje scannen"
       },
       "device_list": {
         "device_info": {
@@ -49,13 +49,13 @@
         "alert": {
           "unknown_error": "Er is een fout opgetreden bij het activeren van het apparaat.",
           "no_building": "Uw account is niet gekoppeld aan een gebouw.",
-          "already_activated": "Dit meetapparaat is al geactiveerd op een ander account."
+          "already_activated": "Dit meetapparaatje is al geactiveerd op een ander account."
         }
       },
       "already_invited": {
         "title": "Reeds uitgenodigd",
         "expanded_title": "Ik heb al een uitnodiging",
-        "description": "In de uitnodigingsmail die u heeft ontvangen staat een activatielink. Klik op deze link om te beginnen met de installatie van uw meetapparaten."
+        "description": "In de uitnodigingsmail die u heeft ontvangen staat een activatielink. Klik op deze link om te beginnen met de installatie van uw meetapparaatjes."
       },
       "add_device": {
         "title": "Apparaat verbinden",
@@ -85,7 +85,7 @@
         },
         "authenticated": {
           "title": "Scan een QR-code",
-          "description": "Scan de QR-code van een nieuw meetapparaatje. Deze staat op het e-ink scherm van het meetapparatje of op een sticker (kijk ook op de achterkant)."
+          "description": "Scan de QR-code van een meetapparaatje. Deze staat op het e-ink scherm van het meetapparaatje of op een sticker (kijk ook op de achterkant)."
         },
         "unauthenticated": {
           "title": "NeedForHeat",
@@ -237,7 +237,7 @@
         "app_language": "Taal selecteren",
         "wifi_passwords": {
           "title": "Opgeslagen wifiwachtwoorden verwijderen",
-          "message": "Weet u het zeker? Na het verwijderen van de opgeslagen wifiwachtwoorden uit deze app zult u bij het koppelen van een nieuw meetapparaat het wifiwachtwoord opnieuw moeten intypen.",
+          "message": "Weet u het zeker? Na het verwijderen van de opgeslagen wifiwachtwoorden uit deze app zult u bij het koppelen van een nieuw meetapparaatje het wifiwachtwoord opnieuw moeten intypen.",
           "toast": "wifiwachtwoorden succesvol verwijderd"
         },
         "session_token": {
