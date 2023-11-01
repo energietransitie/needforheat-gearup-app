@@ -29,7 +29,10 @@ jobs:
           cache: yarn
 
       - name: Setup EAS
-        run: sudo yarn global add expo-cli eas-cli
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
 
       - uses: webfactory/ssh-agent@v0.7.0
         with:
@@ -45,5 +48,3 @@ jobs:
       - name: Build app
         working-directory: apps/expo
         run: eas build --platform all --profile production --non-interactive --no-wait
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
