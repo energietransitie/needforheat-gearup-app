@@ -19,7 +19,7 @@
       "title": "Data Sources",
       "buttons": {
         "add_enelogic": "Connect Enelogic",
-        "install_device": "Add new device"
+        "install_device": "Scan device"
       },
       "device_list": {
         "device_info": {
@@ -85,7 +85,7 @@
         },
         "authenticated": {
           "title": "Scan a QR code",
-          "description": "Scan the QR code of a new measurement device. It can be found on the e-ink screen or on a sticker on (the back of) the device."
+          "description": "Scan the QR code of a measurement device. It can be found on the e-ink screen or on a sticker on (the back of) the device."
         },
         "unauthenticated": {
           "title": "NeedForHeat",
