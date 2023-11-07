@@ -38,10 +38,10 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
   const { t } = useTranslation();
   const { user } = useUser();
 
-  //This function gets the url from the backend. This is done to prevent the url from being hardcoded in the app.
   function getFaqUri() {
-    console.log(user?.campaign.info_url);
-    return user?.campaign.info_url; //return url
+    const infoUrl = user?.campaign.info_url;
+    const defaultUrl = "https://manuals.tst.energietransitiewindesheim.nl/campaigns/faq";
+    return infoUrl || defaultUrl;
   }
 
   const data: InfoItem[] = [
@@ -52,7 +52,7 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
     },
     {
       title: t("screens.info_stack.faq.title"),
-      uri: "FAQ_PLACEHOLDER", //This is a placeholder, the real url is fetched from the backend. This is done to prevent the url from being hardcoded in the app.
+      uri: "FAQ_PLACEHOLDER",
       icon: "help-circle-outline",
     },
     {
@@ -64,7 +64,7 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
 
   const onPress = async (item: InfoItem) => {
     if ("uri" in item) {
-      const uri = item.uri === "FAQ_PLACEHOLDER" ? getFaqUri() : item.uri; //I check if the uri is the placeholder, if so, I fetch the real url from the backend. If not, I use the uri as is.
+      const uri = item.uri === "FAQ_PLACEHOLDER" ? getFaqUri() : item.uri;
       try {
         await Linking.openURL(uri);
       } catch {
@@ -77,7 +77,6 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
       navigation.navigate(item.route);
     }
   };
-
   return (
     <Box style={{ flex: 1 }}>
       <FlatList data={data} renderItem={({ item }) => <InfoListItem item={item} onPress={() => onPress(item)} />} />
