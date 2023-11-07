@@ -2,12 +2,10 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ListItem, makeStyles, Text, useTheme } from "@rneui/themed";
 import { Alert, FlatList, Linking, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
-import { fetchUser } from "@/api/user"; 
-
 import Box from "@/components/elements/Box";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { InfoStackParamList } from "@/types/navigation";
+import useUser from "@/hooks/user/useUser";
 
 type InfoItemBase = { title: string; icon: string };
 type InfoItemURI = InfoItemBase & { uri: string };
@@ -34,17 +32,17 @@ function InfoListItem({ item, onPress }: InfoItemProps) {
   );
 }
 
-//This function gets the url from the backend. This is done to prevent the url from being hardcoded in the app.
-function getFaqUri() {
-  console.log(fetchUser()); //fetch backend url
-
-  return ""; //return url
-}
-
 type InfoScreenProps = NativeStackScreenProps<InfoStackParamList, "InfoScreen">;
 
 export default function InfoScreen({ navigation }: InfoScreenProps) {
   const { t } = useTranslation();
+  const { user } = useUser();
+
+  //This function gets the url from the backend. This is done to prevent the url from being hardcoded in the app.
+  function getFaqUri() {
+    console.log(user?.campaign.info_url);
+    return user?.campaign.info_url; //return url
+  }
 
   const data: InfoItem[] = [
     {
