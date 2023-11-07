@@ -3,6 +3,8 @@ import { ListItem, makeStyles, Text, useTheme } from "@rneui/themed";
 import { Alert, FlatList, Linking, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import { fetchUser } from "@/api/user"; 
+
 import Box from "@/components/elements/Box";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { InfoStackParamList } from "@/types/navigation";
@@ -32,6 +34,13 @@ function InfoListItem({ item, onPress }: InfoItemProps) {
   );
 }
 
+//This function gets the url from the backend. This is done to prevent the url from being hardcoded in the app.
+function getFaqUri() {
+  console.log(fetchUser()); //fetch backend url
+
+  return ""; //return url
+}
+
 type InfoScreenProps = NativeStackScreenProps<InfoStackParamList, "InfoScreen">;
 
 export default function InfoScreen({ navigation }: InfoScreenProps) {
@@ -45,7 +54,7 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
     },
     {
       title: t("screens.info_stack.faq.title"),
-      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/faq",
+      uri: "FAQ_PLACEHOLDER", //This is a placeholder, the real url is fetched from the backend. This is done to prevent the url from being hardcoded in the app.
       icon: "help-circle-outline",
     },
     {
@@ -57,8 +66,9 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
 
   const onPress = async (item: InfoItem) => {
     if ("uri" in item) {
+      const uri = item.uri === "FAQ_PLACEHOLDER" ? getFaqUri() : item.uri; //I check if the uri is the placeholder, if so, I fetch the real url from the backend. If not, I use the uri as is.
       try {
-        await Linking.openURL(item.uri);
+        await Linking.openURL(uri);
       } catch {
         Alert.alert(
           t("screens.info_stack.info.unsuported_url_alert.title"),
