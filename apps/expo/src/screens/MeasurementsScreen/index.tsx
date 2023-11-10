@@ -33,7 +33,6 @@ export default function MeasurementsScreen() {
   const [displayName, setDisplayName] = useState<string | null>(null);
 
   const [deviceId, setDeviceId] = useState<number>();
-  const hasMultipleBuildings = buildings.length > 1;
   const hasMultipleDevices = (devices?.length ?? 0) > 1;
   const CompleteURL = devices && devices.length > 0 ? MANUAL_URL + devices[0].device_type.name : '';
   const deviceDropdownDisabled = !buildingId || !hasMultipleDevices;
@@ -43,23 +42,22 @@ export default function MeasurementsScreen() {
       setDeviceIdentifierName(devices[0].name);
       setDeviceId(devices[0].id);
     }
-
   }, [devices]);
 
   useEffect(() => {
     if (CompleteURL) {
       fetch(CompleteURL)
-        .then((response) => {
+        .then(response => {
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           return response.json();
         })
-        .then((data) => {
+        .then(data => {
           setFetchedData(data);
         })
-        .catch((error) => {
-          console.error('Error fetching data:', error);
+        .catch(error => {
+          console.error("Error fetching data:", error);
         });
     }
   }, [CompleteURL, resolvedLanguage]);
@@ -79,26 +77,14 @@ export default function MeasurementsScreen() {
       <ScrollView>
         <Box style={{ flex: 1 }} padded>
           <TouchableOpacity
-            disabled={!hasMultipleBuildings}
-            style={[styles.dropdown, !hasMultipleBuildings ? { opacity: 0.5 } : {}]}
-            onPress={() => buildingBottomSheetRef.current?.present()}
-          >
-            <Text>
-              {buildingId
-                ? t("screens.device_overview.building_list.building_info.name", { id: buildingId })
-                : t("screens.device_overview.building_list.placeholder")}
-            </Text>
-            {hasMultipleBuildings &&
-              <Icon name="chevron-down" size={16} />
-            }
-          </TouchableOpacity>
-          <TouchableOpacity
             disabled={deviceDropdownDisabled}
             style={[styles.dropdown, deviceDropdownDisabled ? { opacity: 0.5 } : null]}
             onPress={() => deviceBottomSheetRef.current?.present()}
           >
             <Text>
-              {displayName === null ? (fetchedData?.[resolvedLanguage] || t("screens.measurements.graph.no_devices")) : displayName || t("screens.measurements.graph.no_devices")}
+              {displayName === null
+                ? fetchedData?.[resolvedLanguage] || t("screens.measurements.graph.no_devices")
+                : displayName || t("screens.measurements.graph.no_devices")}
             </Text>
             <Icon name="chevron-down" size={16} />
           </TouchableOpacity>
