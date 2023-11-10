@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { fetchDevice } from "@/api/device";
 import { Maybe } from "@/types";
 
-export default function useReceivingMeasurements(deviceName: string, retries = 5, openedTimestamp: Date) {
+export default function useReceivingMeasurements(deviceName: string, retries = 10) {
   const [count, setCount] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [latestMeasurement, setLatestMeasurement] = useState<Maybe<Date>>();
+  const [openedTimestamp, setOpenedTimestamp] = useState<Date>(new Date());
 
   useEffect(() => {
     if (count === null) return;
