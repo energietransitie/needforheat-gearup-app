@@ -1,12 +1,8 @@
-<!-- omit in toc -->
-
-# Twomes provisioning app
+# Twomes provisioning app<!-- omit in toc -->
 
 This repository contains the source code for the NeedForHeat app for both Android and iOS. The app helps users to install and connect one or more Twomes measurement devices that start collecting monitoring data related to home heating.
 
-<!-- omit in toc -->
-
-## Table of contents
+## Table of contents<!-- omit in toc -->
 
 - [General info](#general-info)
 - [Installing the app](#installing-the-app)
@@ -74,24 +70,29 @@ This software is available under the [Apache 2.0 license](./LICENSE), Copyright 
 
 ## Credits
 
-This software is a collaborative effort of:
+This version of the NeedForHeat app was created with the help of:
 
-- Rick Klaasboer - [@rickklaasboer](https://github.com/rickklaasboer)
-- Joël Kuijper - [@joehoel](https://github.com/Joehoel)
-- Ward Pieters - [@wardpieters](https://github.com/wardpieters)
-- Jesse Brand - [@jessuhh](https://github.com/Jessuhh)
+* Jort Driegen · [@jortdr](https://github.com/jortdr)
+* Nick Koster · [@NormalNickYT](https://github.com/NormalNickYT)
+* Robin Leuninge · [@RobinLeuninge](https://github.com/orgs/energietransitie/people/RobinLeuninge)
+* Thomas van Meer · [@CodingMoonMan](https://github.com/orgs/energietransitie/people/CodingMoonMan)
+* Tristan Jansen · [@Tristan611](https://github.com/Tristan611)
 
-Thanks also go to:
+Thanks also go to the developers of previous versions of NeedForHeat and WarmteWachter, the predecessor of this app:
 
-- Wietske Veneberg - [@WVeneberg](https://github.com/WVeneberg)
-- Amicia Smit - [@AmiciaSmit](https://github.com/AmiciaSmit)
-- Marco Prins - [@mk-prins](https://github.com/mk-prins)
-- Brian Hoen - [@lordpalf123](https://github.com/lordpalf123)
-- Mattijs Noordhof - [@Matthijsn](https://github.com/Matthijsn)
-- Matthias Verweij - [@MatthiasVerweij](https://github.com/MatthiasVerweij)
-- Rowan van der Zande - [@RowanvdZ](https://github.com/RowanvdZ)
+* Amicia Smit · [@AmiciaSmit](https://github.com/AmiciaSmit)
+* Brian Hoen - [@lordpalf123](https://github.com/lordpalf123)
+* Jesse Brand - [@jessuhh](https://github.com/Jessuhh)
+* Joël Kuijper - [@joehoel](https://github.com/Joehoel)
+* Marco Prins · [@mk-prins](https://github.com/mk-prins)
+* Matthias Verweij - [@MatthiasVerweij](https://github.com/MatthiasVerweij)
+* Mattijs Noordhof - [@Matthijsn](https://github.com/Matthijsn)
+* Rick Klaasboer - [@rickklaasboer](https://github.com/rickklaasboer)
+* Rowan van der Zande - [@RowanvdZ](https://github.com/RowanvdZ)
+* Ward Pieters - [@wardpieters](https://github.com/wardpieters)
+* Wietske Veneberg · [@WVeneberg](https://github.com/WVeneberg)
 
-Product owner:
+Product owners:
 
 - Nick van Ravenzwaaij - [@n-vr](https://github.com/n-vr)
 - Henri ter Hofte - [@henriterhofte](https://github.com/henriterhofte) - Twitter [@HeNRGi](https://twitter.com/HeNRGi)
