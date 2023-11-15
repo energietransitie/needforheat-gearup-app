@@ -35,11 +35,11 @@ function InfoListItem({ item, onPress }: InfoItemProps) {
 type InfoScreenProps = NativeStackScreenProps<InfoStackParamList, "InfoScreen">;
 
 export default function InfoScreen({ navigation }: InfoScreenProps) {
-  const { t } = useTranslation();
+  const { t, resolvedLanguage } = useTranslation();
   const { user } = useUser();
 
   function getFaqUri() {
-    const infoUrl = user?.campaign.info_url;
+    const infoUrl = user?.campaign.info_url + "/" + resolvedLanguage;
     const defaultUrl = "https://manuals.tst.energietransitiewindesheim.nl/campaigns/faq";
     return infoUrl || defaultUrl;
   }
@@ -47,7 +47,7 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
   const data: InfoItem[] = [
     {
       title: t("screens.info_stack.about.title"),
-      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/info",
+      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/reducedheatcarb2023/info/" + resolvedLanguage,
       icon: "book-outline",
     },
     {
@@ -57,7 +57,7 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
     },
     {
       title: t("screens.info_stack.privacy.title"),
-      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/privacy",
+      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/reducedheatcarb2023/privacy",
       icon: "shield",
     },
   ];
