@@ -28,6 +28,7 @@
     "babel-plugin-module-resolver": "5.0.0",
     "base-64": "1.0.0",
     "burnt": "0.10.0",
+    "crc": "^4.3.2",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.7",
     "eslint-config-nfh": "*",

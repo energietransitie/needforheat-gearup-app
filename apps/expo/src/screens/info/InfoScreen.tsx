@@ -2,10 +2,10 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ListItem, makeStyles, Text, useTheme } from "@rneui/themed";
 import { Alert, FlatList, Linking, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
 import Box from "@/components/elements/Box";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { InfoStackParamList } from "@/types/navigation";
+import useUser from "@/hooks/user/useUser";
 
 type InfoItemBase = { title: string; icon: string };
 type InfoItemURI = InfoItemBase & { uri: string };
@@ -35,30 +35,38 @@ function InfoListItem({ item, onPress }: InfoItemProps) {
 type InfoScreenProps = NativeStackScreenProps<InfoStackParamList, "InfoScreen">;
 
 export default function InfoScreen({ navigation }: InfoScreenProps) {
-  const { t } = useTranslation();
+  const { t, resolvedLanguage } = useTranslation();
+  const { user } = useUser();
+
+  function getFaqUri() {
+    const infoUrl = user?.campaign.info_url + "/" + resolvedLanguage;
+    const defaultUrl = "https://manuals.tst.energietransitiewindesheim.nl/campaigns/faq";
+    return infoUrl || defaultUrl;
+  }
 
   const data: InfoItem[] = [
     {
       title: t("screens.info_stack.about.title"),
-      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/info",
+      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/reducedheatcarb2023/info/" + resolvedLanguage,
       icon: "book-outline",
     },
     {
       title: t("screens.info_stack.faq.title"),
-      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/faq",
+      uri: "FAQ_PLACEHOLDER",
       icon: "help-circle-outline",
     },
     {
       title: t("screens.info_stack.privacy.title"),
-      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/privacy",
+      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/reducedheatcarb2023/privacy",
       icon: "shield",
     },
   ];
 
   const onPress = async (item: InfoItem) => {
     if ("uri" in item) {
+      const uri = item.uri === "FAQ_PLACEHOLDER" ? getFaqUri() : item.uri;
       try {
-        await Linking.openURL(item.uri);
+        await Linking.openURL(uri);
       } catch {
         Alert.alert(
           t("screens.info_stack.info.unsuported_url_alert.title"),
@@ -69,7 +77,6 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
       navigation.navigate(item.route);
     }
   };
-
   return (
     <Box style={{ flex: 1 }}>
       <FlatList data={data} renderItem={({ item }) => <InfoListItem item={item} onPress={() => onPress(item)} />} />

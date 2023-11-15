@@ -53,6 +53,9 @@ export const accountSchema = z.object({
       id: z.number(),
     })
   ),
+  campaign: z.object({
+    info_url: z.string(),
+  }),
 });
 
 export type AccountResponse = z.infer<typeof accountSchema>;
