@@ -1,3 +1,17 @@
+# [2.10.0](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.9.3...v2.10.0) (2023-11-15)
+
+
+### Bug Fixes
+
+* add language based header for FAQ manual. ([36bc42c](https://github.com/energietransitie/twomes-app-needforheat/commit/36bc42c29e2b1871770094259ffbe8b4b48943bf))
+* change faq to api url instead of hardcoded ([dac3d5d](https://github.com/energietransitie/twomes-app-needforheat/commit/dac3d5d300b98fab0fe7f6c6d630084e35ca7280))
+* upload date needs to be newer than time of reset ([01c8b4e](https://github.com/energietransitie/twomes-app-needforheat/commit/01c8b4e4b74b182ac89557c9dbc1b0a1fd8fcf77))
+
+
+### Features
+
+* Enelogic is now available in the device list, and when Enelogic is connected, the user is automatically directed to the device screen. ([826c056](https://github.com/energietransitie/twomes-app-needforheat/commit/826c056addf870df2af9fff592fcd2a4394249b3))
+
 ## [2.9.3](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.9.2...v2.9.3) (2023-11-07)
 
 
