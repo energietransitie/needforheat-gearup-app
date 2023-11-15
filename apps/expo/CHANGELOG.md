@@ -1,3 +1,10 @@
+## [2.9.3](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.9.2...v2.9.3) (2023-11-07)
+
+
+### Reverts
+
+* Revert "fix: remove iPad and Mac build targets." ([284957c](https://github.com/energietransitie/twomes-app-needforheat/commit/284957c85a02b86dce0d7c12785310523ed49de9))
+
 ## [2.9.2](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.9.1...v2.9.2) (2023-10-27)
 
 
