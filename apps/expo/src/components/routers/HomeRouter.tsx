@@ -101,7 +101,6 @@ export default function HomeRouter() {
         name="AddOnlineDataSourceScreen"
         options={{
           title: t("screens.home_stack.provision.enelogic"),
-          ...disableNavigation,
         }}
         component={AddOnlineDataSourceScreen}
       />
