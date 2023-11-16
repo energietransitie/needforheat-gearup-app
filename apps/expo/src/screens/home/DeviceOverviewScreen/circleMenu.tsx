@@ -17,10 +17,11 @@ const CircleMenu = () => {
   const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
 
   const MenuItem = ({ icon, iconText }: { icon: string; iconText: string }) => {
-
     return (
       <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
-        <Text style={{ color: "black", width: "45%", textAlign: "right", marginRight: "5%" }}>{iconText}</Text>
+        <View style={{ backgroundColor: "grey", padding: 5, borderRadius: 2, marginRight: 5 }}>
+          <Text style={{ color: "white", textAlign: "right" }}>{iconText}</Text>
+        </View>
         <View style={styles.menuItem}>
           <Icon name={icon} size={30} color="white" />
         </View>
