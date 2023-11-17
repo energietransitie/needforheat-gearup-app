@@ -1,5 +1,5 @@
 import { t } from "i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 
 import DeviceListItem from "./_listItem";
@@ -8,7 +8,7 @@ import StatusIndicator from "@/components/common/StatusIndicator";
 import useDevices from "@/hooks/device/useDevices";
 import { BuildingDeviceResponse } from "@/types/api";
 
-export default function DeviceList({ buildingId }: { buildingId: number }) {
+export default function DeviceList({ buildingId, refresh, onRefresh }: { buildingId: number, refresh: boolean; onRefresh: () => void }) {
   const { data, isLoading, refetch, isRefetching } = useDevices(buildingId);
   const [scrollEnabled, setScrollEnabled] = useState(true);
 
@@ -17,6 +17,11 @@ export default function DeviceList({ buildingId }: { buildingId: number }) {
 
   if (isLoading) {
     return <StatusIndicator isLoading />;
+  }
+
+  if (refresh) {
+    refetch();
+    onRefresh();
   }
 
   return (

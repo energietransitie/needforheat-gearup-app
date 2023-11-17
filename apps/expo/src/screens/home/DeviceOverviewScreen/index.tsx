@@ -1,7 +1,7 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Text, useTheme, Button } from "@rneui/themed";
-import { useContext, useRef, useState } from "react";
+import { useCallback, useContext, useRef, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -15,6 +15,7 @@ import Screen from "@/components/elements/Screen";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
 import { RootStackParamList } from "@/types/navigation";
+import { useFocusEffect } from "@react-navigation/native";
 
 type DeviceOverviewScreenProps = NativeStackScreenProps<RootStackParamList, "DeviceOverview">;
 
@@ -26,8 +27,18 @@ export default function DeviceOverviewScreen() {
 
   const buildings = user?.buildings ?? [];
   const [buildingId, setBuildingId] = useState<number | undefined>(buildings[0]?.id);
-
+  const [refreshDeviceList, setRefreshDeviceList] = useState(false);
   const hasMultipleBuildings = buildings.length > 1;
+
+  useFocusEffect(
+    useCallback(() => {
+      setRefreshDeviceList(true);
+    }, [])
+  );
+
+  const onDeviceListRefreshed = () => {
+    setRefreshDeviceList(false);
+  };
 
   return (
     <Screen>
@@ -56,7 +67,7 @@ export default function DeviceOverviewScreen() {
                 </TouchableOpacity>
               ) : null}
               <View style={{ flex: 1, justifyContent: "flex-start" }}>
-                <DeviceList buildingId={buildingId} />
+                <DeviceList buildingId={buildingId} refresh={refreshDeviceList} onRefresh={onDeviceListRefreshed} />
               </View>
               {hasMultipleBuildings ? (
                 <BuildingBottomSheet
