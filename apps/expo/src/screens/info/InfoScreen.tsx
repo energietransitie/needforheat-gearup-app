@@ -39,9 +39,11 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
   const { user } = useUser();
 
   function getFaqUri() {
-    const infoUrl = user?.campaign.info_url + "/" + resolvedLanguage;
-    const defaultUrl = "https://manuals.tst.energietransitiewindesheim.nl/campaigns/faq";
-    return infoUrl || defaultUrl;
+    if (user?.campaign) {
+      return user.campaign.info_url + "/" + resolvedLanguage;
+    } else {
+      return "https://manuals.tst.energietransitiewindesheim.nl/campaigns/generic/info/" + resolvedLanguage;
+    }
   }
 
   const data: InfoItem[] = [
@@ -52,7 +54,7 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
     },
     {
       title: t("screens.info_stack.faq.title"),
-      uri: "FAQ_PLACEHOLDER",
+      uri: getFaqUri(),
       icon: "help-circle-outline",
     },
     {
@@ -64,9 +66,8 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
 
   const onPress = async (item: InfoItem) => {
     if ("uri" in item) {
-      const uri = item.uri === "FAQ_PLACEHOLDER" ? getFaqUri() : item.uri;
       try {
-        await Linking.openURL(uri);
+        await Linking.openURL(item.uri);
       } catch {
         Alert.alert(
           t("screens.info_stack.info.unsuported_url_alert.title"),
