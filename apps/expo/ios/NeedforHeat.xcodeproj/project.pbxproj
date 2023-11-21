@@ -381,7 +381,7 @@
 				CODE_SIGN_ENTITLEMENTS = NeedforHeat/NeedforHeat.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20022;
+				CURRENT_PROJECT_VERSION = 20023;
 				DEVELOPMENT_TEAM = 7CD4V7QB9J;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -416,7 +416,7 @@
 				CODE_SIGN_ENTITLEMENTS = NeedforHeat/NeedforHeat.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20022;
+				CURRENT_PROJECT_VERSION = 20023;
 				DEVELOPMENT_TEAM = 7CD4V7QB9J;
 				INFOPLIST_FILE = NeedforHeat/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NeedForHeat;
