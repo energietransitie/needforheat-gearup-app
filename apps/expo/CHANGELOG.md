@@ -1,3 +1,15 @@
+## [2.10.1](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.10.0...v2.10.1) (2023-11-23)
+
+
+### Bug Fixes
+
+* Back button not showing on Android and IOS on the add online data source screen. ([455e5ce](https://github.com/energietransitie/twomes-app-needforheat/commit/455e5ce9c18067b494767fa16f8db8483d2e73a2))
+* deviceList no data received not updating on Homepage when user navigates from ProvisionScreen to HomeScreen ([4ff0827](https://github.com/energietransitie/twomes-app-needforheat/commit/4ff082712f0cb21671fc60aae1a50d83ac2da40d))
+* FAQ url not working for uninvited users using the app. ([baeb79e](https://github.com/energietransitie/twomes-app-needforheat/commit/baeb79ec6042d5fdfd6bbefd0e19ea8f93d6cea1))
+* Manual text is no longer cut off on the screen and text got equal padding on both sides. ([51ecffa](https://github.com/energietransitie/twomes-app-needforheat/commit/51ecffab8d167e27be628e5332d7e473358c18df))
+* Overlap deviceList text with circle menu ([82ba8d3](https://github.com/energietransitie/twomes-app-needforheat/commit/82ba8d335022227514c2f2ca505c2afcfca32160))
+* privacy policy language header ([7011e30](https://github.com/energietransitie/twomes-app-needforheat/commit/7011e30cd2435c1f4b8726d73e39889fc111ce16))
+
 # [2.10.0](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.9.3...v2.10.0) (2023-11-15)
 
 

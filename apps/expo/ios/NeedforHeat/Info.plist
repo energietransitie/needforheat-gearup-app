@@ -17,7 +17,7 @@
 		<key>CFBundlePackageType</key>
 		<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 		<key>CFBundleShortVersionString</key>
-	<string>2.10.0</string>
+	<string>2.10.1</string>
 		<key>CFBundleSignature</key>
 		<string>????</string>
 		<key>CFBundleURLTypes</key>
@@ -39,7 +39,7 @@
 			</dict>
 		</array>
 		<key>CFBundleVersion</key>
-	<string>20023</string>
+	<string>20024</string>
 		<key>FirebaseDynamicLinksCustomDomains</key>
 		<array>
 			<string>https://energietransitiewindesheim.page.link/</string>
