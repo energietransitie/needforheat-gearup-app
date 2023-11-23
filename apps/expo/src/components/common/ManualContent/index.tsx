@@ -26,13 +26,11 @@ export default function ManualContent({ manualUrl, languageHeader }: ManualConte
 
   return (
     <ScrollView
-      style={{ width: "100%" }}
+      style={{ width: "100%", marginLeft: "0%", paddingRight: "0%", paddingLeft: "0%" }}
       contentContainerStyle={{
         alignItems: "center",
         minHeight: "90%",
-        marginLeft: "2%",
-        paddingRight: "4%",
-        paddingLeft: "8%",
+        paddingHorizontal: "5%",
       }}
       persistentScrollbar
     >
