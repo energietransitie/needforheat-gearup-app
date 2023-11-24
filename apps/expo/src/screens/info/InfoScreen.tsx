@@ -42,7 +42,7 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
     if (user?.campaign) {
       return user.campaign.info_url + "/" + (resolvedLanguage ? "/" + resolvedLanguage : "");
     } else {
-      return "https://manuals.tst.energietransitiewindesheim.nl/campaigns/generic/info/" + (resolvedLanguage ? "/" + resolvedLanguage : "");
+      return "https://manuals.tst.energietransitiewindesheim.nl/campaigns/generic/faq/" + (resolvedLanguage ? "/" + resolvedLanguage : "");
     }
   }
 
