@@ -40,16 +40,16 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
 
   function getFaqUri() {
     if (user?.campaign) {
-      return user.campaign.info_url + "/" + resolvedLanguage;
+      return user.campaign.info_url + "/" + (resolvedLanguage ? "/" + resolvedLanguage : "");
     } else {
-      return "https://manuals.tst.energietransitiewindesheim.nl/campaigns/generic/info/" + resolvedLanguage;
+      return "https://manuals.tst.energietransitiewindesheim.nl/campaigns/generic/info/" + (resolvedLanguage ? "/" + resolvedLanguage : "");
     }
   }
 
   const data: InfoItem[] = [
     {
       title: t("screens.info_stack.about.title"),
-      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/reducedheatcarb2023/info/" + resolvedLanguage,
+      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/reducedheatcarb2023/info/" + (resolvedLanguage ? "/" + resolvedLanguage : ""),
       icon: "book-outline",
     },
     {
@@ -59,7 +59,7 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
     },
     {
       title: t("screens.info_stack.privacy.title"),
-      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/reducedheatcarb2023/privacy/" + resolvedLanguage,
+      uri: "https://manuals.tst.energietransitiewindesheim.nl/campaigns/reducedheatcarb2023/privacy/" + (resolvedLanguage ? "/" + resolvedLanguage : ""),
       icon: "shield",
     },
   ];
