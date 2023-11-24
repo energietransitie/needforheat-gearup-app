@@ -146,8 +146,8 @@ android {
         applicationId 'nl.windesheim.energietransitie.warmtewachter'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 20024
-        versionName "2.10.1"
+        versionCode 20025
+        versionName "2.10.2"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
         if (isNewArchitectureEnabled()) {

@@ -1,3 +1,11 @@
+## [2.10.2](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.10.1...v2.10.2) (2023-11-24)
+
+
+### Bug Fixes
+
+* changed info to faq to get the correct url in the app ([f0bd36c](https://github.com/energietransitie/twomes-app-needforheat/commit/f0bd36c8ea7b6743d2eb53f93ab40b7f11fd2b04))
+* possibility that resolvedLanguage is undefined ([6ad485c](https://github.com/energietransitie/twomes-app-needforheat/commit/6ad485cf19774e3a0c8189b618e2fb18617d127a))
+
 ## [2.10.1](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.10.0...v2.10.1) (2023-11-23)
 
 
