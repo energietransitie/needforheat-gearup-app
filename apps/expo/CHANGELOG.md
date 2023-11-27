@@ -1,3 +1,10 @@
+# [2.11.0](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.10.2...v2.11.0) (2023-11-27)
+
+
+### Features
+
+* target production manual links ([8cb1dfd](https://github.com/energietransitie/twomes-app-needforheat/commit/8cb1dfd552b45d4ec0492d39dfcb8e708b95a6cd))
+
 ## [2.10.2](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.10.1...v2.10.2) (2023-11-24)
 
 
