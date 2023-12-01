@@ -41,7 +41,7 @@ export default function ManualContent({ manualUrl, languageHeader }: ManualConte
           <RenderHtml
             remoteErrorView={() => <RemoteErrorView />}
             remoteLoadingView={() => <RemoteLoadingView />}
-            source={{ uri: manualUrl, headers: headersObject }}
+            source={{ uri: manualUrl, headers: headersObject, baseUrl: manualUrl }}
             contentWidth={width}
           />
         </>
