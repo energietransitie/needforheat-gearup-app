@@ -6,6 +6,7 @@ export const theme = createTheme({
     primary: "#45B97C", // Dark green
     secondary: "#B1D249", // Apple green
     background: "#F0F2F3", // Not quite white
+    blue: "#1397F5",
     white: "#FFFFFF",
     black: "#231F20",
     grey0: "#FF00D6", // Unused

@@ -328,7 +328,11 @@
       "hours": "hours",
       "days": "days",
       "months": "months",
-      "years": "years"
+      "years": "years",
+      "Hour": "Hour",
+      "Day": "Day",
+      "Week": "Week",
+      "Month": "Month"
     }
   }
 }

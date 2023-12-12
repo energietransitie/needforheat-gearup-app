@@ -329,7 +329,11 @@
       "hours": "uren",
       "days": "dagen",
       "months": "maanden",
-      "years": "jaren"
+      "years": "jaren",
+      "Hour": "Uur",
+      "Day": "Dag",
+      "Week": "Week",
+      "Month": "Maand"
     }
   }
 }

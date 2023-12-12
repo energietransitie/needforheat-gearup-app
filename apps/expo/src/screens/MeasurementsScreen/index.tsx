@@ -2,7 +2,8 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { Text, makeStyles } from "@rneui/themed";
 import { useContext, useEffect, useRef, useState } from "react";
-import { ScrollView, TouchableOpacity } from "react-native";
+import { ScrollView, TouchableOpacity, View } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
 import Icon from "react-native-vector-icons/Ionicons";
 import { MANUAL_URL } from "@/constants";
 import DeviceGraph from "./_deviceGraph";
@@ -36,6 +37,16 @@ export default function MeasurementsScreen() {
   const hasMultipleDevices = (devices?.length ?? 0) > 1;
   const CompleteURL = devices && devices.length > 0 ? MANUAL_URL + devices[0].device_type.name : '';
   const deviceDropdownDisabled = !buildingId || !hasMultipleDevices;
+
+  const data = [
+    { label: "Day", value: "1" },
+    { label: "Week", value: "7" },
+    { label: "Month", value: "30" },
+  ];
+
+  const [timeValue, setValue] = useState(data[0].value);
+  const [isFocus, setIsFocus] = useState(false);
+  console.log(timeValue);
 
   useEffect(() => {
     if (devices?.length) {
@@ -76,25 +87,70 @@ export default function MeasurementsScreen() {
     <Screen>
       <ScrollView>
         <Box style={{ flex: 1 }} padded>
-          <TouchableOpacity
-            disabled={deviceDropdownDisabled}
-            style={[styles.dropdown, deviceDropdownDisabled ? { opacity: 0.5 } : null]}
-            onPress={() => deviceBottomSheetRef.current?.present()}
-          >
-            <Text>
-              {displayName === null
-                ? fetchedData?.[resolvedLanguage] || t("screens.measurements.graph.no_devices")
-                : displayName || t("screens.measurements.graph.no_devices")}
-            </Text>
-            <Icon name="chevron-down" size={16} />
-          </TouchableOpacity>
+          <View style={{ flex: 1, flexDirection: "row" }}>
+            <TouchableOpacity
+              disabled={deviceDropdownDisabled}
+              style={[styles.dropdownDevice, deviceDropdownDisabled ? { opacity: 0.5 } : null]}
+              onPress={() => deviceBottomSheetRef.current?.present()}
+            >
+              <Text>
+                {displayName === null
+                  ? fetchedData?.[resolvedLanguage] || t("screens.measurements.graph.no_devices")
+                  : displayName || t("screens.measurements.graph.no_devices")}
+              </Text>
+              <Icon name="chevron-down" size={16} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              disabled={deviceDropdownDisabled}
+              style={[styles.dropdownTime, deviceDropdownDisabled ? { opacity: 0.5 } : null]}
+              onPress={() => deviceBottomSheetRef.current?.present()}
+            >
+              <Text>
+                {displayName === null
+                  ? fetchedData?.[resolvedLanguage] || t("screens.measurements.graph.no_devices")
+                  : displayName || t("screens.measurements.graph.no_devices")}
+              </Text>
+              <Icon name="chevron-down" size={16} />
+            </TouchableOpacity>
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              iconStyle={styles.iconStyle}
+              data={data}
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder="Select item"
+              value={timeValue}
+              onChange={item => {
+                setValue(item.value);
+              }}
+              renderRightIcon={() => <Icon name="chevron-down" size={16} />}
+            />
+          </View>
 
           {/* Data of last 14, 30 & 90 days */}
           {buildingId && deviceIdentifierName ? (
             <>
-              <DeviceGraph deviceName={deviceIdentifierName} />
-              <DeviceGraph deviceName={deviceIdentifierName} dayRange={30} />
-              <DeviceGraph deviceName={deviceIdentifierName} dayRange={90} />
+              <DeviceGraph
+                deviceName={deviceIdentifierName}
+                dayRange={+timeValue}
+                graphName="CO2 Concentration"
+                property={{ id: 230, name: "CO2concentration" }}
+              />
+              <DeviceGraph
+                deviceName={deviceIdentifierName}
+                dayRange={+timeValue}
+                graphName="Humidity"
+                property={{ id: 232, name: "relativeHumidity" }}
+              />
+              <DeviceGraph
+                deviceName={deviceIdentifierName}
+                dayRange={+timeValue}
+                graphName="Temperature"
+                property={{ id: 231, name: "roomTemp" }}
+              />
             </>
           ) : null}
 
@@ -118,11 +174,43 @@ export default function MeasurementsScreen() {
 }
 
 const useStyles = makeStyles(theme => ({
-  dropdown: {
-    width: "100%",
+  dropdownDevice: {
+    width: "60%",
+    backgroundColor: theme.colors.grey4,
     flexDirection: "row",
     justifyContent: "space-between",
+    marginHorizontal: theme.spacing.lg,
     paddingHorizontal: theme.spacing.lg,
     paddingVertical: theme.spacing.sm,
+  },
+  dropdownTime: {
+    width: "25%",
+    backgroundColor: theme.colors.grey4,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginLeft: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.lg,
+    paddingVertical: theme.spacing.sm,
+  },
+  dropdown: {
+    width: "25%",
+    height: 35,
+    backgroundColor: theme.colors.grey4,
+    marginLeft: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.lg,
+    paddingVertical: theme.spacing.sm,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
   },
 }));
