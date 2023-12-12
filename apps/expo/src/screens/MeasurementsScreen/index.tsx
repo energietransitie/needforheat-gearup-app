@@ -86,25 +86,16 @@ export default function MeasurementsScreen() {
   return (
     <Screen>
       <ScrollView>
-        <Box style={{ flex: 1 }} padded>
-          <View style={{ flex: 1, flexDirection: "row" }}>
+      <Box style={{ flex: 1 }} padded>
+          {/* This view contains the two buttons at the top of the screen. The device button and the time button. */}
+          <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
+            {/* The device button */}
             <TouchableOpacity
               disabled={deviceDropdownDisabled}
               style={[styles.dropdownDevice, deviceDropdownDisabled ? { opacity: 0.5 } : null]}
               onPress={() => deviceBottomSheetRef.current?.present()}
             >
-              <Text>
-                {displayName === null
-                  ? fetchedData?.[resolvedLanguage] || t("screens.measurements.graph.no_devices")
-                  : displayName || t("screens.measurements.graph.no_devices")}
-              </Text>
-              <Icon name="chevron-down" size={16} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              disabled={deviceDropdownDisabled}
-              style={[styles.dropdownTime, deviceDropdownDisabled ? { opacity: 0.5 } : null]}
-              onPress={() => deviceBottomSheetRef.current?.present()}
-            >
+              {/* If the display name is null, show the fetched data(device names). If the fetched data is null, show the text "No devices" */}
               <Text>
                 {displayName === null
                   ? fetchedData?.[resolvedLanguage] || t("screens.measurements.graph.no_devices")

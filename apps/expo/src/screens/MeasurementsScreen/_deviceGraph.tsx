@@ -29,7 +29,6 @@ export default function DeviceGraph(props: DeviceGraphProps) {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const styles = useStyles();
   const { theme } = useTheme();
-  const [property, setProperty] = useState<DeviceProperty | undefined>();
   console.log("property:" + property?.id);
   const { data, isFetching } = useMeasurements(deviceName, {
     property: property?.id ?? 0,
@@ -115,7 +114,7 @@ export default function DeviceGraph(props: DeviceGraphProps) {
     backgroundGradientFrom: "white",
     backgroundGradientToOpacity: 0,
     color: (opacity = 1) => {
-      const themeColor = theme.colors.blue;
+      const themeColor = theme.colors.primary;
 
       return `rgba(${parseInt(themeColor.slice(1, 3), 16)}, ${parseInt(themeColor.slice(3, 5), 16)}, ${parseInt(
         themeColor.slice(5, 7),
@@ -126,9 +125,9 @@ export default function DeviceGraph(props: DeviceGraphProps) {
     strokeWidth: 2,
     barPercentage: 0.5,
     useShadowColorFromDataset: false,
-    fillShadowGradient: theme.colors.blue,
+    fillShadowGradient: theme.colors.primary,
     fillShadowGradientOpacity: 1,
-    fillShadowGradientTo: theme.colors.blue,
+    fillShadowGradientTo: theme.colors.primary,
     fillShadowGradientToOpacity: 1,
   };
 
@@ -183,12 +182,6 @@ export default function DeviceGraph(props: DeviceGraphProps) {
           )}
         </View>
       </Box>
-      <PropertyBottomSheet
-        bottomSheetRef={bottomSheetRef}
-        deviceName={deviceName}
-        propertyId={property?.id}
-        onPropertySelect={setProperty}
-      />
     </Box>
   );
 }
