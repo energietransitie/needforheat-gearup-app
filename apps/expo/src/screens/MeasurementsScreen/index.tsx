@@ -5,7 +5,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import Icon from "react-native-vector-icons/Ionicons";
-import { MANUAL_URL } from "@/constants";
+
 import DeviceGraph from "./_deviceGraph";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
@@ -13,6 +13,7 @@ import BuildingBottomSheet from "@/components/common/bottomSheets/BuildingBottom
 import DeviceBottomSheet from "@/components/common/bottomSheets/DeviceBottomSheet";
 import Box from "@/components/elements/Box";
 import Screen from "@/components/elements/Screen";
+import { MANUAL_URL } from "@/constants";
 import useDevices from "@/hooks/device/useDevices";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
@@ -35,7 +36,7 @@ export default function MeasurementsScreen() {
 
   const [deviceId, setDeviceId] = useState<number>();
   const hasMultipleDevices = (devices?.length ?? 0) > 1;
-  const CompleteURL = devices && devices.length > 0 ? MANUAL_URL + devices[0].device_type.name : '';
+  const CompleteURL = devices && devices.length > 0 ? MANUAL_URL + devices[0].device_type.name : "";
   const deviceDropdownDisabled = !buildingId || !hasMultipleDevices;
 
   const data = [
@@ -86,7 +87,7 @@ export default function MeasurementsScreen() {
   return (
     <Screen>
       <ScrollView>
-      <Box style={{ flex: 1 }} padded>
+        <Box style={{ flex: 1 }} padded>
           {/* This view contains the two buttons at the top of the screen. The device button and the time button. */}
           <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
             {/* The device button */}
@@ -128,19 +129,19 @@ export default function MeasurementsScreen() {
                 deviceName={deviceIdentifierName}
                 dayRange={+timeValue}
                 graphName="CO2 Concentration"
-                property={{ id: 230, name: "CO2concentration" }}
+                property={{ id: 44080, name: "CO2concentration" }}
               />
               <DeviceGraph
                 deviceName={deviceIdentifierName}
                 dayRange={+timeValue}
                 graphName="Humidity"
-                property={{ id: 232, name: "relativeHumidity" }}
+                property={{ id: 44082, name: "relativeHumidity" }}
               />
               <DeviceGraph
                 deviceName={deviceIdentifierName}
                 dayRange={+timeValue}
                 graphName="Temperature"
-                property={{ id: 231, name: "roomTemp" }}
+                property={{ id: 44081, name: "roomTemp" }}
               />
             </>
           ) : null}
