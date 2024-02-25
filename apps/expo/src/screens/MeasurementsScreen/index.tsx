@@ -99,7 +99,7 @@ export default function MeasurementsScreen() {
           >
             <Text>
               {property !== undefined
-                ? property.name : null}
+                ? t(`hooks.property_translation.${property.name}`, { defaultValue: property.name }) : null}
             </Text>
             <Icon name="chevron-down" size={16} />
           </TouchableOpacity>
