@@ -17,11 +17,11 @@
       "src/types",
       "node_modules/@types"
     ],
-    "types": [
-      "@types/jest",
-      "react-native",
-      "react-test-renderer"
-    ],
+    // "types": [
+    //   "@types/jest",
+    //   "react-native",
+    //   "react-test-renderer"
+    // ],
     "forceConsistentCasingInFileNames": true
   },
   "exclude": [

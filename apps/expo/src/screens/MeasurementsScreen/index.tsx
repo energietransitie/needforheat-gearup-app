@@ -6,7 +6,7 @@ import { ScrollView, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { MANUAL_URL } from "@/constants";
 import DeviceGraph from "./_deviceGraph";
-
+import PropertyBottomSheet from "@/components/common/bottomSheets/PropertyBottomSheet";
 import StatusIndicator from "@/components/common/StatusIndicator";
 import BuildingBottomSheet from "@/components/common/bottomSheets/BuildingBottomSheet";
 import DeviceBottomSheet from "@/components/common/bottomSheets/DeviceBottomSheet";
@@ -15,6 +15,7 @@ import Screen from "@/components/elements/Screen";
 import useDevices from "@/hooks/device/useDevices";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
+import { DeviceProperty } from "@/types/api";
 
 export default function MeasurementsScreen() {
   const styles = useStyles();
@@ -23,6 +24,7 @@ export default function MeasurementsScreen() {
 
   const buildingBottomSheetRef = useRef<BottomSheetModal>(null);
   const deviceBottomSheetRef = useRef<BottomSheetModal>(null);
+  const propertyBottomSheetRef = useRef<BottomSheetModal>(null);
 
   const buildings = user?.buildings ?? [];
   const [buildingId, setBuildingId] = useState<number | undefined>(buildings[0]?.id);
@@ -36,6 +38,8 @@ export default function MeasurementsScreen() {
   const hasMultipleDevices = (devices?.length ?? 0) > 1;
   const CompleteURL = devices && devices.length > 0 ? MANUAL_URL + devices[0].device_type.name : '';
   const deviceDropdownDisabled = !buildingId || !hasMultipleDevices;
+
+  const [property, setProperty] = useState<DeviceProperty | undefined>();
 
   useEffect(() => {
     if (devices?.length) {
@@ -88,13 +92,24 @@ export default function MeasurementsScreen() {
             </Text>
             <Icon name="chevron-down" size={16} />
           </TouchableOpacity>
+          <TouchableOpacity
+            disabled={deviceDropdownDisabled}
+            style={[styles.dropdown, deviceDropdownDisabled ? { opacity: 0.5 } : null]}
+            onPress={() => propertyBottomSheetRef.current?.present()}
+          >
+            <Text>
+              {property !== undefined
+                ? property.name : null}
+            </Text>
+            <Icon name="chevron-down" size={16} />
+          </TouchableOpacity>
 
           {/* Data of last 14, 30 & 90 days */}
           {buildingId && deviceIdentifierName ? (
             <>
-              <DeviceGraph deviceName={deviceIdentifierName} />
-              <DeviceGraph deviceName={deviceIdentifierName} dayRange={30} />
-              <DeviceGraph deviceName={deviceIdentifierName} dayRange={90} />
+              <DeviceGraph deviceName={deviceIdentifierName} property={property} />
+              <DeviceGraph deviceName={deviceIdentifierName} property={property} dayRange={30} />
+              <DeviceGraph deviceName={deviceIdentifierName} property={property} dayRange={90} />
             </>
           ) : null}
 
@@ -111,6 +126,18 @@ export default function MeasurementsScreen() {
             onDisplayName={setDeviceIdentifierName}
             onDeviceId={setDeviceId}
           />
+
+          {buildingId && deviceIdentifierName ? (
+            <>
+              <PropertyBottomSheet
+                bottomSheetRef={propertyBottomSheetRef}
+                deviceName={deviceIdentifierName}
+                propertyId={property?.id}
+                onPropertySelect={setProperty}
+              />
+            </>
+          ) : null}
+
         </Box>
       </ScrollView>
     </Screen>

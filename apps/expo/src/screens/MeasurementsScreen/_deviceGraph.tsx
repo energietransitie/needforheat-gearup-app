@@ -8,7 +8,6 @@ import { AbstractChartConfig } from "react-native-chart-kit/dist/AbstractChart";
 import { LineChartData } from "react-native-chart-kit/dist/line-chart/LineChart";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
-import PropertyBottomSheet from "@/components/common/bottomSheets/PropertyBottomSheet";
 import Box from "@/components/elements/Box";
 import useMeasurements from "@/hooks/device/useMeasurements";
 import useTranslation from "@/hooks/translation/useTranslation";
@@ -18,16 +17,16 @@ import { getAverageValuePerDay } from "@/utils/aggregate";
 type DeviceGraphProps = {
   deviceName: string;
   dayRange?: number;
+  property: DeviceProperty | undefined;
 };
 
 const BOX_HEIGHT = 250;
 
 export default function DeviceGraph(props: DeviceGraphProps) {
-  const { deviceName, dayRange = 14 } = props;
+  const { deviceName, dayRange = 14, property } = props;
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const styles = useStyles();
   const { theme } = useTheme();
-  const [property, setProperty] = useState<DeviceProperty | undefined>();
   const { data, isFetching } = useMeasurements(deviceName, {
     property: property?.id ?? 0,
     start: dayjs().subtract(dayRange, "d").startOf("day").toISOString(),
@@ -80,13 +79,6 @@ export default function DeviceGraph(props: DeviceGraphProps) {
           <Text bold>
             {t("screens.measurements.graph.timespan", { count: dayRange, unit: t("common.units.days") })}
           </Text>
-          <TouchableOpacity style={{ flexGrow: 1 }} onPress={() => bottomSheetRef.current?.present()}>
-            <Text style={{ fontSize: 14, textAlign: "right" }}>
-              {t(`hooks.property_translation.${property?.name}`, {
-                defaultValue: t("screens.measurements.graph.no_property"),
-              })}
-            </Text>
-          </TouchableOpacity>
         </View>
         <View style={{ overflow: "hidden", width: "100%" }} onLayout={e => setWidth(e.nativeEvent.layout.width)}>
           {isFetching ? (
@@ -113,12 +105,6 @@ export default function DeviceGraph(props: DeviceGraphProps) {
           )}
         </View>
       </Box>
-      <PropertyBottomSheet
-        bottomSheetRef={bottomSheetRef}
-        deviceName={deviceName}
-        propertyId={property?.id}
-        onPropertySelect={setProperty}
-      />
     </Box>
   );
 }
