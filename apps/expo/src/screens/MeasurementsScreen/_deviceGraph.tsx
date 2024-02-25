@@ -1,8 +1,7 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { makeStyles, Text, useTheme } from "@rneui/themed";
 import dayjs from "dayjs";
-import { useRef, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import { View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { AbstractChartConfig } from "react-native-chart-kit/dist/AbstractChart";
 import { LineChartData } from "react-native-chart-kit/dist/line-chart/LineChart";
@@ -24,7 +23,6 @@ const BOX_HEIGHT = 250;
 
 export default function DeviceGraph(props: DeviceGraphProps) {
   const { deviceName, dayRange = 14, property } = props;
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
   const styles = useStyles();
   const { theme } = useTheme();
   const { data, isFetching } = useMeasurements(deviceName, {

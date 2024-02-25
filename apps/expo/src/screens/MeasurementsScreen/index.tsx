@@ -156,7 +156,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
     paddingHorizontal: theme.spacing.lg,
     paddingVertical: theme.spacing.sm,
-    backgroundColor: '#e6e6e6', 
+    backgroundColor: '#ebebeb', 
     borderRadius: 8,
   },
 }));
