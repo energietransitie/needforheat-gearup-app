@@ -16,6 +16,7 @@ import useDevices from "@/hooks/device/useDevices";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
 import { DeviceProperty } from "@/types/api";
+import { capitalizeFirstLetter } from "@/utils/tools";
 
 export default function MeasurementsScreen() {
   const styles = useStyles();
@@ -82,22 +83,26 @@ export default function MeasurementsScreen() {
         <Box style={{ flex: 1 }} padded>
           <TouchableOpacity
             disabled={deviceDropdownDisabled}
-            style={[styles.dropdown, deviceDropdownDisabled ? { opacity: 0.5 } : null]}
+            style={{
+              ...styles.dropdown,
+              ...(deviceDropdownDisabled ? { opacity: 0.5 } : null),
+              marginBottom: 2 
+            }}
             onPress={() => deviceBottomSheetRef.current?.present()}
           >
             <Text>
               {displayName === null
-                ? fetchedData?.[resolvedLanguage] || t("screens.measurements.graph.no_devices")
-                : displayName || t("screens.measurements.graph.no_devices")}
+                ? capitalizeFirstLetter(fetchedData?.[resolvedLanguage]) || t("screens.measurements.graph.no_devices")
+                : capitalizeFirstLetter(displayName) || t("screens.measurements.graph.no_devices")}
             </Text>
             <Icon name="chevron-down" size={16} />
           </TouchableOpacity>
           <TouchableOpacity
             disabled={deviceDropdownDisabled}
-            style={[styles.dropdown, deviceDropdownDisabled ? { opacity: 0.5 } : null]}
+            style={[styles.dropdown, deviceDropdownDisabled ? { opacity: 0.5 } : null,]}
             onPress={() => propertyBottomSheetRef.current?.present()}
           >
-            <Text>
+            <Text style={{ fontStyle: 'italic' }}>
               {property !== undefined
                 ? t(`hooks.property_translation.${property.name}`, { defaultValue: property.name }) : null}
             </Text>
@@ -151,5 +156,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
     paddingHorizontal: theme.spacing.lg,
     paddingVertical: theme.spacing.sm,
+    backgroundColor: '#e6e6e6', 
+    borderRadius: 8,
   },
 }));

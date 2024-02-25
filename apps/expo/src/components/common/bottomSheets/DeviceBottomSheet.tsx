@@ -6,6 +6,7 @@ import useDevices from "@/hooks/device/useDevices";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { MANUAL_URL } from "@/constants";
 import { useEffect, useState } from "react";
+import { capitalizeFirstLetter } from "@/utils/tools";
 
 type DeviceBottomSheetProps = {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
@@ -101,7 +102,7 @@ export default function DeviceBottomSheet({
       <BottomSheetScrollView>
         {deviceDataResponses?.map(device => (
           <ListItem key={device.id} onPress={() => onPress(device.id)} Component={TouchableOpacity}>
-            <Text bold={checkId === device.id}>{device.name}</Text>
+            <Text bold={checkId === device.id}>{capitalizeFirstLetter(device.name)}</Text>
           </ListItem>
         ))}
       </BottomSheetScrollView>
