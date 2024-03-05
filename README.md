@@ -59,9 +59,7 @@ List of features in the NeedForHeat app:
   - Present device specific installation instructions provided by the API.
   - Connect via Bluetooth Low Energy (BLE) to a NFH measurement device to provision internet connectivity.
   - Verification of successful device provisioning by checking for a device heartbeat.
-- Multi-language support for the following languages:
-  - English
-  - Dutch
+- Multi-language support
 
 ### GearUp planned features
 List of features that are in development or will be in development:
