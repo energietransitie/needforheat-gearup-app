@@ -1,10 +1,14 @@
 # iOS development
+You should have read the [main developing guide](./developing.md) before looking into the iOS guide.
 
-When developing for iOS you need to have a Mac with Xcode and Ruby 3.1.0 installed. You can find more information about the setup [here](https://docs.expo.io/workflow/ios-simulator/).
+When developing for iOS you need to have a Mac with Xcode and Ruby 3.1.0 installed. You can find more information about the setup over at the [Expo documentation on iOS development](https://docs.expo.io/workflow/ios-simulator/).
+
+This guide is currently only for running iOS in an emulator or device using Expo Go.
 
 ## Ruby
+To install Cocoapods, Ruby is required. MacOS comes with a built-in version of Ruby that might not match the required version of this project. To install the correct version of Ruby, you can use `rbenv` using `homebrew`.
 
-To install Cocoapods, Ruby is required. MacOS comes with a built-in version of Ruby that might not match the required version of this project. To install the correct version of Ruby, you can use `rbenv` using `homebrew`. If you don't have homebrew, you can learn more at [brew.sh](https://brew.sh/).
+If you don't have homebrew, you can learn more at [brew.sh](https://brew.sh/).
 
 To install `rbenv` you can run the following command:
 
@@ -42,7 +46,7 @@ eval "$(rbenv init -)"
 
 and then run `which ruby` again.
 
-### Pods
+## Pods
 
 After installing Ruby correctly, you can install the required pods by running the following command in the `ios` directory:
 
@@ -52,19 +56,16 @@ cd /apps/expo/ios
 pod install
 ```
 
-After getting the prerequisites installed you can start the development server with the following command:
+After getting the prerequisites installed you can start the development server with the following command for running with Expo Go:
 
 ```bash
 yarn workspace app dev:ios
 ```
 
-This will ask you to select a device or simulator to run the app on. It is recommended for developing that you connect your iPhone to your Mac and select that device because of the limitations of the simulator.
+This will ask you to select a device or emulator to run the app on. It is recommended for developing that you connect your iPhone to your Mac and select that device because of the limitations of the emulator.
 
-## Limitations
-
-Although the iOS simulator is great for rapid development, it does come with a few limitations.
-
-The following hardware is unavailable in Simulator:
+## Emulator Limitations
+The following hardware is unavailable in emulator:
 
 - Audio Input
 - Barometer

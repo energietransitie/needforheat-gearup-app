@@ -1,44 +1,75 @@
 # Developing
+This guide will explain how to prepare the local enviroment to start developing the app. Including important things to look out for both Android and iOS.
 
 ## Prerequisites
+-	OpenJDK 17
+    - You can get OpenJDK from [Microsoft](https://learn.microsoft.com/nl-nl/java/openjdk/download#openjdk-17) or [Adoptium](https://adoptium.net/temurin/releases/?version=17)
+-	[Node.js](https://yarnpkg.com/) (>= 16.0.0)
+-	[Yarn](https://yarnpkg.com/) (>= 1.22.0)
+-	[Android Studio](https://developer.android.com/studio) (>= 4.2.0)
+-	[Xcode](https://developer.apple.com/xcode/) (>= 13.0.0)
+-   [Git](https://git-scm.com/)
 
-- [Node.js](https://nodejs.org/en/) (>= 16.0.0)
-- [Yarn](https://yarnpkg.com/) (>= 1.22.0)
-- [Android Studio](https://developer.android.com/studio) (>= 4.2.0)
-- [Xcode](https://developer.apple.com/xcode/) (>= 13.0.0)
+## 1. Setup SSH Key
+Due to the dependency [twomes-app-needforheat-eup](https://github.com/energietransitie/twomes-app-needforheat-eup), a SSH key will be required to set up so Yarn can properly fetch this repo.
 
-### Clone the repository
+To do this, please follow the GitHub documentation to setup an SSH key on the device you will be using to develop:
+1. [Generate a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+2. [Adding a SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
 
+## 2. Clone the repository
+Go to a folder you plan on cloning the code to on your device and run:
 ```bash
 git clone https://github.com/Need-for-Heat/need-for-heat.git
 cd need-for-heat
 ```
 
-### Install dependencies
+## 3. Install dependencies
+Before you can run the app, dependencies need to be fetched and installed to the `node_modules` folder with the following command in a terminal:
 
 ```bash
 yarn
 ```
 
-### Add environment variables
-
-#### Copy the .env.example
+## 4. Add environment variable
+Copy the example environment file and rename it to `.env`:
 
 ```bash
 cp .env.example .env
 ```
 
-#### Fill in the environment variables
+Fill in the environment variable for the API:
 
 ```yaml
 API_URL= # The API URL for the need-for-heat app
 ```
 
-### Install development app
+### Test- or Local API?
+The recommended server to use is the existing public test server available on <https://api.tst.energietransitiewindesheim.nl/v2>
 
-Read the guides for [android](./android.md) and [ios](./ios.md) for a more complete explanation.
+A local server with the [twomes-backoffice-api](https://github.com/energietransitie/twomes-backoffice-api) is possible by running it through Docker with the [feat/cors branch](https://github.com/energietransitie/twomes-backoffice-api/tree/feat/cors). \
+However, this is not the best way to develop and you might run in to issues you won't have by just using the public test server. This issue is because of security from [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 
-To get started quickly, run the following for android:
+### API URL not changing?
+Due to caching, this URL might not always change. You can fix this by running `expo run -c` then doing `CTRL + C` when it starts building to stop it. \
+The cache should then be cleared and you can use Yarn again to run the app.
+
+## 5. Setup Java
+Make sure the JDK for Java 17 is installed and that `JAVA_HOME` is set. \
+It is recommeded to remove other versions of Java that you no longer use.
+
+In addition, make sure you also remove the `/Program Files/Java` folder. \
+Otherwise, the Java JDK inside this folder will be used when building which is most likely not the right version. 
+
+## 6. Prepare and Running with Expo Go
+You SHOULD read the guides for [Android](./android.md) and [iOS](./ios.md) for the OS-specific guide. These guides will explain how to prepare your environment to build the development app on either a emulator or a physical device.
+
+Do note that you should not exclusively develop on Expo Go. Mainly because icons will not load and because of React Native Bindings that get used from [twomes-app-needforheat-eup](https://github.com/energietransitie/twomes-app-needforheat-eup).
+
+You should do [Step 7](#7-compiling-binaries-for-testing) to properly develop and test the app.
+<br><br>
+
+To get started quickly, run the following for Android:
 ```bash
 yarn workspace app dev:android
 ```
@@ -47,12 +78,24 @@ Or for iOS:
 yarn workspace app dev:ios
 ```
 
-## Running and debugging
+## 7. Compiling binaries for testing
+Compiling binaries is OS-specific. Again, you should check out the guides for [Android](./android.md) and [iOS](./ios.md).
+<br><br>
 
-Start the expo developer client using
+To get started quickly, run the following for Android:
+
 ```bash
-yarn workspace app dev
+yarn workspace app release:android:build
 ```
-(For more info about the available scripts. See [Scripts](./scripts.md))
 
-You're now ready to add and change code! Make sure you stick to the [Contribution Guidelines](./contributing.md) when contributing to this repository. For an explanation of the project structure, see [Project Structure](./project-structure.md). If you want to change or add translations and languages check out [Translating - Getting Started](./translating.md)
+```bash
+yarn workspace app release:android:install
+```
+
+## 8. Ready!
+You're now ready to add and change code! \
+Make sure you stick to the [Contribution Guidelines](./contributing.md) when contributing to this repository.
+
+To check what scripts are available for Yarn, see [Yarn Scripts](./scripts.md). \
+For an explanation of the project structure, see [Project Structure](./project-structure.md). \
+If you want to change or add translations and languages check out [Translating - Getting Started](./translating.md).
