@@ -1,5 +1,4 @@
 # Yarn Scripts
-
 | Workspace | Name                    | Description                                                                                               |
 | --------- | ----------------------- | --------------------------------------------------------------------------------------------------------- |
 | `/`       | build                   | Runs all build commands for all workspaces in parallel.                                                   |
