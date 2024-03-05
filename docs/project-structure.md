@@ -29,7 +29,7 @@ need-for-heat/ \
 ## .github
 The `.github` folder contains all the repository workflows. These workflows run everytime a pull request gets opened or changes are commited to an already open pull request. There is also a pullrequest template in this folder.
 
-For more explanation, check out [GitHub documentation of the project](./github.md)
+For more explanation, check out the [GitHub documentation of the project](./github.md)
 
 ---
 

@@ -41,7 +41,7 @@ To deploy and successfully use the app you need to have received an e-mail with 
 
 ## Documentation
 ### Deploying
-Documentation for deploying to the Google Play Store and Apple App Store can be found in [here](./docs/store-update.md).
+Documentation for deploying to the Google Play Store and Apple App Store can be found in [here](./docs/deploying.md).
 
 ### Developing
 Documentation for developing can be found [here](./docs/developing.md).
