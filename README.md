@@ -59,19 +59,7 @@ List of features in the NeedForHeat app:
   - Present device specific installation instructions provided by the API.
   - Connect via Bluetooth Low Energy (BLE) to a NFH measurement device to provision internet connectivity.
   - Verification of successful device provisioning by checking for a device heartbeat.
-- Multi-language support
-
-### GearUp planned features
-List of features that are in development or will be in development:
-
-- A "ShoppingList" of actions an user needs to undertake before being fully onboard a campaign
-- Improved monitoring of measurements and uploads with notifications if something does not seem right
-- EnergyProfileData (EPD) - Privacy-safe profile of an user's home including but not limited to:
-  - High-level coordinate, so it is not possible to pinpoint an exact location. Used for getting weather data.
-  - Use [BAG](https://www.kadaster.nl/zakelijk/registraties/basisregistraties/bag/over-bag) to do the following:
-    - Get information from public accessible APIs
-    - Calculate information based on what the NeedForHeat API requests
- - General improvements to the app includig bug fixes and style improvements    
+- Multi-language support   
 
 ## License
 This software is available under the [Apache 2.0 license](./LICENSE), Copyright 2023 [Research group Energy Transition, Windesheim University of Applied Sciences](https://windesheim.nl/energietransitie)

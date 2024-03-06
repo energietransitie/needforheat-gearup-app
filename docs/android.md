@@ -19,7 +19,7 @@ To fix this, do the workaround as explained in: <https://github.com/expo/expo/is
 ## Preparing a physical device
 If you followed the [Expo documentation on Android Studio](https://docs.expo.io/workflow/android-studio-emulator/). You should have an Android emulator ready for development. However, it is recommended to use a real Android device due to performance and [Emulator limitations](#emulator-limitations).
 
-The first step is to enable [Developer Options](https://developer.android.com/studio/debug/dev-options) on the device. Then you have two options to connext the device to the PC:
+The first step is to enable [Developer Options](https://developer.android.com/studio/debug/dev-options) on the device. Then you have two options to connect the device to the PC:
 
 - **Wired with USB**: Enable USB-Debugging and allow the fingerprint for your PC.
 - **Over WiFi**: Use the [Command-line tool](https://developer.android.com/tools/adb#wireless-android11-command-line) (Recommendend) or with [Android Studio](https://developer.android.com/tools/adb#connect-to-a-device-over-wi-fi).
