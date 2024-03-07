@@ -46,7 +46,7 @@ export default function PropertyBottomSheet({
       backdropComponent={props => <BottomSheetBackdrop {...props} pressBehavior="close" disappearsOnIndex={-1} />}
     >
       <BottomSheetScrollView>
-        <Text style={{ padding: 15 }} bold>
+        <Text style={{ padding: 15, fontWeight: 'bold', fontStyle: 'italic' }}>
           {t("screens.measurements.property_sheet.title")}
         </Text>
         {properties

@@ -43,3 +43,10 @@ export function readableDateTime(date: Maybe<string | Date>, language: string) {
 
   return dateObject.toLocaleString(language, options);
 }
+
+export function capitalizeFirstLetter(text: string | undefined) {
+  if (text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+  return text;
+}

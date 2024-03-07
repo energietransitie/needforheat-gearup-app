@@ -1,3 +1,10 @@
 {
-  "urlRandomness": "pyVt8Y0"
+  "urlRandomness": "pyVt8Y0",
+  "dev": true,
+  "minify": false,
+  "https": false,
+  "hostType": "lan",
+  "lanType": "ip",
+  "scheme": "exp+need-for-heat",
+  "devClient": false
 }
