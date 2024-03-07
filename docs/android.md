@@ -78,7 +78,7 @@ You can still use this, but you need to run the development server with:
 yarn workspace app dev
 ```
 
-The app gets built to the `apps\expo\android\gradle\app\build\apk` folder in either the `debug` or `release` folder.
+The app gets built to the `apps\expo\android\app\build\outputs\apk` folder in either the `debug` or `release` folder.
 
 ### Installing the app
 You can then use the following ADB command from the [platform-tools](https://developer.android.com/tools/adb) to install the release APK to ***all*** ADB-connected devices:
