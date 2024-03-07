@@ -12,7 +12,6 @@ This repository contains the source code for the NeedForHeat (NFH) app for both 
 - [Developing](#developing)
 - [Contributing](#contributing)
 - [Features](#features)
-- [Status](#status)
 - [License](#license)
 - [Credits](#credits)
 

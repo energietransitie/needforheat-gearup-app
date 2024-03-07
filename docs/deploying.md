@@ -3,6 +3,11 @@ NeedForHeat is published to the Apple App Store and Google Play Store App Store 
 
 For access to either of those developer accounts, please contact [@n-vr](https://github.com/n-vr) or [@henriterhofte](https://github.com/henriterhofte).
 
+## Table of contents
+- [General information](#general-information)
+- [Apple App Store](#apple-app-store)
+- [Google Play Store](#google-play-store)
+
 ## General information
 Using GitHub Actions, the app is automatically built when merging a new version to the `main` branch. This is done using the `expo build` command, which you don't have to run yourself. The build is then uploaded to the @nfh organization on Expo.
 

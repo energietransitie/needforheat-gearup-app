@@ -11,26 +11,37 @@ The project has multiple workflows that are all used to ensure the quality of th
 
 These workflows use [GitHub Actions](https://docs.github.com/en/actions) to run.
 
-### For every pullrequest
+### [For every pullrequest]
 These workflows run for every pullrequest that gets made.
+
+---
 
 #### eslint.yml
 Uses [ESLint](https://eslint.org/) to check for problems in code.
 
+---
+
 #### merge-conflict-finder.yml
 Checks for conflicts in code.
+
+---
 
 #### merge-to-default-warning.yml
 When attempting to merge to main, it will create a message to warn you are doing this.
 
+---
+
 #### typescript.yml
 Checks for TypeScript issues in code.
 
-### Push to main
+---
+
+### [Push to main]
 These workflows are run when a pullrequest gets pushed and thus merged into the main branch.
 
 Note that `semantic-release.yml` gets ran first before `eas-build.yml`.
 
+---
 #### semantic-release.yml
 Creates a new semantic release on GitHub with an automatic generated `CHANGELOG.MD` with the new changes based on the commits.
 
@@ -38,3 +49,5 @@ Creates a new semantic release on GitHub with an automatic generated `CHANGELOG.
 After a semantic release, this workflows uses EAS to create binaries and so they can be pushed to the stores. 
 
 Also see [Deploying](./deploying.md) for more info.
+
+---

@@ -1,6 +1,17 @@
 # Developing
 This guide will explain how to prepare the local enviroment to start developing the app. Including important things to look out for both Android and iOS.
 
+## Table of contents
+- [Prerequisites](#prerequisites)
+- [1. Setup SSH Key](#1-setup-ssh-key)
+- [2. Clone the repository](#2-clone-the-repository)
+- [3. Install dependencies](#3-install-dependencies)
+- [4. Add environment variable](#4-add-environment-variable)
+- [5. Setup Java](#5-setup-java)
+- [6. Prepare and Running with Expo Go](#6-prepare-and-running-with-expo-go)
+- [7. Compiling binaries for testing](#7-compiling-binaries-for-testing)
+- [8. Ready!](#8-ready)
+
 ## Prerequisites
 -	OpenJDK 17
     - You can get OpenJDK from [Microsoft](https://learn.microsoft.com/nl-nl/java/openjdk/download#openjdk-17) or [Adoptium](https://adoptium.net/temurin/releases/?version=17)

@@ -1,6 +1,12 @@
 # Android development
 This Android-specific development guide will explain how to setup an environment to develop the Android app. Including important things to look out for to ensure the app can be built.
 
+## Table of contents
+- [Prerequisites](#prerequisites)
+- [Preparing a physical device](#preparing-a-physical-device)
+- [Starting the app with Expo Go](#starting-the-app-with-expo-go)
+- [Compiling an APK for testing](#compiling-an-apk-for-testing)
+
 ## Prerequisites
 You should have read the [main developing guide](./developing.md) before looking into the Android guide.
 

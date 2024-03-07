@@ -5,6 +5,10 @@ The default language is dependant on the device language. If the device language
 
 Read about how to modify or add new translations in the next chapters.
 
+## Table of contents
+- [Modifying a translation](#modifying-a-translation)
+- [Adding a new language](#adding-a-new-language)
+
 ## Modifying a translation
 Modifying a translation can be done very quickly. Navigate to the [lang](../apps/expo/src/lang/) folder and open your language's corresponding translation file (`en-US.json` for English, `nl-NL.json` for Dutch, etc.).
 
