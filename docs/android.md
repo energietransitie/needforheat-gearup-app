@@ -59,7 +59,7 @@ This means that specificly testing the `NeedForHeat` app that the emulator isn't
 There are [Yarn scripts](./scripts.md) that can do this for you if you set everything up properly including [adding platform-tools](https://developer.android.com/tools/adb) to `PATH`.
 <br><br>
 
-In the `apps\expo\android\gradle` folder, run the following command in a Terminal window to build an APK.:
+In the `apps\expo\android\` folder, run the following command in a Terminal window to build an APK.:
 
 ```bash
 gradlew app:assembleRelease 
