@@ -62,7 +62,7 @@ A local server with the [twomes-backoffice-api](https://github.com/energietransi
 However, this is not the best way to develop and you might run in to issues you won't have by just using the public test server. This issue is because of security from [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 
 ### API URL not changing?
-Due to caching, this URL might not always change. You can fix this by running `expo run -c` then doing `CTRL + C` when it starts building to stop it. \
+Due to caching, this URL might not always change. You can fix this by running `npx expo run -c` then doing `CTRL + C` when it starts/finishes to stop it. \
 The cache should then be cleared and you can use Yarn again to run the app.
 
 ## 5. Setup Java
