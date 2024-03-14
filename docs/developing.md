@@ -77,7 +77,8 @@ You SHOULD read the guides for [Android](./android.md) and [iOS](./ios.md) for t
 
 Do note that you should not exclusively develop on Expo Go. Mainly because icons will not load and because of React Native Bindings that get used from [twomes-app-needforheat-eup](https://github.com/energietransitie/twomes-app-needforheat-eup). 
 
-In addition, Expo Go requires that the network is a **private** network. This means you will be unable to use Expo Go on public networks like `Eduroam`. You can fix this by running through a hotspot or and/or setting the network to private for [Windows](https://support.microsoft.com/en-us/windows/make-a-wi-fi-network-public-or-private-in-windows-0460117d-8d3e-a7ac-f003-7a0da607448d). MacOS has no public/private network setting and should work fine on private networks.
+In addition, Expo Go requires that the network is a **private** network with a firewall that allows the Expo Go ports to go through on the PC hosting the Expo Go server. This means you will be unable to use Expo Go on public networks like `eduroam`. \
+You *can* fix this by running through a hotspot or and/or setting the network to private for [Windows](https://support.microsoft.com/en-us/windows/make-a-wi-fi-network-public-or-private-in-windows-0460117d-8d3e-a7ac-f003-7a0da607448d). MacOS has no public/private network setting and should work fine on private networks.
 
 You should do [Step 7](#7-compiling-binaries-for-testing) to properly develop and test the app.
 <br><br>
