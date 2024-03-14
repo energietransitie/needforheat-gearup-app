@@ -156,11 +156,19 @@
           "alert": {
             "title": "Bluetooth permission",
             "message": "This app uses Bluetooth, but does not register your location. On Android devices, Bluetooth is considered part of location services. That's why you will get a question about location.",
-            "button": "Okay, go ahead!"
+            "button": "Okay, go ahead!",
+            "enable_button": "Enable Bluetooth",
+            "cancel": "Cancel",
+            "switch_on": "Switch on",
+            "disabled_bluetooth": "Bluetooth is disabled. Do you want to enable Bluetooth?"
+
           },
           "error": {
             "title": "An error occurred.",
-            "message": "Please make sure Bluetooth is enabled and try again."
+            "message": "Please make sure Bluetooth is enabled and try again.",
+            "cancel_message": "Bluetooth activation canceled",
+            "error_message": "Bluetooth activation failed.",
+            "status_check": "Error while checking Bluetooth status:"
           }
         },
         "scanning": {

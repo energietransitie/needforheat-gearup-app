@@ -156,11 +156,18 @@
           "alert": {
             "title": "Bluetooth toestemming",
             "message": "Deze app gebruikt Bluetooth, maar registreert uw locatie niet. Op Android valt Bluetooth onder locatiediensten. Daarom krijgt u zo een vraag over locatie.",
-            "button": "Oké, vraag maar!"
+            "button": "Oké, vraag maar!",
+            "enable_button": "Bluetooth Inschakelen",
+            "cancel": "Annuleren",
+            "switch_on": "Inschakelen",
+            "disabled_bluetooth": "Bluetooth is uitgeschakeld. Wilt u Bluetooth inschakelen?"
           },
           "error": {
             "title": "Er is een fout opgetreden.",
-            "message": "Zorg ervoor dat Bluetooth is ingeschakeld en probeer opnieuw."
+            "message": "Zorg ervoor dat Bluetooth is ingeschakeld en probeer opnieuw.",
+            "cancel_message": "Bluetooth inschakelen geannuleerd",
+            "error_message": "Bluetooth inschakelen is mislukt.",
+            "status_check": "Fout bij controleren van Bluetooth-status:"
           }
         },
         "scanning": {
