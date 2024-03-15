@@ -152,7 +152,7 @@
           }
         },
         "bluetooth": {
-          "enabling": "Enabling Bluetooth...",
+          "enabling": "Bluetooth is currently disabled. To proceed, please enable your Bluetooth.",
           "alert": {
             "title": "Bluetooth permission",
             "message": "This app uses Bluetooth, but does not register your location. On Android devices, Bluetooth is considered part of location services. That's why you will get a question about location.",

@@ -152,7 +152,7 @@
           }
         },
         "bluetooth": {
-          "enabling": "Bluetooth inschakelen...",
+          "enabling": "Bluetooth is momenteel uitgeschakeld. Om verder te kunnen gaan, dient u uw Bluetooth in te schakelen",
           "alert": {
             "title": "Bluetooth toestemming",
             "message": "Deze app gebruikt Bluetooth, maar registreert uw locatie niet. Op Android valt Bluetooth onder locatiediensten. Daarom krijgt u zo een vraag over locatie.",

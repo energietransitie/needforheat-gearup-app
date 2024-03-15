@@ -51,116 +51,86 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
 
   const targetDevice = devices?.find(foundDevice => foundDevice.deviceName === deviceName);
 
-  // const onRequestPermissionError = (err: string) => {
-  //   console.log("onRequestPermissionError", err);
+  const onRequestPermissionError = (err: string) => {
+    console.log("onRequestPermissionError", err);
 
-  //   Alert.alert("Error", err, [
-  //     {
-  //       text: t("screens.home_stack.search_device.open_settings"),
-  //       onPress: () => {
-  //         // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
-  //         openSettings().catch(e => {});
-  //       },
-  //     },
-  //   ]);
-  // };
+    Alert.alert("Error", err, [
+      {
+        text: t("screens.home_stack.search_device.open_settings"),
+        onPress: () => {
+          // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
+          openSettings().catch(e => {});
+        },
+      },
+    ]);
+  };
 
-  // const onEnableBluetoothError = (err: string) => {
-  //   console.log("onEnableBluetoothError", err);
+  const onEnableBluetoothError = (err: string) => {
+    console.log("onEnableBluetoothError", err);
 
-  //   Alert.alert("Error", err, [
-  //     Platform.OS === "ios"
-  //       ? {
-  //           text: "OK",
-  //         }
-  //       : {
-  //           text: "Open settings",
-  //           onPress: () => {
-  //             // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
-  //             BluetoothStateManager.openSettings().catch(e => {});
-  //           },
-  //         },
-  //   ]);
-  // };
+    Alert.alert("Error", err, [
+      Platform.OS === "ios"
+        ? {
+            text: "OK",
+          }
+        : {
+            text: "Open settings",
+            onPress: () => {
+              // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
+              BluetoothStateManager.openSettings().catch(e => {});
+            },
+          },
+    ]);
+  };
 
-  // const askForBluetoothPermission = async (): Promise<null> => {
-  //   return new Promise((resolve, reject) => {
-  //     Alert.alert(
-  //       t("screens.home_stack.search_device.bluetooth.alert.title"),
-  //       t("screens.home_stack.search_device.bluetooth.alert.message"),
-  //       [
-  //         {
-  //           text: t("screens.home_stack.search_device.bluetooth.alert.button"),
-  //           onPress: async () => {
-  //             try {
-  //               await requestBluetoothPermission();
-  //               resolve(null);
-  //             } catch (err: unknown) {
-  //               const errorMsg =
-  //                 err instanceof Error
-  //                   ? err.message
-  //                   : t("screens.home_stack.search_device.errors.bluetooth.request_failed");
-  //               onRequestPermissionError(errorMsg);
+  const askForBluetoothPermission = async (): Promise<null> => {
+    return new Promise((resolve, reject) => {
+      Alert.alert(
+        t("screens.home_stack.search_device.bluetooth.alert.title"),
+        t("screens.home_stack.search_device.bluetooth.alert.message"),
+        [
+          {
+            text: t("screens.home_stack.search_device.bluetooth.alert.button"),
+            onPress: async () => {
+              try {
+                await requestBluetoothPermission();
+                resolve(null);
+              } catch (err: unknown) {
+                const errorMsg =
+                  err instanceof Error
+                    ? err.message
+                    : t("screens.home_stack.search_device.errors.bluetooth.request_failed");
+                onRequestPermissionError(errorMsg);
 
-  //               setIsScanning(false);
-  //               setIsError(true);
-  //               reject(err);
-  //             }
-  //           },
-  //         },
-  //       ]
-  //     );
-  //   });
-  // };
+                setIsScanning(false);
+                setIsError(true);
+                reject(err);
+              }
+            },
+          },
+        ]
+      );
+    });
+  };
 
   useEffect(() => {
-    const checkAndEnableBluetooth = async () => {
-      try {
-        const bluetoothState = await BluetoothStateManager.getState();
-        if (bluetoothState !== "PoweredOn") {
-          Alert.alert(
-            t("screens.home_stack.search_device.bluetooth.alert.switch_on"),
-            t("screens.home_stack.search_device.bluetooth.alert.disabled_bluetooth"),
-            [
-              {
-                text: t("screens.home_stack.search_device.bluetooth.alert.cancel"),
-                onPress: () => console.log(t("screens.home_stack.search_device.bluetooth.error.cancel_message")),
-                //style: "cancel",
-              },
-              {
-                text: t("screens.home_stack.search_device.bluetooth.alert.switch_on"),
-                onPress: async () => {
-                  try {
-                    const success = await BluetoothStateManager.openSettings();
-                    if (!success) {
-                      throw new Error(t("screens.home_stack.search_device.bluetooth.error.error_message"));
-                    }
-                    // If Bluetooth is successfully enabled, run the scan
-                    await scanDevices();
-                  } catch (error) {
-                    console.error(t("screens.home_stack.search_device.errors.bluetooth.enable_failed"), error);
-                    const errorMessage =
-                      error instanceof Error
-                        ? error.message
-                        : t("screens.home_stack.search_device.bluetooth.error.message");
-                    throw new Error(errorMessage);
-                  }
-                },
-              },
-            ],
-            { cancelable: false }
-          );
-        } else {
-          // If Bluetooth is already enabled, run the scan
-          await scanDevices();
+    const handleBluetoothReset = async () => {
+      if (isBluetoothResetting) {
+        try {
+          const bluetoothState = await BluetoothStateManager.getState();
+          if (bluetoothState !== "PoweredOn") {
+            // Voer hier de logica uit om Bluetooth in te schakelen en scanDevices aan te roepen
+            await enableBluetooth();
+            await scanDevices();
+          }
+        } catch (error) {
+          console.error("Error checking Bluetooth state:", error);
         }
-      } catch (error) {
-        console.error("Fout bij controleren van Bluetooth-status:", error);
       }
     };
 
-    checkAndEnableBluetooth();
-  }, []);
+    handleBluetoothReset();
+  }, [isBluetoothResetting]);
 
   const scanDevices = async () => {
     if (isScanning) return;
@@ -168,8 +138,25 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
     setIsScanning(true);
     setIsError(false);
 
+    const hasBluetoothPermission = await checkBluetoothPermission();
+    if (!hasBluetoothPermission) {
+      await askForBluetoothPermission();
+    }
+
     try {
-      // Scan for Bluetooth devices
+      await enableBluetooth();
+    } catch (err: unknown) {
+      const errorMsg =
+        err instanceof Error ? err.message : t("screens.home_stack.search_device.errors.bluetooth.enable_failed");
+      onEnableBluetoothError(errorMsg);
+
+      setIsScanning(false);
+      setIsError(true);
+      return;
+    }
+
+    try {
+      // Scan at most 30 seconds for devices
       const devices = await withTimeout<BleDeviceType[]>(30, EspIdfProvisioning.getBleDevices(""));
       setDevices(devices);
     } catch {
@@ -224,6 +211,12 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
               <>
                 <ActivityIndicator size="large" />
                 <Text style={styles.text}>{t("screens.home_stack.search_device.bluetooth.enabling")}</Text>
+                <View style={{ marginTop: 20 }} />
+                <Button
+                  containerStyle={{ width: "100%" }}
+                  title={t("screens.home_stack.search_device.bluetooth.alert.enable_button")}
+                  onPress={() => BluetoothStateManager.openSettings()}
+                />
               </>
             ) : (
               <>
@@ -232,12 +225,6 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
                 <Text style={[styles.text, styles.secondaryText]}>
                   {t("screens.home_stack.search_device.bluetooth.error.message")}
                 </Text>
-                <View style={{ marginTop: 20 }} />
-                <Button
-                  containerStyle={{ width: "100%" }}
-                  title={t("screens.home_stack.search_device.bluetooth.alert.enable_button")}
-                  onPress={() => BluetoothStateManager.openSettings()}
-                />
               </>
             )}
           </>
