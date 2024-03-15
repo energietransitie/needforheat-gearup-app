@@ -1,11 +1,12 @@
 # iOS development
 You should have read the [main developing guide](./developing.md) before looking into the iOS guide.
 
-When developing for iOS you need to have a Mac with Xcode and Ruby 3.1.0 installed. You can find more information about the setup over at the [Expo documentation on iOS development](https://docs.expo.io/workflow/ios-simulator/).
+When developing for iOS you need to have a Mac with Xcode and Ruby 3.1.0 installed (for the simulator). You can find more information about the setup over at the [Expo documentation on iOS development](https://docs.expo.io/workflow/ios-simulator/).
 
-This guide is currently only for running iOS in an emulator or device using Expo Go.
+Please make sure the Mac you have has sudo privileges so you are able to set it up correctly.
 
-## Ruby
+## Expo Go
+### Ruby
 To install Cocoapods, Ruby is required. MacOS comes with a built-in version of Ruby that might not match the required version of this project. To install the correct version of Ruby, you can use `rbenv` using `homebrew`.
 
 If you don't have homebrew, you can learn more at [brew.sh](https://brew.sh/).
@@ -46,8 +47,7 @@ eval "$(rbenv init -)"
 
 and then run `which ruby` again.
 
-## Pods
-
+### Pods
 After installing Ruby correctly, you can install the required pods by running the following command in the `ios` directory:
 
 ```bash
@@ -62,10 +62,10 @@ After getting the prerequisites installed you can start the development server w
 yarn workspace app dev:ios
 ```
 
-This will ask you to select a device or emulator to run the app on. It is recommended for developing that you connect your iPhone to your Mac and select that device because of the limitations of the emulator.
+This will ask you to select a device or simulator to run the app on. It is recommended for developing that you connect your iPhone to your Mac and select that device because of the limitations of the simulator.
 
-## Emulator Limitations
-The following hardware is unavailable in emulator:
+### Simulator Limitations
+The following hardware is unavailable in simulator:
 
 - Audio Input
 - Barometer
@@ -74,9 +74,12 @@ The following hardware is unavailable in emulator:
 
 This means that specificly testing the `NeedForHeat` app that the simulator isn't of any use because the camera is needed to detect the QR code.
 
+## Using a physical device
+You can connect a phyiscal iPhone with USB to the Macbook. It will then automatically prepare the iPhone to support Xcode builds in `Window -> Devices and Simulators`
+
 ## Issues
 
-> The CLI seems to be stuck when opening a Simulator
+> The CLI seems to be stuck when opening a simulator
 
 Sometimes the iOS simulator doesn't respond to the open command. If it seems stuck on this prompt, you can open the iOS simulator manually `(open -a Simulator)` and then in the macOS toolbar, choose Hardware → Device, and select an iOS version and device that you'd like to open.
 

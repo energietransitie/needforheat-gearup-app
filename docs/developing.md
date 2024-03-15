@@ -13,13 +13,16 @@ This guide will explain how to prepare the local enviroment to start developing 
 - [8. Ready!](#8-ready)
 
 ## Prerequisites
--	OpenJDK 17
-    - You can get OpenJDK from [Microsoft](https://learn.microsoft.com/nl-nl/java/openjdk/download#openjdk-17) or [Adoptium](https://adoptium.net/temurin/releases/?version=17)
 -	[Node.js](https://yarnpkg.com/) (>= 16.0.0)
 -	[Yarn](https://yarnpkg.com/) (>= 1.22.0)
--	[Android Studio](https://developer.android.com/studio) (>= 4.2.0)
--	[Xcode](https://developer.apple.com/xcode/) (>= 13.0.0)
 -   [Git](https://git-scm.com/)
+- Android
+    -	OpenJDK 17
+        - You can get OpenJDK from [Microsoft](https://learn.microsoft.com/nl-nl/java/openjdk/download#openjdk-17) or [Adoptium](https://adoptium.net/temurin/releases/?version=17)
+    -	[Android Studio](https://developer.android.com/studio) (>= 4.2.0)
+- iOS
+    - [Xcode](https://developer.apple.com/xcode/) (>= 13.0.0)
+    - [Ruby](https://www.ruby-lang.org/en/) (>= 3.1.0)
 
 ## 1. Setup SSH Key
 Due to the dependency [twomes-app-needforheat-eup](https://github.com/energietransitie/twomes-app-needforheat-eup), a SSH key will be required to set up so Yarn can properly fetch this repo.
@@ -62,7 +65,7 @@ A local server with the [twomes-backoffice-api](https://github.com/energietransi
 However, this is not the best way to develop and you might run in to issues you won't have by just using the public test server. This issue is because of security from [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 
 ### API URL not changing?
-Due to caching, this URL might not always change. You can fix this by running `npx expo run -c` then doing `CTRL + C` when it starts/finishes to stop it. \
+Due to caching, this URL might not always change. You can fix this by running `npx expo start -c` in the `apps\expo` folder then doing `CTRL + C` when it starts/finishes to stop it. \
 The cache should then be cleared and you can use Yarn again to run the app.
 
 ## 5. Setup Java
