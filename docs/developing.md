@@ -23,6 +23,7 @@ This guide will explain how to prepare the local enviroment to start developing 
 - iOS
     - [Xcode](https://developer.apple.com/xcode/) (>= 13.0.0)
     - [Ruby](https://www.ruby-lang.org/en/) (>= 3.1.0)
+    - [Cocaopods](https://cocoapods.org/)
 
 ## 1. Setup SSH Key
 Due to the dependency [twomes-app-needforheat-eup](https://github.com/energietransitie/twomes-app-needforheat-eup), a SSH key will be required to set up so Yarn can properly fetch this repo.
@@ -58,13 +59,13 @@ Fill in the environment variable for the API:
 API_URL= # The API URL for the need-for-heat app
 ```
 
-### Test- or Local API?
+### 4.1. Test- or Local API?
 The recommended server to use is the existing public test server available on <https://api.tst.energietransitiewindesheim.nl/v2>
 
 A local server with the [twomes-backoffice-api](https://github.com/energietransitie/twomes-backoffice-api) is possible by running it through Docker with the [feat/cors branch](https://github.com/energietransitie/twomes-backoffice-api/tree/feat/cors). \
 However, this is not the best way to develop and you might run in to issues you won't have by just using the public test server. This issue is because of security from [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 
-### API URL not changing?
+### 4.2. API URL not changing?
 Due to caching, this URL might not always change. You can fix this by running `npx expo start -c` in the `apps\expo` folder then doing `CTRL + C` when it starts/finishes to stop it. \
 The cache should then be cleared and you can use Yarn again to run the app.
 

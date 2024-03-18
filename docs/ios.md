@@ -1,14 +1,23 @@
 # iOS development
+This iOS-specific development guide will explain how to setup an environment to develop the iOS app. Including important things to look out for to ensure the app can be built.
+
+## Table of contents
+- [1. Prerequisites](#1-prerequisites)
+- [2. Expo Go](#2-expo-go)
+- [3. Using a physical device](#3-using-a-physical-device)
+
+## 1. Prerequisites
 You should have read the [main developing guide](./developing.md) before looking into the iOS guide.
 
-When developing for iOS you need to have a Mac with Xcode and Ruby 3.1.0 installed (for the simulator). You can find more information about the setup over at the [Expo documentation on iOS development](https://docs.expo.io/workflow/ios-simulator/).
+You can find more information about setting up for iOS development over at the [Expo documentation on iOS development](https://docs.expo.io/workflow/ios-simulator/).
 
 Please make sure the Mac you have has sudo privileges so you are able to set it up correctly.
 
-## Expo Go
-### Ruby
-To install Cocoapods, Ruby is required. MacOS comes with a built-in version of Ruby that might not match the required version of this project. To install the correct version of Ruby, you can use `rbenv` using `homebrew`.
+## 2. Expo Go
+### 2.1. Ruby
+MacOS comes with a built-in version of Ruby that might not match the required version of this project. Ruby is used for Cocoapods.
 
+To install the correct version of Ruby, you can use `rbenv` through `homebrew`. \
 If you don't have homebrew, you can learn more at [brew.sh](https://brew.sh/).
 
 To install `rbenv` you can run the following command:
@@ -37,22 +46,43 @@ ruby -v
 
 This should output something along the lines of `ruby 3.1.0p0 (2021-12-25 revision 123456) [x86_64-darwin20]`.
 
-If this isn't the case, check where your Ruby version is coming from by running `which ruby`. If this is not the version you just installed, you can run `rbenv init` to get instructions on how to fix this.
+If this isn't the case, check where your Ruby version is coming from by running `which ruby`. 
+If this is not the version you just installed, you can run 
+```bash
+rbenv init
+```
+to get instructions on how to fix this by adding a command to `~/.zshrc`.
 
-If that doesn't work, try eval
+If `.zshrc` does not exist, run
+```bash
+touch ~/.zshrc
+```
+then
+```bash
+open touch ~/.zshrc
+```
+to be able to add the command in the newly opened text editor.
+
+If that *still* does not work, try running the following command:
 
 ```bash
 eval "$(rbenv init -)"
 ```
+and then run `which ruby` again to check if the Ruby (3.1.0) in `/.rbenv/` is used.
 
-and then run `which ruby` again.
+### Cocoapods
+Install Cocaopods with [Gem](https://rubygems.org/?locale=nl). You may want to add `-V` for verbose output to ensure it is doing something as it does not output something without.
+```bash
+sudo gem install cocoapods -V
+```
 
-### Pods
+#### Setting up pods
 After installing Ruby correctly, you can install the required pods by running the following command in the `ios` directory:
 
 ```bash
-cd /apps/expo/ios
-
+cd ./apps/expo/ios
+```
+```bash
 pod install
 ```
 
@@ -62,7 +92,7 @@ After getting the prerequisites installed you can start the development server w
 yarn workspace app dev:ios
 ```
 
-This will ask you to select a device or simulator to run the app on. It is recommended for developing that you connect your iPhone to your Mac and select that device because of the limitations of the simulator.
+This will ask you to select a device or simulator to run the app on. It is recommended for developing that [you connect your iPhone to your Mac](#using-a-physical-device) and select that device because of the limitations of the simulator.
 
 ### Simulator Limitations
 The following hardware is unavailable in simulator:
@@ -74,16 +104,15 @@ The following hardware is unavailable in simulator:
 
 This means that specificly testing the `NeedForHeat` app that the simulator isn't of any use because the camera is needed to detect the QR code.
 
-## Using a physical device
+## 2. Using a physical device
 You can connect a phyiscal iPhone with USB to the Macbook. It will then automatically prepare the iPhone to support Xcode builds in `Window -> Devices and Simulators`
 
-## Issues
-
-> The CLI seems to be stuck when opening a simulator
+## 3. Issues
+***The CLI seems to be stuck when opening a simulator***
 
 Sometimes the iOS simulator doesn't respond to the open command. If it seems stuck on this prompt, you can open the iOS simulator manually `(open -a Simulator)` and then in the macOS toolbar, choose Hardware → Device, and select an iOS version and device that you'd like to open.
 
-> I get an error while building the app in Xcode or when running dev:ios
+***I get an error while building the app in Xcode or when running dev:ios*** \
  If you get the following error:
 
  ```bash
@@ -98,4 +127,5 @@ Sometimes the iOS simulator doesn't respond to the open command. If it seems stu
    134 |         struct enable_hash_value { typedef std::size_t type; };
    ```
 
-Open up Xcode, execute a build, select the error that pops up and select 'Fix'. This will replace the `std::unary_function` with `std::__unary_function` and the build should succeed just fine. You'll also be able to run dev:ios again.
+Open up Xcode, execute a build, select the error under `hash` that pops up and select 'Fix' when clicking on the error in the Xcode IDE. \
+This will replace the `std::unary_function` with `std::__unary_function` and the build should succeed just fine. You'll also be able to run dev:ios again.

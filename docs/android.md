@@ -2,12 +2,12 @@
 This Android-specific development guide will explain how to setup an environment to develop the Android app. Including important things to look out for to ensure the app can be built.
 
 ## Table of contents
-- [Prerequisites](#prerequisites)
-- [Preparing a physical device](#preparing-a-physical-device)
-- [Starting the app with Expo Go](#starting-the-app-with-expo-go)
-- [Compiling an APK for testing](#compiling-an-apk-for-testing)
+- [1. Prerequisites](#1-prerequisites)
+- [2. Preparing a physical device](#2-preparing-a-physical-device)
+- [3. Starting the app with Expo Go](#3-starting-the-app-with-expo-go)
+- [4. Compiling an APK for testing](#4-compiling-an-apk-for-testing)
 
-## Prerequisites
+## 1. Prerequisites
 You should have read the [main developing guide](./developing.md) before looking into the Android guide.
 
 When developing for Android you need to have [Android Studio](https://developer.android.com/studio) installed and updated. \
@@ -17,12 +17,12 @@ You should read the [Expo documentation on Android Studio](https://docs.expo.io/
 
 It is IMPORTANT that `ANDROID_HOME` gets set to the Android SDK folder.
 
-### Secure Folder issue
+### 1.1. Secure Folder issue
 Attempting to run Expo Go will crash due to a bug in Expo. ADB attempts to install the development app to all users, including the Secure Folder (User 150) on Samsung devices. This has not been accounted for yet.
 
 To fix this, do the workaround as explained in: <https://github.com/expo/expo/issues/22473#issuecomment-1546718389>
 
-## Preparing a physical device
+## 2. Preparing a physical device
 If you followed the [Expo documentation on Android Studio](https://docs.expo.io/workflow/android-studio-emulator/). You should have an Android emulator ready for development. However, it is recommended to use a real Android device due to performance and [Emulator limitations](#emulator-limitations).
 
 The first step is to enable [Developer Options](https://developer.android.com/studio/debug/dev-options) on the device. Then you have two options to connect the device to the PC:
@@ -32,7 +32,7 @@ The first step is to enable [Developer Options](https://developer.android.com/st
 
 With ADB ready, you can now send the app straight to your device for development.
 
-## Starting the app with Expo Go
+## 3. Starting the app with Expo Go
 After getting the prerequisites installed you can start the development server with the following command:
 
 ```bash
@@ -45,7 +45,7 @@ The development app should build and automatically install using Expo Go and Met
 
 As explained in the [main developing guide](./developing.md), you should not rely on Expo Go for development. You should [compile the APK](#compiling-an-apk-for-testing) and install it for the most genuine experience.
 
-### Emulator Limitations
+### 3.1. Emulator Limitations
 The following hardware is unavailable in Simulator:
 
 - Audio Input
@@ -55,7 +55,7 @@ The following hardware is unavailable in Simulator:
 
 This means that specificly testing the `NeedForHeat` app that the emulator isn't of any use because the camera is needed to detect the QR code.
 
-## Compiling an APK for testing
+## 4. Compiling an APK for testing
 There are [Yarn scripts](./scripts.md) that can do this for you if you set everything up properly including [adding platform-tools](https://developer.android.com/tools/adb) to `PATH`.
 <br><br>
 
@@ -82,7 +82,7 @@ yarn workspace app dev
 
 The app gets built to the `apps\expo\android\app\build\outputs\apk` folder in either the `debug` or `release` folder.
 
-### Installing the app
+### 4.1. Installing the app
 You can then use the following ADB command from the [platform-tools](https://developer.android.com/tools/adb) to install the release APK to ***all*** ADB-connected devices:
 
 ```bash
