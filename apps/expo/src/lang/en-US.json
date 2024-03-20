@@ -262,10 +262,28 @@
   },
   "hooks": {
     "property_translation": {
-      "roomTemp": "Temperature",
+      "heartbeat": "Heartbeat",
+      "batteryVoltage": "Battery Voltage (V)",
+      "booted_fw": "Booted firmware",
+      "countPresence": "Presence counter",
       "CO2concentration": "CO₂ concentration",
-      "relativeHumidity": "Humidity",
-      "countPresence": "Presence"
+      "roomTemp": "Room temperature",
+      "relativeHumidity": "Relative humidity (%)",
+      "e_use_lo_cum__kWh": "Cumulative energy usage (Low) (kWh)",
+      "e_use_hi_cum__kWh": "Cumulative energy usage (High) (kWh)",
+      "e_ret_lo_cum__kWh": "Cumulative energy return (Low) (kWh)",
+      "e_ret_hi_cum__kWh": "Cumulative energy return (High) (kWh)",
+      "g_use_cum__m3": "Cumulative gas usage (m³)",
+      "battery_voltage__V": "Battery voltage (V)",
+      "occupancy__p": "Number of people present",
+      "co2__ppm": "CO₂ concentration (ppm)",
+      "temp_in__degC": "Temperature (˚C)",
+      "rel_humidity__0": "Relative humidity (%)",
+      "onboarded__p": "Number of people onboard",
+      "dsmr_version__0": "DSMR version",
+      "meter_code__str": "Meter code",
+      "e_ret_cum__kWh": "Cumulative energy return (kWh)",
+      "e_use_cum__kWh": "Cumulative energy usage (kWh)"
     },
     "bluetooth_permission": {
       "not_granted": "Bluetooth permission is not granted. Please grant the permission and try again."
