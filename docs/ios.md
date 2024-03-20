@@ -118,7 +118,6 @@ You can connect a phyiscal iPhone with USB to the Macbook. It will then automati
 ---
 
 For Xcode signing, you need to get access to a developer account to sign the iOS app. For access to the developer account, please contact [@n-vr](https://github.com/n-vr) or [@henriterhofte](https://github.com/henriterhofte). \
-
 Log the account in that is part of the Windesheim team in Xcode and select the Windesheim team for signing.
 
 ---
@@ -147,7 +146,7 @@ and select the physical device to get the QR-code that you can scan on the iOS d
 ### 3.2. Release version on the iOS device
 To install the release version of the, select the release schema in Xcode in the top-menu where it says `NeedforHeat` next to the iOS device selection and then select `NeedforHeat Release`.
 
-(Image here)
+![Change Xcode scheme to Release](https://github.com/energietransitie/twomes-app-needforheat/assets/16213031/7619856f-6dc6-42c2-a4cb-976faea140e5)
 
 Then you can build the app as release version and automatically install to your iOS device. When you open it up, you will get the release version without Expo Go and thus see the app open up immediatley without Metro bundling. \
 You might still see a terminal open with Metro bundler which you can ignore
