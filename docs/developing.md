@@ -23,7 +23,7 @@ This guide will explain how to prepare the local enviroment to start developing 
 - iOS
     - [Xcode](https://developer.apple.com/xcode/) (>= 13.0.0)
     - [Ruby](https://www.ruby-lang.org/en/) (>= 3.1.0)
-    - [Cocaopods](https://cocoapods.org/)
+    - [Cocaopods](https://cocoapods.org/) (>=1.15.2)
 
 ## 1. Setup SSH Key
 Due to the dependency [twomes-app-needforheat-eup](https://github.com/energietransitie/twomes-app-needforheat-eup), a SSH key will be required to set up so Yarn can properly fetch this repo.
