@@ -49,6 +49,8 @@ ruby -v
 
 This should output something along the lines of `ruby 3.1.0p0 (2021-12-25 revision 123456) [x86_64-darwin20]`.
 
+---
+
 If this isn't the case, check where your Ruby version is coming from by running `which ruby`. 
 If this is not the version you just installed, you can run 
 ```bash
@@ -66,6 +68,7 @@ open touch ~/.zshrc
 ```
 to be able to add the command in the newly opened text editor.
 
+<br>
 If that *still* does not work, try running the following command:
 
 ```bash
@@ -74,7 +77,7 @@ eval "$(rbenv init -)"
 and then run `which ruby` again to check if the Ruby (3.1.0) in `/.rbenv/` is used.
 
 ### 2.2. Cocoapods
-Install Cocaopods with [Gem](https://rubygems.org/?locale=nl). You may want to add `-V` for verbose output to ensure it is doing something as it may not show any output when it is working.
+Install Cocaopods with [Gem](https://rubygems.org/?locale=nl). You may want to add `-V` for verbose output to ensure it is doing something as it may not show any output when it is installing.
 ```bash
 sudo gem install cocoapods -V
 ```
@@ -110,19 +113,28 @@ The following hardware is unavailable in simulator:
 This means that specificly testing the `NeedForHeat` app that the simulator isn't of any use because the camera is needed to detect the QR code.
 
 ## 3. Physical device
-You can connect a phyiscal iPhone with USB to the Macbook. It will then automatically prepare the iPhone to support Xcode builds in `Window -> Devices and Simulators`. This chapter will mostly go through Xcode as doing it through Yarn is not possible unlike Android who has Yarn scripts for building and installing.
+You can connect a phyiscal iPhone with USB to the Macbook. It will then automatically prepare the iPhone to support Xcode builds in `Window -> Devices and Simulators`. This chapter will mostly go through Xcode as doing it through Yarn is not possible unlike Android which has Yarn scripts for building and installing.
+
+---
 
 For Xcode signing, you need to get access to a developer account to sign the iOS app. For access to the developer account, please contact [@n-vr](https://github.com/n-vr) or [@henriterhofte](https://github.com/henriterhofte). \
+
 Log the account in that is part of the Windesheim team in Xcode and select the Windesheim team for signing.
 
+---
+
 You will need to register your physical device to the team to be able to start compiling the app and installing it on the device.
+
+---
 
 Make sure there are no errors, check [issues](#4-issues) for additional help. \
 Do not update the project/apply recommended settings as that may make the build fail.
 
+---
+
 You can now start building to the physical device. There will be a prompt that asks for access to the keys, use your Mac device password to allow that.
 
-The app will automatically install to the iOS device, check the status of this in Xcode in the middle and top of the screen.
+The app will automatically install to the iOS device, check the status of this in Xcode in the middle top of the window.
 
 ### 3.1. Expo Go version
 When everything goes well, the app will open to the Expo Go version of the app. You can then run the yarn command:
@@ -133,14 +145,19 @@ yarn workspace app dev:ios
 and select the physical device to get the QR-code that you can scan on the iOS device. Metro should start bundling and the app should open up to the expected screen.
 
 ### 3.2. Release version on the iOS device
-To install the release version of the, select the release schema in Xcode in the top-menu bar through `Product -> Scheme` and then select `NeedForHeat Release`.
+To install the release version of the, select the release schema in Xcode in the top-menu where it says `NeedforHeat` next to the iOS device selection and then select `NeedforHeat Release`.
 
-Then you can build the app as release version and automatically install to your iOS device. When you open it up, you will get the release version without Expo Go and thus see the app open up immediatley without Metro bundling.
+(Image here)
+
+Then you can build the app as release version and automatically install to your iOS device. When you open it up, you will get the release version without Expo Go and thus see the app open up immediatley without Metro bundling. \
+You might still see a terminal open with Metro bundler which you can ignore
 
 ## 4. Issues
 ***The CLI seems to be stuck when opening a simulator***
 
 Sometimes the iOS simulator doesn't respond to the open command. If it seems stuck on this prompt, you can open the iOS simulator manually `(open -a Simulator)` and then in the macOS toolbar, choose Hardware → Device, and select an iOS version and device that you'd like to open.
+
+---
 
 ***I get an error while building the app in Xcode or when running dev:ios*** \
  If you get the following error:
