@@ -87,7 +87,9 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
     return new Promise((resolve, reject) => {
       Alert.alert(
         t("screens.home_stack.search_device.bluetooth.alert.title"),
-        t("screens.home_stack.search_device.bluetooth.alert.message"),
+        Platform.OS === "ios"
+          ? t("screens.home_stack.search_device.bluetooth.alert.message_ios")
+          : t("screens.home_stack.search_device.bluetooth.alert.message"),
         [
           {
             text: t("screens.home_stack.search_device.bluetooth.alert.button"),
