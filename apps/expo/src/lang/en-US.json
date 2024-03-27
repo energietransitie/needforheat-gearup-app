@@ -156,7 +156,6 @@
           "alert": {
             "title": "Bluetooth permission",
             "message": "This app uses Bluetooth, but does not register your location. On Android, Bluetooth falls under location services. Therefore, you will soon receive a question about location access. Additionally, to proceed, you need to grant permission to nearby devices and your location.",
-            "message_ios": "This app uses Bluetooth, but does not register your location. On iOS, Bluetooth falls under location services. Therefore, you will soon receive a question about location access. Additionally, to proceed, you need to grant permission to nearby devices and your location.",
             "button": "Okay, go ahead!",
             "enable_button": "Enable Bluetooth",
             "cancel": "Cancel",
