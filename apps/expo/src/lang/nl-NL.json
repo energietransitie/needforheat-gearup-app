@@ -154,8 +154,9 @@
         "bluetooth": {
           "enabling": "Bluetooth is momenteel uitgeschakeld. Om verder te kunnen gaan, dient u uw Bluetooth in te schakelen",
           "alert": {
-            "title": "Bluetooth toestemming",
-            "message": "Deze app maakt gebruik van Bluetooth, maar registreert uw locatie niet.\n\nOp Android valt Bluetooth onder locatiediensten. Daarom zult u binnenkort een vraag krijgen over locatietoegang.\n\nBovendien dient u toestemming te geven voor 'Apparaten in de Buurt' om verbinding te maken met de module.",
+            "title": "Machtigingen toestaan",
+            "androidmessage": "Deze app maakt gebruik van Bluetooth om te verbinden met de module, maar registreert uw locatie niet.\n\nOp Android valt Bluetooth onder locatiediensten. Daarom zult u binnenkort een vraag krijgen over locatietoegang.\n\nBovendien dient u toestemming te geven voor 'Apparaten in de Buurt' om verbinding te maken met de module.",
+            "iosmessage": "Deze app maakt gebruik van Bluetooth om te verbinden met de module. \n\n Wij vragen aan u om Bluetooth in te schakelen om door te gaan mits u dit niet al heeft gegeven.",
             "button": "Oké, vraag maar!",
             "enable_button": "Bluetooth Inschakelen",
             "cancel": "Annuleren",

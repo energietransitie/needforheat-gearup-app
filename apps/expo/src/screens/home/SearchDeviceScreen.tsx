@@ -53,16 +53,7 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
 
   const onRequestPermissionError = (err: string) => {
     console.log("onRequestPermissionError", err);
-
-    Alert.alert("Error", err, [
-      {
-        text: t("screens.home_stack.search_device.open_settings"),
-        onPress: () => {
-          // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
-          openSettings().catch(e => {});
-        },
-      },
-    ]);
+    openSettings().catch(e => { });
   };
 
   const onEnableBluetoothError = (err: string) => {
@@ -71,15 +62,15 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
     Alert.alert("Error", err, [
       Platform.OS === "ios"
         ? {
-            text: "OK",
-          }
+          text: "OK",
+        }
         : {
-            text: "Open settings",
-            onPress: () => {
-              // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
-              BluetoothStateManager.openSettings().catch(e => {});
-            },
+          text: "Open settings",
+          onPress: () => {
+            // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
+            BluetoothStateManager.openSettings().catch(e => { });
           },
+        },
     ]);
   };
 
@@ -87,32 +78,34 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
     return new Promise((resolve, reject) => {
       let title = "";
       let message = "";
+      
+      title = t("screens.home_stack.search_device.bluetooth.alert.title");
       if (Platform.OS === "android") {
-        title = t("screens.home_stack.search_device.bluetooth.alert.title");
-        message = t("screens.home_stack.search_device.bluetooth.alert.message");
+        message = t("screens.home_stack.search_device.bluetooth.alert.androidmessage");
+      } else {
+        message = t("screens.home_stack.search_device.bluetooth.alert.iosmessage");
+      }
 
-        Alert.alert(title, message, [
-          {
-            text: t("screens.home_stack.search_device.bluetooth.alert.button"),
-            onPress: async () => {
-              try {
-                await requestBluetoothPermission();
-                resolve(null);
-              } catch (err: unknown) {
-                const errorMsg =
-                  err instanceof Error
-                    ? err.message
-                    : t("screens.home_stack.search_device.errors.bluetooth.request_failed");
+      Alert.alert(title, message, [
+        {
+          text: t("screens.home_stack.search_device.bluetooth.alert.button"),
+          onPress: async () => {
+            try {
+              await requestBluetoothPermission();
+              resolve(null);
+            } catch (err: unknown) {
+              const errorMsg =
+              err instanceof Error
+                ? err.message
+                : t("screens.home_stack.search_device.errors.bluetooth.request_failed");
                 onRequestPermissionError(errorMsg);
-
                 setIsScanning(false);
                 setIsError(true);
-                reject(err);
-              }
-            },
+              reject(err);
+            }
           },
-        ]);
-      }
+        },
+      ]);
     });
   };
 
@@ -123,6 +116,7 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
     setIsError(false);
 
     const hasBluetoothPermission = await checkBluetoothPermission();
+    console.log(hasBluetoothPermission);
     if (!hasBluetoothPermission) {
       await askForBluetoothPermission();
     }
