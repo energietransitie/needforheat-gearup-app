@@ -53,7 +53,20 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
 
   const onRequestPermissionError = (err: string) => {
     console.log("onRequestPermissionError", err);
+    if(Platform.OS === "ios"){
+    // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function  
     openSettings().catch(e => { });
+    } else {
+      Alert.alert("Error", err, [
+        {
+          text: t("screens.home_stack.search_device.open_settings"),
+          onPress: () => {
+            // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
+            openSettings().catch(e => { });
+          },
+        },
+      ])
+    }
   };
 
   const onEnableBluetoothError = (err: string) => {
