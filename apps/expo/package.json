@@ -10,7 +10,11 @@
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "ci:eslint": "yarn eslint -f compact ./src --quiet",
     "ci:tsc": "yarn tsc --noEmit --skipLibCheck",
-    "test": "jest"
+    "test": "jest",
+    "release:android:build": "cd android && ./gradlew app:assembleRelease",
+    "release:android:install": "cd android/app/build/outputs/apk/release && adb install app-release.apk",
+    "dev:android:build": "cd android && ./gradlew app:assembleRelease",
+    "dev:android:install": "cd android/app/build/outputs/apk/debug && adb install app-debug.apk "
   },
   "dependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
