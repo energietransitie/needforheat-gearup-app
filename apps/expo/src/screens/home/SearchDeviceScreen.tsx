@@ -90,28 +90,29 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
       if (Platform.OS === "android") {
         title = t("screens.home_stack.search_device.bluetooth.alert.title");
         message = t("screens.home_stack.search_device.bluetooth.alert.message");
-      }
-      Alert.alert(title, message, [
-        {
-          text: t("screens.home_stack.search_device.bluetooth.alert.button"),
-          onPress: async () => {
-            try {
-              await requestBluetoothPermission();
-              resolve(null);
-            } catch (err: unknown) {
-              const errorMsg =
-                err instanceof Error
-                  ? err.message
-                  : t("screens.home_stack.search_device.errors.bluetooth.request_failed");
-              onRequestPermissionError(errorMsg);
 
-              setIsScanning(false);
-              setIsError(true);
-              reject(err);
-            }
+        Alert.alert(title, message, [
+          {
+            text: t("screens.home_stack.search_device.bluetooth.alert.button"),
+            onPress: async () => {
+              try {
+                await requestBluetoothPermission();
+                resolve(null);
+              } catch (err: unknown) {
+                const errorMsg =
+                  err instanceof Error
+                    ? err.message
+                    : t("screens.home_stack.search_device.errors.bluetooth.request_failed");
+                onRequestPermissionError(errorMsg);
+
+                setIsScanning(false);
+                setIsError(true);
+                reject(err);
+              }
+            },
           },
-        },
-      ]);
+        ]);
+      }
     });
   };
 

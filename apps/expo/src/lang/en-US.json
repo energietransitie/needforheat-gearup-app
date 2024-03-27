@@ -155,7 +155,7 @@
           "enabling": "Bluetooth is currently disabled. To proceed, please enable your Bluetooth.",
           "alert": {
             "title": "Bluetooth permission",
-            "message": "This app uses Bluetooth, but does not register your location. On Android, Bluetooth falls under location services. Therefore, you will soon receive a question about location access. Additionally, to proceed, you need to grant permission to nearby devices and your location.",
+            "message": "This app uses Bluetooth but does not register your location.\n\nOn Android, Bluetooth falls under location services. Therefore, you will soon be asked about location access.\n\nAdditionally, you need to give permission for 'Nearby Devices' to connect to the module.",
             "button": "Okay, go ahead!",
             "enable_button": "Enable Bluetooth",
             "cancel": "Cancel",
