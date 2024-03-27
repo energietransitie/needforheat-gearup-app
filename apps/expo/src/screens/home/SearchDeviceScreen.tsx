@@ -115,25 +115,6 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
     });
   };
 
-  // useEffect(() => {
-  //   const handleBluetoothReset = async () => {
-  //     if (isBluetoothResetting) {
-  //       try {
-  //         const bluetoothState = await BluetoothStateManager.getState();
-  //         if (bluetoothState !== "PoweredOn") {
-  //           // Voer hier de logica uit om Bluetooth in te schakelen en scanDevices aan te roepen
-  //           await enableBluetooth();
-  //           await scanDevices();
-  //         }
-  //       } catch (error) {
-  //         console.error("Error checking Bluetooth state:", error);
-  //       }
-  //     }
-  //   };
-
-  //   handleBluetoothReset();
-  // }, [isBluetoothResetting]);
-
   const scanDevices = async () => {
     if (isScanning) return;
 
