@@ -129,7 +129,7 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
     setIsError(false);
 
     const hasBluetoothPermission = await checkBluetoothPermission();
-    console.log(hasBluetoothPermission);
+
     if (!hasBluetoothPermission) {
       await askForBluetoothPermission();
     }
