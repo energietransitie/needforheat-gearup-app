@@ -54,6 +54,7 @@ export const accountSchema = z.object({
     })
   ),
   campaign: z.object({
+    name: z.string(),
     info_url: z.string(),
   }),
 });
