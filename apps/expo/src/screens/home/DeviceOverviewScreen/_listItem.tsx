@@ -117,9 +117,11 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           </ListItem.Subtitle>
         ) : null}
       </ListItem.Content>
-      <TouchableOpacity onPress={openHelpUrl}>
-        <Icon name="help-circle-outline" size={32} />
-      </TouchableOpacity>
+      {item.device_type.info_url !== "" ? (
+        <TouchableOpacity onPress={openHelpUrl}>
+          <Icon name="help-circle-outline" size={32} />
+        </TouchableOpacity>
+      ) : null}
       {!item.connected ? (
         <TouchableOpacity onPress={openHelpUrl}>
           <Icon name="arrow-forward-circle-outline" size={32} />

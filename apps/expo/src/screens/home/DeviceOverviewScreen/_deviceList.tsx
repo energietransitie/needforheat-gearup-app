@@ -32,6 +32,11 @@ export default function DeviceList({ buildingId, refresh, onRefresh, dataSources
           connectStatus = true;
         }
 
+        if(dataSource.type.name === "cloud_feed"){
+          dataSource.item.info_url = oldSource?.device_type.info_url ? oldSource.device_type.info_url : ""
+          dataSource.item.installation_manual_url = oldSource?.device_type.installation_manual_url ? oldSource.device_type.installation_manual_url : ""
+        }
+
         const newResponse: BuildingDeviceResponse = {
           id: dataSource.id,
           name: dataSource.item.name,
