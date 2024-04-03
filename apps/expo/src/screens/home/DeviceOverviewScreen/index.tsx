@@ -1,31 +1,25 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Text, useTheme, Button } from "@rneui/themed";
+import { Text, useTheme } from "@rneui/themed";
 import { useCallback, useContext, useRef, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
-import DeviceList from "./_deviceList";
-import CircleMenu from "./circleMenu";
 import BuildingBottomSheet from "../../../components/common/bottomSheets/BuildingBottomSheet";
+import DeviceList from "./_deviceList";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
 import Box from "@/components/elements/Box";
 import Screen from "@/components/elements/Screen";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
-import { RootStackParamList } from "@/types/navigation";
+import { DataSourcesList } from "@/types/api";
 import { useFocusEffect } from "@react-navigation/native";
-import { DataSourcesListType } from "@/types/api";
-
-type DeviceOverviewScreenProps = NativeStackScreenProps<RootStackParamList, "DeviceOverview">;
 
 export default function DeviceOverviewScreen() {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const { user, isLoading } = useContext(UserContext);
   const bottomSheetRef = useRef<BottomSheetModal>(null);
-
   const buildings = user?.buildings ?? [];
   const [buildingId, setBuildingId] = useState<number | undefined>(buildings[0]?.id);
   const [refreshDeviceList, setRefreshDeviceList] = useState(false);
@@ -68,7 +62,12 @@ export default function DeviceOverviewScreen() {
                 </TouchableOpacity>
               ) : null}
               <View style={{ flex: 1, justifyContent: "flex-start" }}>
-                <DeviceList buildingId={buildingId} refresh={refreshDeviceList} onRefresh={onDeviceListRefreshed} dataSourcesList={user?.campaign.data_sources_list as DataSourcesListType} />
+                <DeviceList
+                  buildingId={buildingId}
+                  refresh={refreshDeviceList}
+                  onRefresh={onDeviceListRefreshed}
+                  dataSourcesList={user?.campaign.data_sources_list as DataSourcesList}
+                />
               </View>
               {hasMultipleBuildings ? (
                 <BuildingBottomSheet
@@ -81,9 +80,6 @@ export default function DeviceOverviewScreen() {
           </>
         )}
       </Box>
-      <View style={{ position: "absolute", bottom: 10, right: 10 }}>
-        <CircleMenu />
-      </View>
     </Screen>
   );
 }
