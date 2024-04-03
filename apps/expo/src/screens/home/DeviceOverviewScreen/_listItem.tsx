@@ -1,18 +1,16 @@
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { Button, ListItem, makeStyles, useTheme } from "@rneui/themed";
-import { TouchableHighlight, TouchableOpacity, View } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
-import { enUS, nl } from 'date-fns/locale';
-import { format } from 'date-fns';
-
 import { MANUAL_URL } from "@/constants";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useOpenExternalLink } from "@/hooks/useOpenExternalLink";
 import { BuildingDeviceResponse } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
-import { useEffect, useState } from "react";
 import { capitalizeFirstLetter } from "@/utils/tools";
-import { Background } from "@react-navigation/elements";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { Button, ListItem, makeStyles, useTheme } from "@rneui/themed";
+import { format } from 'date-fns';
+import { enUS, nl } from 'date-fns/locale';
+import { useEffect, useState } from "react";
+import { TouchableHighlight, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 
 type WifiNetworkListItemProps = {
   item: BuildingDeviceResponse;
@@ -30,10 +28,19 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   const [data, setData] = useState(null); // Initialize data state variable
   const CompleteURL = MANUAL_URL + item.device_type.name;
   const onReset = (close: () => void) => {
-    navigate("QrScannerScreen", { expectedDeviceName: item.name });
+    if (item.typeCategory === "device_type") {
+      navigate("QrScannerScreen", { expectedDeviceName: item.name, device_TypeName: item.name });
+    }
     close();
   };
 
+  const openManual = () => {
+    if (item.typeCategory === "device_type") {
+      navigate("AddDeviceScreen", { device: item.device_type });
+    } else if (item.typeCategory === "cloud_feed") {
+      navigate("AddOnlineDataSourceScreen");
+    }
+  }
   // false so it won't open the pop-up but it will open the URL
   const openHelpUrl = () => openUrl(item.device_type.info_url, false);
 
@@ -77,13 +84,13 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
       onSwipeBegin={onSwipeBegin}
       onSwipeEnd={onSwipeEnd}
       leftWidth={0}
-      rightContent={close => (
+      rightContent={item.connected && !(item.typeCategory === "cloud_feed") ? close => (
         <Button
           title={t("screens.device_overview.device_list.reset_device")}
           onPress={() => onReset(close)}
           buttonStyle={{ minHeight: "100%", backgroundColor: theme.colors.primary }}
         />
-      )}
+      ) : null}
       style={[style.listItem]}
       containerStyle={[
         {
@@ -123,10 +130,11 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
         </TouchableOpacity>
       ) : null}
       {!item.connected ? (
-        <TouchableOpacity onPress={openHelpUrl}>
-          <Icon name="arrow-forward-circle-outline" size={32} />
+        <TouchableOpacity onPress={openManual}>
+          <Icon name="arrow-forward-circle" size={32} />
         </TouchableOpacity>
       ) : null}
+
     </ListItem.Swipeable>
   );
 }

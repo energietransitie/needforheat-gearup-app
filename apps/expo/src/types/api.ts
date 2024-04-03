@@ -86,7 +86,7 @@ const exampleItems = [
 
 // POST: /account
 //TODO: TEMPORARY HARDOCODE, AWAIT API UPDATE THEN REMOVE THE DEFAULTS, OPTIONAL AND NULLABLE
-export type DataSourcesListType = {
+export type DataSourcesList = {
   description: string;
   items: {
     id: number;
@@ -98,10 +98,17 @@ export type DataSourcesListType = {
       name: string;
       installation_manual_url: string;
       info_url: string;
-    };
+    }
     precedes: { id: number }[];
     uploadschedule: string[];
   }[];
+};
+
+export type DataSourceItemType = {
+  id: number;
+  name: string;
+  installation_manual_url: string;
+  info_url: string;
 };
 
 export const accountSchema = z.object({

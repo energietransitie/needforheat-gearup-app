@@ -1,10 +1,10 @@
 import { useIsFocused } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { makeStyles } from "@rneui/themed";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { BarCodeScanningResult, Camera } from "expo-camera";
 import { useEffect, useState } from "react";
 import { Alert, Text } from "react-native";
-import { makeStyles } from "@rneui/themed";
 
 import Box from "@/components/elements/Box";
 import { InvalidQrCodeException } from "@/exceptions/InvalidQrCodeException";
@@ -16,7 +16,7 @@ import { HomeStackParamList } from "@/types/navigation";
 type QrScannerScreenProps = NativeStackScreenProps<HomeStackParamList, "QrScannerScreen">;
 
 export default function QrScannerScreen({ navigation, route }: QrScannerScreenProps) {
-  const { expectedDeviceName } = route.params ?? {};
+  const { expectedDeviceName, device_TypeName } = route.params ?? {};
   const [scanned, setScanned] = useState(false);
   const focused = useIsFocused();
   const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -48,7 +48,7 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
         throw new MismatchedDeviceNameException();
       }
 
-      navigation.navigate("ActivateDeviceScreen", { qrData: data });
+      navigation.navigate("ActivateDeviceScreen", { qrData: data, device_TypeName: device_TypeName });
     } catch (e) {
       if (e instanceof InvalidQrCodeException) {
         onError(t("screens.home_stack.qr_scanner.errors.invalid_qr"));

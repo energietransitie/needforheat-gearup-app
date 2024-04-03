@@ -1,15 +1,23 @@
-import { t, use } from "i18next";
-import { useEffect, useState, useCallback } from "react";
+import StatusIndicator from "@/components/common/StatusIndicator";
+import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
+import useDevices from "@/hooks/device/useDevices";
+import { BuildingDeviceResponse, DataSourcesList } from "@/types/api";
+import { t } from "i18next";
+import { useCallback, useEffect, useState } from "react";
 import { FlatList } from "react-native";
-
 import DeviceListItem from "./_listItem";
 
-import StatusIndicator from "@/components/common/StatusIndicator";
-import useDevices from "@/hooks/device/useDevices";
-import { BuildingDeviceResponse, CloudFeed, DataSourcesListType } from "@/types/api";
-import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
-
-export default function DeviceList({ buildingId, refresh, onRefresh, dataSourcesList }: { buildingId: number, refresh: boolean, dataSourcesList: DataSourcesListType; onRefresh: () => void }) {
+export default function DeviceList({
+  buildingId,
+  refresh,
+  onRefresh,
+  dataSourcesList,
+}: {
+  buildingId: number,
+  refresh: boolean,
+  dataSourcesList: DataSourcesList,
+  onRefresh: () => void
+}) {
   const { data, isLoading, refetch, isRefetching } = useDevices(buildingId);
   const { data: cloudFeedData, isFetching } = useCloudFeeds();
   const [scrollEnabled, setScrollEnabled] = useState(true);
@@ -19,27 +27,26 @@ export default function DeviceList({ buildingId, refresh, onRefresh, dataSources
   const onSwipeEnd = useCallback(() => setScrollEnabled(true), []);
 
   useEffect(() => {
-    if (dataSourcesList && data) {
+    if (dataSourcesList) {
       let newData: BuildingDeviceResponse[] = [];
       dataSourcesList.items.forEach((dataSource) => {
-
         let connectStatus = false;
         const oldSource = data?.find(item => item.device_type.name === dataSource.item.name);
         const activated_at = oldSource?.activated_at ?? null;
         const latest_upload = oldSource?.latest_upload ?? null;
 
-        if((dataSource.type.name === "cloud_feed" && cloudFeedData?.find(item => item.cloud_feed.name === dataSource.item.name)?.connected) || !(activated_at === null)){
+        if ((dataSource.type.name === "cloud_feed" && cloudFeedData?.find(item => item.cloud_feed.name === dataSource.item.name)?.connected) || !(activated_at === null)) {
           connectStatus = true;
         }
 
-        if(dataSource.type.name === "cloud_feed"){
+        if (dataSource.type.name === "cloud_feed") {
           dataSource.item.info_url = oldSource?.device_type.info_url ? oldSource.device_type.info_url : ""
           dataSource.item.installation_manual_url = oldSource?.device_type.installation_manual_url ? oldSource.device_type.installation_manual_url : ""
         }
 
         const newResponse: BuildingDeviceResponse = {
           id: dataSource.id,
-          name: dataSource.item.name,
+          name: oldSource?.name ? oldSource.name : dataSource.item.name,
           building_id: buildingId,
           device_type: dataSource.item,
           activated_at: activated_at,
