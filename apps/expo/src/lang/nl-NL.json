@@ -143,6 +143,43 @@
           "unknown_error": "Er is een fout opgetreden tijdens het scannen van de QR-code."
         }
       },
+      "camera": {
+        "title": "Camera activeren",
+        "errors": {
+          "camera": {
+            "request_failed": "Er is een fout opgetreden bij het aanvragen van camera-machtigingen.",
+            "enable_failed": "Er is een fout opgetreden bij het inschakelen van camera."
+          }
+        },
+        "camera": {
+          "alert": {
+            "title": "Machtiging toestaan",
+            "message": "Deze app maakt gebruik van Camera om de qrcode te scannen van de device",
+            "button": "Oké, vraag maar!",
+            "enable_button": "Camera Inschakelen",
+            "cancel": "Annuleren",
+            "switch_on": "Inschakelen",
+            "disabled_bluetooth": "Camera is uitgeschakeld. Wilt u Camera inschakelen?"
+          },
+          "error": {
+            "title": "Er is een fout opgetreden.",
+            "message": "Zorg ervoor dat camera is ingeschakeld en probeer opnieuw.",
+            "cancel_message": "Camera inschakelen geannuleerd",
+            "error_message": "Camera inschakelen is mislukt.",
+            "status_check": "Fout bij controleren van Camera-status:"
+          }
+        },
+        "scanning": {
+          "message": "Aan het zoeken naar {{name}}...",
+          "found": "Apparaat {{name}} gevonden!",
+          "not_found": {
+            "title": "Apparaat {{name}} kon niet worden gevonden.",
+            "message": "Zorg ervoor dat het apparaat in de buurt van uw smartphone is. Zoek opnieuw met onderstaande knop."
+          }
+        },
+        "scan": "Scannen",
+        "open_settings": "Open instellingen"
+      },
       "search_device": {
         "title": "Apparaat zoeken",
         "errors": {

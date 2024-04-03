@@ -143,6 +143,24 @@
           "unknown_error": "An error occurred while scanning the QR code."
         }
       },
+      "camera": {
+        "alert": {
+          "title": "Allow permission",
+          "message": "This app uses Camera to connect to scan the qrcode thats on the device.",
+          "button": "Okay, go ahead!",
+          "enable_button": "Enable Camera",
+          "cancel": "Cancel",
+          "switch_on": "Switch on",
+          "disabled_bluetooth": "Camera is disabled. Do you want to enable Camera?"
+        },
+        "error": {
+          "title": "An error occurred.",
+          "message": "Please make sure Camera is enabled and try again.",
+          "cancel_message": "Camera activation canceled",
+          "error_message": "Camera activation failed.",
+          "status_check": "Error while checking Camera status:"
+        }
+      },
       "search_device": {
         "title": "Search device",
         "errors": {
