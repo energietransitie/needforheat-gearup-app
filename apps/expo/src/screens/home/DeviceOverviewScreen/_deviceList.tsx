@@ -7,6 +7,7 @@ import DeviceListItem from "./_listItem";
 import StatusIndicator from "@/components/common/StatusIndicator";
 import useDevices from "@/hooks/device/useDevices";
 import { BuildingDeviceResponse } from "@/types/api";
+import useUser from "@/hooks/user/useUser";
 
 export default function DeviceList({ buildingId, refresh, onRefresh }: { buildingId: number, refresh: boolean; onRefresh: () => void }) {
   const { data, isLoading, refetch, isRefetching } = useDevices(buildingId);
@@ -14,6 +15,8 @@ export default function DeviceList({ buildingId, refresh, onRefresh }: { buildin
 
   const onSwipeBegin = () => setScrollEnabled(false);
   const onSwipeEnd = () => setScrollEnabled(true);
+
+  const {user} = useUser();
 
   if (isLoading) {
     return <StatusIndicator isLoading />;

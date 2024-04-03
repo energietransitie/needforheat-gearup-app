@@ -37,7 +37,7 @@
       }
     },
     "home_stack": {
-      "title": "Sources",
+      "title": "Data Sources",
       "activate_device": {
         "title": "Activate device",
         "status_indicator": {
