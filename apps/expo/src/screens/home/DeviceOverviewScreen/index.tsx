@@ -16,6 +16,7 @@ import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
 import { RootStackParamList } from "@/types/navigation";
 import { useFocusEffect } from "@react-navigation/native";
+import { DataSourcesListType } from "@/types/api";
 
 type DeviceOverviewScreenProps = NativeStackScreenProps<RootStackParamList, "DeviceOverview">;
 
@@ -67,7 +68,7 @@ export default function DeviceOverviewScreen() {
                 </TouchableOpacity>
               ) : null}
               <View style={{ flex: 1, justifyContent: "flex-start" }}>
-                <DeviceList buildingId={buildingId} refresh={refreshDeviceList} onRefresh={onDeviceListRefreshed} />
+                <DeviceList buildingId={buildingId} refresh={refreshDeviceList} onRefresh={onDeviceListRefreshed} dataSourcesList={user?.campaign.data_sources_list as DataSourcesListType} />
               </View>
               {hasMultipleBuildings ? (
                 <BuildingBottomSheet
