@@ -152,15 +152,24 @@
           }
         },
         "bluetooth": {
-          "enabling": "Enabling Bluetooth...",
+          "enabling": "Bluetooth is currently disabled. To proceed, please enable your Bluetooth.",
           "alert": {
-            "title": "Bluetooth permission",
-            "message": "This app uses Bluetooth, but does not register your location. On Android devices, Bluetooth is considered part of location services. That's why you will get a question about location.",
-            "button": "Okay, go ahead!"
+            "title": "Allow permissions",
+            "androidmessage": "This app uses Bluetooth to connect to the module, but does not register your location.\n\nOn Android, Bluetooth falls under location services. Therefore, you will soon be asked about location access.\n\nAdditionally, you need to give permission for 'Nearby Devices' to connect to the module.",
+            "iosmessage": "This app uses Bluetooth to connect to the module. \n\n We ask of you to turn Bluetooth on to continue if you have not already given this permission.",
+            "button": "Okay, go ahead!",
+            "enable_button": "Enable Bluetooth",
+            "cancel": "Cancel",
+            "switch_on": "Switch on",
+            "disabled_bluetooth": "Bluetooth is disabled. Do you want to enable Bluetooth?"
+
           },
           "error": {
             "title": "An error occurred.",
-            "message": "Please make sure Bluetooth is enabled and try again."
+            "message": "Please make sure Bluetooth is enabled and try again.",
+            "cancel_message": "Bluetooth activation canceled",
+            "error_message": "Bluetooth activation failed.",
+            "status_check": "Error while checking Bluetooth status:"
           }
         },
         "scanning": {
@@ -218,7 +227,8 @@
         "unsuported_url_alert": {
           "title": "Unsupported URL",
           "message": "The URL {{url}} is not supported."
-        }
+        },
+        "campaign": "Campaign"
       },
       "about": {
         "title": "About"
@@ -286,7 +296,8 @@
       "e_use_cum__kWh": "Cumulative energy usage (kWh)"
     },
     "bluetooth_permission": {
-      "not_granted": "Bluetooth permission is not granted. Please grant the permission and try again."
+      "not_granted_ios": "Bluetooth permission is not granted. Please grant the permission and try again.",
+      "not_granted_android": "Make sure Bluetooth is turned on and that you grant permissions for Location and Nearby Devices.\nYou can do this through settings."
     },
     "external_links": {
       "not_supported": "Your device does not support opening external links.",

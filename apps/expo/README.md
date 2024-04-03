@@ -1,3 +1,2 @@
 # NeedForHeat
-
-Read all about this project [here](../../README.md). Find out how to get started on developing [here](../../docs/developing.md). The project structure can be found [here](../../docs/project-structure.md).
+Read all about this project in the [main README file](../../README.md) that is in the root of this repository.
