@@ -218,6 +218,8 @@ export const buildingDeviceSchema = z.object({
   activated_at: stringToDate.nullable(),
   latest_upload: stringToDate.nullable(),
   device_type: deviceTypeSchema,
+  typeCategory: z.string().nullable().optional(),
+  connected: z.boolean().default(false),
 });
 
 export type BuildingDeviceResponse = z.infer<typeof buildingDeviceSchema>;

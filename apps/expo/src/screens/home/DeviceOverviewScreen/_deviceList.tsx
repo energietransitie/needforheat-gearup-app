@@ -6,10 +6,12 @@ import DeviceListItem from "./_listItem";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
 import useDevices from "@/hooks/device/useDevices";
-import { BuildingDeviceResponse, DataSourcesListType } from "@/types/api";
+import { BuildingDeviceResponse, CloudFeed, DataSourcesListType } from "@/types/api";
+import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
 
 export default function DeviceList({ buildingId, refresh, onRefresh, dataSourcesList }: { buildingId: number, refresh: boolean, dataSourcesList: DataSourcesListType; onRefresh: () => void }) {
   const { data, isLoading, refetch, isRefetching } = useDevices(buildingId);
+  const { data: cloudFeedData, isFetching } = useCloudFeeds();
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const [itemData, setItemData] = useState<BuildingDeviceResponse[]>([]);
 
@@ -20,17 +22,25 @@ export default function DeviceList({ buildingId, refresh, onRefresh, dataSources
     if (dataSourcesList && data) {
       let newData: BuildingDeviceResponse[] = [];
       dataSourcesList.items.forEach((dataSource) => {
+
+        let connectStatus = false;
         const oldSource = data?.find(item => item.device_type.name === dataSource.item.name);
-        
         const activated_at = oldSource?.activated_at ?? null;
         const latest_upload = oldSource?.latest_upload ?? null;
+
+        if((dataSource.type.name === "cloud_feed" && cloudFeedData?.find(item => item.cloud_feed.name === dataSource.item.name)?.connected) || !(activated_at === null)){
+          connectStatus = true;
+        }
+
         const newResponse: BuildingDeviceResponse = {
           id: dataSource.id,
           name: dataSource.item.name,
           building_id: buildingId,
           device_type: dataSource.item,
           activated_at: activated_at,
-          latest_upload: latest_upload
+          latest_upload: latest_upload,
+          typeCategory: dataSource.type.name,
+          connected: connectStatus
         };
 
         newData.push(newResponse);
@@ -48,7 +58,7 @@ export default function DeviceList({ buildingId, refresh, onRefresh, dataSources
     }
   }, [refresh, refetch, onRefresh]);
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <StatusIndicator isLoading />;
   }
 

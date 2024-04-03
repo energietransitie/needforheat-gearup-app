@@ -1,6 +1,6 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Button, ListItem, makeStyles, useTheme } from "@rneui/themed";
-import { TouchableHighlight, TouchableOpacity } from "react-native";
+import { TouchableHighlight, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { enUS, nl } from 'date-fns/locale';
 import { format } from 'date-fns';
@@ -12,6 +12,7 @@ import { BuildingDeviceResponse } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
 import { useEffect, useState } from "react";
 import { capitalizeFirstLetter } from "@/utils/tools";
+import { Background } from "@react-navigation/elements";
 
 type WifiNetworkListItemProps = {
   item: BuildingDeviceResponse;
@@ -53,7 +54,6 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     }
   };
 
-
   const locales: Record<string, Locale> = {
     'en-US': enUS,
     'nl-NL': nl,
@@ -84,31 +84,47 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           buttonStyle={{ minHeight: "100%", backgroundColor: theme.colors.primary }}
         />
       )}
-      style={style.listItem}
+      style={[style.listItem]}
+      containerStyle={[
+        {
+          backgroundColor: (!item.connected) ? '#45b97c' : 'white',
+        },
+        { borderTopLeftRadius: 20 },
+        { borderBottomLeftRadius: 20 }
+      ]}
       Component={TouchableHighlight}
     >
       <ListItem.Content>
         <ListItem.Title>
-          {item.latest_upload ? (
-            <Icon name="cloud-outline" color="green" size={16} />
-          ) : (
-            <Icon name="cloud-offline-outline" color="red" size={16} />
-          )}
+          {item.connected ? (
+            item.latest_upload ? (
+              <Icon name="cloud-outline" color="green" size={16} />
+            ) : (
+              <Icon name="cloud-offline-outline" color="red" size={16} />
+            )
+          ) : null}
           {resolvedLanguage === "nl-NL"
             ? data?.["nl-NL"] ? " " + capitalizeFirstLetter(data["nl-NL"]) : ""
             : data?.["en-US"] ? " " + capitalizeFirstLetter(data["en-US"]) : ""}
         </ListItem.Title>
-        <ListItem.Subtitle>
-          {item.latest_upload
-            ? t("screens.device_overview.device_list.device_info.last_seen", {
-              date: formatDateAndTime(item.latest_upload),
-            })
-            : t("screens.device_overview.device_list.device_info.no_data")}
-        </ListItem.Subtitle>
+        {item.connected ? (
+          <ListItem.Subtitle>
+            {item.latest_upload
+              ? t("screens.device_overview.device_list.device_info.last_seen", {
+                date: formatDateAndTime(item.latest_upload),
+              })
+              : t("screens.device_overview.device_list.device_info.no_data")}
+          </ListItem.Subtitle>
+        ) : null}
       </ListItem.Content>
       <TouchableOpacity onPress={openHelpUrl}>
-        <Icon name="help-circle-outline" color="black" size={32} />
+        <Icon name="help-circle-outline" size={32} />
       </TouchableOpacity>
+      {!item.connected ? (
+        <TouchableOpacity onPress={openHelpUrl}>
+          <Icon name="arrow-forward-circle-outline" size={32} />
+        </TouchableOpacity>
+      ) : null}
     </ListItem.Swipeable>
   );
 }
