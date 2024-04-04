@@ -1,7 +1,7 @@
 # NeedForHeat GearUp App<!-- omit in toc -->
 ![GitHub License](https://img.shields.io/github/license/energietransitie/needforheat-gearup-app)
 ![Project Status badge](https://img.shields.io/badge/status-in%20progress-brightgreen)
-![Version Status Badge](https://img.shields.io/badge/version-stable-brightgreen)
+![Version Status Badge](https://img.shields.io/badge/version-beta-orange)
 
 This repository contains the source code for the GearUp version of the NeedForHeat (NFH) app for both Android and iOS. The app helps users to install and connect one or more NFH measurement devices that start collecting monitoring data related to home heating.
 
