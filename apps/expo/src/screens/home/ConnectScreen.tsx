@@ -7,12 +7,12 @@ import RNExitApp from "react-native-exit-app";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import Box from "@/components/elements/Box";
+import { MANUAL_URL } from "@/constants";
+import useDevice from "@/hooks/device/useDevice";
 import useDeviceConnect from "@/hooks/device/useDeviceConnect";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useDisableBackButton } from "@/hooks/useDisableBackButton";
 import { HomeStackParamList } from "@/types/navigation";
-import useDevice from "@/hooks/device/useDevice";
-import { MANUAL_URL } from "@/constants";
 
 type ConnectScreenProps = NativeStackScreenProps<HomeStackParamList, "ConnectScreen">;
 

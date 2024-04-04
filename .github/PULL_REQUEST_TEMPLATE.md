@@ -15,15 +15,19 @@ Before submitting the PR, please make sure you do the following:
 - [ ] Tests have been written/updated (if necessary)
   - [ ] All tests are passing
 - [ ] Docs have been updated (if necessary)
-- [ ] Updated `Linear` issue to `In Review`
+- [ ] Updated `In Progress` issue to `In Review`
+- [ ] A team member who has not worked on this branch has reviewed this PR
+- [ ] Commits are properly formatted and messages are descriptive
+- [ ] The PR title and description are clear and concise
 
 ### Description
 
-<!-- Please insert your description here and provide especially info about the "what" this PR is solving -->
+<!-- Please insert your description here and provide information about what this PR is solving -->
 
 ### Linked Issues
 
+<!-- Please list any issues or pull requests related to this change -->
 
-### Additional context
+### Additional Context
 
-<!-- e.g. is there anything you'd like reviewers to focus on? -->
+<!-- Is there anything specific you'd like reviewers to focus on or any additional context you'd like to provide? -->
