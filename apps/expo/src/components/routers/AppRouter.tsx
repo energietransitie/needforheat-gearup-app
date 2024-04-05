@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "@rneui/themed";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import HomeRouter from "./HomeRouter";
@@ -13,12 +13,27 @@ import DeviceOverviewScreen from "@/screens/home/DeviceOverviewScreen";
 import MeasurementsScreen from "@/screens/MeasurementsScreen";
 import { RootStackParamList } from "@/types/navigation";
 
+import * as SplashScreen from "expo-splash-screen";
+
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
-export default function AppRouter() {
+interface AppRouterProps {
+  fontsLoaded: boolean;
+}
+
+export default function AppRouter({fontsLoaded}: AppRouterProps) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const { isAuthed } = useContext(UserContext);
+
+  useEffect(() => {
+    const checkSplash = async () => {
+      if (fontsLoaded && isAuthed) {
+        await SplashScreen.hideAsync();
+      }
+    }
+    checkSplash().catch(console.error);
+  }, [fontsLoaded, isAuthed]);
 
   return (
     <Tab.Navigator screenOptions={{ headerShown: false, tabBarActiveTintColor: theme.colors.primary }}>

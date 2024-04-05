@@ -6,7 +6,11 @@ import UnauthenticatedHomeScreen from "./UnauthenticatedHomeScreen";
 
 import { UserContext } from "@/providers/UserProvider";
 
-export default function HomeScreen() {
-  const { isAuthed } = useContext(UserContext);
-  return isAuthed ? <DeviceOverviewScreen /> : <UnauthenticatedHomeScreen />;
+interface HomeScreenProps {
+  isAuthed: boolean;
+}
+
+export default function HomeScreen({ isAuthed }: HomeScreenProps) {
+  const userContext = useContext(UserContext);
+  return userContext.isAuthed ? <DeviceOverviewScreen /> : <UnauthenticatedHomeScreen />;
 }

@@ -4,7 +4,7 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import i18n from "i18next";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { initReactI18next } from "react-i18next";
 import "@total-typescript/ts-reset";
 
@@ -15,6 +15,10 @@ import { useOnAppStateChange } from "@/hooks/useOnAppStateChange";
 import LANG_EN_US from "@/lang/en-US.json";
 import LANG_NL_NL from "@/lang/nl-NL.json";
 import { LanguageDetector } from "@/lib/languageDetector";
+
+import { useContext } from "react";
+import { UserContext } from "@/providers/UserProvider";
+import useUser from "@/hooks/user/useUser";
 
 i18n
   .use(LanguageDetector)
@@ -51,18 +55,23 @@ export default function App() {
     RobotoBlack: require("./assets/fonts/Roboto-Black.ttf"),
   });
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
+  const {isAuthed} = useContext(UserContext);
+
+  useEffect(() => {
+    const checkSplash = async () => {
+      if (fontsLoaded && isAuthed) {
+        //await SplashScreen.hideAsync();
+      }
     }
-  }, [fontsLoaded]);
+    checkSplash().catch(console.error);
+  }, [fontsLoaded, isAuthed]);
 
   if (!fontsLoaded) return null;
 
   return (
-    <Providers onLayout={onLayoutRootView}>
+    <Providers>
       <StatusBar style="dark" />
-      <AppRouter />
+      <AppRouter fontsLoaded={fontsLoaded} />
     </Providers>
   );
 }
