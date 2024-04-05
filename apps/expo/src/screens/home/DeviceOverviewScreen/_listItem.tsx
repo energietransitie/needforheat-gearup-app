@@ -11,6 +11,7 @@ import { useOpenExternalLink } from "@/hooks/useOpenExternalLink";
 import { BuildingDeviceResponse } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
 import { useEffect, useState } from "react";
+import { capitalizeFirstLetter } from "@/utils/tools";
 
 type WifiNetworkListItemProps = {
   item: BuildingDeviceResponse;
@@ -71,13 +72,6 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     return format(inputDate, formatString, { locale });
   }
 
-  function capitalizeFirstLetter(text: string) {
-    if (text) {
-      return text.charAt(0).toUpperCase() + text.slice(1);
-    }
-    return text;
-  }
-
   return (
     <ListItem.Swipeable
       onSwipeBegin={onSwipeBegin}
@@ -101,8 +95,8 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
             <Icon name="cloud-offline-outline" color="red" size={16} />
           )}
           {resolvedLanguage === "nl-NL"
-            ? data?.["nl-NL"] ? capitalizeFirstLetter(data["nl-NL"]) : ""
-            : data?.["en-US"] ? capitalizeFirstLetter(data["en-US"]) : ""}
+            ? data?.["nl-NL"] ? " " + capitalizeFirstLetter(data["nl-NL"]) : ""
+            : data?.["en-US"] ? " " + capitalizeFirstLetter(data["en-US"]) : ""}
         </ListItem.Title>
         <ListItem.Subtitle>
           {item.latest_upload

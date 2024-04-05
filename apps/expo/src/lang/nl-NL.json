@@ -152,15 +152,23 @@
           }
         },
         "bluetooth": {
-          "enabling": "Bluetooth inschakelen...",
+          "enabling": "Bluetooth is momenteel uitgeschakeld. Om verder te kunnen gaan, dient u uw Bluetooth in te schakelen",
           "alert": {
-            "title": "Bluetooth toestemming",
-            "message": "Deze app gebruikt Bluetooth, maar registreert uw locatie niet. Op Android valt Bluetooth onder locatiediensten. Daarom krijgt u zo een vraag over locatie.",
-            "button": "Oké, vraag maar!"
+            "title": "Machtigingen toestaan",
+            "androidmessage": "Deze app maakt gebruik van Bluetooth om te verbinden met de module, maar registreert uw locatie niet.\n\nOp Android valt Bluetooth onder locatiediensten. Daarom zult u binnenkort een vraag krijgen over locatietoegang.\n\nBovendien dient u toestemming te geven voor 'Apparaten in de Buurt' om verbinding te maken met de module.",
+            "iosmessage": "Deze app maakt gebruik van Bluetooth om te verbinden met de module. \n\n Wij vragen aan u om Bluetooth in te schakelen om door te gaan mits u dit niet al heeft gegeven.",
+            "button": "Oké, vraag maar!",
+            "enable_button": "Bluetooth Inschakelen",
+            "cancel": "Annuleren",
+            "switch_on": "Inschakelen",
+            "disabled_bluetooth": "Bluetooth is uitgeschakeld. Wilt u Bluetooth inschakelen?"
           },
           "error": {
             "title": "Er is een fout opgetreden.",
-            "message": "Zorg ervoor dat Bluetooth is ingeschakeld en probeer opnieuw."
+            "message": "Zorg ervoor dat Bluetooth is ingeschakeld en probeer opnieuw.",
+            "cancel_message": "Bluetooth inschakelen geannuleerd",
+            "error_message": "Bluetooth inschakelen is mislukt.",
+            "status_check": "Fout bij controleren van Bluetooth-status:"
           }
         },
         "scanning": {
@@ -263,13 +271,32 @@
   },
   "hooks": {
     "property_translation": {
-      "roomTemp": "Temperatuur",
-      "CO2concentration": "CO₂ concentratie",
-      "relativeHumidity": "Luchtvochtigheid",
-      "countPresence": "Aanwezigheid"
+      "heartbeat": "Hartslag",
+      "batteryVoltage": "Batterijspanning (V)",
+      "booted_fw": "Opgestarte firmware",
+      "countPresence": "Aanwezigheidsteller",
+      "CO2concentration": "CO₂-concentratie",
+      "roomTemp": "Kamertemperatuur",
+      "relativeHumidity": "Relatieve luchtvochtigheid (%)",
+      "e_use_lo_cum__kWh": "Cumulatief energieverbruik (Laag) (kWh)",
+      "e_use_hi_cum__kWh": "Cumulatief energieverbruik (Hoog) (kWh)",
+      "e_ret_lo_cum__kWh": "Cumulatief energieteruglevering (Laag) (kWh)",
+      "e_ret_hi_cum__kWh": "Cumulatief energieteruglevering (Hoog) (kWh)",
+      "g_use_cum__m3": "Cumulatief gasverbruik (m³)",
+      "battery_voltage__V": "Batterijspanning (V)",
+      "occupancy__p": "Aantal personen aanwezig",
+      "co2__ppm": "CO₂-concentratie (ppm)",
+      "temp_in__degC": "Temperatuur (˚C)",
+      "rel_humidity__0": "Relatieve luchtvochtigheid (%)",
+      "onboarded__p": "Aantal personen aan boord",
+      "dsmr_version__0": "DSMR Versie",
+      "meter_code__str": "Metercode",
+      "e_ret_cum__kWh": "Cumulatief energieteruglevering (kWh)",
+      "e_use_cum__kWh": "Cumulatief energieverbruik (kWh)"
     },
     "bluetooth_permission": {
-      "not_granted": "Bluetooth-machtigingen zijn niet verleend. Zorg ervoor dat de app Bluetooth-machtigingen heeft en probeer opnieuw."
+      "not_granted_ios": "Bluetooth-machtigingen zijn niet verleend.\nZorg ervoor dat de app Bluetooth-machtigingen heeft en probeer opnieuw.",
+      "not_granted_android": "Zorg ervoor dat Bluetooth aanstaat en dat u machtigingen geeft voor Locatie en Apparaten in de Buurt.\n U kunt dit doen via instellingen."
     },
     "external_links": {
       "not_supported": "Uw smartphone biedt geen ondersteuning voor het openen van externe links.",

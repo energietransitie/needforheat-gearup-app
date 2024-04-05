@@ -126,4 +126,4 @@ The `docs` folder contains as much of the documentation in this repository as po
 ## .env
 All environment variables for the whole repository can be found here.
 
-Setup can be found [here](./developing.md#Add environment variable).
+Setup can be found [here](https://github.com/energietransitie/needforheat-gearup-app/blob/main/docs/developing.md#4-add-environment-variable).

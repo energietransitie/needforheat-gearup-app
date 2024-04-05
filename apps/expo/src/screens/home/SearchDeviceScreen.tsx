@@ -2,22 +2,22 @@ import { useIsFocused } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, Icon, Text, makeStyles, useTheme } from "@rneui/themed";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Platform } from "react-native";
+import { ActivityIndicator, Alert, Platform, View } from "react-native";
 import BluetoothStateManager from "react-native-bluetooth-state-manager";
 import EspIdfProvisioning from "react-native-esp-idf-provisioning";
 import { openSettings } from "react-native-permissions";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import Box from "@/components/elements/Box";
+import { MANUAL_URL } from "@/constants";
 import useBluetoothPermission from "@/hooks/bluetooth/useBluetoothPermission";
 import useBluetoothState from "@/hooks/bluetooth/useBluetoothState";
+import useDevice from "@/hooks/device/useDevice";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useDisableBackButton } from "@/hooks/useDisableBackButton";
 import { BleDeviceType } from "@/types";
 import { HomeStackParamList } from "@/types/navigation";
 import { withTimeout } from "@/utils/withTimeout";
-import useDevice from "@/hooks/device/useDevice";
-import { MANUAL_URL } from "@/constants";
 
 const useStyles = makeStyles(theme => ({
   text: {
@@ -53,16 +53,20 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
 
   const onRequestPermissionError = (err: string) => {
     console.log("onRequestPermissionError", err);
-
-    Alert.alert("Error", err, [
-      {
-        text: t("screens.home_stack.search_device.open_settings"),
-        onPress: () => {
-          // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
-          openSettings().catch(e => { });
+    if(Platform.OS === "ios"){
+    // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function  
+    openSettings().catch(e => { });
+    } else {
+      Alert.alert("Error", err, [
+        {
+          text: t("screens.home_stack.search_device.open_settings"),
+          onPress: () => {
+            // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
+            openSettings().catch(e => { });
+          },
         },
-      },
-    ]);
+      ])
+    }
   };
 
   const onEnableBluetoothError = (err: string) => {
@@ -85,31 +89,36 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
 
   const askForBluetoothPermission = async (): Promise<null> => {
     return new Promise((resolve, reject) => {
-      Alert.alert(
-        t("screens.home_stack.search_device.bluetooth.alert.title"),
-        t("screens.home_stack.search_device.bluetooth.alert.message"),
-        [
-          {
-            text: t("screens.home_stack.search_device.bluetooth.alert.button"),
-            onPress: async () => {
-              try {
-                await requestBluetoothPermission();
-                resolve(null);
-              } catch (err: unknown) {
-                const errorMsg =
-                  err instanceof Error
-                    ? err.message
-                    : t("screens.home_stack.search_device.errors.bluetooth.request_failed");
-                onRequestPermissionError(errorMsg);
+      let title = "";
+      let message = "";
+      
+      title = t("screens.home_stack.search_device.bluetooth.alert.title");
+      if (Platform.OS === "android") {
+        message = t("screens.home_stack.search_device.bluetooth.alert.androidmessage");
+      } else {
+        message = t("screens.home_stack.search_device.bluetooth.alert.iosmessage");
+      }
 
+      Alert.alert(title, message, [
+        {
+          text: t("screens.home_stack.search_device.bluetooth.alert.button"),
+          onPress: async () => {
+            try {
+              await requestBluetoothPermission();
+              resolve(null);
+            } catch (err: unknown) {
+              const errorMsg =
+              err instanceof Error
+                ? err.message
+                : t("screens.home_stack.search_device.errors.bluetooth.request_failed");
+                onRequestPermissionError(errorMsg);
                 setIsScanning(false);
                 setIsError(true);
-                reject(err);
-              }
-            },
+              reject(err);
+            }
           },
-        ]
-      );
+        },
+      ]);
     });
   };
 
@@ -120,6 +129,7 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
     setIsError(false);
 
     const hasBluetoothPermission = await checkBluetoothPermission();
+
     if (!hasBluetoothPermission) {
       await askForBluetoothPermission();
     }
@@ -192,6 +202,12 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
               <>
                 <ActivityIndicator size="large" />
                 <Text style={styles.text}>{t("screens.home_stack.search_device.bluetooth.enabling")}</Text>
+                <View style={{ marginTop: 20 }} />
+                <Button
+                  containerStyle={{ width: "100%" }}
+                  title={t("screens.home_stack.search_device.bluetooth.alert.enable_button")}
+                  onPress={() => BluetoothStateManager.openSettings()}
+                />
               </>
             ) : (
               <>

@@ -43,7 +43,6 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
     return () => backHandler.remove();
   }, [navigation]);
 
-
   const onProvision = (network: WifiEntry, password?: string) => {
     bottomSheetRef.current?.close();
 
@@ -52,7 +51,7 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
       proofOfPossession,
       network,
       password,
-      device_TypeName
+      device_TypeName,
     });
   };
 
@@ -60,7 +59,7 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
     navigation.navigate("SearchDeviceScreen", {
       deviceName: device.deviceName,
       proofOfPossession,
-      device_TypeName
+      device_TypeName,
     });
   };
 
@@ -95,7 +94,7 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
 
     // If the network is open, navigate to the provisioning screen immediately
     if (network.security === 0) {
-      onProvision(network);
+      onProvision(network, "");
       return;
     }
 
