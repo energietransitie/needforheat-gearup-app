@@ -1,8 +1,8 @@
 # GitHub documentation
-This file aims to explain the workflows and pullrequest template that are used as part of GitHub in [the .github/ folder](https://github.com/energietransitie/twomes-app-needforheat/tree/main/.github).
+This file aims to explain the workflows and pullrequest template that are used as part of GitHub in [the .github/ folder](https://github.com/energietransitie/needforheat-gearup-app/tree/main/.github).
 
 ## Pull Request Template
-The template can be read in the [PULL_REQUEST_TEMPLATE.md](https://github.com/energietransitie/twomes-app-needforheat/blob/main/.github/PULL_REQUEST_TEMPLATE.md?plain=1).
+The template can be read in the [PULL_REQUEST_TEMPLATE.md](https://github.com/energietransitie/needforheat-gearup-app/blob/main/.github/PULL_REQUEST_TEMPLATE.md?plain=1).
 
 This template should be filled in for every pullrequest to ensure that reviewers know what the pullrequest is about.
 
