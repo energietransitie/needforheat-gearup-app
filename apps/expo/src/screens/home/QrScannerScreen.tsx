@@ -1,29 +1,79 @@
-import { useIsFocused } from "@react-navigation/native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { makeStyles } from "@rneui/themed";
-import { BarCodeScanner } from "expo-barcode-scanner";
-import { BarCodeScanningResult, Camera } from "expo-camera";
-import { useEffect, useState } from "react";
-import { Alert, Text, Platform, Button } from "react-native";
-import { openSettings } from "react-native-permissions";
-
 import Box from "@/components/elements/Box";
 import { InvalidQrCodeException } from "@/exceptions/InvalidQrCodeException";
 import { MismatchedDeviceNameException } from "@/exceptions/MismatchedDeviceNameException";
 import useTranslation from "@/hooks/translation/useTranslation";
+import useCameraPermission from "@/hooks/useCameraPermission/useCameraPermission";
 import { SensorQrCode } from "@/types";
 import { HomeStackParamList } from "@/types/navigation";
+import { useIsFocused } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Button, makeStyles } from "@rneui/themed";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import { BarCodeScanningResult, Camera } from "expo-camera";
+import { useEffect, useState } from "react";
+import { Alert, Platform, Text } from "react-native";
+import { openSettings } from "react-native-permissions";
 
 type QrScannerScreenProps = NativeStackScreenProps<HomeStackParamList, "QrScannerScreen">;
 
 export default function QrScannerScreen({ navigation, route }: QrScannerScreenProps) {
   const { expectedDeviceName } = route.params ?? {};
   const [scanned, setScanned] = useState(false);
-  const focused = useIsFocused();
-  const [permission, requestPermission] = Camera.useCameraPermissions();
-  const { t } = useTranslation();
-  const hasPermission = permission?.granted;
+  const [hasPermission, setHasPermission] = useState(false);
   const styles = useStyles();
+  const focused = useIsFocused();
+  const { requestCameraPermission, checkCameraPermission } = useCameraPermission();
+  const { t } = useTranslation();
+
+  const onRequestCameraError = (err: string) => {
+    console.log("onRequestPermissionError", err);
+    if (Platform.OS === "ios") {
+      // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function  
+      openSettings().catch(e => { });
+    } else {
+      Alert.alert("Error", err, [
+        {
+          text: t("screens.home_stack.search_device.open_settings"),
+          onPress: () => {
+            // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
+            openSettings().catch(e => { });
+          },
+        },
+      ])
+    }
+  };
+
+  const askForCameraPermission = async (): Promise<null> => {
+    const permission = await checkCameraPermission();
+    setHasPermission(permission);
+
+    return new Promise((resolve, reject) => {
+      if (!permission) {
+        const title = t("screens.home_stack.qr_scanner.camera.alert.title");
+        const message = t("screens.home_stack.qr_scanner.camera.alert.message");
+
+        Alert.alert(title, message, [
+          {
+            text: t("screens.home_stack.qr_scanner.camera.alert.button"),
+            onPress: async () => {
+              try {
+                await requestCameraPermission();
+                resolve(null);
+                setHasPermission(await checkCameraPermission());
+              } catch (err: unknown) {
+                const errorMsg =
+                  err instanceof Error
+                    ? err.message
+                    : t("screens.home_stack.qr_scanner.errors.camera_request_failed");
+                onRequestCameraError(errorMsg);
+                reject(err);
+              }
+            },
+          },
+        ]);
+      }
+    })
+  };
 
   const onError = (error?: string) => {
     Alert.alert("Error", error ?? t("screens.home_stack.qr_scanner.errors.unknown_error"), [
@@ -62,48 +112,10 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
 
   useEffect(() => {
     !focused && setScanned(false);
-  }, [focused]);
-
-  // if (!hasPermission) {
-  //   requestPermission();
-  // }
-
-  useEffect(() => {
-    if (!hasPermission) {
-      askForCameraPermission();
+    if (focused) {
+      if (!hasPermission) askForCameraPermission();
     }
-  }, [hasPermission]);
-  const askForCameraPermission = () => {
-    let title = "";
-    let message = "";
-    console.log("Hello");
-    title = t("screens.home_stack.camera.alert.title");
-    message = t("screens.home_stack.camera.alert.message");
-    console.log(title);
-
-    Alert.alert(title, message, [
-      {
-        text: t("screens.home_stack.camera.camera.alert.button"),
-        onPress: () => {
-          requestPermission();
-        },
-        // onPress: async () => {
-        //   try {
-        //     requestPermission();
-        //     //resolve(null);
-        //   } catch (e) {
-        //     // const errorMsg =
-        //     //   err instanceof Error ? err.message : t("screens.home_stack.camera.errors.camera.request_failed");
-        //     //   onRequestPermissionError(errorMsg);
-        //     //   setIsScanning(false);
-        //     //   setIsError(true);
-        //     // reject(err);
-        //   }
-        // },
-      },
-    ]);
-    console.log(message);
-  };
+  }, [focused]);
 
   return (
     <Box center>
@@ -125,7 +137,11 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
       ) : (
         <>
           <Text>{t("screens.home_stack.qr_scanner.errors.no_permission")}</Text>
-          onPress= {askForCameraPermission()}
+          <Button
+            containerStyle={{ width: "100%" }}
+            title={t("screens.home_stack.qr_scanner.camera.alert.enable_button")}
+            onPress={() => askForCameraPermission()}
+          />
         </>
       )}
     </Box>
