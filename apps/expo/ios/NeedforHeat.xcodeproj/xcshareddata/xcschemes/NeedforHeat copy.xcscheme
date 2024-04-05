@@ -15,7 +15,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3F481E942BAAE99700FC7668"
+               BlueprintIdentifier = "3FD3E1BE2BC091F6008F6ADB"
                BuildableName = "NeedforHeat Release.app"
                BlueprintName = "NeedforHeat Release"
                ReferencedContainer = "container:NeedforHeat.xcodeproj">
@@ -44,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3F481E942BAAE99700FC7668"
+            BlueprintIdentifier = "3FD3E1BE2BC091F6008F6ADB"
             BuildableName = "NeedforHeat Release.app"
             BlueprintName = "NeedforHeat Release"
             ReferencedContainer = "container:NeedforHeat.xcodeproj">
@@ -61,7 +61,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3F481E942BAAE99700FC7668"
+            BlueprintIdentifier = "3FD3E1BE2BC091F6008F6ADB"
             BuildableName = "NeedforHeat Release.app"
             BlueprintName = "NeedforHeat Release"
             ReferencedContainer = "container:NeedforHeat.xcodeproj">

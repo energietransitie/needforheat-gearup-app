@@ -11,7 +11,7 @@ import { StatusBar } from "expo-status-bar";
 import i18n from "i18next";
 import { useEffect, useState } from "react";
 import { initReactI18next } from "react-i18next";
-import { View } from "react-native";
+import { Dimensions, View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AppRouter from "./src/components/routers/AppRouter";
 import Providers from "./src/providers";
@@ -77,11 +77,14 @@ export default function App() {
   );
 }
 
+const windowHeight = Dimensions.get('window').height
+const windowWidth = Dimensions.get('window').width
+
 const useStyles = makeStyles(theme => ({
   networkAlert: {
     position: 'absolute',
-    top: 45,
-    right: 20,
+    top: windowHeight * 0.04,
+    right: windowWidth * 0.05,
     width: 30,
     height: 30,
     alignItems: 'center',
