@@ -146,7 +146,7 @@ and select the physical device to get the QR-code that you can scan on the iOS d
 ### 3.2. Release version on the iOS device
 To install the release version of the, select the release schema in Xcode in the top-menu where it says `NeedforHeat` next to the iOS device selection and then select `NeedforHeat Release`.
 
-![Change Xcode scheme to Release](https://github.com/energietransitie/twomes-app-needforheat/assets/16213031/7619856f-6dc6-42c2-a4cb-976faea140e5)
+![Change Xcode scheme to Release](https://github.com/energietransitie/needforheat-gearup-app/assets/16213031/7619856f-6dc6-42c2-a4cb-976faea140e5)
 
 Then you can build the app as release version and automatically install to your iOS device. When you open it up, you will get the release version without Expo Go and thus see the app open up immediatley without Metro bundling. \
 You might still see a terminal open with Metro bundler which you can ignore

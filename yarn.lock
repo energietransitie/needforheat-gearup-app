@@ -11464,9 +11464,9 @@ react-native-dotenv@3.4.8:
   dependencies:
     dotenv "^16.0.3"
 
-"react-native-esp-idf-provisioning@ssh://git@github.com/energietransitie/twomes-app-needforheat-eup":
+"react-native-esp-idf-provisioning@ssh://git@github.com/energietransitie/needforheat-gearup-app-eup":
   version "0.1.0"
-  resolved "ssh://git@github.com/energietransitie/twomes-app-needforheat-eup#a166a46ace76ca000d52c638de9072a993963bc8"
+  resolved "ssh://git@github.com/energietransitie/needforheat-gearup-app-eup#a166a46ace76ca000d52c638de9072a993963bc8"
 
 react-native-exit-app@^1.1.0:
   version "1.1.0"
