@@ -335,6 +335,10 @@
       "not_granted_ios": "Bluetooth-machtigingen zijn niet verleend.\nZorg ervoor dat de app Bluetooth-machtigingen heeft en probeer opnieuw.",
       "not_granted_android": "Zorg ervoor dat Bluetooth aanstaat en dat u machtigingen geeft voor Locatie en Apparaten in de Buurt.\n U kunt dit doen via instellingen."
     },
+    "Camera": {
+      "not_granted_ios": "Camera-machtigingen zijn niet verleend.\nZorg ervoor dat de app Camera-machtigingen heeft en probeer opnieuw.",
+      "not_granted_android": "Zorg ervoor dat Camera aanstaat.\n U kunt dit doen via instellingen."
+    },
     "external_links": {
       "not_supported": "Uw smartphone biedt geen ondersteuning voor het openen van externe links.",
       "confirmation": {

@@ -316,6 +316,10 @@
       "not_granted_ios": "Bluetooth permission is not granted. Please grant the permission and try again.",
       "not_granted_android": "Make sure Bluetooth is turned on and that you grant permissions for Location and Nearby Devices.\nYou can do this through settings."
     },
+    "camera_permission": {
+      "not_granted_ios": "Camera permission is not granted. Please grant the permission and try again.",
+      "not_granted_android": "Make sure Camera is turned on.\nYou can do this through settings."
+    },
     "external_links": {
       "not_supported": "Your device does not support opening external links.",
       "confirmation": {
