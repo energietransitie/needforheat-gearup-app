@@ -227,7 +227,8 @@
         "unsuported_url_alert": {
           "title": "Unsupported URL",
           "message": "The URL {{url}} is not supported."
-        }
+        },
+        "campaign": "Campaign"
       },
       "about": {
         "title": "About"
