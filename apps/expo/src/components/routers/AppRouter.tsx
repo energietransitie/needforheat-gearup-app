@@ -1,19 +1,17 @@
+import useTranslation from "@/hooks/translation/useTranslation";
+import { UserContext } from "@/providers/UserProvider";
+import MeasurementsScreen from "@/screens/MeasurementsScreen";
+import { RootStackParamList } from "@/types/navigation";
+import NetInfo from '@react-native-community/netinfo';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "@rneui/themed";
-import { useContext, useEffect } from "react";
+import * as SplashScreen from "expo-splash-screen";
+import { useContext, useEffect, useState } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
 import HomeRouter from "./HomeRouter";
 import InfoRouter from "./InfoRouter";
 import SettingsRouter from "./SettingsRouter";
-
-import useTranslation from "@/hooks/translation/useTranslation";
-import { UserContext } from "@/providers/UserProvider";
-import DeviceOverviewScreen from "@/screens/home/DeviceOverviewScreen";
-import MeasurementsScreen from "@/screens/MeasurementsScreen";
-import { RootStackParamList } from "@/types/navigation";
-
-import * as SplashScreen from "expo-splash-screen";
+import { Image } from "react-native";
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
@@ -21,7 +19,7 @@ interface AppRouterProps {
   fontsLoaded: boolean;
 }
 
-export default function AppRouter({fontsLoaded}: AppRouterProps) {
+export default function AppRouter({ fontsLoaded }: AppRouterProps) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const { isAuthed } = useContext(UserContext);
@@ -49,17 +47,6 @@ export default function AppRouter({fontsLoaded}: AppRouterProps) {
       />
       {isAuthed ? (
         <>
-          {/* <Tab.Screen
-            name="DeviceOverview"
-            component={DeviceOverviewScreen}
-            options={{
-              title: t("screens.device_overview.title"),
-              headerShown: true,
-              tabBarIcon: ({ color, size }) => {
-                return <Ionicons name="list-outline" size={size} color={color} />;
-              },
-            }}
-          /> */}
           <Tab.Screen
             name="Measurements"
             component={MeasurementsScreen}
