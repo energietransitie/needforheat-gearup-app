@@ -26,7 +26,7 @@ This guide will explain how to prepare the local enviroment to start developing 
     - [Cocaopods](https://cocoapods.org/) (>=1.15.2)
 
 ## 1. Setup SSH Key
-Due to the dependency [twomes-app-needforheat-eup](https://github.com/energietransitie/twomes-app-needforheat-eup), a SSH key will be required to set up so Yarn can properly fetch this repo.
+Due to the dependency [needforheat-gearup-app-eup](https://github.com/energietransitie/needforheat-gearup-app-eup), a SSH key will be required to set up so Yarn can properly fetch this repo.
 
 To do this, please follow the GitHub documentation to setup an SSH key on the device you will be using to develop:
 1. [Generate a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
@@ -79,7 +79,7 @@ Otherwise, the Java JDK inside this folder will be used when building which is m
 ## 6. Prepare and Running with Expo Go
 You SHOULD read the guides for [Android](./android.md) and [iOS](./ios.md) for the OS-specific guide. These guides will explain how to prepare your environment to build the development app on either a emulator or a physical device.
 
-Do note that you should not exclusively develop on Expo Go. Mainly because icons will not load and because of React Native Bindings that get used from [twomes-app-needforheat-eup](https://github.com/energietransitie/twomes-app-needforheat-eup). 
+Do note that you should not exclusively develop on Expo Go. Mainly because icons will not load and because of React Native Bindings that get used from [needforheat-gearup-app-eup](needforheat-gearup-app-eup). 
 
 In addition, Expo Go requires that the network is a **private** network with a firewall that allows the Expo Go ports to go through on the PC hosting the Expo Go server. This means you will be unable to use Expo Go on public networks like `eduroam`. \
 You *can* fix this by running through a hotspot or and/or setting the network to private for [Windows](https://support.microsoft.com/en-us/windows/make-a-wi-fi-network-public-or-private-in-windows-0460117d-8d3e-a7ac-f003-7a0da607448d). MacOS has no public/private network setting and should work fine on private networks.
