@@ -40,7 +40,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     } else if (item.typeCategory === "cloud_feed") {
       navigate("AddOnlineDataSourceScreen");
     }
-  }
+  };
   // false so it won't open the pop-up but it will open the URL
   const openHelpUrl = () => openUrl(item.device_type.info_url, false);
 
@@ -78,13 +78,12 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
 
     return format(inputDate, formatString, { locale });
   }
-
   return (
     <ListItem.Swipeable
       onSwipeBegin={onSwipeBegin}
       onSwipeEnd={onSwipeEnd}
       leftWidth={0}
-      rightContent={item.connected && !(item.typeCategory === "cloud_feed") ? close => (
+      rightContent={item.connected === 2 && !(item.typeCategory === "cloud_feed") ? close => (
         <Button
           title={t("screens.device_overview.device_list.reset_device")}
           onPress={() => onReset(close)}
@@ -94,16 +93,18 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
       style={[style.listItem]}
       containerStyle={[
         {
-          backgroundColor: (!item.connected) ? '#45b97c' : 'white',
+          backgroundColor: item.connected === 0 ? '#45b97c' : 
+                          item.connected === 1 ? 'grey' : 
+                          item.connected === 2 ? 'white' : 'initial',
         },
         { borderTopLeftRadius: 20 },
-        { borderBottomLeftRadius: 20 }
+        { borderBottomLeftRadius: 20 },
       ]}
       Component={TouchableHighlight}
     >
       <ListItem.Content>
         <ListItem.Title>
-          {item.connected ? (
+          {item.connected === 2 ? (
             item.latest_upload ? (
               <Icon name="cloud-outline" color="green" size={16} />
             ) : (
@@ -114,7 +115,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
             ? data?.["nl-NL"] ? " " + capitalizeFirstLetter(data["nl-NL"]) : ""
             : data?.["en-US"] ? " " + capitalizeFirstLetter(data["en-US"]) : ""}
         </ListItem.Title>
-        {item.connected ? (
+        {item.connected === 2 ? (
           <ListItem.Subtitle>
             {item.latest_upload
               ? t("screens.device_overview.device_list.device_info.last_seen", {
@@ -129,7 +130,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           <Icon name="help-circle-outline" size={32} />
         </TouchableOpacity>
       ) : null}
-      {!item.connected ? (
+      {item.connected === 0 ? (
         <TouchableOpacity onPress={openManual}>
           <Icon name="arrow-forward-circle" size={32} />
         </TouchableOpacity>

@@ -76,8 +76,8 @@ const exampleItems = [
     item: {
       id: 3,
       name: "enelogic",
-      installation_manual_url: "",
-      info_url: ""
+      installation_manual_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
+      info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation"
     },
     precedes: [],
     uploadschedule: []
@@ -226,7 +226,7 @@ export const buildingDeviceSchema = z.object({
   latest_upload: stringToDate.nullable(),
   device_type: deviceTypeSchema,
   typeCategory: z.string().nullable().optional(),
-  connected: z.boolean().default(false),
+  connected: z.number().default(1),
 });
 
 export type BuildingDeviceResponse = z.infer<typeof buildingDeviceSchema>;
