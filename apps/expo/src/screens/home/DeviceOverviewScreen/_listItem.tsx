@@ -154,7 +154,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           </ListItem.Subtitle>
         ) : null}
       </ListItem.Content>
-      <View style={{ flexDirection: "column"}}>
+      <View style={{ flexDirection: "column" }}>
         {item.connected === 0 ? (
           <Icon name="lock-open-outline" size={32} />
         ) : item.connected === 1 ? (

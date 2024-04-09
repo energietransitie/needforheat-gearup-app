@@ -1,10 +1,8 @@
 import { t } from "i18next";
 import { useCallback, useEffect, useState } from "react";
-import { FlatList, ProgressBarAndroidBase, View } from "react-native";
+import { FlatList, View } from "react-native";
 
 import DeviceListItem from "./_listItem";
-//import Progressbar from "./progressBar";
-
 import ProgressBar from "./progressBar";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
@@ -44,16 +42,14 @@ export default function DeviceList({
         const activated_at = oldSource?.activated_at ?? null;
         const latest_upload = oldSource?.latest_upload ?? null;
 
-        dataSourcesList.items.forEach(dataSource => {
-          if (
-            (dataSource.type.name === "cloud_feed" &&
-              cloudFeedData?.find(item => item.cloud_feed.name === dataSource.item.name)?.connected) ||
-            !(activated_at === null)
-          ) {
-            connectStatus = 2;
-            connectedState.push(dataSource.id);
-          }
-        });
+        if (
+          (dataSource.type.name === "cloud_feed" &&
+            cloudFeedData?.find(item => item.cloud_feed.name === dataSource.item.name)?.connected) ||
+          !(activated_at === null)
+        ) {
+          connectStatus = 2;
+          connectedState.push(dataSource.id);
+        }
 
         const allPrecedesDone = dataSource.precedes.every((precedeItem: any) =>
           connectedState.includes(precedeItem.id)
@@ -68,7 +64,6 @@ export default function DeviceList({
         }
 
         if (connectStatus === 2) {
-          //connectedCount = 2;
           connectedCount++;
         }
 
@@ -86,9 +81,6 @@ export default function DeviceList({
       });
 
       setItemData(newData);
-
-      console.log("Connected count:", connectedCount);
-      console.log("Total items count:", dataSourcesList.items.length);
 
       const progressString = `${connectedCount}/${dataSourcesList.items.length}`;
       setProgress(progressString);

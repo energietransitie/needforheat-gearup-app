@@ -52,11 +52,13 @@ const exampleItems = [
     item: {
       id: 1,
       name: "twomes-co2-occupancy-scd41-m5coreink-firmware",
-      installation_manual_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-co2-occupancy-scd41-m5coreink-firmware/installation",
-      info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-co2-occupancy-scd41-m5coreink-firmware/installation",
+      installation_manual_url:
+        "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-co2-occupancy-scd41-m5coreink-firmware/installation",
+      info_url:
+        "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-co2-occupancy-scd41-m5coreink-firmware/installation",
     },
     precedes: [{ id: 2 }, { id: 3 }],
-    uploadschedule: []
+    uploadschedule: [],
   },
   {
     id: 2,
@@ -64,11 +66,12 @@ const exampleItems = [
     item: {
       id: 2,
       name: "twomes-p1-reader-firmware",
-      installation_manual_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
+      installation_manual_url:
+        "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
       info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
     },
     precedes: [],
-    uploadschedule: []
+    uploadschedule: [],
   },
   {
     id: 3,
@@ -76,12 +79,13 @@ const exampleItems = [
     item: {
       id: 3,
       name: "enelogic",
-      installation_manual_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
-      info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation"
+      installation_manual_url:
+        "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
+      info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
     },
     precedes: [],
-    uploadschedule: []
-  }
+    uploadschedule: [],
+  },
 ];
 
 // POST: /account
@@ -98,7 +102,7 @@ export type DataSourcesList = {
       name: string;
       installation_manual_url: string;
       info_url: string;
-    }
+    };
     precedes: { id: number }[];
     uploadschedule: string[];
   }[];
@@ -119,31 +123,45 @@ export const accountSchema = z.object({
       id: z.number(),
     })
   ),
-  campaign: z.object({
-    name: z.string(),
-    info_url: z.string(),
-    data_sources_list: z.object({
-      description: z.string().default("Hardcoded Data sources list"),
-      items: z.array(
-        z.object({
-          id: z.number(),
-          type: z.object({
-            name: z.string(),
-          }),
-          item: z.object({
-            id: z.number(),
-            name: z.string(),
-            installation_manual_url: z.string(),
-            info_url: z.string()
-          }),
-          precedes: z.array(z.object({
-            id: z.number(),
-          })),
-          uploadschedule: z.array(z.string()),
+  campaign: z
+    .object({
+      name: z.string(),
+      info_url: z.string(),
+      data_sources_list: z
+        .object({
+          description: z.string().default("Hardcoded Data sources list"),
+          items: z
+            .array(
+              z.object({
+                id: z.number(),
+                type: z.object({
+                  name: z.string(),
+                }),
+                item: z.object({
+                  id: z.number(),
+                  name: z.string(),
+                  installation_manual_url: z.string(),
+                  info_url: z.string(),
+                }),
+                precedes: z.array(
+                  z.object({
+                    id: z.number(),
+                  })
+                ),
+                uploadschedule: z.array(z.string()),
+              })
+            )
+            .default(exampleItems),
         })
-      ).default(exampleItems)
-    }).optional().nullable().default({ description: "Hardcoded Data sources list", items: exampleItems })
-  }).default({ name: "", info_url: "", data_sources_list: { description: "Hardcoded Data sources list", items: exampleItems } })
+        .optional()
+        .nullable()
+        .default({ description: "Hardcoded Data sources list", items: exampleItems }),
+    })
+    .default({
+      name: "",
+      info_url: "",
+      data_sources_list: { description: "Hardcoded Data sources list", items: exampleItems },
+    }),
 });
 
 export type AccountResponse = z.infer<typeof accountSchema>;
