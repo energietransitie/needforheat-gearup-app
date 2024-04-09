@@ -224,6 +224,7 @@ export const buildingDeviceSchema = z.object({
   building_id: z.number(),
   activated_at: stringToDate.nullable(),
   latest_upload: stringToDate.nullable(),
+  upload_schedule: z.string(),
   device_type: deviceTypeSchema,
   typeCategory: z.string().nullable().optional(),
   connected: z.boolean().default(false),
