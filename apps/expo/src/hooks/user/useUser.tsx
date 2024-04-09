@@ -1,6 +1,7 @@
-import * as SecureStore from 'expo-secure-store'; // Import SecureStore from Expo
-import { useEffect, useState } from 'react';
 import { useQuery } from "@tanstack/react-query";
+import * as SecureStore from "expo-secure-store"; // Import SecureStore from Expo
+import { useEffect, useState } from "react";
+
 import { fetchUser } from "@/api/user";
 
 export default function useUser() {
@@ -8,22 +9,20 @@ export default function useUser() {
 
   const storeUserData = (userData: any) => {
     try {
-      SecureStore.setItemAsync('userData', JSON.stringify(userData)).catch(error => {
-        console.error('Error storing user data:', error);
-      });
+      SecureStore.setItemAsync("userData", JSON.stringify(userData));
     } catch (error) {
-      console.error('Error storing user data:', error);
+      console.error("Error storing user data:", error);
     }
   };
 
   const getUserData = async () => {
     try {
-      const userData = await SecureStore.getItemAsync('userData');
+      const userData = await SecureStore.getItemAsync("userData");
       if (userData) {
         return JSON.parse(userData);
       }
     } catch (error) {
-      console.error('Error retrieving user data:', error);
+      console.error("Error retrieving user data:", error);
     }
     return null;
   };
@@ -33,7 +32,7 @@ export default function useUser() {
       if (user) {
         storeUserData(user);
       }
-      const storedUser : any = await getUserData();
+      const storedUser: any = await getUserData();
       setStoredUser(storedUser);
     }
 
