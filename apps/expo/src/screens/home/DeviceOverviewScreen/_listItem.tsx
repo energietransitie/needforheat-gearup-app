@@ -5,7 +5,8 @@ import { enUS, nl } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { TouchableHighlight, TouchableOpacity, View, ToastAndroid } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import Progressbar from "./progressBar";
+
+//import Progressbar from "./progressBar";
 
 import { MANUAL_URL } from "@/constants";
 import useTranslation from "@/hooks/translation/useTranslation";
@@ -37,7 +38,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   };
 
   const handleItemClick = () => {
-    ToastAndroid.show("Maak het huidige databron af om verder te kunnen", ToastAndroid.SHORT);
+    ToastAndroid.show("Maak het huidige databron af om verder te kunnen.", ToastAndroid.SHORT);
   };
 
   const openManual = () => {
@@ -46,7 +47,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     } else if (item.typeCategory === "cloud_feed") {
       navigate("AddOnlineDataSourceScreen");
     }
-  }
+  };
   // false so it won't open the pop-up but it will open the URL
   const openHelpUrl = () => openUrl(item.device_type.info_url, false);
 
@@ -72,6 +73,10 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     "nl-NL": nl,
   };
 
+  // const testitem = {
+  //   connected: 1,
+  // };
+
   function formatDateAndTime(date?: Date) {
     const inputDate = date || new Date();
     const locale = locales[resolvedLanguage] || enUS;
@@ -85,31 +90,43 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     return format(inputDate, formatString, { locale });
   }
   return (
-    <View style={{ flex: 1 }}>
-    <Progressbar />
     <ListItem.Swipeable
-      onPress={handleItemClick}
+      onPress={() => {
+        if (item.connected === 1) {
+          handleItemClick();
+        }
+      }}
       onSwipeBegin={onSwipeBegin}
       onSwipeEnd={onSwipeEnd}
       leftWidth={0}
-      rightContent={item.connected === 2 && !(item.typeCategory === "cloud_feed") ? close => (
-        <Button
-          title={t("screens.device_overview.device_list.reset_device")}
-          onPress={() => onReset(close)}
-          buttonStyle={{ minHeight: "100%", backgroundColor: theme.colors.primary }}
-        />
-      ) : null}
+      rightContent={
+        item.connected === 2 && !(item.typeCategory === "cloud_feed")
+          ? close => (
+              <Button
+                title={t("screens.device_overview.device_list.reset_device")}
+                onPress={() => onReset(close)}
+                buttonStyle={{ minHeight: "100%", backgroundColor: theme.colors.primary }}
+              />
+            )
+          : null
+      }
       style={[style.listItem]}
       containerStyle={[
         {
-          backgroundColor: item.connected === 0 ? '#45b97c' : 
-                          item.connected === 1 ? 'grey' : 
-                          item.connected === 2 ? 'white' : 'initial',
+          backgroundColor:
+            item.connected === 0
+              ? "#45b97c"
+              : item.connected === 1
+              ? "grey"
+              : item.connected === 2
+              ? "white"
+              : "initial",
         },
-        { borderTopLeftRadius: 20 },
-        { borderBottomLeftRadius: 20 },
+        { borderTopLeftRadius: 0 },
+        { borderBottomLeftRadius: 0 },
       ]}
-      Component={TouchableHighlight}>
+      Component={TouchableHighlight}
+    >
       <ListItem.Content>
         <ListItem.Title>
           {item.connected === 2 ? (
@@ -137,25 +154,26 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           </ListItem.Subtitle>
         ) : null}
       </ListItem.Content>
-      {item.device_type.info_url !== "" ? (
-        <View style={{ flexDirection: "column" }}>
-          {item.activated_at ? (
-            <Icon name="lock-open-outline" size={30} />
-          ) : (
-            <Icon name="lock-closed-outline" size={30} />
-          )}
+      <View style={{ flexDirection: "column"}}>
+        {item.connected === 0 ? (
+          <Icon name="lock-open-outline" size={32} />
+        ) : item.connected === 1 ? (
+          <Icon name="lock-closed-outline" size={32} />
+        ) : item.connected === 2 ? null : null}
+
+        {item.device_type.info_url !== "" ? (
           <TouchableOpacity onPress={openHelpUrl}>
-            <Icon name="help-circle-outline" size={30} style={{ marginRight: 10 }} />
+            <Icon name="help-circle-outline" size={32} />
           </TouchableOpacity>
-        </View>
-      ) : null}
+        ) : null}
+      </View>
+
       {item.connected === 0 ? (
         <TouchableOpacity onPress={openManual}>
           <Icon name="arrow-forward-circle" size={32} />
         </TouchableOpacity>
-      ) : null} */}
+      ) : null}
     </ListItem.Swipeable>
-    </View>
   );
 }
 

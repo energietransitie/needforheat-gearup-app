@@ -1,10 +1,52 @@
 import React from "react";
-import { View, ProgressBarAndroidComponent } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
-export default function Progressbar() {
+const ProgressBar = ({ progress }: { progress: string }) => {
+  const [connectedCount, totalCount] = progress.split("/").map(Number);
+
   return (
-    <View style={{ flex: 0, justifyContent: "center", alignItems: "center" }}>
-      <ProgressBarAndroidComponent styleAttr="Horizontal" indeterminate={false} progress={20} color="#FF5733" />
+    <View style={styles.container}>
+      <View style={styles.progressBar}>
+        <View style={[styles.progress, { flex: connectedCount }]}>
+          <View style={styles.textWrapper}>
+            <Text style={styles.progressText}>{progress}</Text>
+          </View>
+        </View>
+        <View style={[styles.remainingProgress, { flex: totalCount - connectedCount }]} />
+      </View>
     </View>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 0,
+  },
+  progressBar: {
+    flexDirection: "row",
+    height: 20,
+    backgroundColor: "#ccc",
+    borderRadius: 5,
+    overflow: "hidden",
+    alignItems: "center",
+  },
+  progressText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 15,
+  },
+  textWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+  },
+  progress: {
+    backgroundColor: "green",
+  },
+  remainingProgress: {
+    backgroundColor: "#ddd",
+  },
+});
+
+export default ProgressBar;

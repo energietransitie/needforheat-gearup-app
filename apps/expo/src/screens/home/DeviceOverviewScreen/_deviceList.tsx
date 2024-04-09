@@ -1,9 +1,11 @@
 import { t } from "i18next";
 import { useCallback, useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, ProgressBarAndroidBase, View } from "react-native";
 
 import DeviceListItem from "./_listItem";
-import Progressbar from "./progressBar";
+//import Progressbar from "./progressBar";
+
+import ProgressBar from "./progressBar";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
 import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
@@ -25,36 +27,49 @@ export default function DeviceList({
   const { data: cloudFeedData, isFetching } = useCloudFeeds();
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const [itemData, setItemData] = useState<BuildingDeviceResponse[]>([]);
-
+  const [progress, setProgress] = useState("0/0");
   const onSwipeBegin = useCallback(() => setScrollEnabled(false), []);
   const onSwipeEnd = useCallback(() => setScrollEnabled(true), []);
 
-  let connectedState: number[] = [];
+  const connectedState: number[] = [];
 
   useEffect(() => {
     if (dataSourcesList) {
-      let newData: BuildingDeviceResponse[] = [];
-      dataSourcesList.items.forEach((dataSource) => {
+      let connectedCount = 0;
+
+      const newData: BuildingDeviceResponse[] = [];
+      dataSourcesList.items.forEach(dataSource => {
         let connectStatus = 1;
         const oldSource = data?.find(item => item.device_type.name === dataSource.item.name);
         const activated_at = oldSource?.activated_at ?? null;
         const latest_upload = oldSource?.latest_upload ?? null;
 
-        dataSourcesList.items.forEach((dataSource) => {
-          if ((dataSource.type.name === "cloud_feed" && cloudFeedData?.find(item => item.cloud_feed.name === dataSource.item.name)?.connected) || !(activated_at === null)) {
+        dataSourcesList.items.forEach(dataSource => {
+          if (
+            (dataSource.type.name === "cloud_feed" &&
+              cloudFeedData?.find(item => item.cloud_feed.name === dataSource.item.name)?.connected) ||
+            !(activated_at === null)
+          ) {
             connectStatus = 2;
             connectedState.push(dataSource.id);
           }
         });
 
-        const allPrecedesDone = dataSource.precedes.every((precedeItem: any) => connectedState.includes(precedeItem.id));
-        connectStatus = (connectStatus === 2) ? connectStatus : (allPrecedesDone ? 1 : 0);
+        const allPrecedesDone = dataSource.precedes.every((precedeItem: any) =>
+          connectedState.includes(precedeItem.id)
+        );
+        connectStatus = connectStatus === 2 ? connectStatus : allPrecedesDone ? 1 : 0;
 
         if (dataSource.type.name === "cloud_feed") {
           dataSource.item.info_url = oldSource?.device_type.info_url ? oldSource.device_type.info_url : "";
           dataSource.item.installation_manual_url = oldSource?.device_type.installation_manual_url
             ? oldSource.device_type.installation_manual_url
             : "";
+        }
+
+        if (connectStatus === 2) {
+          //connectedCount = 2;
+          connectedCount++;
         }
 
         const newResponse: BuildingDeviceResponse = {
@@ -71,8 +86,15 @@ export default function DeviceList({
       });
 
       setItemData(newData);
+
+      console.log("Connected count:", connectedCount);
+      console.log("Total items count:", dataSourcesList.items.length);
+
+      const progressString = `${connectedCount}/${dataSourcesList.items.length}`;
+      setProgress(progressString);
     } else {
-      setItemData(data ?? []); // Set to original data if no user data sources list
+      setProgress("0/0");
+      setItemData(data ?? []);
     }
   }, [dataSourcesList, data]);
 
@@ -87,22 +109,29 @@ export default function DeviceList({
     return <StatusIndicator isLoading />;
   }
   return (
-    <FlatList<BuildingDeviceResponse>
-      data={itemData || data}
-      contentContainerStyle={{ flexGrow: 1 }}
-      style={{ width: "100%" }}
-      keyExtractor={item => item.name}
-      renderItem={({ item }) => <DeviceListItem {...{
-        item,
-        onSwipeBegin,
-        onSwipeEnd,
-      }} />}
-      ListEmptyComponent={
-        <StatusIndicator isError errorText={t("screens.device_overview.device_list.empty_collection")} />
-      }
-      onRefresh={refetch}
-      refreshing={isRefetching}
-      scrollEnabled={scrollEnabled}
-    />
+    <View>
+      <ProgressBar progress={progress} />
+      <FlatList<BuildingDeviceResponse>
+        data={itemData || data}
+        contentContainerStyle={{ flexGrow: 1 }}
+        style={{ width: "100%" }}
+        keyExtractor={item => item.name}
+        renderItem={({ item }) => (
+          <DeviceListItem
+            {...{
+              item,
+              onSwipeBegin,
+              onSwipeEnd,
+            }}
+          />
+        )}
+        ListEmptyComponent={
+          <StatusIndicator isError errorText={t("screens.device_overview.device_list.empty_collection")} />
+        }
+        onRefresh={refetch}
+        refreshing={isRefetching}
+        scrollEnabled={scrollEnabled}
+      />
+    </View>
   );
 }
