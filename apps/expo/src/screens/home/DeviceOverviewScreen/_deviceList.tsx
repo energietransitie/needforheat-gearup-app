@@ -34,28 +34,42 @@ export default function DeviceList({
   useEffect(() => {
     if (dataSourcesList) {
       let connectedCount = 0;
-
       const newData: BuildingDeviceResponse[] = [];
+
       dataSourcesList.items.forEach(dataSource => {
         let connectStatus = 1;
         const oldSource = data?.find(item => item.device_type.name === dataSource.item.name);
         const activated_at = oldSource?.activated_at ?? null;
         const latest_upload = oldSource?.latest_upload ?? null;
 
-        if (
-          (dataSource.type.name === "cloud_feed" &&
-            cloudFeedData?.find(item => item.cloud_feed.name === dataSource.item.name)?.connected) ||
-          !(activated_at === null)
-        ) {
-          connectStatus = 2;
-          connectedState.push(dataSource.id);
+        if (oldSource) {
+          connectStatus = checkStatus(dataSource, oldSource);
+          if (connectStatus === 2) connectedState.push(dataSource.id);
         }
 
-        const allPrecedesDone = dataSource.precedes.every((precedeItem: any) =>
-          connectedState.includes(precedeItem.id)
-        );
-        connectStatus = connectStatus === 2 ? connectStatus : allPrecedesDone ? 1 : 0;
+        //Check if all precedes are completed
+        const itemsNotPrecedingCurrent = dataSourcesList.items.filter(otherItem => {
+          const precedesMatch = otherItem.precedes.some(precede => precede.id === dataSource.id);
+          return otherItem.id !== dataSource.id && precedesMatch;
+        });
 
+        let allPrecedesDone = true;
+        if (itemsNotPrecedingCurrent.length > 0) {
+          itemsNotPrecedingCurrent.forEach(otherItem => {
+            const otherOldSource = data?.find(item => item.device_type.name === otherItem.item.name);
+            if (otherOldSource) {
+              if (checkStatus(otherItem, otherOldSource) === 1) {
+                allPrecedesDone = false;
+              }
+            } else {
+              allPrecedesDone = false;
+            }
+          });
+        }
+
+        connectStatus = connectStatus === 2 ? connectStatus : allPrecedesDone ? 0 : 1;
+
+        //Cloudfeed is the odd one here
         if (dataSource.type.name === "cloud_feed") {
           dataSource.item.info_url = oldSource?.device_type.info_url ? oldSource.device_type.info_url : "";
           dataSource.item.installation_manual_url = oldSource?.device_type.installation_manual_url
@@ -63,6 +77,7 @@ export default function DeviceList({
             : "";
         }
 
+        //Progressbar
         if (connectStatus === 2) {
           connectedCount++;
         }
@@ -88,7 +103,7 @@ export default function DeviceList({
       setProgress("0/0");
       setItemData(data ?? []);
     }
-  }, [dataSourcesList, data]);
+  }, [dataSourcesList, data, cloudFeedData]);
 
   useEffect(() => {
     if (refresh) {
@@ -101,7 +116,7 @@ export default function DeviceList({
     return <StatusIndicator isLoading />;
   }
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <ProgressBar progress={progress} />
       <FlatList<BuildingDeviceResponse>
         data={itemData || data}
@@ -126,4 +141,25 @@ export default function DeviceList({
       />
     </View>
   );
+
+  function checkStatus(
+    dataSource: {
+      id: number;
+      type: { name: string };
+      item: { id: number; name: string; installation_manual_url: string; info_url: string };
+      precedes: { id: number }[];
+      uploadschedule: string[];
+    },
+    oldSource: BuildingDeviceResponse
+  ) {
+    const activated_at = oldSource?.activated_at ?? null;
+    if (
+      (dataSource.type.name === "cloud_feed" &&
+        cloudFeedData?.find(item => item.cloud_feed.name === dataSource.item.name)?.connected) ||
+      !(activated_at === null)
+    ) {
+      return 2;
+    }
+    return 1;
+  }
 }
