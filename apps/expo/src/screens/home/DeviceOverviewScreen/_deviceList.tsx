@@ -34,6 +34,7 @@ export default function DeviceList({
         const oldSource = data?.find(item => item.device_type.name === dataSource.item.name);
         const activated_at = oldSource?.activated_at ?? null;
         const latest_upload = oldSource?.latest_upload ?? null;
+        const upload_schedule = dataSource.uploadschedule;
 
         if ((dataSource.type.name === "cloud_feed" && cloudFeedData?.find(item => item.cloud_feed.name === dataSource.item.name)?.connected) || !(activated_at === null)) {
           connectStatus = true;
@@ -51,6 +52,7 @@ export default function DeviceList({
           device_type: dataSource.item,
           activated_at: activated_at,
           latest_upload: latest_upload,
+          upload_schedule: upload_schedule,
           typeCategory: dataSource.type.name,
           connected: connectStatus
         };

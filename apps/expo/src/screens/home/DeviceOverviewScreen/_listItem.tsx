@@ -78,6 +78,14 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
 
     return format(inputDate, formatString, { locale });
   }
+  function checkMissedUpload(){
+    const latestUpload = item.latest_upload? item.latest_upload : new Date();
+    const timeNow = new Date();
+
+    const diff = timeNow.getTime() - latestUpload.getTime(); 
+    console.log(diff / 60000); // 60000 to change diff to minutes
+    
+  }
 
   return (
     <ListItem.Swipeable
@@ -103,6 +111,18 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     >
       <ListItem.Content>
         <ListItem.Title>
+          {item.typeCategory == "device_type" ? (
+            <>
+            <Icon name="layers" size={16}/>
+            {checkMissedUpload()}
+            </>
+          ) : null}
+          {item.typeCategory == "energy_query_type" ? (
+            <Icon name="flash" size={16}/>
+          ) : null}
+          {item.typeCategory == "cloud_feed" ? (
+            <Icon name="cloud" size={16}/>
+          ) : null}
           {item.connected ? (
             item.latest_upload ? (
               <Icon name="cloud-outline" color="green" size={16} />

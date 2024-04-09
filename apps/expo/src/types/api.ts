@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { string, z } from "zod";
 
 const stringToDate = z.string().transform(v => new Date(v));
 
@@ -56,7 +56,7 @@ const exampleItems = [
       info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-co2-occupancy-scd41-m5coreink-firmware/installation",
     },
     precedes: [{ id: 2 }, { id: 3 }],
-    uploadschedule: []
+    uploadschedule: "*/10 * * * *"
   },
   {
     id: 2,
@@ -68,7 +68,7 @@ const exampleItems = [
       info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
     },
     precedes: [],
-    uploadschedule: []
+    uploadschedule: "*/10 * * * *"
   },
   {
     id: 3,
@@ -80,7 +80,7 @@ const exampleItems = [
       info_url: ""
     },
     precedes: [],
-    uploadschedule: []
+    uploadschedule: "*/10 * * * *"
   }
 ];
 
@@ -100,7 +100,7 @@ export type DataSourcesList = {
       info_url: string;
     }
     precedes: { id: number }[];
-    uploadschedule: string[];
+    uploadschedule: string;
   }[];
 };
 
@@ -139,7 +139,7 @@ export const accountSchema = z.object({
           precedes: z.array(z.object({
             id: z.number(),
           })),
-          uploadschedule: z.array(z.string()),
+          uploadschedule: z.string(),
         })
       ).default(exampleItems)
     }).optional().nullable().default({ description: "Hardcoded Data sources list", items: exampleItems })
