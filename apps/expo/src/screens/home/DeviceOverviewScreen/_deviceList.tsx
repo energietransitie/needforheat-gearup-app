@@ -1,11 +1,12 @@
 import { t } from "i18next";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FlatList } from "react-native";
 
 import DeviceListItem from "./_listItem";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
 import useDevices from "@/hooks/device/useDevices";
+import { UserContext } from "@/providers/UserProvider";
 import { BuildingDeviceResponse } from "@/types/api";
 
 export default function DeviceList({
@@ -19,12 +20,17 @@ export default function DeviceList({
 }) {
   const { data, isLoading, refetch, isRefetching } = useDevices(buildingId);
   const [scrollEnabled, setScrollEnabled] = useState(true);
-
+  const { user } = useContext(UserContext);
   const onSwipeBegin = () => setScrollEnabled(false);
   const onSwipeEnd = () => setScrollEnabled(true);
 
-  if (isLoading) {
-    return <StatusIndicator isLoading />;
+  let shouldLoad = true;
+  if (!isLoading || Boolean(user)) {
+    shouldLoad = false;
+  }
+
+  if (shouldLoad) {
+    return <StatusIndicator isLoading={shouldLoad} />;
   }
 
   if (refresh) {

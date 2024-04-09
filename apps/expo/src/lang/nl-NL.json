@@ -235,7 +235,8 @@
         "unsuported_url_alert": {
           "title": "Niet-ondersteunde URL",
           "message": "De URL {{url}} word niet ondersteund."
-        }
+        },
+        "campaign": "Campagne"
       },
       "about": {
         "title": "Over deze app"

@@ -44,7 +44,43 @@ export const deviceMeasurementSchema = z.array(deviceMeasurement);
 
 export type deviceMeasurementsResponse = z.infer<typeof deviceMeasurementSchema>;
 
+//TODO: TEMPORARY HARDOCODE, AWAIT API UPDATE. BASED ON TST SERVER ITEMS
+const exampleItems = [
+  {
+    id: 1,
+    type: { name: "device_type" },
+    item: {
+      name: "twomes-co2-occupancy-scd41-m5coreink-firmware",
+      installation_manual_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-co2-occupancy-scd41-m5coreink-firmware/installation",
+      info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-co2-occupancy-scd41-m5coreink-firmware/installation",
+    },
+    precedes: [{ id: 2 }, { id: 3 }],
+    uploadschedule: []
+  },
+  {
+    id: 2,
+    type: { name: "device_type" },
+    item: {
+      name: "twomes-p1-reader-firmware",
+      installation_manual_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
+      info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
+    },
+    precedes: [],
+    uploadschedule: []
+  },
+  {
+    id: 3,
+    type: { name: "cloud_feed" },
+    item: {
+      name: "enelogic"
+    },
+    precedes: [],
+    uploadschedule: []
+  }
+];
+
 // POST: /account
+//TODO: TEMPORARY HARDOCODE, AWAIT API UPDATE THEN REMOVE THE DEFAULTS, OPTIONAL AND NULLABLE
 export const accountSchema = z.object({
   id: z.number(),
   activated_at: stringToDate,
@@ -54,8 +90,26 @@ export const accountSchema = z.object({
     })
   ),
   campaign: z.object({
+    name: z.string(),
     info_url: z.string(),
-  }),
+    shoppinglist: z.object({
+      description: z.string().default("Hardcoded ShoppingList"),
+      items: z.array(
+        z.object({
+          id: z.number(),
+          type: z.object({
+            name: z.string(),
+          }),
+          item: z.object({
+          }),
+          precedes: z.array(z.object({
+            id: z.number(),
+          })),
+          uploadschedule: z.array(z.string()),
+        })
+      ).default(exampleItems)
+    }).optional().nullable().default({ description: "Hardcoded ShoppingList", items: exampleItems })  
+  }).default({ name: "", info_url: "", shoppinglist: { description: "Hardcoded ShoppingList", items: exampleItems } })
 });
 
 export type AccountResponse = z.infer<typeof accountSchema>;

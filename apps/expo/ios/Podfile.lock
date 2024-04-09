@@ -395,7 +395,7 @@ PODS:
     - Alamofire
     - ESPProvision
     - React
-  - react-native-netinfo (9.3.7):
+  - react-native-netinfo (11.3.1):
     - React-Core
   - react-native-render-html (6.3.4):
     - React-Core
@@ -830,7 +830,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 5e5497c844f2381e8648ec3a7d0ad25b3f27f23e
   React-logger: b277ad8f4473f2506fb30b762b6348534a3de10e
   react-native-esp-idf-provisioning: 22776ea4401cbbe5e5c016566d9cbc3386dfcbcf
-  react-native-netinfo: 2517ad504b3d303e90d7a431b0fcaef76d207983
+  react-native-netinfo: bdb108d340cdb41875c9ced535977cac6d2ff321
   react-native-render-html: 984dfe2294163d04bf5fe25d7c9f122e60e05ebe
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a
   React-perflogger: e9249a18e055cae96fdf685bf6145cbea62506c8
@@ -862,6 +862,6 @@ SPEC CHECKSUMS:
   Yoga: d6133108734e69e8c0becc6ba587294b94829687
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 90b53aca765ae16b00d03cace886508ec28e76dc
+PODFILE CHECKSUM: 94684c2021965a94afe243da46a16460c3441b10
 
 COCOAPODS: 1.15.2
