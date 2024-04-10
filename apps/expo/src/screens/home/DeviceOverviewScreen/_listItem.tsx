@@ -96,12 +96,12 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
       rightContent={
         item.connected === 2 && !(item.typeCategory === "cloud_feed")
           ? close => (
-            <Button
-              title={t("screens.device_overview.device_list.reset_device")}
-              onPress={() => onReset(close)}
-              buttonStyle={{ minHeight: "100%", backgroundColor: theme.colors.primary }}
-            />
-          )
+              <Button
+                title={t("screens.device_overview.device_list.reset_device")}
+                onPress={() => onReset(close)}
+                buttonStyle={{ minHeight: "100%", backgroundColor: theme.colors.primary }}
+              />
+            )
           : null
       }
       style={[style.listItem]}
@@ -111,10 +111,10 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
             item.connected === 0
               ? "#45b97c"
               : item.connected === 1
-                ? "grey"
-                : item.connected === 2
-                  ? "white"
-                  : "initial",
+              ? "grey"
+              : item.connected === 2
+              ? "white"
+              : "initial",
         },
         { borderTopLeftRadius: 0 },
         { borderBottomLeftRadius: 0 },
@@ -135,15 +135,15 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
               ? " " + capitalizeFirstLetter(data["nl-NL"])
               : ""
             : data?.["en-US"]
-              ? " " + capitalizeFirstLetter(data["en-US"])
-              : ""}
+            ? " " + capitalizeFirstLetter(data["en-US"])
+            : ""}
         </ListItem.Title>
         {item.connected === 2 ? (
           <ListItem.Subtitle>
             {item.latest_upload
               ? t("screens.device_overview.device_list.device_info.last_seen", {
-                date: formatDateAndTime(item.latest_upload),
-              })
+                  date: formatDateAndTime(item.latest_upload),
+                })
               : t("screens.device_overview.device_list.device_info.no_data")}
           </ListItem.Subtitle>
         ) : null}
@@ -167,7 +167,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           <Icon name="arrow-forward-circle" size={32} />
         </TouchableOpacity>
       ) : null}
-      {item.connected === 2 ? (
+      {item.connected === 2 && item.typeCategory !== "cloud_feed" ? (
         <Icon
           name="reorder-three-outline"
           size={10}
