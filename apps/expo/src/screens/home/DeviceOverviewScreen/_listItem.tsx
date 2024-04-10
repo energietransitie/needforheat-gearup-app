@@ -3,6 +3,7 @@ import { Button, ListItem, makeStyles, useTheme } from "@rneui/themed";
 import cronParser from "cron-parser";
 import { format } from "date-fns";
 import { enUS, nl } from "date-fns/locale";
+import { DateTime, Duration, Interval } from "luxon";
 import { useEffect, useState } from "react";
 import { ToastAndroid, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -16,17 +17,18 @@ import { BuildingDeviceResponse } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
 import { capitalizeFirstLetter } from "@/utils/tools";
 import "intl";
-//import { Platform } from "react-native";
 import "intl/locale-data/jsonp/en";
 
 type WifiNetworkListItemProps = {
   item: BuildingDeviceResponse;
   onSwipeBegin?: () => void;
   onSwipeEnd?: () => void;
+  allItemsDone: boolean;
+  refreshAfter20Seconds: () => void;
 };
 
 export default function DeviceListItem(props: WifiNetworkListItemProps) {
-  const { item, onSwipeBegin, onSwipeEnd } = props;
+  const { item, onSwipeBegin, onSwipeEnd, allItemsDone, refreshAfter20Seconds } = props;
   const { navigate } = useNavigation<NavigationProp<HomeStackParamList>>();
   const { openUrl } = useOpenExternalLink();
   const { theme } = useTheme();
@@ -37,6 +39,11 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
 
   const [missed, setMissed] = useState(0);
   const [timeToUpload, setTimeToUpload] = useState<string>();
+
+  const locales: Record<string, Locale> = {
+    "en-US": enUS,
+    "nl-NL": nl,
+  };
 
   const onReset = (close: () => void) => {
     if (item.typeCategory === "device_type") {
@@ -56,7 +63,8 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
       navigate("AddOnlineDataSourceScreen");
     }
   };
-  // false so it won't open the pop-up but it will open the URL
+
+  //Used for when we start the item
   const openHelpUrl = () => openUrl(item.device_type.info_url, false);
 
   useEffect(() => {
@@ -75,11 +83,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
       console.error("Error fetching data:", error);
     }
   };
-
-  const locales: Record<string, Locale> = {
-    "en-US": enUS,
-    "nl-NL": nl,
-  };
+  // End region
 
   function formatDateAndTime(date?: Date) {
     const inputDate = date || new Date();
@@ -93,55 +97,100 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
 
     return format(inputDate, formatString, { locale });
   }
-  function checkNextUpload() {
-    const latestUpload: Date = item.latest_upload ? item.latest_upload : new Date();
+
+  function checkNextUpload(item: BuildingDeviceResponse): string {
+    const latestUpload = item.latest_upload ?? new Date();
     const timeNow = new Date();
-    const cronExpression: string = item.upload_schedule ? item.upload_schedule : "";
-    const intervalIterator = cronParser.parseExpression(cronExpression, { currentDate: latestUpload });
-    const scheduledTime = intervalIterator.next();
-    const timeToUpload = Math.round((scheduledTime.getTime() - timeNow.getTime()) / 60000);
-    const timeTotal = Math.round((scheduledTime.getTime() - latestUpload.getTime()) / 60000);
-    if (timeToUpload < 0) {
-      return "0/0";
-    } else {
-      return timeToUpload + "/" + timeTotal;
+    let cronExpression = item.upload_schedule ?? "";
+
+    // Replace '0' in cron expression with corresponding value from latestUpload
+    if (cronExpression.includes("0")) {
+      const [minute, hour, daym, month, dayw] = cronExpression.split(" ");
+      cronExpression = [
+        minute === "0" ? latestUpload.getMinutes().toString() : minute,
+        hour === "0" ? latestUpload.getHours().toString() : hour,
+        daym === "0" ? latestUpload.getDate().toString() : daym, // Day of the month
+        month === "0" ? (latestUpload.getMonth() + 1).toString() : month, // Month (0-11, so we add 1)
+        dayw === "0" ? latestUpload.getDay().toString() : dayw, // Day of the week
+      ].join(" ");
     }
-  }
-
-  function checkMissedUpload() {
-    const latestUpload: string = item.latest_upload ? item.latest_upload.toISOString() : "";
-    const timeNow = new Date();
-    const cronExpression: string = item.upload_schedule ? item.upload_schedule : "";
-
-    let missedIntervals = 0;
-    let upToDate = false;
 
     try {
       const intervalIterator = cronParser.parseExpression(cronExpression, { currentDate: latestUpload });
+      const scheduledTime = intervalIterator.next().toDate();
+
+      // Calculate minutes until the next upload
+      const timeToUpload = Math.ceil((scheduledTime.getTime() - timeNow.getTime()) / (1000 * 60));
+
+      if (timeToUpload < 0) {
+        return "0/0";
+      } else {
+        const timeTotal = Math.ceil((scheduledTime.getTime() - latestUpload.getTime()) / (1000 * 60));
+        return `${timeToUpload}/${timeTotal}`;
+      }
+    } catch (error) {
+      console.error("Error parsing cron expression:", error);
+      return "0/0";
+    }
+  }
+
+  function checkMissedUpload(item: BuildingDeviceResponse): number {
+    const latestUploadString = item.latest_upload ? item.latest_upload.toISOString() : "";
+    const timeNow = new Date();
+    const cronExpression = item.upload_schedule ? item.upload_schedule : "";
+    const notificationThresholdDurationISO = item.notification_threshold_duration;
+    try {
+      const intervalIterator = cronParser.parseExpression(cronExpression, { currentDate: latestUploadString });
+      let missedIntervals = 0;
+      let upToDate = false;
+
+      // Convert ISO 8601 duration to Luxon Duration
+      if (notificationThresholdDurationISO) {
+        const thresholdTime = DateTime.fromISO(latestUploadString).plus(
+          Duration.fromISO(notificationThresholdDurationISO)
+        );
+
+        // Check if the current time has passed the threshold time
+        if (DateTime.now() >= thresholdTime) return -2;
+      }
 
       while (!upToDate && intervalIterator.hasNext() && missedIntervals < 10) {
-        const nextInterval = intervalIterator.next();
+        const nextInterval = intervalIterator.next().toDate();
+
         if (nextInterval.getTime() < timeNow.getTime()) {
           missedIntervals++;
         } else {
           upToDate = true;
         }
       }
+
+      return missedIntervals;
     } catch (error) {
-      console.error(error);
+      console.error("Error parsing cron expression:", error);
       return -1;
     }
-
-    //console.log('Missed intervals:', missedIntervals);
-    return missedIntervals;
   }
 
   useEffect(() => {
-    if (data) {
-      setTimeToUpload(checkNextUpload());
-      setMissed(checkMissedUpload());
+    if (item.latest_upload) {
+      setTimeToUpload(checkNextUpload(item));
+      setMissed(checkMissedUpload(item));
     }
-  }, [data, item]);
+  }, [item]);
+
+  const handleTimePassedByMinute = () => {
+    if (item.latest_upload) {
+      setTimeToUpload(checkNextUpload(item));
+      setMissed(checkMissedUpload(item));
+
+      if (timeToUpload) {
+        const [elapsedTime, totalTime] = timeToUpload.split("/").map(Number);
+        if (elapsedTime === 0 && totalTime >= 0) {
+          refreshAfter20Seconds();
+        }
+      }
+    }
+  };
 
   return (
     <>
@@ -176,6 +225,8 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
                 ? "#d3eaf9"
                 : item.connected === 1
                 ? "#d9dadb"
+                : item.connected === 2 && allItemsDone
+                ? "white"
                 : item.connected === 2
                 ? "#aef2b7"
                 : "initial",
@@ -193,8 +244,10 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
                   <>
                     {missed === 0 ? (
                       <Icon name="layers" color="green" size={16} />
-                    ) : (
+                    ) : missed === -1 || missed >= 2 ? (
                       <Icon name="layers" color="orange" size={16} />
+                    ) : (
+                      <Icon name="layers" color="red" size={16} />
                     )}
                   </>
                 )}
@@ -202,8 +255,10 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
                   <>
                     {missed === 0 ? (
                       <Icon name="flash" color="green" size={16} />
-                    ) : (
+                    ) : missed === -1 || missed >= 2 ? (
                       <Icon name="flash" color="orange" size={16} />
+                    ) : (
+                      <Icon name="flash" color="red" size={16} />
                     )}
                   </>
                 )}
@@ -211,8 +266,10 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
                   <>
                     {missed === 0 ? (
                       <Icon name="cloud" color="green" size={16} />
-                    ) : (
+                    ) : missed === -1 || missed >= 2 ? (
                       <Icon name="cloud" color="orange" size={16} />
+                    ) : (
+                      <Icon name="cloud" color="red" size={16} />
                     )}
                   </>
                 )}
@@ -236,7 +293,13 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
                 : t("screens.device_overview.device_list.device_info.no_data")}
             </ListItem.Subtitle>
           ) : null}
-          {timeToUpload ? <TimeProgressBar progress={timeToUpload} /> : null}
+          {timeToUpload && item.connected === 2 ? (
+            <TimeProgressBar
+              progress={timeToUpload}
+              onTimePassedByMinute={handleTimePassedByMinute}
+              notificationSent={missed === -2}
+            />
+          ) : null}
         </ListItem.Content>
         <View style={{ flexDirection: "column" }}>
           {item.connected === 0 ? (
