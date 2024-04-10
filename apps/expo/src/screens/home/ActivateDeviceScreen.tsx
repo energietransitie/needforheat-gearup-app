@@ -17,7 +17,7 @@ import { HomeStackParamList } from "@/types/navigation";
 type ActivateDeviceScreenProps = NativeStackScreenProps<HomeStackParamList, "ActivateDeviceScreen">;
 
 export default function ActivateDeviceScreen({ navigation, route }: ActivateDeviceScreenProps) {
-  const { qrData } = route.params;
+  const { qrData, device_TypeName } = route.params;
   const { theme } = useTheme();
   const styles = useStyles();
   const { t } = useTranslation();
@@ -42,7 +42,11 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
     setIsActivated(true);
 
     setTimeout(() => {
-      navigation.navigate("AddDeviceScreen", { qrData });
+      navigation.navigate("SearchDeviceScreen", {
+        deviceName: qrData.name,
+        proofOfPossession: qrData.pop,
+        device_TypeName: device_TypeName
+      });
     }, 500);
   };
 

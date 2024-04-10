@@ -1,3 +1,12 @@
+import { useIsFocused } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { makeStyles, Button } from "@rneui/themed";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import { BarCodeScanningResult, Camera } from "expo-camera";
+import { useEffect, useState } from "react";
+import { Alert, Text, Platform } from "react-native";
+import { openSettings } from "react-native-permissions";
+
 import Box from "@/components/elements/Box";
 import { InvalidQrCodeException } from "@/exceptions/InvalidQrCodeException";
 import { MismatchedDeviceNameException } from "@/exceptions/MismatchedDeviceNameException";
@@ -5,19 +14,11 @@ import useTranslation from "@/hooks/translation/useTranslation";
 import useCameraPermission from "@/hooks/useCameraPermission/useCameraPermission";
 import { SensorQrCode } from "@/types";
 import { HomeStackParamList } from "@/types/navigation";
-import { useIsFocused } from "@react-navigation/native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Button, makeStyles } from "@rneui/themed";
-import { BarCodeScanner } from "expo-barcode-scanner";
-import { BarCodeScanningResult, Camera } from "expo-camera";
-import { useEffect, useState } from "react";
-import { Alert, Platform, Text } from "react-native";
-import { openSettings } from "react-native-permissions";
 
 type QrScannerScreenProps = NativeStackScreenProps<HomeStackParamList, "QrScannerScreen">;
 
 export default function QrScannerScreen({ navigation, route }: QrScannerScreenProps) {
-  const { expectedDeviceName } = route.params ?? {};
+  const { expectedDeviceName, device_TypeName } = route.params ?? {};
   const [scanned, setScanned] = useState(false);
   const [hasPermission, setHasPermission] = useState(false);
   const styles = useStyles();
@@ -28,18 +29,18 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
   const onRequestCameraError = (err: string) => {
     console.log("onRequestPermissionError", err);
     if (Platform.OS === "ios") {
-      // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function  
-      openSettings().catch(e => { });
+      // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
+      openSettings().catch(e => {});
     } else {
       Alert.alert("Error", err, [
         {
           text: t("screens.home_stack.search_device.open_settings"),
           onPress: () => {
             // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
-            openSettings().catch(e => { });
+            openSettings().catch(e => {});
           },
         },
-      ])
+      ]);
     }
   };
 
@@ -62,9 +63,7 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
                 setHasPermission(await checkCameraPermission());
               } catch (err: unknown) {
                 const errorMsg =
-                  err instanceof Error
-                    ? err.message
-                    : t("screens.home_stack.qr_scanner.errors.camera_request_failed");
+                  err instanceof Error ? err.message : t("screens.home_stack.qr_scanner.errors.camera_request_failed");
                 onRequestCameraError(errorMsg);
                 reject(err);
               }
@@ -72,7 +71,7 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
           },
         ]);
       }
-    })
+    });
   };
 
   const onError = (error?: string) => {
@@ -98,7 +97,7 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
         throw new MismatchedDeviceNameException();
       }
 
-      navigation.navigate("ActivateDeviceScreen", { qrData: data });
+      navigation.navigate("ActivateDeviceScreen", { qrData: data, device_TypeName });
     } catch (e) {
       if (e instanceof InvalidQrCodeException) {
         onError(t("screens.home_stack.qr_scanner.errors.invalid_qr"));

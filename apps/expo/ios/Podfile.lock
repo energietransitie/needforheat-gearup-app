@@ -162,6 +162,8 @@ PODS:
   - libevent (2.1.12)
   - Permission-BluetoothPeripheral (3.6.1):
     - RNPermissions
+  - Permission-Camera (3.6.1):
+    - RNPermissions
   - Permission-LocationWhenInUse (3.6.1):
     - RNPermissions
   - PromisesObjC (2.2.0)
@@ -563,6 +565,7 @@ DEPENDENCIES:
   - hermes-engine (from `../../../node_modules/react-native/sdks/hermes/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
   - Permission-BluetoothPeripheral (from `../../../node_modules/react-native-permissions/ios/BluetoothPeripheral`)
+  - Permission-Camera (from `../../../node_modules/react-native-permissions/ios/Camera`)
   - Permission-LocationWhenInUse (from `../../../node_modules/react-native-permissions/ios/LocationWhenInUse`)
   - RCT-Folly (from `../../../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../../../node_modules/react-native/Libraries/RCTRequired`)
@@ -684,6 +687,8 @@ EXTERNAL SOURCES:
     :podspec: "../../../node_modules/react-native/sdks/hermes/hermes-engine.podspec"
   Permission-BluetoothPeripheral:
     :path: "../../../node_modules/react-native-permissions/ios/BluetoothPeripheral"
+  Permission-Camera:
+    :path: "../../../node_modules/react-native-permissions/ios/Camera"
   Permission-LocationWhenInUse:
     :path: "../../../node_modules/react-native-permissions/ios/LocationWhenInUse"
   RCT-Folly:
@@ -812,6 +817,7 @@ SPEC CHECKSUMS:
   hermes-engine: 0b19f33a9c2ec1dbdede3232606eeb1101db4cec
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Permission-BluetoothPeripheral: 67708853584bb9208c76d36d0e0ea4eafb97ea5b
+  Permission-Camera: bf6791b17c7f614b6826019fcfdcc286d3a107f6
   Permission-LocationWhenInUse: 3ba99e45c852763f730eabecec2870c2382b7bd4
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
@@ -862,6 +868,6 @@ SPEC CHECKSUMS:
   Yoga: d6133108734e69e8c0becc6ba587294b94829687
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 94684c2021965a94afe243da46a16460c3441b10
+PODFILE CHECKSUM: 675910d0a52c3af1ad5edbb23232f9589fc80e94
 
 COCOAPODS: 1.15.2

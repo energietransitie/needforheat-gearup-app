@@ -17,6 +17,7 @@
     },
     "device_overview": {
       "title": "Databronnen",
+      "toast_message": "Maak eerst de geopende databron af.",
       "buttons": {
         "add_enelogic": "Enelogic toevoegen",
         "install_device": "Meetapparaatje scannen"
@@ -27,7 +28,7 @@
           "no_data": "Nog geen data ontvangen"
         },
         "reset_device": "Resetten",
-        "empty_collection": "Er zijn nog geen databronnen toegevoegd."
+        "empty_collection": "Er is geen Databronnen lijst gevonden voor deze campagne."
       },
       "building_list": {
         "placeholder": "Selecteer een gebouw",
@@ -37,7 +38,7 @@
       }
     },
     "home_stack": {
-      "title": "Bronnen",
+      "title": "Databronnen",
       "activate_device": {
         "title": "Apparaat activeren",
         "status_indicator": {
