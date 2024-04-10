@@ -1,63 +1,64 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 
-const TimeProgressBar = ({ progress }: { progress: string }) => {
-  let [elapsedTime, totalTime] = progress.split("/").map(Number);
-  const [remainingTime, setRemainingTime] = useState(0);
-  let tooLate = false;
-  if (elapsedTime === totalTime) {
-    tooLate = true;
-  } else {
-    if (elapsedTime === 0) {
-      elapsedTime = 1
-    }
-  }
-  
+interface TimeProgressBarProps {
+  progress: string;
+  onTimePassedByMinute: () => void;
+  notificationSent: boolean;
+}
+
+const TimeProgressBar: React.FC<TimeProgressBarProps> = ({ progress, onTimePassedByMinute, notificationSent }) => {
+  const { t } = useTranslation();
+  const [elapsedTime, totalTime] = progress.split("/").map(Number);
+  const [remainingTime, setRemainingTime] = useState(elapsedTime);
+  const [tooLate, setTooLate] = useState(false);
+  const [superLate, setSuperLate] = useState(false);
+
   useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-  
-    const updateRemainingTime = () => {
-      intervalId = setInterval(() => {
-        // setRemainingTime(prevRemainingTime => {
-        //   console.log(prevRemainingTime + "hi")
-        //   if (prevRemainingTime < 0) {
-        //     //return prevRemainingTime + 1;
-        //   // } else {
-        //     if (elapsedTime === totalTime) {
-        //       tooLate = true;
-        //     } else {
-        //       if (elapsedTime === 0) {
-        //         elapsedTime = 1
-        //       }
-        //     }
-        //     clearInterval(intervalId);
-        //     return prevRemainingTime;
-        //   }
-        //   return 0;
-        // });
-        const newTime = totalTime - elapsedTime;
-        console.log(newTime);
-        setRemainingTime(totalTime - elapsedTime);
-      }, 60000);
-    };
-  
-    setRemainingTime(totalTime - elapsedTime);
-    updateRemainingTime();
-  
+    setRemainingTime(elapsedTime);
+
+    if (remainingTime === totalTime && remainingTime === 0 && totalTime === 0) setTooLate(true);
+    else setTooLate(false);
+
+    if (notificationSent) setSuperLate(true);
+    else setSuperLate(false);
+
+    const intervalId = setInterval(() => {
+      if (remainingTime <= 0) {
+        setTooLate(true);
+      } else {
+        setTooLate(false);
+      }
+      onTimePassedByMinute();
+    }, 30000);
+
     return () => clearInterval(intervalId);
   }, [progress]);
 
-  const progressBarWidth = tooLate ? 100 : ((remainingTime / totalTime) * 100);
+  const progressBarWidth = tooLate ? 100 : 100 - (remainingTime / totalTime) * 100;
 
   return (
     <View style={styles.container}>
       <View style={styles.progressBar}>
-        <View style={[styles.progress, tooLate ? styles.tooLateProgress : null, { width: `${progressBarWidth}%`, height: tooLate ? 5 : 15 }]}>
-          <View style={styles.textWrapper}>
-            <Text style={styles.progressText}>{tooLate ? "" : `${remainingTime}m`}</Text>
-          </View>
+        <View
+          style={[
+            styles.progress,
+            superLate ? styles.superLateProgress : tooLate ? styles.tooLateProgress : null,
+            { width: `${progressBarWidth}%`, height: tooLate || superLate ? 5 : 15 },
+          ]}
+        >
+          {!tooLate && !superLate && (
+            <View style={styles.textWrapper}>
+              {remainingTime === 0 ? (
+                <Text style={styles.progressText}>{t("screens.device_overview.device_list.updating_now")}</Text>
+              ) : (
+                <Text style={styles.progressText}>{`${remainingTime}m`}</Text>
+              )}
+            </View>
+          )}
         </View>
-        <View style={[styles.remainingProgress, { width: `${100 - progressBarWidth}%` }]} />
+        <View style={[styles.remainingProgress, { width: `${progressBarWidth}%` }]} />
       </View>
     </View>
   );
@@ -91,6 +92,9 @@ const styles = StyleSheet.create({
   },
   tooLateProgress: {
     backgroundColor: "orange",
+  },
+  superLateProgress: {
+    backgroundColor: "red",
   },
   remainingProgress: {
     backgroundColor: "#ddd",

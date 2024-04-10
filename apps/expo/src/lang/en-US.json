@@ -28,7 +28,8 @@
           "no_data": "No data received yet"
         },
         "reset_device": "Reset",
-        "empty_collection": "No Data Sources List found for this Campaign"
+        "empty_collection": "No Data Sources List found for this Campaign",
+        "updating_now": "Now"
       },
       "building_list": {
         "placeholder": "Select a building",
