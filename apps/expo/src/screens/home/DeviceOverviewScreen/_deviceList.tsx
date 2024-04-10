@@ -72,14 +72,6 @@ export default function DeviceList({
 
         connectStatus = connectStatus === 2 ? connectStatus : allPrecedesDone ? 0 : 1;
 
-        //Cloudfeed is the odd one here
-        if (dataSource.type.name === "cloud_feed") {
-          dataSource.item.info_url = oldSource?.device_type.info_url ? oldSource.device_type.info_url : "";
-          dataSource.item.installation_manual_url = oldSource?.device_type.installation_manual_url
-            ? oldSource.device_type.installation_manual_url
-            : "";
-        }
-
         //Progressbar
         if (connectStatus === 2) {
           connectedCount++;
