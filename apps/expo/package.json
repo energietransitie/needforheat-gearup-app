@@ -19,7 +19,7 @@
   "dependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@gorhom/bottom-sheet": "4",
-    "@react-native-community/netinfo": "9.3.7",
+    "@react-native-community/netinfo": "^11.3.1",
     "@react-native-firebase/app": "17.3.2",
     "@react-native-firebase/dynamic-links": "17.3.2",
     "@react-navigation/bottom-tabs": "6.5.7",
@@ -60,7 +60,7 @@
     "react-native-bluetooth-state-manager": "1.3.4",
     "react-native-chart-kit": "6.12.0",
     "react-native-dotenv": "3.4.8",
-    "react-native-esp-idf-provisioning": "ssh://git@github.com/energietransitie/twomes-app-needforheat-eup",
+    "react-native-esp-idf-provisioning": "ssh://git@github.com/energietransitie/needforheat-gearup-app-eup",
     "react-native-exit-app": "^1.1.0",
     "react-native-gesture-handler": "2.8.0",
     "react-native-permissions": "3.6.1",

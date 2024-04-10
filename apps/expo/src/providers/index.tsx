@@ -13,7 +13,6 @@ import { theme } from "@/lib/theme";
 
 type ProviderProps = {
   children: ReactNode;
-  onLayout: (event: LayoutChangeEvent) => void;
 };
 
 const queryClient = new QueryClient({
@@ -28,7 +27,7 @@ const queryClient = new QueryClient({
 
 export default function Providers(props: ProviderProps) {
   return (
-    <SafeAreaProvider onLayout={props.onLayout}>
+    <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <ThemeProvider theme={theme}>
           <QueryClientProvider client={queryClient}>

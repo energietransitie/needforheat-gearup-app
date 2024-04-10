@@ -1,9 +1,9 @@
-# NeedForHeat App<!-- omit in toc -->
-![GitHub License](https://img.shields.io/github/license/energietransitie/twomes-app-needforheat)
+# NeedForHeat GearUp App<!-- omit in toc -->
+![GitHub License](https://img.shields.io/github/license/energietransitie/needforheat-gearup-app)
 ![Project Status badge](https://img.shields.io/badge/status-in%20progress-brightgreen)
-![Version Status Badge](https://img.shields.io/badge/version-stable-brightgreen)
+![Version Status Badge](https://img.shields.io/badge/version-beta-orange)
 
-This repository contains the source code for the NeedForHeat (NFH) app for both Android and iOS. The app helps users to install and connect one or more NFH measurement devices that start collecting monitoring data related to home heating.
+This repository contains the source code for the GearUp version of the NeedForHeat (NFH) app for both Android and iOS. The app helps users to install and connect one or more NFH measurement devices that start collecting monitoring data related to home heating.
 
 ## Table of contents<!-- omit in toc -->
 - [General info](#general-info)
@@ -102,6 +102,7 @@ We use and gratefully acknowlegde the efforts of the makers of the following sou
 - [Expo](https://github.com/expo/expo), by 2015-present 650 Industries, Inc. (aka Expo), licensed under [MIT](https://github.com/expo/expo/blob/main/LICENSE)
 - [react-i18next](https://github.com/i18next/react-i18next/tree/master), by i18next, licensed under [MIT](https://github.com/i18next/react-i18next/blob/master/LICENSE)
 - [React Native Bottom Sheet](https://github.com/gorhom/react-native-bottom-sheet), by Mo Gorhom, licensed under [MIT](https://github.com/gorhom/react-native-bottom-sheet/blob/master/LICENSE)
+- [React Native Network Info](https://github.com/react-native-netinfo/react-native-netinfo), by react-native-netinfo, licensed under [MIT](https://github.com/react-native-netinfo/react-native-netinfo/blob/master/LICENSE)
 - [cron-parser](https://github.com/harrisiirak/cron-parser/), by Harri Siirak, licensed under [MIT license](https://github.com/harrisiirak/cron-parser/blob/master/LICENSE)
 
 This `README` uses [badges](https://github.com/badges/shields/blob/master/LICENSE), by [Shield.io](https://github.com/badges), licensed under [CC0 v1.0 Universal](https://github.com/badges/shields/blob/master/LICENSE)
