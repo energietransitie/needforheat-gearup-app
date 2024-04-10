@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     overflow: "hidden",
     alignItems: "center",
+    marginBottom: 5,
   },
   progressText: {
     color: "white",

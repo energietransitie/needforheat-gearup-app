@@ -3,7 +3,7 @@ import { Button, ListItem, makeStyles, useTheme } from "@rneui/themed";
 import { format } from "date-fns";
 import { enUS, nl } from "date-fns/locale";
 import { useEffect, useState } from "react";
-import { TouchableHighlight, TouchableOpacity, View, ToastAndroid } from "react-native";
+import { ToastAndroid, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import { MANUAL_URL } from "@/constants";
@@ -12,13 +12,11 @@ import { useOpenExternalLink } from "@/hooks/useOpenExternalLink";
 import { BuildingDeviceResponse } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
 import { capitalizeFirstLetter } from "@/utils/tools";
-import { CronExpression, ParserOptions } from 'cron-parser';
-import { parse, addMinutes } from 'date-fns';
 import cronParser from 'cron-parser';
-import { string } from "zod";
 import "intl";
 //import { Platform } from "react-native";
 import "intl/locale-data/jsonp/en";
+import TimeProgressBar from "./timeProgressBar";
 
 type WifiNetworkListItemProps = {
   item: BuildingDeviceResponse;
@@ -35,6 +33,10 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   const { t, resolvedLanguage } = useTranslation();
   const [data, setData] = useState(null); // Initialize data state variable
   const CompleteURL = MANUAL_URL + item.device_type.name;
+
+  const [missed, setMissed] = useState(0);
+  const [timeToUpload, setTimeToUpload] = useState<string>();
+
   const onReset = (close: () => void) => {
     if (item.typeCategory === "device_type") {
       navigate("QrScannerScreen", { expectedDeviceName: item.name, device_TypeName: item.name });
@@ -90,171 +92,179 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
 
     return format(inputDate, formatString, { locale });
   }
-  function checkNextUpload(){
-    
+  function checkNextUpload() {
     const latestUpload: Date = item.latest_upload ? item.latest_upload : new Date();
     const timeNow = new Date();
     const cronExpression: string = item.upload_schedule ? item.upload_schedule : "";
     const intervalIterator = cronParser.parseExpression(cronExpression, { currentDate: latestUpload });
-    // console.log(item.id);
-    // console.log('Latest ',latestUpload.toISOString());
-    // console.log('Latest ',latestUpload.getTime());
-    // console.log('now    ',timeNow.toISOString());
-    // console.log('now    ',timeNow.getTime());
     const scheduledTime = intervalIterator.next();
-    // console.log('sched  ',scheduledTime.toISOString());
-    // console.log('sched  ',scheduledTime.getTime());
-    const diff = Math.round((scheduledTime.getTime() - timeNow.getTime()) /60000);
-    console.log('DIFF', diff);
-    return diff;
-    
+    const timeToUpload = Math.round((scheduledTime.getTime() - timeNow.getTime()) / 60000);
+    const timeTotal = Math.round((scheduledTime.getTime() - latestUpload.getTime()) / 60000);
+    if (timeToUpload < 0) {
+      return "0/0";
+    } else {
+      return timeToUpload + "/" + timeTotal;
+    }
   }
-  function checkMissedUpload(){
+
+  function checkMissedUpload() {
     const latestUpload: string = item.latest_upload ? item.latest_upload.toISOString() : "";
     const timeNow = new Date();
     const cronExpression: string = item.upload_schedule ? item.upload_schedule : "";
     const interval = item.upload_schedule;
 
-   let missedIntervals = 0;
-   var upToDate = false;
+    let missedIntervals = 0;
+    var upToDate = false;
 
     try {
       const intervalIterator = cronParser.parseExpression(cronExpression, { currentDate: latestUpload });
-      
+
       while (!upToDate && intervalIterator.hasNext() && missedIntervals < 10) {
         const nextInterval = intervalIterator.next();
         if (nextInterval.getTime() < timeNow.getTime()) {
-            missedIntervals++;
+          missedIntervals++;
         } else {
-            upToDate = true;
+          upToDate = true;
         }
       }
     } catch (error) {
-        console.error(error);
-        return -1;
+      console.error(error);
+      return -1;
     }
 
     //console.log('Missed intervals:', missedIntervals);
     return missedIntervals;
   }
 
+  useEffect(() => {
+    if (data) {
+      setTimeToUpload(checkNextUpload());
+      setMissed(checkMissedUpload());
+    }
+  }, [data, item]);
+
   return (
-    <ListItem.Swipeable
-      onPress={() => {
-        if (item.connected === 1) {
-          handleItemClick();
-        }
-        if (item.connected === 0) {
-          openManual();
-        }
-      }}
-      onSwipeBegin={onSwipeBegin}
-      onSwipeEnd={onSwipeEnd}
-      leftWidth={0}
-      rightContent={
-        item.connected === 2 && !(item.typeCategory === "cloud_feed")
-          ? close => (
+    <>
+      <ListItem.Swipeable
+        onPress={() => {
+          if (item.connected === 1) {
+            handleItemClick();
+          }
+          if (item.connected === 0) {
+            openManual();
+          }
+        }}
+        onSwipeBegin={onSwipeBegin}
+        onSwipeEnd={onSwipeEnd}
+        leftWidth={0}
+        rightContent={
+          item.connected === 2 && !(item.typeCategory === "cloud_feed")
+            ? close => (
               <Button
                 title={t("screens.device_overview.device_list.reset_device")}
                 onPress={() => onReset(close)}
                 buttonStyle={{ minHeight: "100%", backgroundColor: theme.colors.primary }}
               />
             )
-          : null
-      }
-      style={[style.listItem]}
-      containerStyle={[
-        {
-          backgroundColor:
-            item.connected === 0
-              ? "#45b97c"
-              : item.connected === 1
-              ? "grey"
-              : item.connected === 2
-              ? "white"
-              : "initial",
-        },
-        { borderTopLeftRadius: 0 },
-        { borderBottomLeftRadius: 0 },
-      ]}
-      Component={TouchableHighlight}
-    >
-      <ListItem.Content>
-        <ListItem.Title>
-        {item.connected === 2 ? (
-  <>
-    {item.typeCategory === "device_type" && (
-      <>
-        {checkNextUpload()}
-        {checkMissedUpload() === 0 ? (
-          <Icon name="layers" color="green" size={16}/>
-        ) : (
-          <Icon name="layers" color="orange" size={16}/>
-        )}
-      </>
-    )}
-    {item.typeCategory === "energy_query_type" && (
-      <>
-        {checkNextUpload()}
-        {checkMissedUpload() === 0 ? (
-          <Icon name="flash" color="green" size={16}/>
-        ) : (
-          <Icon name="flash" color="orange" size={16}/>
-        )}
-      </>
-    )}
-    {item.typeCategory === "cloud_feed" && (
-      <>
-        {checkMissedUpload() === 0 ? (
-          <Icon name="cloud" color="green" size={16}/>
-        ) : (
-          <Icon name="cloud" color="orange" size={16}/>
-        )}
-      </>
-    )}
-  </>
-) : null}
+            : null
+        }
+        style={[style.listItem]}
+        containerStyle={[
+          {
+            backgroundColor:
+              item.connected === 0
+                ? "#45b97c"
+                : item.connected === 1
+                  ? "grey"
+                  : item.connected === 2
+                    ? "white"
+                    : "initial",
+          },
+          { borderTopLeftRadius: 0 },
+          { borderBottomLeftRadius: 0 },
+        ]}
+        Component={TouchableHighlight}
+      >
+        <ListItem.Content>
+          <ListItem.Title>
+            {item.connected === 2 ? (
+              <>
+                {item.typeCategory === "device_type" && (
+                  <>
+                    {missed === 0 ? (
+                      <Icon name="layers" color="green" size={16} />
+                    ) : (
+                      <Icon name="layers" color="orange" size={16} />
+                    )}
+                  </>
+                )}
+                {item.typeCategory === "energy_query_type" && (
+                  <>
+                    {missed === 0 ? (
+                      <Icon name="flash" color="green" size={16} />
+                    ) : (
+                      <Icon name="flash" color="orange" size={16} />
+                    )}
+                  </>
+                )}
+                {item.typeCategory === "cloud_feed" && (
+                  <>
+                    {missed === 0 ? (
+                      <Icon name="cloud" color="green" size={16} />
+                    ) : (
+                      <Icon name="cloud" color="orange" size={16} />
+                    )}
+                  </>
+                )}
+              </>
+            ) : null}
 
-          {resolvedLanguage === "nl-NL"
-            ? data?.["nl-NL"]
-              ? " " + capitalizeFirstLetter(data["nl-NL"])
-              : ""
-            : data?.["en-US"]
-            ? " " + capitalizeFirstLetter(data["en-US"])
-            : ""}
-        </ListItem.Title>
-        {item.connected === 2 ? (
-          <ListItem.Subtitle>
-            {item.latest_upload
-              ? t("screens.device_overview.device_list.device_info.last_seen", {
+            {resolvedLanguage === "nl-NL"
+              ? data?.["nl-NL"]
+                ? " " + capitalizeFirstLetter(data["nl-NL"])
+                : ""
+              : data?.["en-US"]
+                ? " " + capitalizeFirstLetter(data["en-US"])
+                : ""}
+          </ListItem.Title>
+          {item.connected === 2 ? (
+            <ListItem.Subtitle>
+              {item.latest_upload
+                ? t("screens.device_overview.device_list.device_info.last_seen", {
                   date: formatDateAndTime(item.latest_upload),
                 })
-              : t("screens.device_overview.device_list.device_info.no_data")}
-          </ListItem.Subtitle>
-        ) : null}
-      </ListItem.Content>
-      <View style={{ flexDirection: "column" }}>
-        {item.connected === 0 ? (
-          <Icon name="lock-open-outline" size={32} />
-        ) : item.connected === 1 ? (
-          <Icon name="lock-closed-outline" size={32} />
-        ) : item.connected === 2 ? null : null}
+                : t("screens.device_overview.device_list.device_info.no_data")}
 
-        {item.device_type.info_url !== "" ? (
-          <TouchableOpacity onPress={openHelpUrl}>
-            <Icon name="help-circle-outline" size={32} />
-          </TouchableOpacity>
+            </ListItem.Subtitle>
+          ) : null}
+          {timeToUpload ? (
+            <TimeProgressBar progress={timeToUpload} />
+          ) : null}
+        </ListItem.Content>
+        <View style={{ flexDirection: "column" }}>
+          {item.connected === 0 ? (
+            <Icon name="lock-open-outline" size={32} />
+          ) : item.connected === 1 ? (
+            <Icon name="lock-closed-outline" size={32} />
+          ) : item.connected === 2 ? null : null}
+
+          {item.device_type.info_url !== "" ? (
+            <TouchableOpacity onPress={openHelpUrl}>
+              <Icon name="help-circle-outline" size={32} />
+            </TouchableOpacity>
+          ) : null}
+
+        </View>
+        {item.connected === 2 && item.typeCategory !== "cloud_feed" ? (
+          <Icon
+            name="reorder-three-outline"
+            size={10}
+            color="gray"
+            style={{ transform: [{ rotate: "90deg" }, { scaleX: 2 }, { scaleY: 2 }], marginLeft: -10 }}
+          />
         ) : null}
-      </View>
-      {item.connected === 2 && item.typeCategory !== "cloud_feed" ? (
-        <Icon
-          name="reorder-three-outline"
-          size={10}
-          color="gray"
-          style={{ transform: [{ rotate: "90deg" }, { scaleX: 2 }, { scaleY: 2 }], marginLeft: -10 }}
-        />
-      ) : null}
-    </ListItem.Swipeable>
+      </ListItem.Swipeable>
+    </>
   );
 }
 

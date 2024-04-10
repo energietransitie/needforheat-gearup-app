@@ -118,11 +118,6 @@ export default function DeviceList({
     return <StatusIndicator isLoading={shouldLoad} />;
   }
 
-  if (refresh) {
-    refetch();
-    onRefresh();
-  }
-
   if (isLoading || isFetching) {
     return <StatusIndicator isLoading />;
   }
