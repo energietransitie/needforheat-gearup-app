@@ -1,6 +1,7 @@
 import { t } from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
+import { RefreshControl } from "react-native-gesture-handler";
 
 import DeviceListItem from "./_listItem";
 import ProgressBar from "./progressBar";
@@ -9,7 +10,6 @@ import StatusIndicator from "@/components/common/StatusIndicator";
 import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
 import useDevices from "@/hooks/device/useDevices";
 import { BuildingDeviceResponse, DataSourcesList } from "@/types/api";
-import { RefreshControl } from "react-native-gesture-handler";
 
 export default function DeviceList({
   buildingId,
@@ -136,9 +136,7 @@ export default function DeviceList({
         ListEmptyComponent={
           <StatusIndicator isError errorText={t("screens.device_overview.device_list.empty_collection")} />
         }
-        refreshControl={
-          <RefreshControl enabled={true} onRefresh={refetch} refreshing={refresh}
-          />}
+        refreshControl={<RefreshControl enabled onRefresh={refetch} refreshing={refresh} />}
         refreshing={isRefetching}
         scrollEnabled={scrollEnabled}
       />
