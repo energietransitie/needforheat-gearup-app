@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 import { TouchableHighlight, TouchableOpacity, View, ToastAndroid } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
-//import Progressbar from "./progressBar";
-
 import { MANUAL_URL } from "@/constants";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useOpenExternalLink } from "@/hooks/useOpenExternalLink";
@@ -38,7 +36,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   };
 
   const handleItemClick = () => {
-    ToastAndroid.show("Maak het huidige databron af om verder te kunnen.", ToastAndroid.SHORT);
+    ToastAndroid.show(t("screens.device_overview.toast_message"), ToastAndroid.SHORT);
   };
 
   const openManual = () => {
@@ -72,10 +70,6 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     "en-US": enUS,
     "nl-NL": nl,
   };
-
-  // const testitem = {
-  //   connected: 1,
-  // };
 
   function formatDateAndTime(date?: Date) {
     const inputDate = date || new Date();
