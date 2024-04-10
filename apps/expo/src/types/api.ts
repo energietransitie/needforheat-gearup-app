@@ -79,9 +79,8 @@ const exampleItems = [
     item: {
       id: 3,
       name: "enelogic",
-      installation_manual_url:
-        "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
-      info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
+      installation_manual_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/enelogic/installation",
+      info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/enelogic/faq",
     },
     precedes: [],
     uploadschedule: [],
