@@ -1,5 +1,5 @@
 import { t } from "i18next";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 
@@ -9,6 +9,7 @@ import ProgressBar from "./progressBar";
 import StatusIndicator from "@/components/common/StatusIndicator";
 import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
 import useDevices from "@/hooks/device/useDevices";
+import { UserContext } from "@/providers/UserProvider";
 import { BuildingDeviceResponse, DataSourcesList } from "@/types/api";
 
 export default function DeviceList({
@@ -29,6 +30,7 @@ export default function DeviceList({
   const [progress, setProgress] = useState("0/0");
   const onSwipeBegin = useCallback(() => setScrollEnabled(false), []);
   const onSwipeEnd = useCallback(() => setScrollEnabled(true), []);
+  const { user } = useContext(UserContext);
 
   const connectedState: number[] = [];
 
@@ -112,6 +114,20 @@ export default function DeviceList({
       onRefresh();
     }
   }, [refresh, refetch, onRefresh]);
+
+  let shouldLoad = true;
+  if (!isLoading || Boolean(user)) {
+    shouldLoad = false;
+  }
+
+  if (shouldLoad) {
+    return <StatusIndicator isLoading={shouldLoad} />;
+  }
+
+  if (refresh) {
+    refetch();
+    onRefresh();
+  }
 
   if (isLoading || isFetching) {
     return <StatusIndicator isLoading />;

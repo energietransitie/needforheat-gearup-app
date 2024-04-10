@@ -1,11 +1,12 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { useFocusEffect } from "@react-navigation/native";
 import { Text, useTheme } from "@rneui/themed";
 import { useCallback, useContext, useRef, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
-import BuildingBottomSheet from "../../../components/common/bottomSheets/BuildingBottomSheet";
 import DeviceList from "./_deviceList";
+import BuildingBottomSheet from "../../../components/common/bottomSheets/BuildingBottomSheet";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
 import Box from "@/components/elements/Box";
@@ -13,7 +14,6 @@ import Screen from "@/components/elements/Screen";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
 import { DataSourcesList } from "@/types/api";
-import { useFocusEffect } from "@react-navigation/native";
 
 export default function DeviceOverviewScreen() {
   const { theme } = useTheme();

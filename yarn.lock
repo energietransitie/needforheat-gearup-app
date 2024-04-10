@@ -2605,10 +2605,10 @@
     prompts "^2.4.0"
     semver "^6.3.0"
 
-"@react-native-community/netinfo@9.3.7":
-  version "9.3.7"
-  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-9.3.7.tgz#92407f679f00bae005c785a9284e61d63e292b34"
-  integrity sha512-+taWmE5WpBp0uS6kf+bouCx/sn89G9EpR4s2M/ReLvctVIFL2Qh8WnWfBxqK9qwgmFha/uqjSr2Gq03OOtiDcw==
+"@react-native-community/netinfo@^11.3.1":
+  version "11.3.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-11.3.1.tgz#4539371a2f4bd402d932031be82c2449ed63a1a5"
+  integrity sha512-UBnJxyV0b7i9Moa97Av+HKho1ByzX0DtbJXzUQS5E3xhQs6P2D/Os0iw3ouy7joY1TVd6uIhplPbr7l1SJNaNQ==
 
 "@react-native-firebase/app@17.3.2":
   version "17.3.2"
@@ -11464,9 +11464,9 @@ react-native-dotenv@3.4.8:
   dependencies:
     dotenv "^16.0.3"
 
-"react-native-esp-idf-provisioning@ssh://git@github.com/energietransitie/twomes-app-needforheat-eup":
+"react-native-esp-idf-provisioning@ssh://git@github.com/energietransitie/needforheat-gearup-app-eup":
   version "0.1.0"
-  resolved "ssh://git@github.com/energietransitie/twomes-app-needforheat-eup#a166a46ace76ca000d52c638de9072a993963bc8"
+  resolved "ssh://git@github.com/energietransitie/needforheat-gearup-app-eup#a166a46ace76ca000d52c638de9072a993963bc8"
 
 react-native-exit-app@^1.1.0:
   version "1.1.0"

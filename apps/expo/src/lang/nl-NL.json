@@ -141,7 +141,16 @@
           "no_permission": "Geen cameratoestemming",
           "invalid_qr": "De QR-code is geen geldige QR-code voor een meetapparaatje.",
           "mismatched_device_name": "Het apparaat dat u probeert te activeren is niet hetzelfde als het apparaat dat u zojuist heeft gescand.",
-          "unknown_error": "Er is een fout opgetreden tijdens het scannen van de QR-code."
+          "unknown_error": "Er is een fout opgetreden tijdens het scannen van de QR-code.",
+          "camera_request_failed": "Een fout is opgetreden bij het aanvragen van camera-machtigingen."
+        },
+        "camera": {
+          "alert": {
+            "title": "Camera machtiging",
+            "message": "Deze app maakt gebruik van de camera om QR-codes te scannen vanaf het apparaat.\n\nWilt u deze machtiging verlenen?",
+            "button": "Oké, vraag maar!",
+            "enable_button": "Machtiging camera verlenen"
+          }
         }
       },
       "search_device": {
@@ -299,6 +308,10 @@
     "bluetooth_permission": {
       "not_granted_ios": "Bluetooth-machtigingen zijn niet verleend.\nZorg ervoor dat de app Bluetooth-machtigingen heeft en probeer opnieuw.",
       "not_granted_android": "Zorg ervoor dat Bluetooth aanstaat en dat u machtigingen geeft voor Locatie en Apparaten in de Buurt.\n U kunt dit doen via instellingen."
+    },
+    "camera_permission": {
+      "not_granted_ios": "Camera-machtigingen zijn niet verleend.\nZorg ervoor dat de app Camera-machtigingen heeft en probeer opnieuw.",
+      "not_granted_android": "Zorg ervoor dat Camera aanstaat.\nU kunt dit doen via instellingen."
     },
     "external_links": {
       "not_supported": "Uw smartphone biedt geen ondersteuning voor het openen van externe links.",

@@ -141,7 +141,16 @@
           "no_permission": "No camera permission",
           "invalid_qr": "The QR code is not a valid QR code for a measurement device.",
           "mismatched_device_name": "The device name in the QR code does not match the name of the device you are trying to reset.",
-          "unknown_error": "An error occurred while scanning the QR code."
+          "unknown_error": "An error occurred while scanning the QR code.",
+          "camera_request_failed": "An error occurred while requesting camera permissions."
+        },
+        "camera": {
+          "alert": {
+            "title": "Camera permission",
+            "message": "This app uses the camera to scan QR codes from the device.\n\nDo you want to grant this permission?",
+            "button": "Okay, ask away!",
+            "enable_button": "Grant Camera Permission"
+          }
         }
       },
       "search_device": {
@@ -163,7 +172,6 @@
             "cancel": "Cancel",
             "switch_on": "Switch on",
             "disabled_bluetooth": "Bluetooth is disabled. Do you want to enable Bluetooth?"
-
           },
           "error": {
             "title": "An error occurred.",
@@ -299,6 +307,10 @@
     "bluetooth_permission": {
       "not_granted_ios": "Bluetooth permission is not granted. Please grant the permission and try again.",
       "not_granted_android": "Make sure Bluetooth is turned on and that you grant permissions for Location and Nearby Devices.\nYou can do this through settings."
+    },
+    "camera_permission": {
+      "not_granted_ios": "Camera permission is not granted. Please grant the permission and try again.",
+      "not_granted_android": "Make sure Camera is turned on.\nYou can do this through settings."
     },
     "external_links": {
       "not_supported": "Your device does not support opening external links.",
