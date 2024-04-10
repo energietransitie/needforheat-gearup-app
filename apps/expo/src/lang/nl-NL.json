@@ -17,6 +17,7 @@
     },
     "device_overview": {
       "title": "Databronnen",
+      "toast_message": "Maak eerst de geopende databron af om verder te kunnen gaan.",
       "buttons": {
         "add_enelogic": "Enelogic toevoegen",
         "install_device": "Meetapparaatje scannen"

@@ -17,6 +17,7 @@
     },
     "device_overview": {
       "title": "Data Sources",
+      "toast_message": "Finish the opened data source first in order to proceed.",
       "buttons": {
         "add_enelogic": "Connect Enelogic",
         "install_device": "Scan device"
