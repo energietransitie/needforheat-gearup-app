@@ -104,8 +104,9 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     let cronExpression = item.upload_schedule ?? "";
 
     // Replace '0' in cron expression with corresponding value from latestUpload
-    if (cronExpression.includes("0")) {
-      const [minute, hour, daym, month, dayw] = cronExpression.split(" ");
+    const parts = cronExpression.split(" ");
+    if (parts.includes("0")) {
+      const [minute, hour, daym, month, dayw] = parts;
       cronExpression = [
         minute === "0" ? latestUpload.getMinutes().toString() : minute,
         hour === "0" ? latestUpload.getHours().toString() : hour,
