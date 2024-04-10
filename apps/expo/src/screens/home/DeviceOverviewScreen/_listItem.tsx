@@ -164,6 +164,14 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           </TouchableOpacity>
         ) : null}
       </View>
+      {item.connected === 2 ? (
+        <Icon
+          name="reorder-three-outline"
+          size={10}
+          color="gray"
+          style={{ transform: [{ rotate: "90deg" }, { scaleX: 2 }, { scaleY: 2 }], marginLeft: -10 }}
+        />
+      ) : null}
     </ListItem.Swipeable>
   );
 }
