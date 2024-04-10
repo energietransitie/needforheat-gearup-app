@@ -1,10 +1,13 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Button, ListItem, makeStyles, useTheme } from "@rneui/themed";
+import cronParser from "cron-parser";
 import { format } from "date-fns";
 import { enUS, nl } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { ToastAndroid, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+
+import TimeProgressBar from "./timeProgressBar";
 
 import { MANUAL_URL } from "@/constants";
 import useTranslation from "@/hooks/translation/useTranslation";
@@ -12,11 +15,9 @@ import { useOpenExternalLink } from "@/hooks/useOpenExternalLink";
 import { BuildingDeviceResponse } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
 import { capitalizeFirstLetter } from "@/utils/tools";
-import cronParser from 'cron-parser';
 import "intl";
 //import { Platform } from "react-native";
 import "intl/locale-data/jsonp/en";
-import TimeProgressBar from "./timeProgressBar";
 
 type WifiNetworkListItemProps = {
   item: BuildingDeviceResponse;
@@ -111,10 +112,9 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     const latestUpload: string = item.latest_upload ? item.latest_upload.toISOString() : "";
     const timeNow = new Date();
     const cronExpression: string = item.upload_schedule ? item.upload_schedule : "";
-    const interval = item.upload_schedule;
 
     let missedIntervals = 0;
-    var upToDate = false;
+    let upToDate = false;
 
     try {
       const intervalIterator = cronParser.parseExpression(cronExpression, { currentDate: latestUpload });
@@ -160,12 +160,12 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
         rightContent={
           item.connected === 2 && !(item.typeCategory === "cloud_feed")
             ? close => (
-              <Button
-                title={t("screens.device_overview.device_list.reset_device")}
-                onPress={() => onReset(close)}
-                buttonStyle={{ minHeight: "100%", backgroundColor: theme.colors.primary }}
-              />
-            )
+                <Button
+                  title={t("screens.device_overview.device_list.reset_device")}
+                  onPress={() => onReset(close)}
+                  buttonStyle={{ minHeight: "100%", backgroundColor: theme.colors.primary }}
+                />
+              )
             : null
         }
         style={[style.listItem]}
@@ -173,12 +173,12 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           {
             backgroundColor:
               item.connected === 0
-                ? "#45b97c"
+                ? "#d3eaf9"
                 : item.connected === 1
-                  ? "grey"
-                  : item.connected === 2
-                    ? "white"
-                    : "initial",
+                ? "#d9dadb"
+                : item.connected === 2
+                ? "#aef2b7"
+                : "initial",
           },
           { borderTopLeftRadius: 0 },
           { borderBottomLeftRadius: 0 },
@@ -224,22 +224,19 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
                 ? " " + capitalizeFirstLetter(data["nl-NL"])
                 : ""
               : data?.["en-US"]
-                ? " " + capitalizeFirstLetter(data["en-US"])
-                : ""}
+              ? " " + capitalizeFirstLetter(data["en-US"])
+              : ""}
           </ListItem.Title>
           {item.connected === 2 ? (
             <ListItem.Subtitle>
               {item.latest_upload
                 ? t("screens.device_overview.device_list.device_info.last_seen", {
-                  date: formatDateAndTime(item.latest_upload),
-                })
+                    date: formatDateAndTime(item.latest_upload),
+                  })
                 : t("screens.device_overview.device_list.device_info.no_data")}
-
             </ListItem.Subtitle>
           ) : null}
-          {timeToUpload ? (
-            <TimeProgressBar progress={timeToUpload} />
-          ) : null}
+          {timeToUpload ? <TimeProgressBar progress={timeToUpload} /> : null}
         </ListItem.Content>
         <View style={{ flexDirection: "column" }}>
           {item.connected === 0 ? (
@@ -253,7 +250,6 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
               <Icon name="help-circle-outline" size={32} />
             </TouchableOpacity>
           ) : null}
-
         </View>
         {item.connected === 2 && item.typeCategory !== "cloud_feed" ? (
           <Icon

@@ -1,4 +1,4 @@
-import { string, z } from "zod";
+import { z } from "zod";
 
 const stringToDate = z.string().transform(v => new Date(v));
 
@@ -58,7 +58,7 @@ const exampleItems = [
         "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-co2-occupancy-scd41-m5coreink-firmware/installation",
     },
     precedes: [{ id: 2 }, { id: 3 }],
-    uploadschedule: '*/2 * * * *'
+    uploadschedule: "*/2 * * * *",
   },
   {
     id: 2,
@@ -71,7 +71,7 @@ const exampleItems = [
       info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
     },
     precedes: [],
-    uploadschedule: '*/10 * * * *'
+    uploadschedule: "*/10 * * * *",
   },
   {
     id: 3,
@@ -83,8 +83,8 @@ const exampleItems = [
       info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/enelogic/faq",
     },
     precedes: [],
-    uploadschedule: '*/10 * * * *'
-  }
+    uploadschedule: "*/10 * * * *",
+  },
 ];
 
 // POST: /account

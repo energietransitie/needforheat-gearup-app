@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   progressBar: {
     flexDirection: "row",
     height: 20,
-    backgroundColor: "#ccc",
+    backgroundColor: "#e3e4e6",
     borderRadius: 5,
     overflow: "hidden",
     alignItems: "center",
