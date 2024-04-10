@@ -89,6 +89,9 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
         if (item.connected === 1) {
           handleItemClick();
         }
+        if (item.connected === 0) {
+          openManual();
+        }
       }}
       onSwipeBegin={onSwipeBegin}
       onSwipeEnd={onSwipeEnd}
@@ -161,12 +164,6 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           </TouchableOpacity>
         ) : null}
       </View>
-
-      {item.connected === 0 ? (
-        <TouchableOpacity onPress={openManual}>
-          <Icon name="arrow-forward-circle" size={32} />
-        </TouchableOpacity>
-      ) : null}
     </ListItem.Swipeable>
   );
 }
