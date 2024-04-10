@@ -52,6 +52,7 @@
     "expo-status-bar": "1.4.2",
     "html-entities": "2.3.3",
     "i18next": "22.4.13",
+    "intl": "^1.2.5",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-i18next": "12.2.0",

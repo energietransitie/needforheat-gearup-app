@@ -11,6 +11,13 @@ import { enUS, nl } from 'date-fns/locale';
 import { useEffect, useState } from "react";
 import { TouchableHighlight, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { CronExpression, ParserOptions } from 'cron-parser';
+import { parse, addMinutes } from 'date-fns';
+import cronParser from 'cron-parser';
+import { string } from "zod";
+import "intl";
+//import { Platform } from "react-native";
+import "intl/locale-data/jsonp/en";
 
 type WifiNetworkListItemProps = {
   item: BuildingDeviceResponse;
@@ -78,13 +85,52 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
 
     return format(inputDate, formatString, { locale });
   }
-  function checkMissedUpload(){
-    const latestUpload = item.latest_upload? item.latest_upload : new Date();
-    const timeNow = new Date();
-
-    const diff = timeNow.getTime() - latestUpload.getTime(); 
-    console.log(diff / 60000); // 60000 to change diff to minutes
+  function checkNextUpload(){
     
+    const latestUpload: Date = item.latest_upload ? item.latest_upload : new Date();
+    const timeNow = new Date();
+    const cronExpression: string = item.upload_schedule ? item.upload_schedule : "";
+    const intervalIterator = cronParser.parseExpression(cronExpression, { currentDate: latestUpload });
+    // console.log(item.id);
+    // console.log('Latest ',latestUpload.toISOString());
+    // console.log('Latest ',latestUpload.getTime());
+    // console.log('now    ',timeNow.toISOString());
+    // console.log('now    ',timeNow.getTime());
+    const scheduledTime = intervalIterator.next();
+    // console.log('sched  ',scheduledTime.toISOString());
+    // console.log('sched  ',scheduledTime.getTime());
+    const diff = Math.round((scheduledTime.getTime() - timeNow.getTime()) /60000);
+    console.log('DIFF', diff);
+    return diff;
+    
+  }
+  function checkMissedUpload(){
+    const latestUpload: string = item.latest_upload ? item.latest_upload.toISOString() : "";
+    const timeNow = new Date();
+    const cronExpression: string = item.upload_schedule ? item.upload_schedule : "";
+    const interval = item.upload_schedule;
+
+   let missedIntervals = 0;
+   var upToDate = false;
+
+    try {
+      const intervalIterator = cronParser.parseExpression(cronExpression, { currentDate: latestUpload });
+      
+      while (!upToDate && intervalIterator.hasNext() && missedIntervals < 10) {
+        const nextInterval = intervalIterator.next();
+        if (nextInterval.getTime() < timeNow.getTime()) {
+            missedIntervals++;
+        } else {
+            upToDate = true;
+        }
+      }
+    } catch (error) {
+        console.error(error);
+        return -1;
+    }
+
+    //console.log('Missed intervals:', missedIntervals);
+    return missedIntervals;
   }
 
   return (
@@ -113,22 +159,32 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
         <ListItem.Title>
           {item.typeCategory == "device_type" ? (
             <>
-            <Icon name="layers" size={16}/>
-            {checkMissedUpload()}
+            {checkNextUpload()}
+            {checkMissedUpload() == 0 ? (
+              <Icon name="layers" color="green" size={16}/>
+            ) : (
+              <Icon name="layers" color="orange" size={16}/>
+            )}
             </>
           ) : null}
           {item.typeCategory == "energy_query_type" ? (
-            <Icon name="flash" size={16}/>
+            <>
+            {checkNextUpload()}
+            {checkMissedUpload() == 0 ? (
+              <Icon name="flash" color="green" size={16}/>
+            ) : (
+              <Icon name="flash" color="orange" size={16}/>
+            )}
+            </>
           ) : null}
           {item.typeCategory == "cloud_feed" ? (
-            <Icon name="cloud" size={16}/>
-          ) : null}
-          {item.connected ? (
-            item.latest_upload ? (
-              <Icon name="cloud-outline" color="green" size={16} />
+            <>
+            {checkMissedUpload() == 0 ? (
+              <Icon name="cloud" color="green" size={16}/>
             ) : (
-              <Icon name="cloud-offline-outline" color="red" size={16} />
-            )
+              <Icon name="cloud" color="orange" size={16}/>
+            )}
+            </>
           ) : null}
           {resolvedLanguage === "nl-NL"
             ? data?.["nl-NL"] ? " " + capitalizeFirstLetter(data["nl-NL"]) : ""

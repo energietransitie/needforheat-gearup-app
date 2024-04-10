@@ -56,7 +56,7 @@ const exampleItems = [
       info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-co2-occupancy-scd41-m5coreink-firmware/installation",
     },
     precedes: [{ id: 2 }, { id: 3 }],
-    uploadschedule: "*/10 * * * *"
+    uploadschedule: '*/2 * * * *'
   },
   {
     id: 2,
@@ -68,7 +68,7 @@ const exampleItems = [
       info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
     },
     precedes: [],
-    uploadschedule: "*/10 * * * *"
+    uploadschedule: '*/10 * * * *'
   },
   {
     id: 3,
@@ -80,7 +80,7 @@ const exampleItems = [
       info_url: ""
     },
     precedes: [],
-    uploadschedule: "*/10 * * * *"
+    uploadschedule: '*/10 * * * *'
   }
 ];
 
@@ -224,7 +224,7 @@ export const buildingDeviceSchema = z.object({
   building_id: z.number(),
   activated_at: stringToDate.nullable(),
   latest_upload: stringToDate.nullable(),
-  upload_schedule: z.string(),
+  upload_schedule: z.string().optional().nullable(),
   device_type: deviceTypeSchema,
   typeCategory: z.string().nullable().optional(),
   connected: z.boolean().default(false),
