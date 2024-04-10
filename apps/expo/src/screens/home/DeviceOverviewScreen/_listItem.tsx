@@ -71,6 +71,8 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     "nl-NL": nl,
   };
 
+  
+
   function formatDateAndTime(date?: Date) {
     const inputDate = date || new Date();
     const locale = locales[resolvedLanguage] || enUS;
@@ -112,11 +114,11 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
         {
           backgroundColor:
             item.connected === 0
-              ? "#45b97c"
+              ? "#d3eaf9"
               : item.connected === 1
-              ? "grey"
+              ? "#d9dadb"
               : item.connected === 2
-              ? "white"
+              ? "#aef2b7"
               : "initial",
         },
         { borderTopLeftRadius: 0 },
