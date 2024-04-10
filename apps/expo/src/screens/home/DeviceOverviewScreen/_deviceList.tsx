@@ -9,6 +9,7 @@ import StatusIndicator from "@/components/common/StatusIndicator";
 import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
 import useDevices from "@/hooks/device/useDevices";
 import { BuildingDeviceResponse, DataSourcesList } from "@/types/api";
+import { RefreshControl } from "react-native-gesture-handler";
 
 export default function DeviceList({
   buildingId,
@@ -135,7 +136,9 @@ export default function DeviceList({
         ListEmptyComponent={
           <StatusIndicator isError errorText={t("screens.device_overview.device_list.empty_collection")} />
         }
-        onRefresh={refetch}
+        refreshControl={
+          <RefreshControl enabled={true} onRefresh={refetch} refreshing={refresh}
+          />}
         refreshing={isRefetching}
         scrollEnabled={scrollEnabled}
       />
