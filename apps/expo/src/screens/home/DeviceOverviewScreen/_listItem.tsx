@@ -119,12 +119,9 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     try {
       const intervalIterator = cronParser.parseExpression(cronExpression, { currentDate: latestUpload });
       const scheduledTime = intervalIterator.next().toDate();
-      console.log("scheduledTime:" + scheduledTime);
       // Calculate minutes until the next upload
       const timeToUpload = Math.ceil((scheduledTime.getTime() - timeNow.getTime()) / (1000 * 60));
-      console.log("timeToUpload: " + timeToUpload);
       if (timeToUpload < 0) {
-        console.log("RETURNING 0/0");
         return "0/0";
       } else {
         const timeTotal = Math.ceil((scheduledTime.getTime() - latestUpload.getTime()) / (1000 * 60));
@@ -153,22 +150,18 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
         );
 
         // Check if the current time has passed the threshold time
-        console.log("threshols: " + thresholdTime.day);
         if (DateTime.now() >= thresholdTime) return -2;
       }
 
       while (!upToDate && intervalIterator.hasNext() && missedIntervals < 10) {
         const nextInterval = intervalIterator.next().toDate();
-        console.log("NextInterval: " + nextInterval);
         if (nextInterval.getTime() === timeNow.getTime()) break;
         if (nextInterval.getTime() < timeNow.getTime()) {
-          console.log("MISSED INTERVAL +1");
           missedIntervals++;
         } else {
           upToDate = true;
         }
       }
-      console.log("missed: " + missedIntervals);
       return missedIntervals;
     } catch (error) {
       console.error("Error parsing cron expression:", error);
@@ -177,20 +170,17 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   }
 
   function updateMonitoring() {
-    console.log("=======" + item.device_type.name + "=======");
     setTimeToUpload(checkNextUpload(item));
     setMissed(checkMissedUpload(item));
   }
   useEffect(() => {
     if (item.latest_upload) {
-      console.log("!!!!!!!!Updateing NOW: " + DateTime.now().toISO());
       updateMonitoring();
     }
   }, [item]);
 
   const handleTimePassedByMinute = () => {
     if (item.latest_upload) {
-      console.log("!!!!!!!!Updateing NOW HANDLETIME: " + DateTime.now().toISO());
       updateMonitoring();
 
       if (timeToUpload) {

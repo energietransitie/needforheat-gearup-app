@@ -16,7 +16,6 @@ const TimeProgressBar: React.FC<TimeProgressBarProps> = ({ progress, onTimePasse
   const [superLate, setSuperLate] = useState(false);
 
   useEffect(() => {
-    console.log("WE ARE IN HERE WITH " + elapsedTime + " AND " + totalTime);
     setRemainingTime(elapsedTime);
 
     if (remainingTime === totalTime && remainingTime === 0 && totalTime === 0) setTooLate(true);
@@ -26,7 +25,6 @@ const TimeProgressBar: React.FC<TimeProgressBarProps> = ({ progress, onTimePasse
     else setSuperLate(false);
 
     const intervalId = setInterval(() => {
-      console.log("WE ARE!!! " + elapsedTime + " AND " + totalTime)
       if (remainingTime === totalTime && remainingTime === 0 && totalTime === 0) {
         setTooLate(true);
       } else {
