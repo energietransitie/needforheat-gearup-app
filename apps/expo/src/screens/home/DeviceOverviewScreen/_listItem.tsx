@@ -3,7 +3,7 @@ import { Button, ListItem, makeStyles, useTheme } from "@rneui/themed";
 import cronParser from "cron-parser";
 import { format } from "date-fns";
 import { enUS, nl } from "date-fns/locale";
-import { DateTime, Duration, Interval } from "luxon";
+import { DateTime, Duration } from "luxon";
 import { useEffect, useState } from "react";
 import { ToastAndroid, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";

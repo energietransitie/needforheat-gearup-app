@@ -31,7 +31,7 @@ export default function DeviceList({
   const onSwipeBegin = useCallback(() => setScrollEnabled(false), []);
   const onSwipeEnd = useCallback(() => setScrollEnabled(true), []);
   const { user } = useContext(UserContext);
-  let allItemsDone = true;
+  const [allItemsDone, setAllItemsDone] = useState(true);
   const connectedState: number[] = [];
 
   function checkStatus(
@@ -97,8 +97,6 @@ export default function DeviceList({
         //Progressbar
         if (connectStatus === 2) {
           connectedCount++;
-        } else {
-          allItemsDone = false;
         }
 
         const newResponse: BuildingDeviceResponse = {
@@ -133,6 +131,21 @@ export default function DeviceList({
     }
   }, [refresh, refetch, onRefresh]);
 
+  useEffect(() => {
+    let itemDone = true;
+    itemData.forEach(source => {
+      if (source.connected !== 2) {
+        itemDone = false;
+      }
+    });
+
+    if (itemDone) {
+      setAllItemsDone(true);
+    } else {
+      setAllItemsDone(false);
+    }
+  }, [itemData]);
+
   const refreshAfter20Seconds = () => {
     setTimeout(() => {
       refetch();
@@ -153,7 +166,7 @@ export default function DeviceList({
   }
   return (
     <View style={{ flex: 1 }}>
-      {!allItemsDone ? <ProgressBar progress={progress} /> : null}
+      <ProgressBar progress={progress} />
       <FlatList<BuildingDeviceResponse>
         data={itemData || data}
         contentContainerStyle={{ flexGrow: 1 }}
