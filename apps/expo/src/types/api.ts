@@ -58,7 +58,8 @@ const exampleItems = [
         "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-co2-occupancy-scd41-m5coreink-firmware/installation",
     },
     precedes: [{ id: 2 }, { id: 3 }],
-    uploadschedule: [],
+    uploadschedule: "*/10 * * * *",
+    notificationThresholdDuration: "P2D",
   },
   {
     id: 2,
@@ -71,7 +72,8 @@ const exampleItems = [
       info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
     },
     precedes: [],
-    uploadschedule: [],
+    uploadschedule: "*/10 * * * *",
+    notificationThresholdDuration: "P2D",
   },
   {
     id: 3,
@@ -83,7 +85,8 @@ const exampleItems = [
       info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/enelogic/faq",
     },
     precedes: [],
-    uploadschedule: [],
+    uploadschedule: "0 0 * * *",
+    notificationThresholdDuration: "P2D",
   },
 ];
 
@@ -103,7 +106,8 @@ export type DataSourcesList = {
       info_url: string;
     };
     precedes: { id: number }[];
-    uploadschedule: string[];
+    uploadschedule: string;
+    notificationThresholdDuration: string;
   }[];
 };
 
@@ -147,7 +151,8 @@ export const accountSchema = z.object({
                     id: z.number(),
                   })
                 ),
-                uploadschedule: z.array(z.string()),
+                uploadschedule: z.string(),
+                notificationThresholdDuration: z.string(),
               })
             )
             .default(exampleItems),
@@ -241,6 +246,8 @@ export const buildingDeviceSchema = z.object({
   building_id: z.number(),
   activated_at: stringToDate.nullable(),
   latest_upload: stringToDate.nullable(),
+  upload_schedule: z.string().optional().nullable(),
+  notification_threshold_duration: z.string().optional().nullable(),
   device_type: deviceTypeSchema,
   typeCategory: z.string().nullable().optional(),
   connected: z.number().default(1),

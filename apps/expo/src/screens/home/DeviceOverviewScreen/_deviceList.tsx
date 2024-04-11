@@ -31,8 +31,29 @@ export default function DeviceList({
   const onSwipeBegin = useCallback(() => setScrollEnabled(false), []);
   const onSwipeEnd = useCallback(() => setScrollEnabled(true), []);
   const { user } = useContext(UserContext);
-
+  const [allItemsDone, setAllItemsDone] = useState(true);
   const connectedState: number[] = [];
+
+  function checkStatus(
+    dataSource: {
+      id: number;
+      type: { name: string };
+      item: { id: number; name: string; installation_manual_url: string; info_url: string };
+      precedes: { id: number }[];
+      uploadschedule: string;
+    },
+    oldSource: BuildingDeviceResponse
+  ) {
+    const activated_at = oldSource?.activated_at ?? null;
+    if (
+      (dataSource.type.name === "cloud_feed" &&
+        cloudFeedData?.find(item => item.cloud_feed.name === dataSource.item.name)?.connected) ||
+      !(activated_at === null)
+    ) {
+      return 2;
+    }
+    return 1;
+  }
 
   useEffect(() => {
     if (dataSourcesList) {
@@ -44,6 +65,7 @@ export default function DeviceList({
         const oldSource = data?.find(item => item.device_type.name === dataSource.item.name);
         const activated_at = oldSource?.activated_at ?? null;
         const latest_upload = oldSource?.latest_upload ?? null;
+        const upload_schedule = dataSource.uploadschedule;
 
         if (oldSource) {
           connectStatus = checkStatus(dataSource, oldSource);
@@ -84,8 +106,10 @@ export default function DeviceList({
           device_type: dataSource.item,
           activated_at,
           latest_upload,
+          upload_schedule,
           typeCategory: dataSource.type.name,
           connected: connectStatus,
+          notification_threshold_duration: dataSource.notificationThresholdDuration,
         };
         newData.push(newResponse);
       });
@@ -107,6 +131,27 @@ export default function DeviceList({
     }
   }, [refresh, refetch, onRefresh]);
 
+  useEffect(() => {
+    let itemDone = true;
+    itemData.forEach(source => {
+      if (source.connected !== 2) {
+        itemDone = false;
+      }
+    });
+
+    if (itemDone) {
+      setAllItemsDone(true);
+    } else {
+      setAllItemsDone(false);
+    }
+  }, [itemData]);
+
+  const refreshAfter20Seconds = () => {
+    setTimeout(() => {
+      refetch();
+    }, 20000); // 10000 milliseconds = 10 seconds
+  };
+
   let shouldLoad = true;
   if (!isLoading || Boolean(user)) {
     shouldLoad = false;
@@ -114,11 +159,6 @@ export default function DeviceList({
 
   if (shouldLoad) {
     return <StatusIndicator isLoading={shouldLoad} />;
-  }
-
-  if (refresh) {
-    refetch();
-    onRefresh();
   }
 
   if (isLoading || isFetching) {
@@ -138,6 +178,8 @@ export default function DeviceList({
               item,
               onSwipeBegin,
               onSwipeEnd,
+              allItemsDone,
+              refreshAfter20Seconds,
             }}
           />
         )}
@@ -150,25 +192,4 @@ export default function DeviceList({
       />
     </View>
   );
-
-  function checkStatus(
-    dataSource: {
-      id: number;
-      type: { name: string };
-      item: { id: number; name: string; installation_manual_url: string; info_url: string };
-      precedes: { id: number }[];
-      uploadschedule: string[];
-    },
-    oldSource: BuildingDeviceResponse
-  ) {
-    const activated_at = oldSource?.activated_at ?? null;
-    if (
-      (dataSource.type.name === "cloud_feed" &&
-        cloudFeedData?.find(item => item.cloud_feed.name === dataSource.item.name)?.connected) ||
-      !(activated_at === null)
-    ) {
-      return 2;
-    }
-    return 1;
-  }
 }
