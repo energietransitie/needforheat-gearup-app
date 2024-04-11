@@ -5,7 +5,8 @@ import { format } from "date-fns";
 import { enUS, nl } from "date-fns/locale";
 import { DateTime, Duration } from "luxon";
 import { useEffect, useState } from "react";
-import { ToastAndroid, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import * as Burnt from "burnt";
+import { Alert, Platform, ToastAndroid, TouchableHighlight, TouchableOpacity, View} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import TimeProgressBar from "./timeProgressBar";
@@ -53,7 +54,15 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   };
 
   const handleItemClick = () => {
+    if(Platform.OS === 'android') {
     ToastAndroid.show(t("screens.device_overview.toast_message"), ToastAndroid.SHORT);
+    } else {
+      Burnt.toast({
+        title: t("screens.device_overview.toast_title"),
+        message: t("screens.device_overview.toast_message"),
+        preset: "error",
+      });
+    }
   };
 
   const openManual = () => {
