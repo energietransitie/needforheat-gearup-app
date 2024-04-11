@@ -29,7 +29,8 @@
         },
         "reset_device": "Reset",
         "empty_collection": "No Data Sources List found for this Campaign",
-        "updating_now": "Now"
+        "updating_now": "Now",
+        "next_update": "Next in"
       },
       "building_list": {
         "placeholder": "Select a building",

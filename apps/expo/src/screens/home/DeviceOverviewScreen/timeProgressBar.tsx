@@ -16,6 +16,7 @@ const TimeProgressBar: React.FC<TimeProgressBarProps> = ({ progress, onTimePasse
   const [superLate, setSuperLate] = useState(false);
 
   useEffect(() => {
+    console.log("WE ARE IN HERE WITH " + elapsedTime + " AND " + totalTime);
     setRemainingTime(elapsedTime);
 
     if (remainingTime === totalTime && remainingTime === 0 && totalTime === 0) setTooLate(true);
@@ -25,7 +26,8 @@ const TimeProgressBar: React.FC<TimeProgressBarProps> = ({ progress, onTimePasse
     else setSuperLate(false);
 
     const intervalId = setInterval(() => {
-      if (remainingTime <= 0) {
+      console.log("WE ARE!!! " + elapsedTime + " AND " + totalTime)
+      if (remainingTime === totalTime && remainingTime === 0 && totalTime === 0) {
         setTooLate(true);
       } else {
         setTooLate(false);
@@ -41,23 +43,31 @@ const TimeProgressBar: React.FC<TimeProgressBarProps> = ({ progress, onTimePasse
   return (
     <View style={styles.container}>
       <View style={styles.progressBar}>
+        {/* Progress bar */}
         <View
           style={[
             styles.progress,
             superLate ? styles.superLateProgress : tooLate ? styles.tooLateProgress : null,
             { width: `${progressBarWidth}%`, height: tooLate || superLate ? 5 : 15 },
           ]}
-        >
-          {!tooLate && !superLate && (
-            <View style={styles.textWrapper}>
-              {remainingTime === 0 ? (
-                <Text style={styles.progressText}>{t("screens.device_overview.device_list.updating_now")}</Text>
-              ) : (
-                <Text style={styles.progressText}>{`${remainingTime}m`}</Text>
-              )}
-            </View>
-          )}
-        </View>
+        />
+
+        {/* Text or remaining time */}
+        {!tooLate && !superLate && (
+          <View style={[styles.textWrapper]}>
+            {remainingTime === 0 ? (
+              <Text style={[styles.progressText, progressBarWidth >= 50 && styles.textWrapperWhite]}>
+                {t("screens.device_overview.device_list.updating_now")}
+              </Text>
+            ) : (
+              <Text style={[styles.progressText, progressBarWidth >= 50 && styles.textWrapperWhite]}>
+                {t("screens.device_overview.device_list.next_update") + ` ${remainingTime}m`}
+              </Text>
+            )}
+          </View>
+        )}
+
+        {/* Remaining progress */}
         <View style={[styles.remainingProgress, { width: `${progressBarWidth}%` }]} />
       </View>
     </View>
@@ -75,29 +85,47 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     overflow: "hidden",
     alignItems: "center",
+    position: "relative", // Ensure positioning context
   },
   progressText: {
-    color: "white",
     fontWeight: "bold",
     fontSize: 10,
+    textAlign: "center",
+    zIndex: 2, // Ensure text is above remainingProgress
   },
   textWrapper: {
-    flex: 1,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
+    zIndex: 2, // Ensure text is above remainingProgress
+  },
+  textWrapperWhite: {
+    color: "white",
   },
   progress: {
     backgroundColor: "green",
+    zIndex: 1, // Ensure progress is below text and remainingProgress
   },
   tooLateProgress: {
     backgroundColor: "orange",
+    zIndex: 1, // Ensure tooLateProgress is below text and remainingProgress
   },
   superLateProgress: {
     backgroundColor: "red",
+    zIndex: 1, // Ensure superLateProgress is below text and remainingProgress
   },
   remainingProgress: {
     backgroundColor: "#ddd",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    zIndex: 0, // Behind progress and text
   },
 });
 
