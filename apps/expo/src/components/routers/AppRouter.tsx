@@ -1,18 +1,20 @@
-import useTranslation from "@/hooks/translation/useTranslation";
-import { UserContext } from "@/providers/UserProvider";
-import MeasurementsScreen from "@/screens/MeasurementsScreen";
-import { RootStackParamList } from "@/types/navigation";
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo from "@react-native-community/netinfo";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "@rneui/themed";
 import * as SplashScreen from "expo-splash-screen";
 import { useContext, useEffect, useState } from "react";
+import { Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+
 import HomeRouter from "./HomeRouter";
 import InfoRouter from "./InfoRouter";
 import SettingsRouter from "./SettingsRouter";
-import { Image } from "react-native";
 
+import useTranslation from "@/hooks/translation/useTranslation";
+import useUser from "@/hooks/user/useUser";
+import { UserContext } from "@/providers/UserProvider";
+import MeasurementsScreen from "@/screens/MeasurementsScreen";
+import { RootStackParamList } from "@/types/navigation";
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
 interface AppRouterProps {
@@ -22,14 +24,14 @@ interface AppRouterProps {
 export default function AppRouter({ fontsLoaded }: AppRouterProps) {
   const { t } = useTranslation();
   const { theme } = useTheme();
-  const { isAuthed } = useContext(UserContext);
+  const { isAuthed } = useUser();
 
   useEffect(() => {
     const checkSplash = async () => {
-      if (fontsLoaded && isAuthed) {
+      if (fontsLoaded) {
         await SplashScreen.hideAsync();
       }
-    }
+    };
     checkSplash().catch(console.error);
   }, [fontsLoaded, isAuthed]);
 
