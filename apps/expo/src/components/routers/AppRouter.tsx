@@ -32,6 +32,7 @@ export default function AppRouter({ fontsLoaded }: AppRouterProps) {
         await SplashScreen.hideAsync();
       }
     };
+
     checkSplash().catch(console.error);
   }, [fontsLoaded, isAuthed]);
 

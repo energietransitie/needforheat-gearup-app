@@ -44,7 +44,7 @@ export default function useUser() {
 
   return {
     user: user || storedUser,
-    isAuthed: Boolean(user?.activated_at),
+    isAuthed: Boolean((user && user.activated_at) || (storedUser)),
     isLoading: isFetching,
     refetch,
   };
