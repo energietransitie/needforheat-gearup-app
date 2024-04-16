@@ -88,6 +88,19 @@ const exampleItems = [
     uploadschedule: "0 0 * * *",
     notificationThresholdDuration: "P2D",
   },
+  {
+    id: 4,
+    type: { name: "energy_query_type" },
+    item: {
+      id: 1,
+      name: "weather_interpolation_location",
+      installation_manual_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/enelogic/installation",
+      info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/enelogic/faq",
+    },
+    precedes: [],
+    uploadschedule: "",
+    notificationThresholdDuration: "P2D",
+  },
 ];
 
 // POST: /account

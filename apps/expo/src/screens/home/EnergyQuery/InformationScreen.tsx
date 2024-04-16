@@ -1,43 +1,20 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, useTheme } from "@rneui/themed";
-import { useEffect, useState } from "react";
 
 import ManualContent from "@/components/common/ManualContent";
 import Box from "@/components/elements/Box";
-import { MANUAL_URL } from "@/constants";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { HomeStackParamList } from "@/types/navigation";
 
-type AddDeviceScreenProps = NativeStackScreenProps<HomeStackParamList, "AddDeviceScreen">;
+type InformationScreenProps = NativeStackScreenProps<HomeStackParamList, "InformationScreen">;
 
-export default function AddDeviceScreen({ navigation, route }: AddDeviceScreenProps) {
-  const { expectedDeviceName, device } = route.params;
+export default function InformationScreen({ navigation, route }: InformationScreenProps) {
+  const { device } = route.params;
   const { theme } = useTheme();
   const { t, resolvedLanguage } = useTranslation();
-  const [fetchedData, setFetchedData] = useState(null);
-  const ComleteUrl = MANUAL_URL + device.name;
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch(ComleteUrl);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const fetchedData = await response.json();
-      setFetchedData(fetchedData);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (ComleteUrl) {
-      fetchData();
-    }
-  }, []);
 
   const onAddDevice = () => {
-    navigation.navigate("QrScannerScreen");
+    navigation.navigate("HomeSelectScreen");
   };
 
   const onCancel = () => navigation.navigate("HomeScreen");

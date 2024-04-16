@@ -1,12 +1,12 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Button, ListItem, makeStyles, useTheme } from "@rneui/themed";
+import * as Burnt from "burnt";
 import cronParser from "cron-parser";
 import { format } from "date-fns";
 import { enUS, nl } from "date-fns/locale";
 import { DateTime, Duration } from "luxon";
 import { useEffect, useState } from "react";
-import * as Burnt from "burnt";
-import { Alert, Platform, ToastAndroid, TouchableHighlight, TouchableOpacity, View} from "react-native";
+import { Platform, ToastAndroid, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import TimeProgressBar from "./timeProgressBar";
@@ -54,8 +54,8 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   };
 
   const handleItemClick = () => {
-    if(Platform.OS === 'android') {
-    ToastAndroid.show(t("screens.device_overview.toast_message"), ToastAndroid.SHORT);
+    if (Platform.OS === "android") {
+      ToastAndroid.show(t("screens.device_overview.toast_message"), ToastAndroid.SHORT);
     } else {
       Burnt.toast({
         title: t("screens.device_overview.toast_title"),
@@ -70,6 +70,10 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
       navigate("AddDeviceScreen", { device: item.device_type });
     } else if (item.typeCategory === "cloud_feed") {
       navigate("AddOnlineDataSourceScreen");
+    } else if (item.typeCategory === "energy_query_type") {
+      if (item.name === "weather_interpolation_location") {
+        navigate("InformationScreen", { device: item.device_type });
+      }
     }
   };
 

@@ -104,5 +104,6 @@ We use and gratefully acknowlegde the efforts of the makers of the following sou
 - [React Native Bottom Sheet](https://github.com/gorhom/react-native-bottom-sheet), by Mo Gorhom, licensed under [MIT](https://github.com/gorhom/react-native-bottom-sheet/blob/master/LICENSE)
 - [React Native Network Info](https://github.com/react-native-netinfo/react-native-netinfo), by react-native-netinfo, licensed under [MIT](https://github.com/react-native-netinfo/react-native-netinfo/blob/master/LICENSE)
 - [cron-parser](https://github.com/harrisiirak/cron-parser/), by Harri Siirak, licensed under [MIT license](https://github.com/harrisiirak/cron-parser/blob/master/LICENSE)
+- [React Native Maps](https://github.com/react-native-maps/react-native-maps), by Airbnb, licensed under [MIT](https://github.com/react-native-maps/react-native-maps/blob/master/LICENSE)
 
 This `README` uses [badges](https://github.com/badges/shields/blob/master/LICENSE), by [Shield.io](https://github.com/badges), licensed under [CC0 v1.0 Universal](https://github.com/badges/shields/blob/master/LICENSE)

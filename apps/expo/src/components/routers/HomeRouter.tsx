@@ -1,20 +1,22 @@
+import { HeaderBackButton } from "@react-navigation/elements";
+import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator, NativeStackNavigationOptions } from "@react-navigation/native-stack";
+import { Platform } from "react-native";
+
 import useTranslation from "@/hooks/translation/useTranslation";
 import ActivateDeviceScreen from "@/screens/home/ActivateDeviceScreen";
 import AddDeviceScreen from "@/screens/home/AddDeviceScreen";
-import DeviceOverviewScreen from "@/screens/home/DeviceOverviewScreen";
+import AddOnlineDataSourceScreen from "@/screens/home/AddOnlineDataSourceScreen";
 import AlreadyInvitedScreen from "@/screens/home/AlreadyInvitedScreen";
 import ConnectScreen from "@/screens/home/ConnectScreen";
+import InformationScreen from "@/screens/home/EnergyQuery/InformationScreen";
 import HomeScreen from "@/screens/home/HomeScreen";
 import ProvisionScreen from "@/screens/home/ProvisionScreen";
 import QrScannerScreen from "@/screens/home/QrScannerScreen";
 import SearchDeviceScreen from "@/screens/home/SearchDeviceScreen";
 import WifiOverviewScreen from "@/screens/home/WifiOverviewScreen";
 import { HomeStackParamList } from "@/types/navigation";
-import { useNavigation } from "@react-navigation/native";
-import { HeaderBackButton } from '@react-navigation/elements'
-import { Platform } from "react-native";
-import AddOnlineDataSourceScreen from "@/screens/home/AddOnlineDataSourceScreen";
+import HomeSelectScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/HomeSelectScreen";
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -74,18 +76,19 @@ export default function HomeRouter() {
         options={{
           title: t("screens.home_stack.wifi_overview.title"),
           ...disableNavigation,
-          headerLeft: Platform.OS === 'ios' ? (
-            () => (
-              <HeaderBackButton
-                labelVisible={true}
-                onPress={() => {
-                  navigation.goBack();
-                  navigation.goBack();
-                  navigation.goBack();
-                }}
-              />
-            )
-          ) : undefined,
+          headerLeft:
+            Platform.OS === "ios"
+              ? () => (
+                  <HeaderBackButton
+                    labelVisible
+                    onPress={() => {
+                      navigation.goBack();
+                      navigation.goBack();
+                      navigation.goBack();
+                    }}
+                  />
+                )
+              : undefined,
         }}
         component={WifiOverviewScreen}
       />
@@ -103,6 +106,18 @@ export default function HomeRouter() {
           title: t("screens.home_stack.provision.enelogic"),
         }}
         component={AddOnlineDataSourceScreen}
+      />
+
+      {/* EnergyQuery */}
+      <HomeStack.Screen
+        name="InformationScreen"
+        options={{ title: t("screens.home_stack.add_device.title"), ...disableNavigation }}
+        component={InformationScreen}
+      />
+      <HomeStack.Screen
+        name="HomeSelectScreen"
+        options={{ title: t("screens.home_stack.add_device.title"), ...disableNavigation }}
+        component={HomeSelectScreen}
       />
     </HomeStack.Navigator>
   );
