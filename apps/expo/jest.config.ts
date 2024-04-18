@@ -8,7 +8,10 @@ const config: Config = {
   preset: "react-native",
   testPathIgnorePatterns: ["<rootDir>/node_modules", "<rootDir>/dist"],
   setupFilesAfterEnv: ["./jest-setup.js"],
-  transformIgnorePatterns: ["<rootDir>/../../node_modules/(?!(@react-native|react-native|@rneui/base)/)"],
+  transformIgnorePatterns: [
+    "<rootDir>/../../node_modules/(?!(@react-native|react-native|@rneui/base)/)",
+    "<rootDir>/../../node_modules/(?!(@react-native|react-native|react-native-vector-icons)/)",
+  ],
   testMatch: ["**/__test__/**/*.tsx", "**/?(*.)+(spec|test).tsx"],
   globals: {
     __DEV__: true,
