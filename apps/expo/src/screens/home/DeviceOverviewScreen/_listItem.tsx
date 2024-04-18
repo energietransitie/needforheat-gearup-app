@@ -1,12 +1,12 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Button, ListItem, makeStyles, useTheme } from "@rneui/themed";
+import * as Burnt from "burnt";
 import cronParser from "cron-parser";
 import { format } from "date-fns";
 import { enUS, nl } from "date-fns/locale";
 import { DateTime, Duration } from "luxon";
 import { useEffect, useState } from "react";
-import * as Burnt from "burnt";
-import { Alert, Platform, ToastAndroid, TouchableHighlight, TouchableOpacity, View} from "react-native";
+import { Platform, ToastAndroid, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import TimeProgressBar from "./timeProgressBar";
@@ -46,16 +46,39 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     "nl-NL": nl,
   };
 
+  const getNormalName = (): string => {
+    let name = "";
+
+    if (data?.["nl-NL"] && resolvedLanguage === "nl-NL") {
+      name = capitalizeFirstLetter(data["nl-NL"]) || name;
+    }
+
+    if (!name && data?.["en-US"] && resolvedLanguage === "en-US") {
+      name = capitalizeFirstLetter(data["en-US"]) || name;
+    }
+
+    if (!name && item.device_type?.name) {
+      name = capitalizeFirstLetter(item.device_type.name) || name;
+    }
+
+    return name;
+  };
+
   const onReset = (close: () => void) => {
     if (item.typeCategory === "device_type") {
-      navigate("QrScannerScreen", { expectedDeviceName: item.name, device_TypeName: item.name });
+      navigate("QrScannerScreen", {
+        expectedDeviceName: item.name,
+        device_TypeName: item.name,
+        dataSourceType: item.device_type,
+        normalName: getNormalName(),
+      });
     }
     close();
   };
 
   const handleItemClick = () => {
-    if(Platform.OS === 'android') {
-    ToastAndroid.show(t("screens.device_overview.toast_message"), ToastAndroid.SHORT);
+    if (Platform.OS === "android") {
+      ToastAndroid.show(t("screens.device_overview.toast_message"), ToastAndroid.SHORT);
     } else {
       Burnt.toast({
         title: t("screens.device_overview.toast_title"),
@@ -67,7 +90,12 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
 
   const openManual = () => {
     if (item.typeCategory === "device_type") {
-      navigate("AddDeviceScreen", { device: item.device_type });
+      navigate("QrScannerScreen", {
+        expectedDeviceName: undefined,
+        device_TypeName: undefined,
+        dataSourceType: item.device_type,
+        normalName: getNormalName(),
+      });
     } else if (item.typeCategory === "cloud_feed") {
       navigate("AddOnlineDataSourceScreen");
     }
@@ -285,13 +313,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
               </>
             ) : null}
 
-            {resolvedLanguage === "nl-NL"
-              ? data?.["nl-NL"]
-                ? " " + capitalizeFirstLetter(data["nl-NL"])
-                : ""
-              : data?.["en-US"]
-              ? " " + capitalizeFirstLetter(data["en-US"])
-              : ""}
+            {" " + getNormalName()}
           </ListItem.Title>
           {item.connected === 2 ? (
             <ListItem.Subtitle>

@@ -1,8 +1,9 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, Text, useTheme } from "@rneui/themed";
-import { useEffect, useState } from "react";
-import { enUS, nl } from 'date-fns/locale';
-import { format } from 'date-fns';
+import { format } from "date-fns";
+import { enUS, nl } from "date-fns/locale";
+import { useEffect } from "react";
+
 import DelayedButton from "@/components/common/DelayedButton";
 import Timeline from "@/components/common/Timeline";
 import Box from "@/components/elements/Box";
@@ -17,7 +18,7 @@ type ProvisionScreenProps = NativeStackScreenProps<HomeStackParamList, "Provisio
 
 export default function ProvisionScreen({ navigation, route }: ProvisionScreenProps) {
   const { theme } = useTheme();
-  const { device, network, password, proofOfPossession, device_TypeName } = route.params;
+  const { device, network, password, proofOfPossession, device_TypeName, normalName } = route.params;
   const { t, resolvedLanguage } = useTranslation();
   const {
     provisionDevice,
@@ -43,14 +44,14 @@ export default function ProvisionScreen({ navigation, route }: ProvisionScreenPr
     {
       title: t("screens.home_stack.provision.timeline.steps.connecting.title"),
       description: t("screens.home_stack.provision.timeline.steps.connecting.description", {
-        device_name: device_TypeName,
+        device_name: normalName,
       }),
       finished: true,
     },
     {
       title: t("screens.home_stack.provision.timeline.steps.activating.title"),
       description: t("screens.home_stack.provision.timeline.steps.activating.description", {
-        device_name: device_TypeName,
+        device_name: normalName,
       }),
       finished: true,
     },
@@ -66,7 +67,7 @@ export default function ProvisionScreen({ navigation, route }: ProvisionScreenPr
     {
       title: t("screens.home_stack.provision.timeline.steps.receiving.title"),
       description: t("screens.home_stack.provision.timeline.steps.receiving.description", {
-        device_name: device_TypeName,
+        device_name: normalName,
       }),
       finished: isReceivingMeasurements,
       loading: isReceivingMeasurementsLoading,
@@ -81,23 +82,23 @@ export default function ProvisionScreen({ navigation, route }: ProvisionScreenPr
       deviceName: device.deviceName,
       proofOfPossession,
       device_TypeName,
+      normalName,
     });
   };
 
   const locales: Record<string, Locale> = {
-    'en-US': enUS,
-    'nl-NL': nl,
+    "en-US": enUS,
+    "nl-NL": nl,
   };
-
 
   function formatDateAndTime(date?: Date) {
     const inputDate = date || new Date();
     const locale = locales[resolvedLanguage] || enUS;
 
-    let formatString = 'cccccc, LLL d, yyy HH:mm';
+    let formatString = "cccccc, LLL d, yyy HH:mm";
 
-    if (resolvedLanguage === 'nl-NL') {
-      formatString = 'cccccc d LLL yyy HH:mm';
+    if (resolvedLanguage === "nl-NL") {
+      formatString = "cccccc d LLL yyy HH:mm";
     }
 
     return format(inputDate, formatString, { locale });
