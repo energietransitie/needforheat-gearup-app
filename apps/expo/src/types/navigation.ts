@@ -13,19 +13,35 @@ export type RootStackParamList = {
 export type HomeStackParamList = {
   HomeScreen: undefined;
   AlreadyInvitedScreen: undefined;
-  QrScannerScreen: { expectedDeviceName: string, device_TypeName: any } | undefined;
-  AddDeviceScreen: { expectedDeviceName?: string | undefined, device: DataSourceItemType };
+  QrScannerScreen: {
+    expectedDeviceName: string | undefined;
+    device_TypeName: any;
+    dataSourceType: DataSourceItemType;
+    normalName: string;
+  };
+  AddDeviceScreen: {
+    qrData: SensorQrCode;
+    expectedDeviceName?: string | undefined;
+    device: DataSourceItemType;
+    normalName: string;
+  };
   AddOnlineDataSourceScreen: undefined;
-  SearchDeviceScreen: { deviceName: string; proofOfPossession: string; device_TypeName: any };
-  ActivateDeviceScreen: { qrData: SensorQrCode, device_TypeName: any };
-  ConnectScreen: { device: BleDeviceType; proofOfPossession: string; device_TypeName: any };
-  WifiOverviewScreen: { device: BleDeviceType; proofOfPossession: string; device_TypeName: any };
+  SearchDeviceScreen: { deviceName: string; proofOfPossession: string; device_TypeName: any; normalName: string };
+  ActivateDeviceScreen: {
+    qrData: SensorQrCode;
+    device_TypeName: any;
+    dataSourceType: DataSourceItemType;
+    normalName: string;
+  };
+  ConnectScreen: { device: BleDeviceType; proofOfPossession: string; device_TypeName: any; normalName: string };
+  WifiOverviewScreen: { device: BleDeviceType; proofOfPossession: string; device_TypeName: any; normalName: string };
   ProvisionScreen: {
     device: BleDeviceType;
     network: WifiEntry;
     proofOfPossession: string;
     password?: string;
-    device_TypeName: any
+    device_TypeName: any;
+    normalName: string;
   };
   DeviceOverviewScreen: undefined;
 };
