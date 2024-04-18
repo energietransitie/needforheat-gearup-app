@@ -12,6 +12,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { openSettings } from "expo-linking";
 import usePreciseLocationPermission from "@/hooks/location/usePreciseLocationPermission";
 import Geolocation, { GeolocationResponse } from "@react-native-community/geolocation";
+import HomeSelectExplanationBottomSheet from "./_HomeSelectExplanationBottomSheet";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 type HomeSelectScreenProps = NativeStackScreenProps<HomeStackParamList, "HomeSelectScreen">;
 
@@ -20,6 +22,7 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
   const { t } = useTranslation();
   const style = useStyles();
   const refMap = useRef<MapView>(null);
+  const refExplanationSheet = useRef<BottomSheetModal>(null);
   const [userLocationReceivedOnce, setUserLocationReceiveOnce] = useState(false);
   const [location, setLocation] = useState<UserLocation>({
     latitude: 52.501076707906,
@@ -86,7 +89,7 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
   const onPressMyLocation = async () => {
     if (await checkPreciseLocationPermission()) {
       Geolocation.getCurrentPosition((pos) => succes(pos))
-      const succes = (position : GeolocationResponse) => {
+      const succes = (position: GeolocationResponse) => {
         if (position) {
           setLocation({ longitude: position.coords.longitude, latitude: position.coords.latitude, longitudeDelta: location.longitude, latitudeDelta: location.latitudeDelta });
           refMap.current?.animateToRegion({ longitude: position.coords.longitude, latitude: position.coords.latitude, longitudeDelta: 0.0008, latitudeDelta: 0.0008 }, 20)
@@ -102,57 +105,59 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
     setLocation(newRegion)
   }
 
-  const handleUserLocationChangeOne = (latitude: number | undefined, longitude: number | undefined) => {
-    if (userLocationReceivedOnce) return;
-    if (latitude && longitude) {
-      refMap.current?.animateToRegion({ latitude: latitude, longitude: longitude, longitudeDelta: location.longitudeDelta, latitudeDelta: location.latitudeDelta })
-      setUserLocationReceiveOnce(true)
-    }
-  }
-
+  useEffect(() => {
+    refExplanationSheet.current?.present()
+  }, [])
   return (
-    <Box padded style={{ flex: 1 }}>
-      <View style={style.mapcontainer}>
-        <MapView
-          ref={refMap}
-          showsUserLocation={true}
-          showsMyLocationButton={true}
-          showsBuildings={true}
-          showsScale={true}
-          pitchEnabled={false}
-          style={style.map}
-          onRegionChangeComplete={handleRegionChangeCompleted}
-        >
-        </MapView>
-        <View pointerEvents="none">
-          <Icon name="location-pin" color="red" size={40} style={{ marginBottom: 30 }} />
-        </View>
-        <View style={style.myLocation}>
-          <TouchableOpacity onPress={onPressMyLocation}>
-            <Icon name="my-location" color="black" size={40} />
-          </TouchableOpacity>
-        </View>
-        <View style={style.help}>
-          <TouchableOpacity>
-            <Icon name="help-outline" color="black" size={40} />
-          </TouchableOpacity>
-        </View>
+    <>
+      <Box padded style={{ flex: 1 }}>
+        <View style={style.mapcontainer}>
+          <MapView
+            ref={refMap}
+            showsUserLocation={true}
+            showsMyLocationButton={true}
+            showsBuildings={true}
+            showsScale={true}
+            pitchEnabled={false}
+            style={style.map}
+            onRegionChangeComplete={handleRegionChangeCompleted}
+          >
+          </MapView>
+          <View pointerEvents="none">
+            <Icon name="location-pin" color="red" size={40} style={{ marginBottom: 30 }} />
+          </View>
+          <View style={style.myLocation}>
+            <TouchableOpacity onPress={onPressMyLocation}>
+              <Icon name="my-location" color="black" size={40} />
+            </TouchableOpacity>
+          </View>
+          <View style={style.help}>
+            <TouchableOpacity onPress={() => { refExplanationSheet.current?.present() }}>
+              <Icon name="help-outline" color="black" size={40} />
+            </TouchableOpacity>
+          </View>
 
-      </View>
-      <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
-        <Button
-          containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
-          title={t("common.connect")}
-          color="primary"
-          onPress={onAddDevice}
-          icon={{
-            name: "wifi-outline",
-            type: "ionicon",
-            color: theme.colors.white,
-          }}
-        />
+        </View>
+        <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
+          <Button
+            containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
+            title={t("common.connect")}
+            color="primary"
+            onPress={onAddDevice}
+            icon={{
+              name: "wifi-outline",
+              type: "ionicon",
+              color: theme.colors.white,
+            }}
+          />
+        </Box>
       </Box>
-    </Box>
+      <View style={{marginBottom: -50}}>
+      <HomeSelectExplanationBottomSheet
+        bottomSheetRef={refExplanationSheet}
+      />
+      </View>
+    </>
   );
 }
 
