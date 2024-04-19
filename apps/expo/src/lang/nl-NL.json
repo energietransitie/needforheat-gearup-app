@@ -53,7 +53,8 @@
         "alert": {
           "unknown_error": "Er is een fout opgetreden bij het activeren van het apparaat.",
           "no_building": "Uw account is niet gekoppeld aan een gebouw.",
-          "already_activated": "Dit meetapparaatje is al geactiveerd op een ander account."
+          "already_activated": "Dit meetapparaatje is al geactiveerd op een ander account.",
+          "mismatched_device_name": "Er is een verkeerd apparaat gescand. Probeer het opnieuw met het juiste apparaat."
         }
       },
       "already_invited": {

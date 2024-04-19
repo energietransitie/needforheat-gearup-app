@@ -52,7 +52,8 @@
         "alert": {
           "unknown_error": "An error occurred while activating the device.",
           "no_building": "Your account is not associated with a building.",
-          "already_activated": "This measurement device was already activated on another account."
+          "already_activated": "This measurement device was already activated on another account.",
+          "mismatched_device_name": "The wrong device has been scanned. Please try again with the correct device."
         }
       },
       "already_invited": {
