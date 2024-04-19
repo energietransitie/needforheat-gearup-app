@@ -11,6 +11,7 @@ const config: Config = {
   transformIgnorePatterns: [
     "<rootDir>/../../node_modules/(?!(@react-native|react-native|@rneui/base)/)",
     "<rootDir>/../../node_modules/(?!(@react-native|react-native|react-native-vector-icons)/)",
+    "<rootDir>/../../node_modules/(?!(@react-native|react-native|react-native-gesture-handler)/)",
   ],
   testMatch: ["**/__test__/**/*.tsx", "**/?(*.)+(spec|test).tsx"],
   globals: {

@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ThemeProvider } from "@rneui/themed";
-import { render, screen, waitFor } from "@testing-library/react-native";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react-native";
 import React, { ReactNode } from "react";
 
 import { theme } from "@/lib/theme";
@@ -81,6 +81,20 @@ describe("DeviceListItem", () => {
     });
   });
 
+  // Test rendering of last seen information when device is connected
+  it("renders last seen information when device is connected", async () => {
+    const { getByText } = render(
+      <MockNavigationContainer>
+        <DeviceListItem {...mockProps} />
+      </MockNavigationContainer>
+    );
+
+    await waitFor(() => {
+      const expectedLastSeenText = "screens.device_overview.device_list.device_info.last_seen";
+      expect(getByText(expectedLastSeenText)).toBeTruthy();
+    });
+  });
+  
   afterEach(() => {
     jest.restoreAllMocks();
   });

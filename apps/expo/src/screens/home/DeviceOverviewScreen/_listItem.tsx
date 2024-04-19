@@ -232,6 +232,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   return (
     <>
       <ListItem.Swipeable
+        testID="device-list-item"
         onPress={() => {
           if (item.connected === 1) {
             handleItemClick();
