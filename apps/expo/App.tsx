@@ -53,6 +53,7 @@ export default function App() {
     RobotoBold: require("./assets/fonts/Roboto-Bold.ttf"),
     RobotoBlack: require("./assets/fonts/Roboto-Black.ttf"),
   });
+
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener(state => {
       setNetworkConnected(Boolean(state.isInternetReachable));
