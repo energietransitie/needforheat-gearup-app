@@ -30,7 +30,9 @@
         "reset_device": "Reset",
         "empty_collection": "No Data Sources List found for this Campaign",
         "updating_now": "Now",
-        "next_update": "Next in"
+        "next_update": "Next in",
+        "hours": "h"
+
       },
       "building_list": {
         "placeholder": "Select a building",

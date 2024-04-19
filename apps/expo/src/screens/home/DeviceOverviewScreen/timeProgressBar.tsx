@@ -39,6 +39,19 @@ const TimeProgressBar: React.FC<TimeProgressBarProps> = ({ progress, onTimePasse
 
   const progressPercentage = (remainingTime / totalTime) * 100;
 
+  //formattime hours and minutes
+  const formatTime = (time: number) => {
+    if (time >= 60) {
+      const hours = Math.floor(time / 60);
+      const minutes = time % 60;
+      return minutes === 0
+        ? hours + t("screens.device_overview.device_list.hours")
+        : hours + t("screens.device_overview.device_list.hours") + " " + minutes + "m";
+    } else {
+      return time + "m";
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Svg width="50%" height="50%" viewBox="0 0 42 42">
@@ -56,7 +69,7 @@ const TimeProgressBar: React.FC<TimeProgressBarProps> = ({ progress, onTimePasse
         />
       </Svg>
       <Text style={styles.progressText}>
-        {remainingTime === 0 ? t("screens.device_overview.device_list.updating_now") : ` ${remainingTime}m`}
+        {remainingTime === 0 ? t("screens.device_overview.device_list.updating_now") : formatTime(remainingTime)}
       </Text>
     </View>
   );
@@ -74,7 +87,7 @@ const styles = StyleSheet.create({
   },
   progressText: {
     position: "absolute",
-    fontSize: 10,
+    fontSize: 8,
     textAlign: "center",
     zIndex: 2,
   },
