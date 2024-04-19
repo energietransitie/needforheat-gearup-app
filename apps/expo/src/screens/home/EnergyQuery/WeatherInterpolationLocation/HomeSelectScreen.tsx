@@ -23,7 +23,6 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
   const style = useStyles();
   const refMap = useRef<MapView>(null);
   const refExplanationSheet = useRef<BottomSheetModal>(null);
-  const [userLocationReceivedOnce, setUserLocationReceiveOnce] = useState(false);
   const [location, setLocation] = useState<UserLocation>({
     latitude: 52.501076707906,
     longitude: 6.079587294142308,
@@ -31,7 +30,7 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
     longitudeDelta: 0.0008
   });
 
-  const onAddDevice = () => {
+  const onContinue= () => {
     navigation.navigate("HomeScreen");
   };
 
@@ -58,22 +57,20 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
 
     return new Promise((resolve, reject) => {
       if (!permission) {
-        const title = t("screens.home_stack.qr_scanner.camera.alert.title");
-        const message = t("screens.home_stack.qr_scanner.camera.alert.message");
+        const title = t("screens.home_stack.energy_query.location_permission.alert.title");
+        const message = t("screens.home_stack.energy_query.location_permission.alert.message");
 
         Alert.alert(title, message, [
           {
-            text: t("screens.home_stack.qr_scanner.camera.alert.button"),
+            text: t("screens.home_stack.energy_query.location_permission.alert.button"),
             onPress: async () => {
               try {
-                console.log("?")
                 await requestPreciseLocationPermission();
                 resolve(null);
                 setHasPermission(await checkPreciseLocationPermission());
               } catch (err: unknown) {
-                console.log("o")
                 const errorMsg =
-                  err instanceof Error ? err.message : t("screens.home_stack.qr_scanner.errors.camera_request_failed");
+                  err instanceof Error ? err.message : t("screens.home_stack.energy_query.location_permission.errors.request_failed");
                 onRequestPreciseLocationError(errorMsg);
                 reject(err);
               }
@@ -141,21 +138,21 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
         <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
           <Button
             containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
-            title={t("common.connect")}
+            title={t("screens.home_stack.energy_query.homeselect_screen.button")}
             color="primary"
-            onPress={onAddDevice}
+            onPress={onContinue}
             icon={{
-              name: "wifi-outline",
+              name: "location-outline",
               type: "ionicon",
               color: theme.colors.white,
             }}
           />
         </Box>
       </Box>
-      <View style={{marginBottom: -50}}>
-      <HomeSelectExplanationBottomSheet
-        bottomSheetRef={refExplanationSheet}
-      />
+      <View style={{ marginBottom: -50 }}>
+        <HomeSelectExplanationBottomSheet
+          bottomSheetRef={refExplanationSheet}
+        />
       </View>
     </>
   );

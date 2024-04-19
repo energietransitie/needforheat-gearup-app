@@ -111,12 +111,12 @@ export default function HomeRouter() {
       {/* EnergyQuery */}
       <HomeStack.Screen
         name="InformationScreen"
-        options={{ title: t("screens.home_stack.add_device.title"), ...disableNavigation }}
+        options={{ title: t("screens.home_stack.energy_query.information_screen.title"), ...disableNavigation }}
         component={InformationScreen}
       />
       <HomeStack.Screen
         name="HomeSelectScreen"
-        options={{ title: t("screens.home_stack.add_device.title"), ...disableNavigation }}
+        options={{ title: t("screens.home_stack.energy_query.homeselect_screen.title"), ...disableNavigation }}
         component={HomeSelectScreen}
       />
     </HomeStack.Navigator>

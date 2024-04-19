@@ -9,7 +9,7 @@ type HomeSelectExplanationBottomSheetProps = {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
 };
 
-export default function HomeSelectExplanationBottomSheet({bottomSheetRef}: HomeSelectExplanationBottomSheetProps) {
+export default function HomeSelectExplanationBottomSheet({ bottomSheetRef }: HomeSelectExplanationBottomSheetProps) {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const style = useStyles();
@@ -17,13 +17,13 @@ export default function HomeSelectExplanationBottomSheet({bottomSheetRef}: HomeS
   return (
     <View style={style.container}>
       <BottomSheetModal
-      ref={bottomSheetRef}
-      snapPoints={["60%", "100%"]}
-      enablePanDownToClose
-      backdropComponent={props => <BottomSheetBackdrop {...props} pressBehavior="close" disappearsOnIndex={-1}/>}
+        ref={bottomSheetRef}
+        snapPoints={["60%", "100%"]}
+        enablePanDownToClose
+        backdropComponent={props => <BottomSheetBackdrop {...props} pressBehavior="close" disappearsOnIndex={-1} />}
       >
         <BottomSheetView style={style.contentContainer}>
-          <Text>Lorum Ipsum</Text>
+          <Text style={style.title}>Lorum Ipsum</Text>
           <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque finibus, libero ac ullamcorper ornare, lectus nisi fermentum libero, vel efficitur. </Text>
         </BottomSheetView>
       </BottomSheetModal>
@@ -41,4 +41,8 @@ const useStyles = makeStyles(theme => ({
     flex: 1,
     alignItems: 'center',
   },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 20,
+  }
 }));

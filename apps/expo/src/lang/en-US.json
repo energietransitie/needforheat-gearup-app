@@ -229,6 +229,27 @@
             }
           }
         }
+      },
+      "energy_query": {
+        "information_screen": {
+          "title": "EnergyQuery Information",
+          "button": "Execute!"
+        },
+        "homeselect_screen": {
+          "title": "Select your Home",
+          "button": "Use this location!"
+        },
+        "location_permission": {
+          "alert": {
+            "title": "Locatie Permission",
+            "message": "This app uses GPS to get your location.\n\nDo you want to grant this permission?",
+            "button": "Sure, ask away!",
+            "enable_button": "Grant Location permission"
+          },
+          "errors": {
+            "request_failed": "An error occurred while requesting Location permissions."
+          }
+        }
       }
     },
     "info_stack": {

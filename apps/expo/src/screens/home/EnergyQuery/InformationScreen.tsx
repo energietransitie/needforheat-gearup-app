@@ -13,7 +13,7 @@ export default function InformationScreen({ navigation, route }: InformationScre
   const { theme } = useTheme();
   const { t, resolvedLanguage } = useTranslation();
 
-  const onAddDevice = () => {
+  const onExecuteQuery = () => {
     navigation.navigate("HomeSelectScreen");
   };
 
@@ -36,11 +36,11 @@ export default function InformationScreen({ navigation, route }: InformationScre
         />
         <Button
           containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
-          title={t("common.connect")}
+          title={t("screens.home_stack.energy_query.information_screen.button")}
           color="primary"
-          onPress={onAddDevice}
+          onPress={onExecuteQuery}
           icon={{
-            name: "wifi-outline",
+            name: "flash-outline",
             type: "ionicon",
             color: theme.colors.white,
           }}

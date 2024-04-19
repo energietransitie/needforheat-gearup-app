@@ -230,151 +230,172 @@
             }
           }
         }
-      }
-    },
-    "info_stack": {
-      "title": "Info",
-      "info": {
-        "title": "Info",
-        "unsuported_url_alert": {
-          "title": "Niet-ondersteunde URL",
-          "message": "De URL {{url}} word niet ondersteund."
-        },
-        "campaign": "Campagne"
       },
-      "about": {
-        "title": "Over deze app"
-      },
-      "faq": {
-        "title": "Veelgestelde vragen"
-      },
-      "privacy": {
-        "title": "Privacyverklaring"
-      }
-    },
-    "settings_stack": {
-      "title": "Instellingen",
-      "settings_screen": {
-        "title": "Instellingen",
-        "app_language": "Taal selecteren",
-        "wifi_passwords": {
-          "title": "Opgeslagen wifiwachtwoorden verwijderen",
-          "message": "Weet u het zeker? Na het verwijderen van de opgeslagen wifiwachtwoorden uit deze app zult u bij het koppelen van een nieuw meetapparaatje het wifiwachtwoord opnieuw moeten intypen.",
-          "toast": "wifiwachtwoorden succesvol verwijderd"
+      "energy_query": {
+        "information_screen": {
+          "title": "EnergyQuery Informatie",
+          "button": "Uitvoeren!"
         },
-        "session_token": {
-          "title": "Sessie-token resetten",
-          "message": "Weet u het zeker? Dit is een debug-voorziening. Na de reset moet u de app heractiveren met een persoonlijke activatielink.",
-          "toast": "Sessie-token succesvol verwijderd"
+        "homeselect_screen": {
+          "title": "Selecteer uw woning",
+          "button": "Deze locatie gebruiken!"
         },
-        "app_info": "App versie: {{version}} | Build: {{build}}",
-        "external_providers": "Verbind online databronnen"
-      },
-      "external_provider_screen": {
-        "title": "Online databronnen",
-        "state": {
-          "not_connected": "Verbind",
-          "connected": "Verbonden"
-        },
-        "description": {
-          "not_connected": "Verbinden met {{name}}",
-          "connected": "Verbonden met {{name}}"
+        "location_permission": {
+          "alert": {
+            "title": "Locatie machtiging",
+            "message": "Deze app maakt gebruik van uw GPS om uw locatie op te halen.\n\nWilt u deze machtiging verlenen?",
+            "button": "Oké, vraag maar!",
+            "enable_button": "Machtiging locatie verlenen"
+          },
+          "errors": {
+            "request_failed": "Een fout is opgetreden bij het aanvragen van de locatie-machtigingen."
+          }
         }
       }
-    }
-  },
-  "hooks": {
-    "property_translation": {
-      "heartbeat": "Hartslag",
-      "batteryVoltage": "Batterijspanning (V)",
-      "booted_fw": "Opgestarte firmware",
-      "countPresence": "Aanwezigheidsteller",
-      "CO2concentration": "CO₂-concentratie",
-      "roomTemp": "Kamertemperatuur",
-      "relativeHumidity": "Relatieve luchtvochtigheid (%)",
-      "e_use_lo_cum__kWh": "Cumulatief energieverbruik (Laag) (kWh)",
-      "e_use_hi_cum__kWh": "Cumulatief energieverbruik (Hoog) (kWh)",
-      "e_ret_lo_cum__kWh": "Cumulatief energieteruglevering (Laag) (kWh)",
-      "e_ret_hi_cum__kWh": "Cumulatief energieteruglevering (Hoog) (kWh)",
-      "g_use_cum__m3": "Cumulatief gasverbruik (m³)",
-      "battery_voltage__V": "Batterijspanning (V)",
-      "occupancy__p": "Aantal personen aanwezig",
-      "co2__ppm": "CO₂-concentratie (ppm)",
-      "temp_in__degC": "Temperatuur (˚C)",
-      "rel_humidity__0": "Relatieve luchtvochtigheid (%)",
-      "onboarded__p": "Aantal personen aan boord",
-      "dsmr_version__0": "DSMR Versie",
-      "meter_code__str": "Metercode",
-      "e_ret_cum__kWh": "Cumulatief energieteruglevering (kWh)",
-      "e_use_cum__kWh": "Cumulatief energieverbruik (kWh)"
-    },
-    "bluetooth_permission": {
-      "not_granted_ios": "Bluetooth-machtigingen zijn niet verleend.\nZorg ervoor dat de app Bluetooth-machtigingen heeft en probeer opnieuw.",
-      "not_granted_android": "Zorg ervoor dat Bluetooth aanstaat en dat u machtigingen geeft voor Locatie en Apparaten in de Buurt.\n U kunt dit doen via instellingen."
-    },
-    "camera_permission": {
-      "not_granted_ios": "Camera-machtigingen zijn niet verleend.\nZorg ervoor dat de app Camera-machtigingen heeft en probeer opnieuw.",
-      "not_granted_android": "Zorg ervoor dat Camera aanstaat.\nU kunt dit doen via instellingen."
-    },
-    "external_links": {
-      "not_supported": "Uw smartphone biedt geen ondersteuning voor het openen van externe links.",
-      "confirmation": {
-        "title": "Externe link openen",
-        "description": "U staat op het punt een link buiten de applicatie te openen. Wil je doorgaan?\n\nURL: {{url}}",
-        "confirm": "Open"
-      }
-    }
-  },
-  "providers": {
-    "user_provider": {
-      "activate": {
-        "title": "Account activeren",
-        "message": "Even geduld terwijl uw account geactiveerd wordt."
       },
-      "activate_success": {
-        "title": "Account geactiveerd",
-        "message": "Uw account is succesvol geactiveerd."
+      "info_stack": {
+        "title": "Info",
+        "info": {
+          "title": "Info",
+          "unsuported_url_alert": {
+            "title": "Niet-ondersteunde URL",
+            "message": "De URL {{url}} word niet ondersteund."
+          },
+          "campaign": "Campagne"
+        },
+        "about": {
+          "title": "Over deze app"
+        },
+        "faq": {
+          "title": "Veelgestelde vragen"
+        },
+        "privacy": {
+          "title": "Privacyverklaring"
+        }
       },
-      "activate_error": {
-        "title": "Accountactivatiefout",
-        "message": "De activatielink is ongeldig."
+      "settings_stack": {
+        "title": "Instellingen",
+        "settings_screen": {
+          "title": "Instellingen",
+          "app_language": "Taal selecteren",
+          "wifi_passwords": {
+            "title": "Opgeslagen wifiwachtwoorden verwijderen",
+            "message": "Weet u het zeker? Na het verwijderen van de opgeslagen wifiwachtwoorden uit deze app zult u bij het koppelen van een nieuw meetapparaatje het wifiwachtwoord opnieuw moeten intypen.",
+            "toast": "wifiwachtwoorden succesvol verwijderd"
+          },
+          "session_token": {
+            "title": "Sessie-token resetten",
+            "message": "Weet u het zeker? Dit is een debug-voorziening. Na de reset moet u de app heractiveren met een persoonlijke activatielink.",
+            "toast": "Sessie-token succesvol verwijderd"
+          },
+          "app_info": "App versie: {{version}} | Build: {{build}}",
+          "external_providers": "Verbind online databronnen"
+        },
+        "external_provider_screen": {
+          "title": "Online databronnen",
+          "state": {
+            "not_connected": "Verbind",
+            "connected": "Verbonden"
+          },
+          "description": {
+            "not_connected": "Verbinden met {{name}}",
+            "connected": "Verbonden met {{name}}"
+          }
+        }
       }
-    }
-  },
-  "components": {
-    "wifi_network_list": {
-      "empty_collection": "Geen wifinetwerken gevonden."
     },
-    "manual_content": {
-      "loading": "Handleiding laden...",
-      "error": "De handleiding kon niet worden geladen. Neem contact op met de maker van het meetapparaatje voor meer informatie of ga verder op eigen risico."
+    "hooks": {
+      "property_translation": {
+        "heartbeat": "Hartslag",
+        "batteryVoltage": "Batterijspanning (V)",
+        "booted_fw": "Opgestarte firmware",
+        "countPresence": "Aanwezigheidsteller",
+        "CO2concentration": "CO₂-concentratie",
+        "roomTemp": "Kamertemperatuur",
+        "relativeHumidity": "Relatieve luchtvochtigheid (%)",
+        "e_use_lo_cum__kWh": "Cumulatief energieverbruik (Laag) (kWh)",
+        "e_use_hi_cum__kWh": "Cumulatief energieverbruik (Hoog) (kWh)",
+        "e_ret_lo_cum__kWh": "Cumulatief energieteruglevering (Laag) (kWh)",
+        "e_ret_hi_cum__kWh": "Cumulatief energieteruglevering (Hoog) (kWh)",
+        "g_use_cum__m3": "Cumulatief gasverbruik (m³)",
+        "battery_voltage__V": "Batterijspanning (V)",
+        "occupancy__p": "Aantal personen aanwezig",
+        "co2__ppm": "CO₂-concentratie (ppm)",
+        "temp_in__degC": "Temperatuur (˚C)",
+        "rel_humidity__0": "Relatieve luchtvochtigheid (%)",
+        "onboarded__p": "Aantal personen aan boord",
+        "dsmr_version__0": "DSMR Versie",
+        "meter_code__str": "Metercode",
+        "e_ret_cum__kWh": "Cumulatief energieteruglevering (kWh)",
+        "e_use_cum__kWh": "Cumulatief energieverbruik (kWh)"
+      },
+      "bluetooth_permission": {
+        "not_granted_ios": "Bluetooth-machtigingen zijn niet verleend.\nZorg ervoor dat de app Bluetooth-machtigingen heeft en probeer opnieuw.",
+        "not_granted_android": "Zorg ervoor dat Bluetooth aanstaat en dat u machtigingen geeft voor Locatie en Apparaten in de Buurt.\n U kunt dit doen via instellingen."
+      },
+      "camera_permission": {
+        "not_granted_ios": "Camera-machtigingen zijn niet verleend.\nZorg ervoor dat de app Camera-machtigingen heeft en probeer opnieuw.",
+        "not_granted_android": "Zorg ervoor dat Camera aanstaat.\nU kunt dit doen via instellingen."
+      },
+      "external_links": {
+        "not_supported": "Uw smartphone biedt geen ondersteuning voor het openen van externe links.",
+        "confirmation": {
+          "title": "Externe link openen",
+          "description": "U staat op het punt een link buiten de applicatie te openen. Wil je doorgaan?\n\nURL: {{url}}",
+          "confirm": "Open"
+        }
+      }
     },
-    "status_indicator": {
-      "loading": "Aan het laden...",
-      "error": "Er is een fout opgetreden."
-    }
-  },
-  "common": {
-    "cancel": "Annuleren",
-    "delete": "Verwijderen",
-    "reset": "Reset",
-    "add": "Toevoegen",
-    "connect": "Verbinden",
-    "no": "Nee",
-    "yes": "Ja",
-    "retry": "Opnieuw proberen",
-    "back_to_home": "Terug naar home",
-    "go_back": "Ga terug",
-    "password": "Wachtwoord",
-    "error": "Fout",
-    "unknown_error": "Er is een onbekende fout opgetreden.",
-    "units": {
-      "seconds": "seconden",
-      "minutes": "minuten",
-      "hours": "uren",
-      "days": "dagen",
-      "months": "maanden",
-      "years": "jaren"
+    "providers": {
+      "user_provider": {
+        "activate": {
+          "title": "Account activeren",
+          "message": "Even geduld terwijl uw account geactiveerd wordt."
+        },
+        "activate_success": {
+          "title": "Account geactiveerd",
+          "message": "Uw account is succesvol geactiveerd."
+        },
+        "activate_error": {
+          "title": "Accountactivatiefout",
+          "message": "De activatielink is ongeldig."
+        }
+      }
+    },
+    "components": {
+      "wifi_network_list": {
+        "empty_collection": "Geen wifinetwerken gevonden."
+      },
+      "manual_content": {
+        "loading": "Handleiding laden...",
+        "error": "De handleiding kon niet worden geladen. Neem contact op met de maker van het meetapparaatje voor meer informatie of ga verder op eigen risico."
+      },
+      "status_indicator": {
+        "loading": "Aan het laden...",
+        "error": "Er is een fout opgetreden."
+      }
+    },
+    "common": {
+      "cancel": "Annuleren",
+      "delete": "Verwijderen",
+      "reset": "Reset",
+      "add": "Toevoegen",
+      "connect": "Verbinden",
+      "no": "Nee",
+      "yes": "Ja",
+      "retry": "Opnieuw proberen",
+      "back_to_home": "Terug naar home",
+      "go_back": "Ga terug",
+      "password": "Wachtwoord",
+      "error": "Fout",
+      "unknown_error": "Er is een onbekende fout opgetreden.",
+      "units": {
+        "seconds": "seconden",
+        "minutes": "minuten",
+        "hours": "uren",
+        "days": "dagen",
+        "months": "maanden",
+        "years": "jaren"
+      }
     }
   }
-}
