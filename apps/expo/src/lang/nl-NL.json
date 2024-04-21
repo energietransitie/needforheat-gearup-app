@@ -342,6 +342,13 @@
       }
     }
   },
+  "notifications": {
+    "ticker": "DataSource Offline",
+    "bigText": "Een of meer van uw DataSources hebben langdurig niet geupload en hun status is nu ROOD.\nGraag onderzoeken!",
+    "subText": "NeedForHeat DataSources",
+    "title": "DataSource Waarschuwing",
+    "message": "Een of meer van uw DataSources hebben langdurig niet geupload en hun status is nu ROOD.\nGraag onderzoeken!"
+  },
   "components": {
     "wifi_network_list": {
       "empty_collection": "Geen wifinetwerken gevonden."

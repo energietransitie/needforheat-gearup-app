@@ -11,18 +11,16 @@ export default function NotificationProvider({ children }: PropsWithChildren<unk
   }, []);
 
   const configureBackgroundFetch = async () => {
-    // Configure background fetch
     BackgroundFetch.configure(
       {
-        minimumFetchInterval: 1, // Minimum interval in minutes (Android-only)
-        stopOnTerminate: false, // Continue background task even if app terminated (Android-only)
-        startOnBoot: true, // Start background task on device boot (Android-only)
-        enableHeadless: true, // Enable headless JS task (Android-only)
-        requiredNetworkType: BackgroundFetch.NETWORK_TYPE_ANY, // Network connection type (Android-only)
-        requiresBatteryNotLow: false, // Battery requirements (Android-only)
-        requiresCharging: false, // Charging requirements (Android-only)
-        requiresDeviceIdle: false, // Idle device requirements (Android-only)
-        requiresStorageNotLow: false, // Storage requirements (Android-only)
+        minimumFetchInterval: 60,
+        stopOnTerminate: false,
+        startOnBoot: true,
+        enableHeadless: true,
+        requiresBatteryNotLow: false,
+        requiresCharging: false,
+        requiresDeviceIdle: false,
+        requiresStorageNotLow: false,
       },
 
       async taskId => {
@@ -30,7 +28,6 @@ export default function NotificationProvider({ children }: PropsWithChildren<unk
 
         try {
           checkDataSources();
-          console.log(`[BackgroundFetch] Task finished:${taskId} at ${Date.now().toLocaleString()}`);
         } catch (error) {
           console.error("Error in background task:", error);
         }
@@ -42,7 +39,6 @@ export default function NotificationProvider({ children }: PropsWithChildren<unk
       }
     );
 
-    // Start background fetch
     BackgroundFetch.start();
   };
 

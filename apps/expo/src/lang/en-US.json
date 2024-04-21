@@ -340,6 +340,13 @@
       }
     }
   },
+  "notifications": {
+    "ticker": "DataSource Offline",
+    "bigText": "One or more of your DataSources hasn't been uploading for an extended period and its status is now RED.\nPlease investigate!",
+    "subText": "NeedForHeat DataSources",
+    "title": "DataSource Alert",
+    "message": "One or more of your DataSources hasn't been uploading for an extended period and its status is now RED.\nPlease investigate!"
+  },
   "components": {
     "wifi_network_list": {
       "empty_collection": "No Wi-Fi networks found."

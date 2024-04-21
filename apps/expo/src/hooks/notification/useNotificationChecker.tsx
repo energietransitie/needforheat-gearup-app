@@ -1,18 +1,16 @@
 import * as SecureStore from "expo-secure-store";
 import PushNotification from "react-native-push-notification";
 
-import useCloudFeeds from "../cloud-feed/useCloudFeeds";
-import useDevices from "../device/useDevices";
-import useUser from "../user/useUser";
+import useTranslation from "../translation/useTranslation";
 
+import { fetchCloudFeeds } from "@/api/account";
+import { fetchDevices } from "@/api/device";
+import { fetchUser } from "@/api/user";
 import { checkMissedUpload, processDataSource } from "@/utils/tools";
 
+//TODO test on iOS
 export default function useSuperLateDataSourceNotifier() {
-  const { user } = useUser();
-  const buildingId = user?.buildings[0]?.id;
-  const dataSourceList = user?.campaign.data_sources_list;
-  const { data } = useDevices(buildingId ? buildingId : -1); //No issue, there should be an internet connection anyway
-  const { data: cloudFeedData } = useCloudFeeds();
+  const { t } = useTranslation();
 
   const NOTIFICATION_HOUR_START = 22; // Start of silent hours (10 PM)
   const NOTIFICATION_HOUR_END = 7; // End of silent hours (7 AM)
@@ -34,9 +32,16 @@ export default function useSuperLateDataSourceNotifier() {
     console.log("Running background task to fetch devices, check status, and send notification...");
     let sendNotification = false;
     let badgeCounter = 0;
+
+    const user = await fetchUser();
+    const buildingID = user?.buildings[0].id ? user?.buildings[0].id : -1;
+    const data = await fetchDevices(buildingID);
+    const cloudFeedData = await fetchCloudFeeds();
+    const dataSourceList = user?.campaign.data_sources_list;
+
     dataSourceList?.items.forEach(dataSource => {
-      if (!buildingId) return;
-      const processedDataSource = processDataSource(dataSource, data, cloudFeedData, dataSourceList, buildingId);
+      if (!buildingID) return;
+      const processedDataSource = processDataSource(dataSource, data, cloudFeedData, dataSourceList, buildingID);
       if (checkMissedUpload(processedDataSource) === -2) {
         sendNotification = true;
         badgeCounter += 1;
@@ -56,45 +61,42 @@ export default function useSuperLateDataSourceNotifier() {
       const shouldSend = await shouldSendNotification();
       if (!shouldSend) {
         console.log("Notification already sent today.");
+        PushNotification.setApplicationIconBadgeNumber(badgeCounter);
         return;
       }
 
       PushNotification.localNotification({
         channelId: "777",
-        ticker: "A DataSource is offline for too long",
-        largeIcon: "ic_launcher", // (optional) default: "ic_launcher". Use "" for no large icon.
-        largeIconUrl: "./assets/Logo-WH-social-groen-800px.png", // (optional) default: undefined
-        smallIcon: "ic_notification", // (optional) default: "ic_notification" with fallback for "ic_launcher". Use "" for default small icon.
-        bigText:
-          "A DataSource has not been uploading in a long whie and its status has turned RED.\nPlease investigate!", // (optional) default: "message" prop
-        subText: "DataSource Warning", // (optional) default: none
-        bigPictureUrl: "./assets/Logo-WH-social-groen-800px.png", // (optional) default: undefined
-        bigLargeIcon: "ic_launcher", // (optional) default: undefined
-        bigLargeIconUrl: "./assets/Logo-WH-social-groen-800px.png", // (optional) default: undefined
-        color: "#ee3135", // (optional) default: system default
-        vibrate: silentNotification, // (optional) default: true
-        vibration: 300, // vibration length in milliseconds, ignored if vibrate=false, default: 1000
-        tag: "WindesheimTag", // (optional) add tag to message
-        group: "WindesheimGroup", // (optional) add group to message
-        groupSummary: false, // (optional) set this notification to be the group summary for a group of notifications, default: false
-        ongoing: false, // (optional) set whether this is an "ongoing" notification
-        priority: "high", // (optional) set notification priority, default: high
-        ignoreInForeground: false, // (optional) if true, the notification will not be visible when the app is in the foreground (useful for parity with how iOS notifications appear). should be used in combine with `com.dieam.reactnativepushnotification.notification_foreground` setting
-        onlyAlertOnce: true, // (optional) alert will open only once with sound and notify, default: false
+        ticker: t("notifications.ticker"),
+        largeIcon: "ic_launcher",
+        largeIconUrl: "./assets/Logo-WH-social-groen-800px.png",
+        smallIcon: "ic_notification",
+        bigText: t("notifications.bigText"),
+        subText: t("notifications.subText"),
+        bigPictureUrl: "./assets/Logo-WH-social-groen-800px.png",
+        bigLargeIcon: "ic_launcher",
+        bigLargeIconUrl: "./assets/Logo-WH-social-groen-800px.png",
+        color: "#ee3135",
+        vibrate: silentNotification,
+        vibration: 300,
+        tag: "WindesheimTag",
+        group: "WindesheimGroup",
+        ongoing: false,
+        ignoreInForeground: false,
+        onlyAlertOnce: true,
 
-        when: Date.now(), // (optional) Add a timestamp (Unix timestamp value in milliseconds) pertaining to the notification (usually the time the event occurred). For apps targeting Build.VERSION_CODES.N and above, this time is not shown anymore by default and must be opted into by using `showWhen`, default: null.
+        when: Date.now(),
         showWhen: true,
 
         /* iOS only properties */
-        category: "WindesheimCategory", // (optional) default: empty string
+        category: "Windesheim",
 
         /* iOS and Android properties */
-        title: "DataSource Warning", // (optional)
-        message:
-          "A DataSource has not been uploading in a long whie and its status has turned RED.\nPlease investigate!", // (required)
-        picture: "https://www.example.tld/picture.jpg", // (optional) Display an picture with the notification, alias of `bigPictureUrl` for Android. default: undefined
-        playSound: silentNotification, // (optional) default: true
-        number: badgeCounter, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
+        title: t("notifications.title"),
+        message: t("notifications.message"),
+        picture: "./assets/Logo-WH-social-groen-800px.png",
+        playSound: silentNotification,
+        number: badgeCounter,
       });
 
       await saveNotificationSentToday();

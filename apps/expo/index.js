@@ -1,9 +1,8 @@
 //import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { registerRootComponent } from "expo";
-import PushNotification, { Importance } from "react-native-push-notification";
+import PushNotification from "react-native-push-notification";
 
 import App from "./App";
-
 PushNotification.configure({
   onRegister(token) {
     console.log("TOKEN:", token);
@@ -37,11 +36,8 @@ PushNotification.configure({
 PushNotification.createChannel(
   {
     channelId: "777", // (required), every ASCII in NFH starts with 7
-    channelName: "NeedForheat", // (required)
+    channelName: "NeedForHeat", // (required)
     channelDescription: "Notifications for DataSources",
-    playSound: true, // (optional) default: true
-    importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-    vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
   },
   created => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
 );

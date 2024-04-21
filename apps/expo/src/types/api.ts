@@ -59,7 +59,7 @@ const exampleItems = [
     },
     precedes: [{ id: 2 }, { id: 3 }],
     uploadschedule: "*/10 * * * *",
-    notificationThresholdDuration: "P2D",
+    notificationThresholdDuration: "P1D",
   },
   {
     id: 2,
@@ -73,7 +73,7 @@ const exampleItems = [
     },
     precedes: [],
     uploadschedule: "*/10 * * * *",
-    notificationThresholdDuration: "P2D",
+    notificationThresholdDuration: "P1D",
   },
   {
     id: 3,
