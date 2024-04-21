@@ -263,6 +263,9 @@
           "message": "Weet u het zeker? Na het verwijderen van de opgeslagen wifiwachtwoorden uit deze app zult u bij het koppelen van een nieuw meetapparaatje het wifiwachtwoord opnieuw moeten intypen.",
           "toast": "wifiwachtwoorden succesvol verwijderd"
         },
+        "notifications": {
+          "title": "Open melding instellingen"
+        },
         "session_token": {
           "title": "Sessie-token resetten",
           "message": "Weet u het zeker? Dit is een debug-voorziening. Na de reset moet u de app heractiveren met een persoonlijke activatielink.",
@@ -347,7 +350,13 @@
     "bigText": "Een of meer van uw DataSources hebben langdurig niet geupload en hun status is nu ROOD.\nGraag onderzoeken!",
     "subText": "NeedForHeat DataSources",
     "title": "DataSource Waarschuwing",
-    "message": "Een of meer van uw DataSources hebben langdurig niet geupload en hun status is nu ROOD.\nGraag onderzoeken!"
+    "message": "Een of meer van uw DataSources hebben langdurig niet geupload en hun status is nu ROOD.\nGraag onderzoeken!",
+    "alert": {
+      "title": "Melding machtiging",
+      "message": "Deze app stuurt meldingen om u te informeren als een DataSource langduring niet upload.\n\nWilt u deze machtiging verlenen?",
+      "button": "Oké, vraag maar!",
+      "enable_button": "Machtiging melding verlenen"
+    }
   },
   "components": {
     "wifi_network_list": {

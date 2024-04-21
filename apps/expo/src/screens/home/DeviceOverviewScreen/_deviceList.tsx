@@ -1,6 +1,6 @@
 import { t } from "i18next";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { Alert, FlatList, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 
 import DeviceListItem from "./_listItem";
@@ -9,6 +9,7 @@ import ProgressBar from "./progressBar";
 import StatusIndicator from "@/components/common/StatusIndicator";
 import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
 import useDevices from "@/hooks/device/useDevices";
+import useNotificationPermission from "@/hooks/useNotificationPermission/useNotificationPermission";
 import { UserContext } from "@/providers/UserProvider";
 import { BuildingDeviceResponse, DataSourcesList } from "@/types/api";
 import { processDataSource } from "@/utils/tools";
@@ -34,6 +35,7 @@ export default function DeviceList({
   const { user } = useContext(UserContext);
   const [allItemsDone, setAllItemsDone] = useState(true);
   const connectedState: number[] = [];
+  const { requestNotificationPermission } = useNotificationPermission();
 
   useEffect(() => {
     if (dataSourcesList) {
@@ -51,6 +53,9 @@ export default function DeviceList({
         }
       });
 
+      if (connectedCount > 0) {
+        requestNotificationPermission();
+      }
       setItemData(newData);
 
       const progressString = `${connectedCount}/${dataSourcesList.items.length}`;
