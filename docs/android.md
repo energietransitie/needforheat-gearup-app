@@ -83,7 +83,7 @@ yarn workspace app dev
 The app gets built to the `apps\expo\android\app\build\outputs\apk` folder in either the `debug` or `release` folder.
 
 ### 4.1. Installing the app
-You can then use the following ADB command from the [platform-tools](https://developer.android.com/tools/adb) to install the release APK to ***all*** ADB-connected devices:
+You can then use the following ADB command from the [platform-tools](https://developer.android.com/tools/adb) to install the release APK to ADB-connected devices:
 
 ```bash
 adb install app-release.apk 
