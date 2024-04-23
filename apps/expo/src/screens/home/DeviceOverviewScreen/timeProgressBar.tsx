@@ -37,7 +37,8 @@ const TimeProgressBar: React.FC<TimeProgressBarProps> = ({ progress, onTimePasse
     return () => clearInterval(intervalId);
   }, [progress]);
 
-  const progressPercentage = (remainingTime / totalTime) * 100;
+  let progressPercentage = (remainingTime / totalTime) * 100;
+  if(remainingTime === totalTime && remainingTime === 0 && totalTime === 0) progressPercentage = 100;
 
   //formattime hours and minutes
   const formatTime = (time: number) => {
