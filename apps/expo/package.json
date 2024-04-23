@@ -14,7 +14,9 @@
     "release:android:build": "cd android && ./gradlew app:assembleRelease",
     "release:android:install": "cd android/app/build/outputs/apk/release && adb install app-release.apk",
     "dev:android:build": "cd android && ./gradlew app:assembleRelease",
-    "dev:android:install": "cd android/app/build/outputs/apk/debug && adb install app-debug.apk "
+    "dev:android:install": "cd android/app/build/outputs/apk/debug && adb install app-debug.apk",
+    "ios:pod:annihilate": "cd ios && pod cache clean --all && pod deintegrate",
+    "ios:pod:install": "cd ios && pod install"
   },
   "dependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
