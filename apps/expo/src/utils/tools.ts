@@ -25,7 +25,7 @@ export function readableDateTime(date: Maybe<string | Date>, language: string) {
   }
 
   // Convert 'date' parameter to a Date object if it is a string
-  const dateObject = typeof date === 'string' ? new Date(date) : date;
+  const dateObject = typeof date === "string" ? new Date(date) : date;
 
   if (isNaN(dateObject.getTime())) {
     // Invalid Date object, return an empty string or an error message
@@ -33,12 +33,12 @@ export function readableDateTime(date: Maybe<string | Date>, language: string) {
   }
 
   const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'short',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false // Use 24-hour format
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false, // Use 24-hour format
   };
 
   return dateObject.toLocaleString(language, options);

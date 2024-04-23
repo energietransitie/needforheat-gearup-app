@@ -8,6 +8,7 @@ export default function useReceivingMeasurements(deviceName: string, retries = 1
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [latestMeasurement, setLatestMeasurement] = useState<Maybe<Date>>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [openedTimestamp, setOpenedTimestamp] = useState<Date>(new Date());
 
   useEffect(() => {

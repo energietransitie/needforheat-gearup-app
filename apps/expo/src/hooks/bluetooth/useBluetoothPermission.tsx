@@ -23,7 +23,7 @@ export default function useBluetoothPermission() {
     // Request permissions if not granted
     const requestStatusses = await requestMultiple(BLUETOOTH_PERMISSIONS);
     if (Object.values(requestStatusses).some(status => status !== "granted")) {
-      if (Platform.OS == "ios") {
+      if (Platform.OS === "ios") {
         throw new Error(t("hooks.bluetooth_permission.not_granted_ios"));
       } else {
         throw new Error(t("hooks.bluetooth_permission.not_granted_android"));

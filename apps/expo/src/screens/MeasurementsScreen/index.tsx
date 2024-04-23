@@ -4,14 +4,16 @@ import { Text, makeStyles } from "@rneui/themed";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ScrollView, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { MANUAL_URL } from "@/constants";
+
 import DeviceGraph from "./_deviceGraph";
-import PropertyBottomSheet from "@/components/common/bottomSheets/PropertyBottomSheet";
+
 import StatusIndicator from "@/components/common/StatusIndicator";
 import BuildingBottomSheet from "@/components/common/bottomSheets/BuildingBottomSheet";
 import DeviceBottomSheet from "@/components/common/bottomSheets/DeviceBottomSheet";
+import PropertyBottomSheet from "@/components/common/bottomSheets/PropertyBottomSheet";
 import Box from "@/components/elements/Box";
 import Screen from "@/components/elements/Screen";
+import { MANUAL_URL } from "@/constants";
 import useDevices from "@/hooks/device/useDevices";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
@@ -35,9 +37,8 @@ export default function MeasurementsScreen() {
 
   const [displayName, setDisplayName] = useState<string | null>(null);
 
-  const [deviceId, setDeviceId] = useState<number>();
   const hasMultipleDevices = (devices?.length ?? 0) > 1;
-  const CompleteURL = devices && devices.length > 0 ? MANUAL_URL + devices[0].device_type.name : '';
+  const CompleteURL = devices && devices.length > 0 ? MANUAL_URL + devices[0].data_source.item.name : "";
   const deviceDropdownDisabled = !buildingId || !hasMultipleDevices;
 
   const [property, setProperty] = useState<DeviceProperty | undefined>();
@@ -45,7 +46,6 @@ export default function MeasurementsScreen() {
   useEffect(() => {
     if (devices?.length) {
       setDeviceIdentifierName(devices[0].name);
-      setDeviceId(devices[0].id);
     }
   }, [devices]);
 
@@ -86,7 +86,7 @@ export default function MeasurementsScreen() {
             style={{
               ...styles.dropdown,
               ...(deviceDropdownDisabled ? { opacity: 0.5 } : null),
-              marginBottom: 2 
+              marginBottom: 2,
             }}
             onPress={() => deviceBottomSheetRef.current?.present()}
           >
@@ -99,12 +99,13 @@ export default function MeasurementsScreen() {
           </TouchableOpacity>
           <TouchableOpacity
             disabled={deviceDropdownDisabled}
-            style={[styles.dropdown, deviceDropdownDisabled ? { opacity: 0.5 } : null,]}
+            style={[styles.dropdown, deviceDropdownDisabled ? { opacity: 0.5 } : null]}
             onPress={() => propertyBottomSheetRef.current?.present()}
           >
-            <Text style={{ fontStyle: 'italic' }}>
+            <Text style={{ fontStyle: "italic" }}>
               {property !== undefined
-                ? t(`hooks.property_translation.${property.name}`, { defaultValue: property.name }) : null}
+                ? t(`hooks.property_translation.${property.name}`, { defaultValue: property.name })
+                : null}
             </Text>
             <Icon name="chevron-down" size={16} />
           </TouchableOpacity>
@@ -129,7 +130,6 @@ export default function MeasurementsScreen() {
             deviceName={deviceIdentifierName}
             onDeviceIdentifier={setDisplayName}
             onDisplayName={setDeviceIdentifierName}
-            onDeviceId={setDeviceId}
           />
 
           {buildingId && deviceIdentifierName ? (
@@ -142,7 +142,6 @@ export default function MeasurementsScreen() {
               />
             </>
           ) : null}
-
         </Box>
       </ScrollView>
     </Screen>
@@ -156,7 +155,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
     paddingHorizontal: theme.spacing.lg,
     paddingVertical: theme.spacing.sm,
-    backgroundColor: '#ebebeb', 
+    backgroundColor: "#ebebeb",
     borderRadius: 8,
   },
 }));
