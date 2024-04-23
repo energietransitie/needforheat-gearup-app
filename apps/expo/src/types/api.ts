@@ -11,8 +11,6 @@ export const validationErrorSchema = z.object({
 export const deviceTypeSchema = z.object({
   id: z.number(),
   name: z.string(),
-  installation_manual_url: z.string(),
-  info_url: z.string(),
 });
 
 export type DeviceTypeResponse = z.infer<typeof deviceTypeSchema>;
@@ -44,79 +42,31 @@ export const deviceMeasurementSchema = z.array(deviceMeasurement);
 
 export type deviceMeasurementsResponse = z.infer<typeof deviceMeasurementSchema>;
 
-//TODO: TEMPORARY HARDOCODE, AWAIT API UPDATE. BASED ON TST SERVER ITEMS
-const exampleItems = [
-  {
-    id: 1,
-    type: { name: "device_type" },
-    item: {
-      id: 1,
-      name: "twomes-co2-occupancy-scd41-m5coreink-firmware",
-      installation_manual_url:
-        "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-co2-occupancy-scd41-m5coreink-firmware/installation",
-      info_url:
-        "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-co2-occupancy-scd41-m5coreink-firmware/installation",
-    },
-    precedes: [{ id: 2 }, { id: 3 }],
-    uploadschedule: "*/10 * * * *",
-    notificationThresholdDuration: "P2D",
-  },
-  {
-    id: 2,
-    type: { name: "device_type" },
-    item: {
-      id: 2,
-      name: "twomes-p1-reader-firmware",
-      installation_manual_url:
-        "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
-      info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
-    },
-    precedes: [],
-    uploadschedule: "*/10 * * * *",
-    notificationThresholdDuration: "P2D",
-  },
-  {
-    id: 3,
-    type: { name: "cloud_feed" },
-    item: {
-      id: 3,
-      name: "enelogic",
-      installation_manual_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/enelogic/installation",
-      info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/enelogic/faq",
-    },
-    precedes: [],
-    uploadschedule: "0 0 * * *",
-    notificationThresholdDuration: "P2D",
-  },
-];
-
 // POST: /account
-//TODO: TEMPORARY HARDOCODE, AWAIT API UPDATE THEN REMOVE THE DEFAULTS, OPTIONAL AND NULLABLE
-export type DataSourcesList = {
-  description: string;
-  items: {
-    id: number;
-    type: {
-      name: string;
-    };
-    item: {
-      id: number;
-      name: string;
-      installation_manual_url: string;
-      info_url: string;
-    };
-    precedes: { id: number }[];
-    uploadschedule: string;
-    notificationThresholdDuration: string;
-  }[];
-};
+//DataSourceList
+export const dataSourceType = z.object({
+  id: z.number(),
+  category: z.string(),
+  item: deviceTypeSchema,
+  order: z.number(),
+  installation_manual_url: z.string(),
+  FAQ_url: z.string(),
+  info_url: z.string(),
+  precedes: z.array(z.object({ id: z.number() })),
+  uploadschedule: z.string(),
+  notificationThresholdDuration: z.string(),
+});
 
-export type DataSourceItemType = {
-  id: number;
-  name: string;
-  installation_manual_url: string;
-  info_url: string;
-};
+export type DataSourceType = z.infer<typeof dataSourceType>;
+
+export const dataSourceList = z.object({
+  id: z.number(),
+  name: z.string(),
+  items: z.array(dataSourceType),
+});
+
+export type DataSourceList = z.infer<typeof dataSourceList>;
+// Datasourcelist End
 
 export const accountSchema = z.object({
   id: z.number(),
@@ -126,46 +76,11 @@ export const accountSchema = z.object({
       id: z.number(),
     })
   ),
-  campaign: z
-    .object({
-      name: z.string(),
-      info_url: z.string(),
-      data_sources_list: z
-        .object({
-          description: z.string().default("Hardcoded Data sources list"),
-          items: z
-            .array(
-              z.object({
-                id: z.number(),
-                type: z.object({
-                  name: z.string(),
-                }),
-                item: z.object({
-                  id: z.number(),
-                  name: z.string(),
-                  installation_manual_url: z.string(),
-                  info_url: z.string(),
-                }),
-                precedes: z.array(
-                  z.object({
-                    id: z.number(),
-                  })
-                ),
-                uploadschedule: z.string(),
-                notificationThresholdDuration: z.string(),
-              })
-            )
-            .default(exampleItems),
-        })
-        .optional()
-        .nullable()
-        .default({ description: "Hardcoded Data sources list", items: exampleItems }),
-    })
-    .default({
-      name: "",
-      info_url: "",
-      data_sources_list: { description: "Hardcoded Data sources list", items: exampleItems },
-    }),
+  campaign: z.object({
+    name: z.string(),
+    info_url: z.string(),
+    data_source_list: dataSourceList,
+  }),
 });
 
 export type AccountResponse = z.infer<typeof accountSchema>;
@@ -177,8 +92,8 @@ export const activateAccountSchema = z.object({
 
 export type ActivateAccountResponse = z.infer<typeof activateAccountSchema>;
 
-export const cloudFeed = z.object({
-  cloud_feed: z.object({
+export const cloudFeedType = z.object({
+  cloud_feed_type: z.object({
     id: z.number(),
     name: z.string(),
     authorization_url: z.string(),
@@ -190,10 +105,10 @@ export const cloudFeed = z.object({
   connected: z.boolean(),
 });
 
-export type CloudFeed = z.infer<typeof cloudFeed>;
+export type CloudFeedType = z.infer<typeof cloudFeedType>;
 
 // GET: /account/{id}/cloud_feed_auth
-export const cloudFeedSchema = z.array(cloudFeed);
+export const cloudFeedSchema = z.array(cloudFeedType);
 
 export type cloudFeedsResponse = z.infer<typeof cloudFeedSchema>;
 
@@ -214,7 +129,7 @@ export const deviceSchema = z.object({
   name: z.string(),
   device_type: deviceTypeSchema.merge(
     z.object({
-      properties: z.array(z.object({ id: z.number(), name: z.string(), unit: z.string() })),
+      properties: z.array(z.object({ id: z.number(), name: z.string() })),
     })
   ),
   activation_token: z.string(),
@@ -246,10 +161,7 @@ export const buildingDeviceSchema = z.object({
   building_id: z.number(),
   activated_at: stringToDate.nullable(),
   latest_upload: stringToDate.nullable(),
-  upload_schedule: z.string().optional().nullable(),
-  notification_threshold_duration: z.string().optional().nullable(),
-  device_type: deviceTypeSchema,
-  typeCategory: z.string().nullable().optional(),
+  data_source: dataSourceType,
   connected: z.number().default(1),
 });
 

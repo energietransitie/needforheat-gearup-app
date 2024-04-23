@@ -13,7 +13,7 @@ import Box from "@/components/elements/Box";
 import Screen from "@/components/elements/Screen";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
-import { DataSourcesList } from "@/types/api";
+import { DataSourceList } from "@/types/api";
 
 export default function DeviceOverviewScreen() {
   const { theme } = useTheme();
@@ -66,7 +66,7 @@ export default function DeviceOverviewScreen() {
                   buildingId={buildingId}
                   refresh={refreshDeviceList}
                   onRefresh={onDeviceListRefreshed}
-                  dataSourcesList={user?.campaign.data_sources_list as DataSourcesList}
+                  dataSourceList={user?.campaign.data_source_list as DataSourceList}
                 />
               </View>
               {hasMultipleBuildings ? (

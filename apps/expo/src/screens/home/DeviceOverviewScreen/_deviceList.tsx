@@ -10,17 +10,17 @@ import StatusIndicator from "@/components/common/StatusIndicator";
 import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
 import useDevices from "@/hooks/device/useDevices";
 import { UserContext } from "@/providers/UserProvider";
-import { BuildingDeviceResponse, DataSourcesList } from "@/types/api";
+import { BuildingDeviceResponse, DataSourceType, DataSourceList } from "@/types/api";
 
 export default function DeviceList({
   buildingId,
   refresh,
   onRefresh,
-  dataSourcesList,
+  dataSourceList,
 }: {
   buildingId: number;
   refresh: boolean;
-  dataSourcesList: DataSourcesList;
+  dataSourceList: DataSourceList;
   onRefresh: () => void;
 }) {
   const { data, isLoading, refetch, isRefetching } = useDevices(buildingId);
@@ -34,20 +34,11 @@ export default function DeviceList({
   const [allItemsDone, setAllItemsDone] = useState(true);
   const connectedState: number[] = [];
 
-  function checkStatus(
-    dataSource: {
-      id: number;
-      type: { name: string };
-      item: { id: number; name: string; installation_manual_url: string; info_url: string };
-      precedes: { id: number }[];
-      uploadschedule: string;
-    },
-    oldSource: BuildingDeviceResponse
-  ) {
+  function checkStatus(dataSource: DataSourceType, oldSource: BuildingDeviceResponse) {
     const activated_at = oldSource?.activated_at ?? null;
     if (
-      (dataSource.type.name === "cloud_feed" &&
-        cloudFeedData?.find(item => item.cloud_feed.name === dataSource.item.name)?.connected) ||
+      (dataSource.category === "cloud_feed_type" &&
+        cloudFeedData?.find(item => item.cloud_feed_type.name === dataSource.item.name)?.connected) ||
       !(activated_at === null)
     ) {
       return 2;
@@ -56,16 +47,15 @@ export default function DeviceList({
   }
 
   useEffect(() => {
-    if (dataSourcesList) {
+    if (dataSourceList) {
       let connectedCount = 0;
       const newData: BuildingDeviceResponse[] = [];
 
-      dataSourcesList.items.forEach(dataSource => {
+      dataSourceList.items.forEach(dataSource => {
         let connectStatus = 1;
-        const oldSource = data?.find(item => item.device_type.name === dataSource.item.name);
+        const oldSource = data?.find(item => item.data_source.item.name === dataSource.item.name);
         const activated_at = oldSource?.activated_at ?? null;
         const latest_upload = oldSource?.latest_upload ?? null;
-        const upload_schedule = dataSource.uploadschedule;
 
         if (oldSource) {
           connectStatus = checkStatus(dataSource, oldSource);
@@ -73,7 +63,7 @@ export default function DeviceList({
         }
 
         //Check if all precedes are completed
-        const itemsNotPrecedingCurrent = dataSourcesList.items.filter(otherItem => {
+        const itemsNotPrecedingCurrent = dataSourceList.items.filter(otherItem => {
           const precedesMatch = otherItem.precedes.some(precede => precede.id === dataSource.id);
           return otherItem.id !== dataSource.id && precedesMatch;
         });
@@ -81,7 +71,7 @@ export default function DeviceList({
         let allPrecedesDone = true;
         if (itemsNotPrecedingCurrent.length > 0) {
           itemsNotPrecedingCurrent.forEach(otherItem => {
-            const otherOldSource = data?.find(item => item.device_type.name === otherItem.item.name);
+            const otherOldSource = data?.find(item => item.data_source.item.name === otherItem.item.name);
             if (otherOldSource) {
               if (checkStatus(otherItem, otherOldSource) === 1) {
                 allPrecedesDone = false;
@@ -103,26 +93,24 @@ export default function DeviceList({
           id: dataSource.id,
           name: oldSource?.name ? oldSource.name : dataSource.item.name,
           building_id: buildingId,
-          device_type: dataSource.item,
           activated_at,
           latest_upload,
-          upload_schedule,
-          typeCategory: dataSource.type.name,
+          data_source: dataSource,
           connected: connectStatus,
-          notification_threshold_duration: dataSource.notificationThresholdDuration,
         };
         newData.push(newResponse);
       });
 
+      newData.sort((a, b) => a.data_source.order - b.data_source.order);
       setItemData(newData);
 
-      const progressString = `${connectedCount}/${dataSourcesList.items.length}`;
+      const progressString = `${connectedCount}/${dataSourceList.items.length}`;
       setProgress(progressString);
     } else {
       setProgress("0/0");
       setItemData(data ?? []);
     }
-  }, [dataSourcesList, data, cloudFeedData]);
+  }, [dataSourceList, data, cloudFeedData]);
 
   useEffect(() => {
     if (refresh) {

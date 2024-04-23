@@ -1,11 +1,12 @@
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetScrollView, TouchableOpacity } from "@gorhom/bottom-sheet";
 import { BottomSheetModalMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { ListItem, Text } from "@rneui/themed";
+import { useEffect, useState } from "react";
 
+import { fetchUser } from "@/api/user";
+import { MANUAL_URL } from "@/constants";
 import useDevices from "@/hooks/device/useDevices";
 import useTranslation from "@/hooks/translation/useTranslation";
-import { MANUAL_URL } from "@/constants";
-import { useEffect, useState } from "react";
 import { capitalizeFirstLetter } from "@/utils/tools";
 
 type DeviceBottomSheetProps = {
@@ -31,8 +32,8 @@ export default function DeviceBottomSheet({
   onDeviceId,
 }: DeviceBottomSheetProps) {
   const { data: devices } = useDevices(buildingId);
-  const { t, resolvedLanguage } = useTranslation();
-  const [deviceDataResponses, setDeviceDataResponses] = useState<Array<DeviceDataResponse>>([]);
+  const { resolvedLanguage } = useTranslation();
+  const [deviceDataResponses, setDeviceDataResponses] = useState<DeviceDataResponse[]>([]);
   const [checkId, setCheckId] = useState<number | null>(devices?.[0]?.id ?? null);
 
   const onPress = (id: number) => {
@@ -59,10 +60,12 @@ export default function DeviceBottomSheet({
   };
 
   const fetchDeviceData = async () => {
+    const user = await fetchUser();
     if (devices) {
       try {
-        const deviceDataPromises = devices.map(async (device) => {
-          const response = await fetch(`${MANUAL_URL + device.device_type.name}`);
+        const deviceDataPromises = devices.map(async device => {
+          const dataSource = user?.campaign.data_source_list.items.find(item => item.item.name === device.name);
+          const response = await fetch(`${MANUAL_URL + dataSource?.item.name}`);
           if (response.ok) {
             const data = await response.json();
             return { id: device.id, name: data[resolvedLanguage] };
@@ -74,12 +77,11 @@ export default function DeviceBottomSheet({
 
         const deviceDataResults = await Promise.all(deviceDataPromises);
 
-        const filteredResults: Array<DeviceDataResponse> = deviceDataResults.filter(
+        const filteredResults: DeviceDataResponse[] = deviceDataResults.filter(
           (result): result is DeviceDataResponse => result !== null
         );
 
         setDeviceDataResponses(filteredResults);
-
       } catch (error) {
         console.error("Error fetching device data", error);
       }

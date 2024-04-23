@@ -18,7 +18,7 @@ import { HomeStackParamList } from "@/types/navigation";
 type ActivateDeviceScreenProps = NativeStackScreenProps<HomeStackParamList, "ActivateDeviceScreen">;
 
 export default function ActivateDeviceScreen({ navigation, route }: ActivateDeviceScreenProps) {
-  const { qrData, device_TypeName, dataSourceType, normalName } = route.params;
+  const { qrData, device_TypeName, dataSourceType, normalName, dataSource } = route.params;
   const { theme } = useTheme();
   const styles = useStyles();
   const { t } = useTranslation();
@@ -39,10 +39,11 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
   const onError = (error: unknown) =>
     errorAlert(`${t("screens.home_stack.activate_device.alert.unknown_error")}${error ? `\n\n${error}` : ""}`);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onActivated = (data: any) => {
     const device = data as BuildingDeviceResponse;
 
-    if (device.device_type.name !== dataSourceType.name)
+    if (device.data_source.item.name !== dataSourceType)
       errorAlert(
         t("screens.home_stack.activate_device.alert.mismatched_device_name"),
         t("screens.home_stack.activate_device.alert.unknown_error")
@@ -56,6 +57,7 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
         expectedDeviceName: device_TypeName,
         device: dataSourceType,
         normalName,
+        dataSource,
       });
     }, 500);
   };
