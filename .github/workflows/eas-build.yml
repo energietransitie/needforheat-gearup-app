@@ -44,6 +44,7 @@ jobs:
       - name: Setup environment file
         run: |
           echo "API_URL=${{ secrets.NFH_API_URL }}" > .env
+          echo "GOOGLE_MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" >> .env
 
       - name: Build app
         working-directory: apps/expo
