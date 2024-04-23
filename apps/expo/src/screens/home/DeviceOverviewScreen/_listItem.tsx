@@ -1,12 +1,12 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Button, ListItem, makeStyles, useTheme } from "@rneui/themed";
+import * as Burnt from "burnt";
 import cronParser from "cron-parser";
 import { format } from "date-fns";
 import { enUS, nl } from "date-fns/locale";
 import { DateTime, Duration } from "luxon";
 import { useEffect, useState } from "react";
-import * as Burnt from "burnt";
-import { Alert, Platform, ToastAndroid, TouchableHighlight, TouchableOpacity, View} from "react-native";
+import { Platform, ToastAndroid, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import TimeProgressBar from "./timeProgressBar";
@@ -54,8 +54,8 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   };
 
   const handleItemClick = () => {
-    if(Platform.OS === 'android') {
-    ToastAndroid.show(t("screens.device_overview.toast_message"), ToastAndroid.SHORT);
+    if (Platform.OS === "android") {
+      ToastAndroid.show(t("screens.device_overview.toast_message"), ToastAndroid.SHORT);
     } else {
       Burnt.toast({
         title: t("screens.device_overview.toast_title"),
@@ -294,7 +294,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
               : ""}
           </ListItem.Title>
           {item.connected === 2 ? (
-            <ListItem.Subtitle>
+            <ListItem.Subtitle style={[style.listItemSubtitle]}>
               {item.latest_upload
                 ? t("screens.device_overview.device_list.device_info.last_seen", {
                     date: formatDateAndTime(item.latest_upload),
@@ -342,5 +342,8 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  listItemSubtitle: {
+    marginRight: 24,
   },
 }));

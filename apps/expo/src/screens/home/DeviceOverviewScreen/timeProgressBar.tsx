@@ -56,7 +56,7 @@ const TimeProgressBar: React.FC<TimeProgressBarProps> = ({ progress, onTimePasse
   //dynamic time fontsize
   const getFontSize = (time: number) => {
     if (time > 59) {
-      return 7;
+      return 8;
     } else {
       return 10;
     }
