@@ -52,6 +52,15 @@ const TimeProgressBar: React.FC<TimeProgressBarProps> = ({ progress, onTimePasse
     }
   };
 
+  //dynamic time fontsize
+  const getFontSize = (time: number) => {
+    if (time > 59) {
+      return 7;
+    } else {
+      return 10;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Svg width="50%" height="50%" viewBox="0 0 42 42">
@@ -68,7 +77,7 @@ const TimeProgressBar: React.FC<TimeProgressBarProps> = ({ progress, onTimePasse
           transform="rotate(-90, 21, 21)"
         />
       </Svg>
-      <Text style={styles.progressText}>
+      <Text style={{ ...styles.progressText, fontSize: getFontSize(remainingTime) }}>
         {remainingTime === 0 ? t("screens.device_overview.device_list.updating_now") : formatTime(remainingTime)}
       </Text>
     </View>
@@ -82,12 +91,11 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     position: "absolute",
-    right: -40,
+    right: -45,
     top: -30,
   },
   progressText: {
     position: "absolute",
-    fontSize: 8,
     textAlign: "center",
     zIndex: 2,
   },
