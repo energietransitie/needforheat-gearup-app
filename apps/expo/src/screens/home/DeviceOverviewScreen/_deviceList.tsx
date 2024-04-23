@@ -13,6 +13,8 @@ import useNotificationPermission from "@/hooks/useNotificationPermission/useNoti
 import { UserContext } from "@/providers/UserProvider";
 import { BuildingDeviceResponse, DataSourcesList } from "@/types/api";
 import { processDataSource } from "@/utils/tools";
+import PushNotification from "react-native-push-notification";
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
 export default function DeviceList({
   buildingId,

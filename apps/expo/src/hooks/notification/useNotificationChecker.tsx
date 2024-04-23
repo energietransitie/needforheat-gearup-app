@@ -7,8 +7,9 @@ import { fetchCloudFeeds } from "@/api/account";
 import { fetchDevices } from "@/api/device";
 import { fetchUser } from "@/api/user";
 import { checkMissedUpload, processDataSource } from "@/utils/tools";
+import { Platform } from "react-native";
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
-//TODO test on iOS
 export default function useSuperLateDataSourceNotifier() {
   const { t } = useTranslation();
 
@@ -65,6 +66,7 @@ export default function useSuperLateDataSourceNotifier() {
         return;
       }
 
+      if(Platform.OS === 'android'){
       PushNotification.localNotification({
         channelId: "777",
         ticker: t("notifications.ticker"),
@@ -98,6 +100,16 @@ export default function useSuperLateDataSourceNotifier() {
         playSound: silentNotification,
         number: badgeCounter,
       });
+    } else {
+      PushNotificationIOS.addNotificationRequest({
+        id: "777",
+        title: t("notifications.title"),
+        body: t("notifications.message"),
+        badge: badgeCounter,
+        category: "NeedForHeat",
+        isSilent: silentNotification
+      });
+    }
 
       await saveNotificationSentToday();
     }

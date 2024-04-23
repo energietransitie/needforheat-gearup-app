@@ -21,7 +21,6 @@ export default function useNotificationPermission() {
 
   const checkNotificationPermission = async () => {
     const checkStatusses = await checkMultiple(NOTIFICATION_PERMISSIONS);
-    console.log(checkStatusses)
     const statusValues = Object.values(checkStatusses).map(status => {
       if (status === "granted") {
         return 2; // "granted" -> 2

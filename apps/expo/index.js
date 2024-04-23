@@ -1,6 +1,7 @@
 //import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { registerRootComponent } from "expo";
 import PushNotification from "react-native-push-notification";
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
 import App from "./App";
 PushNotification.configure({
@@ -10,7 +11,7 @@ PushNotification.configure({
 
   onNotification(notification) {
     console.log("NOTIFICATION:", notification);
-    //notification.finish(PushNotificationIOS.FetchResult.NoData);
+    notification.finish(PushNotificationIOS.FetchResult.NoData);
   },
 
   onAction(notification) {
