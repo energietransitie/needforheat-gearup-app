@@ -241,6 +241,12 @@
           "title": "Selecteer uw woning",
           "button": "Deze locatie gebruiken!"
         },
+        "weather_location_result_screen":{
+          "title": "Resultaten",
+          "send_button": "Verzend mijn query!",
+          "back_button": "Opniwu",
+          "marker": "Geselecteerde locatie"
+        },
         "location_permission": {
           "alert": {
             "title": "Locatie machtiging",

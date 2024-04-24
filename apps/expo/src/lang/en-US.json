@@ -240,6 +240,12 @@
           "title": "Select your Home",
           "button": "Use this location!"
         },
+        "weather_location_result_screen":{
+          "title": "Check Results",
+          "send_button": "Send my query!",
+          "back_button": "Try again",
+          "marker": "Selected location"
+        },
         "location_permission": {
           "alert": {
             "title": "Locatie Permission",

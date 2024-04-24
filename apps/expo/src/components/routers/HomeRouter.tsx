@@ -17,6 +17,7 @@ import SearchDeviceScreen from "@/screens/home/SearchDeviceScreen";
 import WifiOverviewScreen from "@/screens/home/WifiOverviewScreen";
 import { HomeStackParamList } from "@/types/navigation";
 import HomeSelectScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/HomeSelectScreen";
+import WeatherLocationResultScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/WeatherLocationResultScreen";
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -118,6 +119,11 @@ export default function HomeRouter() {
         name="HomeSelectScreen"
         options={{ title: t("screens.home_stack.energy_query.homeselect_screen.title"), ...disableNavigation }}
         component={HomeSelectScreen}
+      />
+      <HomeStack.Screen
+        name="WeatherLocationResultScreen"
+        options={{ title: t("screens.home_stack.energy_query.weather_location_result_screen.title"), ...disableNavigation }}
+        component={WeatherLocationResultScreen}
       />
     </HomeStack.Navigator>
   );

@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, Icon, makeStyles, useTheme } from "@rneui/themed";
-import MapView, { Marker, Region, UserLocationChangeEvent } from "react-native-maps";
-
+import MapView, { Geojson, Marker, Region, UserLocationChangeEvent } from "react-native-maps";
+import { latLngToCell, cellToBoundary, cellToLatLng, CoordPair } from "h3-js";
 import Box from "@/components/elements/Box";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { HomeStackParamList } from "@/types/navigation";
@@ -14,25 +14,43 @@ import usePreciseLocationPermission from "@/hooks/location/usePreciseLocationPer
 import Geolocation, { GeolocationResponse } from "@react-native-community/geolocation";
 import HomeSelectExplanationBottomSheet from "./_HomeSelectExplanationBottomSheet";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
 
-type HomeSelectScreenProps = NativeStackScreenProps<HomeStackParamList, "HomeSelectScreen">;
+type WeatherLocationResultScreenProps = NativeStackScreenProps<HomeStackParamList, "WeatherLocationResultScreen">;
 
-export default function HomeSelectScreen({ navigation, route }: HomeSelectScreenProps) {
+export default function WeatherLocationResultScreen({ navigation, route }: WeatherLocationResultScreenProps) {
+  const { location } = route.params
   const { theme } = useTheme();
   const { t } = useTranslation();
   const style = useStyles();
   const refMap = useRef<MapView>(null);
-  const refExplanationSheet = useRef<BottomSheetModal>(null);
-  const [location, setLocation] = useState<UserLocation>({
-    latitude: 52.501076707906,
-    longitude: 6.079587294142308,
-    latitudeDelta: 0.0008,
-    longitudeDelta: 0.0008
-  });
 
-  const onContinue= () => {
-    navigation.navigate("WeatherLocationResultScreen", {location});
+  const onContinue = () => {
+    navigation.navigate("HomeScreen");
   };
+
+  const onBack = () => {
+    navigation.navigate("HomeSelectScreen");
+  };
+
+  //H3
+  const cell = latLngToCell(location.latitude, location.longitude, 4)
+  const resultLocation = cellToLatLng(cell)
+  const cellBoundaries = cellToBoundary(cell, true)
+  const cellBoundariesGeoJson: FeatureCollection = {
+    type: 'FeatureCollection',
+    features: [
+      {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'Polygon',
+          coordinates: [cellBoundaries]
+        }
+      }
+    ]
+  };
+  //End H3
 
   //Location permission
   const [hasPermission, setHasPermission] = useState(false);
@@ -88,7 +106,6 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
       Geolocation.getCurrentPosition((pos) => succes(pos))
       const succes = (position: GeolocationResponse) => {
         if (position) {
-          setLocation({ longitude: position.coords.longitude, latitude: position.coords.latitude, longitudeDelta: location.longitude, latitudeDelta: location.latitudeDelta });
           refMap.current?.animateToRegion({ longitude: position.coords.longitude, latitude: position.coords.latitude, longitudeDelta: 0.0008, latitudeDelta: 0.0008 }, 20)
         }
       }
@@ -98,39 +115,68 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
     }
   }
 
-  const handleRegionChangeCompleted = (newRegion: Region) => {
-    setLocation(newRegion)
-  }
+  const getRegionForCoordinates = (coordinates : CoordPair[], paddingPercent = 0.04) => {
+    if (!coordinates || coordinates.length === 0) {
+      throw new Error("Coordinates array cannot be empty.");
+    }
+  
+    // Get minimum and maximum latitude and longitude from the coordinates
+    const latitudes = coordinates.map(coord => coord[1]);
+    const longitudes = coordinates.map(coord => coord[0]);
+  
+    const minLat = Math.min(...latitudes);
+    const maxLat = Math.max(...latitudes);
+    const minLon = Math.min(...longitudes);
+    const maxLon = Math.max(...longitudes);
+  
+    const baseLatitudeDelta = maxLat - minLat;
+  const baseLongitudeDelta = maxLon - minLon;
 
-  useEffect(() => {
-    refExplanationSheet.current?.present()
-  }, [])
+  // Apply padding to the deltas
+  const latitudeDelta = baseLatitudeDelta + baseLatitudeDelta * paddingPercent;
+  const longitudeDelta = baseLongitudeDelta + baseLongitudeDelta * paddingPercent;
+  
+    const centerLatitude = (minLat + maxLat) / 2;
+    const centerLongitude = (minLon + maxLon) / 2;
+  
+    return {
+      latitude: centerLatitude,
+      longitude: centerLongitude,
+      latitudeDelta,
+      longitudeDelta,
+    };
+  };
+
   return (
     <>
       <Box padded style={{ flex: 1 }}>
         <View style={style.mapcontainer}>
           <MapView
             ref={refMap}
+            region={getRegionForCoordinates(cellBoundaries)}
             showsUserLocation={true}
             showsMyLocationButton={true}
             showsBuildings={true}
             showsScale={true}
             pitchEnabled={false}
             style={style.map}
-            onRegionChangeComplete={handleRegionChangeCompleted}
           >
+            <Geojson
+              geojson={cellBoundariesGeoJson}
+              strokeColor="#3388ff"
+              strokeWidth={3}
+              lineCap="round"
+              lineJoin="round"
+              fillColor="rgba(51, 136, 255, 0.2)"
+            />
+            <Marker
+              title={t("screens.home_stack.energy_query.weather_location_result_screen.marker")}
+              coordinate={location}
+              draggable={false} />
           </MapView>
-          <View pointerEvents="none">
-            <Icon name="location-pin" color="red" size={40} style={{ marginBottom: 30 }} />
-          </View>
           <View style={style.myLocation}>
             <TouchableOpacity onPress={onPressMyLocation}>
               <Icon name="my-location" color="black" size={40} />
-            </TouchableOpacity>
-          </View>
-          <View style={style.help}>
-            <TouchableOpacity onPress={() => { refExplanationSheet.current?.present() }}>
-              <Icon name="help-outline" color="black" size={40} />
             </TouchableOpacity>
           </View>
 
@@ -138,22 +184,28 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
         <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
           <Button
             containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
-            title={t("screens.home_stack.energy_query.homeselect_screen.button")}
+            title={t("screens.home_stack.energy_query.weather_location_result_screen.back_button")}
+            color="primary"
+            onPress={onBack}
+            icon={{
+              name: "arrow-back-circle-outline",
+              type: "ionicon",
+              color: theme.colors.white,
+            }}
+          />
+          <Button
+            containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
+            title={t("screens.home_stack.energy_query.weather_location_result_screen.send_button")}
             color="primary"
             onPress={onContinue}
             icon={{
-              name: "location-outline",
+              name: "cloud-upload-outline",
               type: "ionicon",
               color: theme.colors.white,
             }}
           />
         </Box>
       </Box>
-      <View style={{ marginBottom: -50 }}>
-        <HomeSelectExplanationBottomSheet
-          bottomSheetRef={refExplanationSheet}
-        />
-      </View>
     </>
   );
 }
@@ -177,9 +229,4 @@ const useStyles = makeStyles(theme => ({
     bottom: 30,
     left: 10
   },
-  help: {
-    position: "absolute",
-    bottom: 70,
-    left: 10
-  }
 }));

@@ -1,5 +1,6 @@
 import { BleDeviceType, SensorQrCode, WifiEntry } from ".";
 import { DataSourceItemType } from "./api";
+import { UserLocation } from "./energyquery";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -48,6 +49,7 @@ export type HomeStackParamList = {
   //EnergyQuery
   InformationScreen: { expectedDeviceName?: string | undefined; device: DataSourceItemType };
   HomeSelectScreen: undefined;
+  WeatherLocationResultScreen: { location: UserLocation }
 };
 
 export type InfoStackParamList = {
