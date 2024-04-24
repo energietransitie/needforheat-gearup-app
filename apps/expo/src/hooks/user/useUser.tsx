@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import * as SecureStore from "expo-secure-store"; // Import SecureStore from Expo
+import * as SecureStore from "expo-secure-store";
 import { useEffect, useState } from "react";
 
 import { fetchUser } from "@/api/user";
-import { AccountResponse } from "@/types/api";
 
 export default function useUser() {
   const { data: user, isFetching, refetch } = useQuery({ queryKey: ["user"], queryFn: () => fetchUser(), retry: 0 });
@@ -44,7 +43,7 @@ export default function useUser() {
 
   return {
     user: user || storedUser,
-    isAuthed: Boolean((user && user.activated_at) || (storedUser)),
+    isAuthed: Boolean((user && user.activated_at) || storedUser),
     isLoading: isFetching,
     refetch,
   };
