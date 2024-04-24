@@ -93,9 +93,9 @@ const exampleItems = [
     type: { name: "energy_query_type" },
     item: {
       id: 1,
-      name: "weather_interpolation_location",
-      installation_manual_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/enelogic/installation",
-      info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/enelogic/faq",
+      name: "weather-interpolation-location",
+      installation_manual_url: "https://manuals.tst.energietransitiewindesheim.nl/energy_queries/weather-interpolation-location/installation",
+      info_url: "https://manuals.tst.energietransitiewindesheim.nl/energy_queries/weather-interpolation-location/faq",
     },
     precedes: [],
     uploadschedule: "",

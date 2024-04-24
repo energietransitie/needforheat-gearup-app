@@ -36,7 +36,9 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   const style = useStyles();
   const { t, resolvedLanguage } = useTranslation();
   const [data, setData] = useState(null); // Initialize data state variable
-  const CompleteURL = MANUAL_URL + item.device_type.name;
+  
+  const manual_type = item.typeCategory === "device_type" ? "devices" : item.typeCategory === "cloud_feed" ? "cloud_feeds" : "energy_queries"
+  const CompleteURL = `${MANUAL_URL + manual_type}/${item.device_type.name}`;
 
   const [missed, setMissed] = useState(0);
   const [timeToUpload, setTimeToUpload] = useState<string>();
@@ -99,7 +101,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     } else if (item.typeCategory === "cloud_feed") {
       navigate("AddOnlineDataSourceScreen");
     } else if (item.typeCategory === "energy_query_type") {
-      if (item.name === "weather_interpolation_location") {
+      if (item.name === "weather-interpolation-location") {
         navigate("InformationScreen", { device: item.device_type });
       }
     }

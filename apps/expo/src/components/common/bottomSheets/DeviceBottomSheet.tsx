@@ -62,7 +62,9 @@ export default function DeviceBottomSheet({
     if (devices) {
       try {
         const deviceDataPromises = devices.map(async (device) => {
-          const response = await fetch(`${MANUAL_URL + device.device_type.name}`);
+          const manual_type = device.typeCategory === "device_type" ? "devices" : device.typeCategory === "cloud_feed" ? "cloud_feeds" : "energy_queries"
+          const CompleteURL = `${MANUAL_URL + manual_type}/${device.device_type.name}`;
+          const response = await fetch(CompleteURL);
           if (response.ok) {
             const data = await response.json();
             return { id: device.id, name: data[resolvedLanguage] };

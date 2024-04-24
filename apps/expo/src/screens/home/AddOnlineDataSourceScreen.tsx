@@ -150,7 +150,7 @@ export default function AddOnlineDataSourceScreen({ navigation, route }: AddOnli
 
     return (
         <Box padded style={{ flex: 1 }}>
-            <ManualContent manualUrl={MANUAL_URL + "enelogic/installation/generic/"} languageHeader={resolvedLanguage} />
+            <ManualContent manualUrl={MANUAL_URL + "cloud_feeds/enelogic/installation/generic/"} languageHeader={resolvedLanguage} />
             <Box style={{ flexDirection: "column", marginTop: 16, width: "100%", justifyContent: 'center', alignItems: 'center' }}>
                 {data?.some((item) => !item.connected) && (
                     <Button

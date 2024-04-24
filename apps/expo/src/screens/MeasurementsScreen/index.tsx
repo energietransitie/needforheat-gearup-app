@@ -37,7 +37,8 @@ export default function MeasurementsScreen() {
 
   const [deviceId, setDeviceId] = useState<number>();
   const hasMultipleDevices = (devices?.length ?? 0) > 1;
-  const CompleteURL = devices && devices.length > 0 ? MANUAL_URL + devices[0].device_type.name : '';
+  const manual_type = devices && devices[0].typeCategory === "device_type" ? "devices" : devices && devices[0].typeCategory === "cloud_feed" ? "cloud_feeds" : "energy_queries"
+  const CompleteURL = devices && devices.length > 0 ? MANUAL_URL + manual_type + "/" + devices[0].device_type.name : '';
   const deviceDropdownDisabled = !buildingId || !hasMultipleDevices;
 
   const [property, setProperty] = useState<DeviceProperty | undefined>();
