@@ -3,46 +3,26 @@ import { Button, useTheme } from "@rneui/themed";
 
 import ManualContent from "@/components/common/ManualContent";
 import Box from "@/components/elements/Box";
-import { MANUAL_URL } from "@/constants";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { HomeStackParamList } from "@/types/navigation";
-import { useEffect, useState } from "react";
 
 type AddDeviceScreenProps = NativeStackScreenProps<HomeStackParamList, "AddDeviceScreen">;
 
 export default function AddDeviceScreen({ navigation, route }: AddDeviceScreenProps) {
-  const { expectedDeviceName, device } = route.params;
+  const { qrData, device, normalName } = route.params;
   const { theme } = useTheme();
   const { t, resolvedLanguage } = useTranslation();
-  const [fetchedData, setFetchedData] = useState(null);
-  const ComleteUrl = MANUAL_URL + device.name;
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch(ComleteUrl);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const fetchedData = await response.json();
-      setFetchedData(fetchedData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
-  useEffect(() => {
-    if (ComleteUrl) {
-      fetchData();
-    }
-  }, []);
-
 
   const onAddDevice = () => {
-    navigation.navigate("QrScannerScreen")
+    navigation.navigate("SearchDeviceScreen", {
+      deviceName: qrData.name,
+      proofOfPossession: qrData.pop,
+      device_TypeName: device.name,
+      normalName,
+    });
   };
 
   const onCancel = () => navigation.navigate("HomeScreen");
-
 
   return (
     <Box padded style={{ flex: 1 }}>

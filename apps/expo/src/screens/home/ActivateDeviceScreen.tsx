@@ -12,12 +12,13 @@ import useDeviceActivate from "@/hooks/device/useDeviceActivate";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useDisableBackButton } from "@/hooks/useDisableBackButton";
 import { UserContext } from "@/providers/UserProvider";
+import { BuildingDeviceResponse } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
 
 type ActivateDeviceScreenProps = NativeStackScreenProps<HomeStackParamList, "ActivateDeviceScreen">;
 
 export default function ActivateDeviceScreen({ navigation, route }: ActivateDeviceScreenProps) {
-  const { qrData, device_TypeName } = route.params;
+  const { qrData, device_TypeName, dataSourceType, normalName } = route.params;
   const { theme } = useTheme();
   const styles = useStyles();
   const { t } = useTranslation();
@@ -38,14 +39,23 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
   const onError = (error: unknown) =>
     errorAlert(`${t("screens.home_stack.activate_device.alert.unknown_error")}${error ? `\n\n${error}` : ""}`);
 
-  const onActivated = () => {
+  const onActivated = (data: any) => {
+    const device = data as BuildingDeviceResponse;
+
+    if (device.device_type.name !== dataSourceType.name)
+      errorAlert(
+        t("screens.home_stack.activate_device.alert.mismatched_device_name"),
+        t("screens.home_stack.activate_device.alert.unknown_error")
+      );
+
     setIsActivated(true);
 
     setTimeout(() => {
-      navigation.navigate("SearchDeviceScreen", {
-        deviceName: qrData.name,
-        proofOfPossession: qrData.pop,
-        device_TypeName: device_TypeName
+      navigation.navigate("AddDeviceScreen", {
+        qrData,
+        expectedDeviceName: device_TypeName,
+        device: dataSourceType,
+        normalName,
       });
     }, 500);
   };
