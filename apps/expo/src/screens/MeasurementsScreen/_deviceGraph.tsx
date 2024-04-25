@@ -27,7 +27,7 @@ export default function DeviceGraph(props: DeviceGraphProps) {
   const { theme } = useTheme();
   const { data, isFetching } = useMeasurements(deviceName, {
     property: property?.id ?? 0,
-    start: dayjs().subtract(dayRange, "d").startOf("day").toISOString(),
+    start: dayjs().subtract(dayRange, "d").startOf("day").toLocaleString(),
   });
   const [width, setWidth] = useState<number>(0);
   const { t } = useTranslation();

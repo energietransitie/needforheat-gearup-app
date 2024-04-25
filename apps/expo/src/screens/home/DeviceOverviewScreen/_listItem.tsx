@@ -171,7 +171,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   }
 
   function checkMissedUpload(item: AllDevicesResponse): number {
-    const latestUploadString = item.latest_upload ? item.latest_upload.toISOString() : "";
+    const latestUploadString = item.latest_upload ? item.latest_upload.toLocaleString() : "";
     const timeNow = new Date();
     const cronExpression = item.data_source.uploadschedule ? item.data_source.uploadschedule : "";
     const notificationThresholdDurationISO = item.data_source.notificationThresholdDuration;
