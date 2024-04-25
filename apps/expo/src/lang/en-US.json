@@ -234,14 +234,16 @@
       "energy_query": {
         "information_screen": {
           "title": "EnergyQuery Information",
-          "button": "Execute!"
+          "button": "Understood!"
         },
         "homeselect_screen": {
           "title": "Select your Home",
+          "subtitle": "Drag the map around and place the pin above your home/building",
           "button": "Use this location!"
         },
         "weather_location_result_screen":{
           "title": "Check Results",
+          "subtitle": "Is your home/building inside this hexagon?",
           "send_button": "Send my query!",
           "back_button": "Try again",
           "marker": "Selected location"

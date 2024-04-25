@@ -29,7 +29,6 @@ export default function usePreciseLocationPermission() {
 
   const checkPreciseLocationPermission = async () => {
     const checkStatusses = await checkMultiple(LOCATION_PERMISSIONS);
-    console.log(checkStatusses)
     return Object.values(checkStatusses).every(status => status === "granted");
   };
 

@@ -5,7 +5,7 @@ import MapView, { Marker, Region, UserLocationChangeEvent } from "react-native-m
 import Box from "@/components/elements/Box";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { HomeStackParamList } from "@/types/navigation";
-import { Alert, Platform, Touchable, View } from "react-native";
+import { Alert, Platform, Text, Touchable, View } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { UserLocation } from "@/types/energyquery";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -26,8 +26,8 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
   const [location, setLocation] = useState<UserLocation>({
     latitude: 52.501076707906,
     longitude: 6.079587294142308,
-    latitudeDelta: 0.0008,
-    longitudeDelta: 0.0008
+    latitudeDelta: 4,
+    longitudeDelta: 4
   });
 
   const onContinue= () => {
@@ -35,7 +35,6 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
   };
 
   //Location permission
-  const [hasPermission, setHasPermission] = useState(false);
   const { requestPreciseLocationPermission, checkPreciseLocationPermission } = usePreciseLocationPermission();
 
   const onRequestPreciseLocationError = (err: string) => {
@@ -53,7 +52,6 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
 
   const askForPreciseLocationPermission = async (): Promise<null> => {
     const permission = await checkPreciseLocationPermission();
-    setHasPermission(permission);
 
     return new Promise((resolve, reject) => {
       if (!permission) {
@@ -67,7 +65,6 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
               try {
                 await requestPreciseLocationPermission();
                 resolve(null);
-                setHasPermission(await checkPreciseLocationPermission());
               } catch (err: unknown) {
                 const errorMsg =
                   err instanceof Error ? err.message : t("screens.home_stack.energy_query.location_permission.errors.request_failed");
@@ -102,15 +99,32 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
     setLocation(newRegion)
   }
 
-  useEffect(() => {
-    refExplanationSheet.current?.present()
-  }, [])
+  const handleZoomIn = () => {
+    setLocation((prevRegion) => ({
+      ...prevRegion,
+      latitudeDelta: prevRegion.latitudeDelta / 2,
+      longitudeDelta: prevRegion.longitudeDelta / 2,
+    }));
+  };
+
+  const handleZoomOut = () => {
+    setLocation((prevRegion) => ({
+      ...prevRegion,
+      latitudeDelta: prevRegion.latitudeDelta * 2,
+      longitudeDelta: prevRegion.longitudeDelta * 2,
+    }));
+  };
+
   return (
     <>
       <Box padded style={{ flex: 1 }}>
+        <View >
+          <Text style={style.subtitle}>{t("screens.home_stack.energy_query.homeselect_screen.subtitle")}</Text>
+        </View>
         <View style={style.mapcontainer}>
           <MapView
             ref={refMap}
+            region={location}
             showsUserLocation={true}
             showsMyLocationButton={true}
             showsBuildings={true}
@@ -120,20 +134,22 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
             onRegionChangeComplete={handleRegionChangeCompleted}
           >
           </MapView>
+          <View style={style.zoomControls}>
+          <TouchableOpacity onPress={handleZoomIn} style={style.zoomButton}>
+            <Icon name="add" color="white" size={30} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleZoomOut} style={style.zoomButton}>
+            <Icon name="remove" color="white" size={30} />
+          </TouchableOpacity>
+        </View>
           <View pointerEvents="none">
             <Icon name="location-pin" color="red" size={40} style={{ marginBottom: 30 }} />
           </View>
           <View style={style.myLocation}>
             <TouchableOpacity onPress={onPressMyLocation}>
-              <Icon name="my-location" color="black" size={40} />
+              <Icon name="my-location" color="white" size={40} />
             </TouchableOpacity>
           </View>
-          <View style={style.help}>
-            <TouchableOpacity onPress={() => { refExplanationSheet.current?.present() }}>
-              <Icon name="help-outline" color="black" size={40} />
-            </TouchableOpacity>
-          </View>
-
         </View>
         <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
           <Button
@@ -172,14 +188,32 @@ const useStyles = makeStyles(theme => ({
     right: 0,
     bottom: 0,
   },
+  zoomControls: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    flexDirection: 'column',
+  },
+  zoomButton: {
+    backgroundColor: theme.colors.primary,
+    padding: 8,
+    borderRadius: 5,
+    marginBottom: 5,
+  },
   myLocation: {
     position: "absolute",
     bottom: 30,
-    left: 10
+    left: 10, 
+    backgroundColor: theme.colors.primary,
+    padding: 8,
+    borderRadius: 5,
+    marginBottom: 5,
   },
-  help: {
-    position: "absolute",
-    bottom: 70,
-    left: 10
+  subtitle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontWeight: 'bold', 
+    textAlign: 'center', 
+    fontSize: 16,
   }
 }));

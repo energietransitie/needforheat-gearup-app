@@ -235,16 +235,18 @@
       "energy_query": {
         "information_screen": {
           "title": "EnergyQuery Informatie",
-          "button": "Uitvoeren!"
+          "button": "Begrepen!"
         },
         "homeselect_screen": {
           "title": "Selecteer uw woning",
+          "subtitle": "Sleep de kaart rond en plaats de pin boven uw huis/gebouw",
           "button": "Deze locatie gebruiken!"
         },
         "weather_location_result_screen":{
           "title": "Resultaten",
-          "send_button": "Verzend mijn query!",
-          "back_button": "Opniwu",
+          "subtitle": "Bevindt jouw huis/gebouw zich in deze zeshoek?",
+          "send_button": "Verzenden",
+          "back_button": "Opnieuw",
           "marker": "Geselecteerde locatie"
         },
         "location_permission": {

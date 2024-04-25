@@ -5,7 +5,7 @@ import { latLngToCell, cellToBoundary, cellToLatLng, CoordPair } from "h3-js";
 import Box from "@/components/elements/Box";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { HomeStackParamList } from "@/types/navigation";
-import { Alert, Platform, Touchable, View } from "react-native";
+import { Alert, Platform, Text, Touchable, View } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { UserLocation } from "@/types/energyquery";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -24,7 +24,7 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
   const { t } = useTranslation();
   const style = useStyles();
   const refMap = useRef<MapView>(null);
-
+  const [locationState, setLocationState] = useState<UserLocation>(location);
   const onContinue = () => {
     navigation.navigate("HomeScreen");
   };
@@ -115,6 +115,22 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
     }
   }
 
+  const handleZoomIn = () => {
+    setLocationState((prevRegion) => ({
+      ...prevRegion,
+      latitudeDelta: prevRegion.latitudeDelta / 2,
+      longitudeDelta: prevRegion.longitudeDelta / 2,
+    }));
+  };
+
+  const handleZoomOut = () => {
+    setLocationState((prevRegion) => ({
+      ...prevRegion,
+      latitudeDelta: prevRegion.latitudeDelta * 2,
+      longitudeDelta: prevRegion.longitudeDelta * 2,
+    }));
+  };
+
   const getRegionForCoordinates = (coordinates : CoordPair[], paddingPercent = 0.04) => {
     if (!coordinates || coordinates.length === 0) {
       throw new Error("Coordinates array cannot be empty.");
@@ -147,13 +163,20 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
     };
   };
 
+  useEffect(() => {
+    setLocationState(getRegionForCoordinates(cellBoundaries))
+  }, [])
+
   return (
     <>
       <Box padded style={{ flex: 1 }}>
+      <View>
+          <Text style={style.subtitle}>{t("screens.home_stack.energy_query.weather_location_result_screen.subtitle")}</Text>
+        </View>
         <View style={style.mapcontainer}>
           <MapView
             ref={refMap}
-            region={getRegionForCoordinates(cellBoundaries)}
+            region={locationState}
             showsUserLocation={true}
             showsMyLocationButton={true}
             showsBuildings={true}
@@ -169,14 +192,18 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
               lineJoin="round"
               fillColor="rgba(51, 136, 255, 0.2)"
             />
-            <Marker
-              title={t("screens.home_stack.energy_query.weather_location_result_screen.marker")}
-              coordinate={location}
-              draggable={false} />
           </MapView>
+          <View style={style.zoomControls}>
+          <TouchableOpacity onPress={handleZoomIn} style={style.zoomButton}>
+            <Icon name="add" color="white" size={30} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleZoomOut} style={style.zoomButton}>
+            <Icon name="remove" color="white" size={30} />
+          </TouchableOpacity>
+        </View>
           <View style={style.myLocation}>
             <TouchableOpacity onPress={onPressMyLocation}>
-              <Icon name="my-location" color="black" size={40} />
+              <Icon name="my-location" color="white" size={40} />
             </TouchableOpacity>
           </View>
 
@@ -224,9 +251,32 @@ const useStyles = makeStyles(theme => ({
     right: 0,
     bottom: 0,
   },
+  zoomControls: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    flexDirection: 'column',
+  },
+  zoomButton: {
+    backgroundColor: theme.colors.primary,
+    padding: 8,
+    borderRadius: 5,
+    marginBottom: 5,
+  },
   myLocation: {
     position: "absolute",
     bottom: 30,
-    left: 10
+    left: 10,
+    backgroundColor: theme.colors.primary,
+    padding: 8,
+    borderRadius: 5,
+    marginBottom: 5,
   },
+  subtitle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontWeight: 'bold', 
+    textAlign: 'center', 
+    fontSize: 16,
+  }
 }));
