@@ -14,14 +14,14 @@ import TimeProgressBar from "./timeProgressBar";
 import { MANUAL_URL } from "@/constants";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useOpenExternalLink } from "@/hooks/useOpenExternalLink";
-import { BuildingDeviceResponse } from "@/types/api";
+import { AllDevicesResponse } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
 import { capitalizeFirstLetter } from "@/utils/tools";
 import "intl";
 import "intl/locale-data/jsonp/en";
 
 type WifiNetworkListItemProps = {
-  item: BuildingDeviceResponse;
+  item: AllDevicesResponse;
   onSwipeBegin?: () => void;
   onSwipeEnd?: () => void;
   allItemsDone: boolean;
@@ -135,7 +135,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     return format(inputDate, formatString, { locale });
   }
 
-  function checkNextUpload(item: BuildingDeviceResponse): string {
+  function checkNextUpload(item: AllDevicesResponse): string {
     const latestUpload = item.latest_upload ?? new Date();
     const timeNow = new Date();
     let cronExpression = item.data_source.uploadschedule ?? "";
@@ -170,7 +170,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     }
   }
 
-  function checkMissedUpload(item: BuildingDeviceResponse): number {
+  function checkMissedUpload(item: AllDevicesResponse): number {
     const latestUploadString = item.latest_upload ? item.latest_upload.toISOString() : "";
     const timeNow = new Date();
     const cronExpression = item.data_source.uploadschedule ? item.data_source.uploadschedule : "";

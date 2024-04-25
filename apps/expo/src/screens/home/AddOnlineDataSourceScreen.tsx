@@ -2,7 +2,6 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, useTheme } from "@rneui/themed";
 import * as Burnt from "burnt";
 import { crc16xmodem } from "crc";
-import { useContext } from "react";
 import { Alert, Platform } from "react-native";
 import { URL, URLSearchParams } from "react-native-url-polyfill";
 import { z } from "zod";
@@ -18,7 +17,6 @@ import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
 import useDeviceActivate from "@/hooks/device/useDeviceActivate";
 import useTranslation from "@/hooks/translation/useTranslation";
 import useDeepLinks from "@/hooks/useDeepLinks";
-import { UserContext } from "@/providers/UserProvider";
 import { HomeStackParamList } from "@/types/navigation";
 
 export type ExternalProviderItem = { name: string; icon: string; description: string; is_connected: boolean };
@@ -33,7 +31,6 @@ export default function AddOnlineDataSourceScreen({ navigation, route }: AddOnli
   const { data, isFetching } = useCloudFeeds();
   const { mutate: activate } = useActivateCloudFeed();
   const deviceActivateMutation = useDeviceActivate();
-  const { user } = useContext(UserContext);
 
   const onCancel = () => {
     navigation.goBack();
@@ -44,19 +41,12 @@ export default function AddOnlineDataSourceScreen({ navigation, route }: AddOnli
     let deviceCreated = false;
 
     try {
-      const buildingId = user?.buildings[0]?.id;
-      if (buildingId === undefined) {
-        console.error("buildingId is undefined");
-        return;
-      }
-
       for (let attempt = 1; attempt <= retries; attempt++) {
         const crc16XMODEM = crc16xmodem(cloudFeedName).toString(16).toUpperCase();
 
         const createDevicePayload = {
           name: crc16XMODEM + "-" + generateRandomHex(6),
           activationSecret: generateRandomHex(32),
-          buildingId,
         };
 
         try {

@@ -31,12 +31,6 @@
         "empty_collection": "No Data Sources List found for this Campaign",
         "updating_now": "Now",
         "next_update": "Next in"
-      },
-      "building_list": {
-        "placeholder": "Select a building",
-        "building_info": {
-          "name": "Building #{{id}}"
-        }
       }
     },
     "home_stack": {
@@ -51,7 +45,6 @@
         "activated": "Device activated!",
         "alert": {
           "unknown_error": "An error occurred while activating the device.",
-          "no_building": "Your account is not associated with a building.",
           "already_activated": "This measurement device was already activated on another account.",
           "mismatched_device_name": "The wrong device has been scanned. Please try again with the correct device."
         }

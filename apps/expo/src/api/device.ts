@@ -3,7 +3,7 @@ import { URLSearchParams } from "react-native-url-polyfill";
 
 import { FETCH_HEADERS } from "@/constants";
 import {
-  buildingSchema,
+  allDevicesSchema,
   createDeviceSchema,
   deviceMeasurementSchema,
   devicePropertiesSchema,
@@ -11,17 +11,6 @@ import {
   deviceTypeSchema,
 } from "@/types/api";
 import { handleRequestErrors } from "@/utils/tools";
-
-export async function fetchBuilding(buildingId: number | string) {
-  const response = await fetch(`${API_URL}/building/${buildingId}`, {
-    ...(await FETCH_HEADERS()),
-  });
-
-  const data = await handleRequestErrors(response);
-  const jsonData = await data.json();
-
-  return buildingSchema.parse(jsonData);
-}
 
 export async function fetchDeviceType(deviceName: string) {
   const response = await fetch(`${API_URL}/device_type/${deviceName}`, {
@@ -62,22 +51,13 @@ export async function fetchDeviceProperties(deviceName: string) {
   return devicePropertiesSchema.parse(jsonData);
 }
 
-export async function activateDevice({
-  name,
-  activationSecret,
-  buildingId,
-}: {
-  name: string;
-  activationSecret: string;
-  buildingId: number;
-}) {
+export async function activateDevice({ name, activationSecret }: { name: string; activationSecret: string }) {
   const response = await fetch(`${API_URL}/device`, {
     ...(await FETCH_HEADERS()),
     method: "POST",
     body: JSON.stringify({
       name,
       activation_secret: activationSecret,
-      building_id: buildingId,
     }),
   });
 
@@ -96,12 +76,33 @@ export async function fetchDevice(deviceName: string) {
   return deviceReadSchema.parse(jsonData);
 }
 
-export async function fetchDevices(buildingId: number) {
-  const response = await fetch(`${API_URL}/building/${buildingId}`, {
-    ...(await FETCH_HEADERS()),
-  });
+export async function fetchDevices() {
+  try {
+    const response = await fetch(`${API_URL}/device/all`, {
+      ...(await FETCH_HEADERS()),
+    });
 
-  const data = await handleRequestErrors(response);
-  const jsonData = await data.json();
-  return buildingSchema.parse(jsonData)?.devices ?? [];
+    const data = await handleRequestErrors(response);
+    const jsonData = await data.json();
+
+    if (!Array.isArray(jsonData)) {
+      console.error("Invalid data format received from server");
+      return [];
+    }
+
+    const parsedDevices = [];
+    for (const deviceData of jsonData) {
+      try {
+        const parsedDevice = allDevicesSchema.parse(deviceData);
+        parsedDevices.push(parsedDevice);
+      } catch (error) {
+        console.error("Error parsing device data:", error);
+      }
+    }
+
+    return parsedDevices;
+  } catch (error) {
+    console.error("Error fetching or parsing devices:", error);
+    return [];
+  }
 }

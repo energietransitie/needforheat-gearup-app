@@ -10,23 +10,21 @@ import StatusIndicator from "@/components/common/StatusIndicator";
 import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
 import useDevices from "@/hooks/device/useDevices";
 import { UserContext } from "@/providers/UserProvider";
-import { BuildingDeviceResponse, DataSourceType, DataSourceList } from "@/types/api";
+import { AllDevicesResponse, DataSourceType, DataSourceList } from "@/types/api";
 
 export default function DeviceList({
-  buildingId,
   refresh,
   onRefresh,
   dataSourceList,
 }: {
-  buildingId: number;
   refresh: boolean;
   dataSourceList: DataSourceList;
   onRefresh: () => void;
 }) {
-  const { data, isLoading, refetch, isRefetching } = useDevices(buildingId);
+  const { data, isLoading, refetch, isRefetching } = useDevices();
   const { data: cloudFeedData, isFetching } = useCloudFeeds();
   const [scrollEnabled, setScrollEnabled] = useState(true);
-  const [itemData, setItemData] = useState<BuildingDeviceResponse[]>([]);
+  const [itemData, setItemData] = useState<AllDevicesResponse[]>([]);
   const [progress, setProgress] = useState("0/0");
   const onSwipeBegin = useCallback(() => setScrollEnabled(false), []);
   const onSwipeEnd = useCallback(() => setScrollEnabled(true), []);
@@ -34,7 +32,7 @@ export default function DeviceList({
   const [allItemsDone, setAllItemsDone] = useState(true);
   const connectedState: number[] = [];
 
-  function checkStatus(dataSource: DataSourceType, oldSource: BuildingDeviceResponse) {
+  function checkStatus(dataSource: DataSourceType, oldSource: AllDevicesResponse) {
     const activated_at = oldSource?.activated_at ?? null;
     if (
       (dataSource.category === "cloud_feed_type" &&
@@ -49,7 +47,7 @@ export default function DeviceList({
   useEffect(() => {
     if (dataSourceList) {
       let connectedCount = 0;
-      const newData: BuildingDeviceResponse[] = [];
+      const newData: AllDevicesResponse[] = [];
 
       dataSourceList.items.forEach(dataSource => {
         let connectStatus = 1;
@@ -89,10 +87,9 @@ export default function DeviceList({
           connectedCount++;
         }
 
-        const newResponse: BuildingDeviceResponse = {
+        const newResponse: AllDevicesResponse = {
           id: dataSource.id,
           name: oldSource?.name ? oldSource.name : dataSource.item.name,
-          building_id: buildingId,
           activated_at,
           latest_upload,
           data_source: dataSource,
@@ -155,7 +152,7 @@ export default function DeviceList({
   return (
     <View style={{ flex: 1 }}>
       <ProgressBar progress={progress} />
-      <FlatList<BuildingDeviceResponse>
+      <FlatList<AllDevicesResponse>
         data={itemData || data}
         contentContainerStyle={{ flexGrow: 1 }}
         style={{ width: "100%" }}

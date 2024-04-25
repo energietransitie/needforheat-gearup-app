@@ -12,7 +12,6 @@ import { capitalizeFirstLetter } from "@/utils/tools";
 type DeviceBottomSheetProps = {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
   deviceName?: string;
-  buildingId: number;
   onDeviceId?: (id: number) => void;
   onDeviceIdentifier: (name: string) => void;
   onDisplayName: (name: string) => void;
@@ -26,12 +25,11 @@ interface DeviceDataResponse {
 export default function DeviceBottomSheet({
   bottomSheetRef,
   deviceName,
-  buildingId,
   onDeviceIdentifier,
   onDisplayName,
   onDeviceId,
 }: DeviceBottomSheetProps) {
-  const { data: devices } = useDevices(buildingId);
+  const { data: devices } = useDevices();
   const { resolvedLanguage } = useTranslation();
   const [deviceDataResponses, setDeviceDataResponses] = useState<DeviceDataResponse[]>([]);
   const [checkId, setCheckId] = useState<number | null>(devices?.[0]?.id ?? null);

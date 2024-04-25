@@ -1,7 +1,7 @@
 import { useIsFocused } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Text, makeStyles, useTheme } from "@rneui/themed";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -11,8 +11,7 @@ import useDevice from "@/hooks/device/useDevice";
 import useDeviceActivate from "@/hooks/device/useDeviceActivate";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useDisableBackButton } from "@/hooks/useDisableBackButton";
-import { UserContext } from "@/providers/UserProvider";
-import { BuildingDeviceResponse } from "@/types/api";
+import { AllDevicesResponse } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
 
 type ActivateDeviceScreenProps = NativeStackScreenProps<HomeStackParamList, "ActivateDeviceScreen">;
@@ -23,7 +22,6 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
   const styles = useStyles();
   const { t } = useTranslation();
   const focused = useIsFocused();
-  const { user } = useContext(UserContext);
   const [isActivated, setIsActivated] = useState(false);
 
   const errorAlert = (message: string, title = "Error") => {
@@ -41,7 +39,7 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onActivated = (data: any) => {
-    const device = data as BuildingDeviceResponse;
+    const device = data as AllDevicesResponse;
 
     if (device.data_source.item.name !== dataSourceType)
       errorAlert(
@@ -67,22 +65,13 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
   // Activate the device if it's not activated already
   const onFetchError = (error: Error) => {
     const errorMsg = (error as Error)?.message?.toLowerCase();
-    const buildingId = user?.buildings?.[0]?.id;
-
-    if (!buildingId) {
-      errorAlert(t("screens.home_stack.activate_device.alert.no_building"));
-      return;
-    }
 
     if (errorMsg !== "device not found") {
       errorAlert(t("screens.home_stack.activate_device.alert.already_activated"));
       return;
     }
 
-    activateDevice(
-      { name: qrData.name, activationSecret: qrData.pop, buildingId },
-      { onSuccess: onActivated, onError }
-    );
+    activateDevice({ name: qrData.name, activationSecret: qrData.pop }, { onSuccess: onActivated, onError });
   };
 
   const { isFetching, isError, refetch } = useDevice(qrData.name, onActivated, onFetchError);

@@ -1,5 +1,5 @@
 import { BleDeviceType, SensorQrCode, WifiEntry } from ".";
-import { BuildingDeviceResponse } from "./api";
+import { AllDevicesResponse } from "./api";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -16,7 +16,7 @@ export type HomeStackParamList = {
   QrScannerScreen: {
     expectedDeviceName: string | undefined;
     device_TypeName: string;
-    dataSource: BuildingDeviceResponse;
+    dataSource: AllDevicesResponse;
     normalName: string;
   };
   AddDeviceScreen: {
@@ -24,7 +24,7 @@ export type HomeStackParamList = {
     expectedDeviceName?: string | undefined;
     device: string;
     normalName: string;
-    dataSource: BuildingDeviceResponse;
+    dataSource: AllDevicesResponse;
   };
   AddOnlineDataSourceScreen: undefined;
   SearchDeviceScreen: { deviceName: string; proofOfPossession: string; device_TypeName: string; normalName: string };
@@ -33,7 +33,7 @@ export type HomeStackParamList = {
     device_TypeName: string;
     dataSourceType: string;
     normalName: string;
-    dataSource: BuildingDeviceResponse;
+    dataSource: AllDevicesResponse;
   };
   ConnectScreen: { device: BleDeviceType; proofOfPossession: string; device_TypeName: string; normalName: string };
   WifiOverviewScreen: { device: BleDeviceType; proofOfPossession: string; device_TypeName: string; normalName: string };

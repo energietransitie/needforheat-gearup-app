@@ -71,11 +71,6 @@ export type DataSourceList = z.infer<typeof dataSourceList>;
 export const accountSchema = z.object({
   id: z.number(),
   activated_at: stringToDate,
-  buildings: z.array(
-    z.object({
-      id: z.number(),
-    })
-  ),
   campaign: z.object({
     name: z.string(),
     info_url: z.string(),
@@ -117,7 +112,6 @@ export const activateAccountDeviceSchema = z.object({
   id: z.number(),
   name: z.string(),
   device_type: deviceTypeSchema,
-  building_id: z.number(),
   activated_at: stringToDate.nullable(),
 });
 
@@ -154,27 +148,14 @@ export const activateDeviceSchema = z.object({ session_token: z.string() });
 
 export type ActivateDeviceResponse = z.infer<typeof activateDeviceSchema>;
 
-// GET /building/{id}
-export const buildingDeviceSchema = z.object({
+// GET /device/{all
+export const allDevicesSchema = z.object({
   id: z.number(),
   name: z.string(),
-  building_id: z.number(),
   activated_at: stringToDate.nullable(),
   latest_upload: stringToDate.nullable(),
   data_source: dataSourceType,
   connected: z.number().default(1),
 });
 
-export type BuildingDeviceResponse = z.infer<typeof buildingDeviceSchema>;
-
-// GET /building/{id}
-export const buildingSchema = z.object({
-  id: z.number(),
-  account_id: z.number(),
-  longtitude: z.number(),
-  latitude: z.number(),
-  tz_name: z.string(),
-  devices: z.array(buildingDeviceSchema).optional(),
-});
-
-export type BuildingResponse = z.infer<typeof buildingSchema>;
+export type AllDevicesResponse = z.infer<typeof allDevicesSchema>;

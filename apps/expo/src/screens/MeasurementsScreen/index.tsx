@@ -8,7 +8,6 @@ import Icon from "react-native-vector-icons/Ionicons";
 import DeviceGraph from "./_deviceGraph";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
-import BuildingBottomSheet from "@/components/common/bottomSheets/BuildingBottomSheet";
 import DeviceBottomSheet from "@/components/common/bottomSheets/DeviceBottomSheet";
 import PropertyBottomSheet from "@/components/common/bottomSheets/PropertyBottomSheet";
 import Box from "@/components/elements/Box";
@@ -23,15 +22,12 @@ import { capitalizeFirstLetter } from "@/utils/tools";
 export default function MeasurementsScreen() {
   const styles = useStyles();
   const { t, resolvedLanguage } = useTranslation();
-  const { user, isLoading } = useContext(UserContext);
+  const { isLoading } = useContext(UserContext);
 
-  const buildingBottomSheetRef = useRef<BottomSheetModal>(null);
   const deviceBottomSheetRef = useRef<BottomSheetModal>(null);
   const propertyBottomSheetRef = useRef<BottomSheetModal>(null);
 
-  const buildings = user?.buildings ?? [];
-  const [buildingId, setBuildingId] = useState<number | undefined>(buildings[0]?.id);
-  const { data: devices } = useDevices(buildingId ?? 0);
+  const { data: devices } = useDevices();
   const [deviceIdentifierName, setDeviceIdentifierName] = useState<string | undefined>();
   const [fetchedData, setFetchedData] = useState(null);
 
@@ -39,7 +35,7 @@ export default function MeasurementsScreen() {
 
   const hasMultipleDevices = (devices?.length ?? 0) > 1;
   const CompleteURL = devices && devices.length > 0 ? MANUAL_URL + devices[0].data_source.item.name : "";
-  const deviceDropdownDisabled = !buildingId || !hasMultipleDevices;
+  const deviceDropdownDisabled = !hasMultipleDevices;
 
   const [property, setProperty] = useState<DeviceProperty | undefined>();
 
@@ -67,11 +63,11 @@ export default function MeasurementsScreen() {
     }
   }, [CompleteURL, resolvedLanguage]);
 
-  if (isLoading || !buildingId) {
+  if (isLoading) {
     return (
       <Screen>
         <Box style={{ flex: 1 }} padded center>
-          <StatusIndicator isLoading isError={!buildingId} />
+          <StatusIndicator isLoading />
         </Box>
       </Screen>
     );
@@ -111,28 +107,21 @@ export default function MeasurementsScreen() {
           </TouchableOpacity>
 
           {/* Data of last 14, 30 & 90 days */}
-          {buildingId && deviceIdentifierName ? (
+          {deviceIdentifierName ? (
             <>
               <DeviceGraph deviceName={deviceIdentifierName} property={property} />
               <DeviceGraph deviceName={deviceIdentifierName} property={property} dayRange={30} />
               <DeviceGraph deviceName={deviceIdentifierName} property={property} dayRange={90} />
             </>
           ) : null}
-
-          <BuildingBottomSheet
-            bottomSheetRef={buildingBottomSheetRef}
-            buildingId={buildingId}
-            onBuildingSelect={setBuildingId}
-          />
           <DeviceBottomSheet
             bottomSheetRef={deviceBottomSheetRef}
-            buildingId={buildingId}
             deviceName={deviceIdentifierName}
             onDeviceIdentifier={setDisplayName}
             onDisplayName={setDeviceIdentifierName}
           />
 
-          {buildingId && deviceIdentifierName ? (
+          {deviceIdentifierName ? (
             <>
               <PropertyBottomSheet
                 bottomSheetRef={propertyBottomSheetRef}
