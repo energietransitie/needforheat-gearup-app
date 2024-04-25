@@ -19,7 +19,7 @@ export default function useCameraPermission() {
     // Request permissions if not granted
     const requestStatusses = await requestMultiple(CAMERA_PERMISSIONS);
     if (Object.values(requestStatusses).some(status => status !== "granted")) {
-      if (Platform.OS == "ios") {
+      if (Platform.OS === "ios") {
         throw new Error(t("hooks.camera_permission.not_granted_ios"));
       } else {
         throw new Error(t("hooks.camera_permission.not_granted_android"));

@@ -66,6 +66,10 @@ allprojects {
             // expo-camera bundles a custom com.google.android:cameraview
             url "$rootDir/../../../node_modules/expo-camera/android/maven"
         }
+        maven {
+           // react-native-background-fetch
+           url("${project(':react-native-background-fetch').projectDir}/libs")
+        }
     }
 }
 // @generated begin expo-camera-import - expo prebuild (DO NOT MODIFY) sync-f244f4f3d8bf7229102e8f992b525b8602c74770

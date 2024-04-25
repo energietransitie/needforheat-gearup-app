@@ -266,6 +266,9 @@
           "message": "Are you sure? After removing the stored Wi-Fi passwords from this app, you will have to enter the password again when you want to add a new measurement device.",
           "toast": "Succesfully deleted stored Wi-Fi passwords"
         },
+        "notifications": {
+          "title": "Open notification settings"
+        },
         "session_token": {
           "title": "Reset session token",
           "message": "Are you sure? This is a debug feature. After the reset, you need to re-activate the app using a personal invitation link.",
@@ -342,6 +345,19 @@
         "title": "Account activation error",
         "message": "The activation link is invalid."
       }
+    }
+  },
+  "notifications": {
+    "ticker": "DataSource Offline",
+    "bigText": "One or more of your DataSources hasn't been uploading for an extended period and its status is now RED.\nPlease investigate!",
+    "subText": "NeedForHeat DataSources",
+    "title": "DataSource Alert",
+    "message": "One or more of your DataSources hasn't been uploading for an extended period and its status is now RED.\nPlease investigate!",
+    "alert": {
+      "title": "Notification permission",
+      "message": "This app uses notifications to notify if a DataSource hasn't been uploading in a while.\n\nDo you want to grant this permission?",
+      "button": "Okay, ask away!",
+      "enable_button": "Grant Notification Permission"
     }
   },
   "components": {

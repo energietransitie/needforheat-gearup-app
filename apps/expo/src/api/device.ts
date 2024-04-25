@@ -100,7 +100,6 @@ export async function fetchDevices(buildingId: number) {
   const response = await fetch(`${API_URL}/building/${buildingId}`, {
     ...(await FETCH_HEADERS()),
   });
-
   const data = await handleRequestErrors(response);
   const jsonData = await data.json();
   return buildingSchema.parse(jsonData)?.devices ?? [];

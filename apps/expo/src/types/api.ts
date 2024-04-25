@@ -59,7 +59,7 @@ const exampleItems = [
     },
     precedes: [{ id: 2 }, { id: 3 }],
     uploadschedule: "*/10 * * * *",
-    notificationThresholdDuration: "P2D",
+    notificationThresholdDuration: "P1D",
   },
   {
     id: 2,
@@ -73,7 +73,7 @@ const exampleItems = [
     },
     precedes: [],
     uploadschedule: "*/10 * * * *",
-    notificationThresholdDuration: "P2D",
+    notificationThresholdDuration: "P1D",
   },
   {
     id: 3,
@@ -94,21 +94,18 @@ const exampleItems = [
 //TODO: TEMPORARY HARDOCODE, AWAIT API UPDATE THEN REMOVE THE DEFAULTS, OPTIONAL AND NULLABLE
 export type DataSourcesList = {
   description: string;
-  items: {
-    id: number;
-    type: {
-      name: string;
-    };
-    item: {
-      id: number;
-      name: string;
-      installation_manual_url: string;
-      info_url: string;
-    };
-    precedes: { id: number }[];
-    uploadschedule: string;
-    notificationThresholdDuration: string;
-  }[];
+  items: DataSourceType[];
+};
+
+export type DataSourceType = {
+  id: number;
+  type: {
+    name: string;
+  };
+  item: DataSourceItemType;
+  precedes: { id: number }[];
+  uploadschedule: string;
+  notificationThresholdDuration: string;
 };
 
 export type DataSourceItemType = {
