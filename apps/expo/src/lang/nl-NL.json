@@ -9,7 +9,7 @@
         "timespan": "Afgelopen {{count}} {{unit}}",
         "no_devices": "Er zijn geen apparaten gekoppeld",
         "no_property": "Selecteer een attribuut",
-        "no_data": "Geen dat beschikbaar"
+        "no_data": "Geen data beschikbaar"
       },
       "property_sheet": {
         "title": "Selecteer een attribuut"
@@ -17,8 +17,8 @@
     },
     "device_overview": {
       "title": "Databronnen",
-      "toast_message": "Voltooi de geopende taak eerst!",
-      "toast_title": "Gesloten item",
+      "toast_message": "Voltooi eerst het geopende item.",
+      "toast_title": "Vergrendeld item",
       "buttons": {
         "add_enelogic": "Enelogic toevoegen",
         "install_device": "Meetapparaat scannen"
