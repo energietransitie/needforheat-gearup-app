@@ -31,7 +31,14 @@
         "NSBluetoothAlwaysUsageDescription": "This app needs Bluetooth to connect to the sensor.",
         "NSBluetoothPeripheralUsageDescription": "This app needs Bluetooth to connect to the sensor.",
         "NSLocationWhenInUseUsageDescription": "This app needs location access to list nearby Wifi networks.",
-        "NSCameraUsageDescription": "This app needs camera access to scan QR codes."
+        "NSCameraUsageDescription": "This app needs camera access to scan QR codes.",
+        "UIBackgroundModes": [
+          "fetch",
+          "processing"
+        ],
+        "BGTaskSchedulerPermittedIdentifiers": [
+          "com.transistorsoft.fetch"
+        ]
       },
       "config": {
         "usesNonExemptEncryption": false
@@ -60,6 +67,7 @@
     "plugins": [
       "@react-native-firebase/app",
       "react-native-wifi-reborn",
+      "react-native-background-fetch",
       "./legacy-packaging",
       [
         "expo-build-properties",
