@@ -9,30 +9,39 @@ import ProgressBar from "./progressBar";
 import StatusIndicator from "@/components/common/StatusIndicator";
 import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
 import useDevices from "@/hooks/device/useDevices";
+import useEnergyQueries from "@/hooks/energyquery/useEnergyQueries";
 import { UserContext } from "@/providers/UserProvider";
-import { AllDevicesResponse, DataSourceType, DataSourceList } from "@/types/api";
+import { AllDataSourcesResponse, DataSourceType, DataSourceListType } from "@/types/api";
 
-export default function DeviceList({
+export default function DataSourceList({
   refresh,
   onRefresh,
   dataSourceList,
 }: {
   refresh: boolean;
-  dataSourceList: DataSourceList;
+  dataSourceList: DataSourceListType;
   onRefresh: () => void;
 }) {
   const { data, isLoading, refetch, isRefetching } = useDevices();
   const { data: cloudFeedData, isFetching } = useCloudFeeds();
-  const [scrollEnabled, setScrollEnabled] = useState(true);
-  const [itemData, setItemData] = useState<AllDevicesResponse[]>([]);
-  const [progress, setProgress] = useState("0/0");
-  const onSwipeBegin = useCallback(() => setScrollEnabled(false), []);
-  const onSwipeEnd = useCallback(() => setScrollEnabled(true), []);
+  const {
+    data: energyQueryData,
+    isLoading: isLoadingEnergyQueries,
+    refetch: refetchEnergyQueries,
+    isRefetching: isRefetchingEnergyQueries,
+  } = useEnergyQueries();
   const { user } = useContext(UserContext);
+
+  const [itemData, setItemData] = useState<AllDataSourcesResponse[]>([]);
   const [allItemsDone, setAllItemsDone] = useState(true);
+  const [progress, setProgress] = useState("0/0");
   const connectedState: number[] = [];
 
-  function checkStatus(dataSource: DataSourceType, oldSource: AllDevicesResponse) {
+  const [scrollEnabled, setScrollEnabled] = useState(true);
+  const onSwipeBegin = useCallback(() => setScrollEnabled(false), []);
+  const onSwipeEnd = useCallback(() => setScrollEnabled(true), []);
+
+  function checkStatus(dataSource: DataSourceType, oldSource: AllDataSourcesResponse) {
     const activated_at = oldSource?.activated_at ?? null;
     if (
       (dataSource.category === "cloud_feed_type" &&
@@ -47,11 +56,18 @@ export default function DeviceList({
   useEffect(() => {
     if (dataSourceList) {
       let connectedCount = 0;
-      const newData: AllDevicesResponse[] = [];
+      const newData: AllDataSourcesResponse[] = [];
 
       dataSourceList.items.forEach(dataSource => {
         let connectStatus = 1;
-        const oldSource = data?.find(item => item.data_source.item.name === dataSource.item.name);
+
+        let oldSource: AllDataSourcesResponse | undefined;
+        if (dataSource.category === "energy_query_type") {
+          oldSource = energyQueryData?.find(item => item.data_source.item.name === dataSource.item.name);
+        } else {
+          oldSource = data?.find(item => item.data_source.item.name === dataSource.item.name);
+        }
+
         const activated_at = oldSource?.activated_at ?? null;
         const latest_upload = oldSource?.latest_upload ?? null;
 
@@ -87,7 +103,7 @@ export default function DeviceList({
           connectedCount++;
         }
 
-        const newResponse: AllDevicesResponse = {
+        const newResponse: AllDataSourcesResponse = {
           id: dataSource.id,
           name: oldSource?.name ? oldSource.name : dataSource.item.name,
           activated_at,
@@ -107,14 +123,15 @@ export default function DeviceList({
       setProgress("0/0");
       setItemData(data ?? []);
     }
-  }, [dataSourceList, data, cloudFeedData]);
+  }, [dataSourceList, data, cloudFeedData, energyQueryData]);
 
   useEffect(() => {
     if (refresh) {
       refetch();
+      refetchEnergyQueries();
       onRefresh();
     }
-  }, [refresh, refetch, onRefresh]);
+  }, [refresh, refetch, onRefresh, refetchEnergyQueries]);
 
   useEffect(() => {
     let itemDone = true;
@@ -138,7 +155,7 @@ export default function DeviceList({
   };
 
   let shouldLoad = true;
-  if (!isLoading || Boolean(user)) {
+  if ((!isLoading && !isLoadingEnergyQueries) || Boolean(user)) {
     shouldLoad = false;
   }
 
@@ -146,13 +163,13 @@ export default function DeviceList({
     return <StatusIndicator isLoading={shouldLoad} />;
   }
 
-  if (isLoading || isFetching) {
+  if (isLoading || isFetching || isLoadingEnergyQueries || isRefetchingEnergyQueries) {
     return <StatusIndicator isLoading />;
   }
   return (
     <View style={{ flex: 1 }}>
       <ProgressBar progress={progress} />
-      <FlatList<AllDevicesResponse>
+      <FlatList<AllDataSourcesResponse>
         data={itemData || data}
         contentContainerStyle={{ flexGrow: 1 }}
         style={{ width: "100%" }}

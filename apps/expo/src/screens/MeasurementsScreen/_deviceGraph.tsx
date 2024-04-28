@@ -8,15 +8,15 @@ import { LineChartData } from "react-native-chart-kit/dist/line-chart/LineChart"
 
 import StatusIndicator from "@/components/common/StatusIndicator";
 import Box from "@/components/elements/Box";
-import useMeasurements from "@/hooks/device/useMeasurements";
 import useTranslation from "@/hooks/translation/useTranslation";
-import { DeviceProperty } from "@/types/api";
+import useMeasurements from "@/hooks/upload/useMeasurements";
+import { Measurement, Property } from "@/types/api";
 import { getAverageValuePerDay } from "@/utils/aggregate";
 
 type DeviceGraphProps = {
   deviceName: string;
   dayRange?: number;
-  property: DeviceProperty | undefined;
+  property: Property | undefined;
 };
 
 const BOX_HEIGHT = 250;
@@ -25,14 +25,15 @@ export default function DeviceGraph(props: DeviceGraphProps) {
   const { deviceName, dayRange = 14, property } = props;
   const styles = useStyles();
   const { theme } = useTheme();
-  const { data, isFetching } = useMeasurements(deviceName, {
+  const { data, isFetching } = useMeasurements(deviceName, "device", {
     property: property?.id ?? 0,
     start: dayjs().subtract(dayRange, "d").startOf("day").toLocaleString(),
   });
+  const measurements: Measurement[] = Array.isArray(data) ? data : [];
   const [width, setWidth] = useState<number>(0);
   const { t } = useTranslation();
 
-  const filteredData = data?.filter(measurement => !isNaN(parseFloat(measurement.value)));
+  const filteredData = measurements?.filter(measurement => !isNaN(parseFloat(measurement.value)));
 
   // get the aggregated average value of every day
   const aggregatedData = getAverageValuePerDay(filteredData ?? []);

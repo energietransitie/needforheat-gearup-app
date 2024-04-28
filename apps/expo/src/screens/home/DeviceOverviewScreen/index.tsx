@@ -2,13 +2,13 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useContext, useState } from "react";
 import { View } from "react-native";
 
-import DeviceList from "./_deviceList";
+import DataSourceList from "./_datasourcelist";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
 import Box from "@/components/elements/Box";
 import Screen from "@/components/elements/Screen";
 import { UserContext } from "@/providers/UserProvider";
-import { DataSourceList } from "@/types/api";
+import { DataSourceListType } from "@/types/api";
 
 export default function DeviceOverviewScreen() {
   const { user, isLoading } = useContext(UserContext);
@@ -33,10 +33,10 @@ export default function DeviceOverviewScreen() {
           <>
             <View style={{ flex: 1 }}>
               <View style={{ flex: 1, justifyContent: "flex-start" }}>
-                <DeviceList
+                <DataSourceList
                   refresh={refreshDeviceList}
                   onRefresh={onDeviceListRefreshed}
-                  dataSourceList={user?.campaign.data_source_list as DataSourceList}
+                  dataSourceList={user?.campaign.data_source_list as DataSourceListType}
                 />
               </View>
             </View>

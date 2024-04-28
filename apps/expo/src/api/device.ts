@@ -3,12 +3,13 @@ import { URLSearchParams } from "react-native-url-polyfill";
 
 import { FETCH_HEADERS } from "@/constants";
 import {
-  allDevicesSchema,
+  allDataSourcesSchema,
   createDeviceSchema,
-  deviceMeasurementSchema,
-  devicePropertiesSchema,
+  measurementSchema,
+  propertiesSchema,
   deviceReadSchema,
   deviceTypeSchema,
+  FetchMeasurementsOptions,
 } from "@/types/api";
 import { handleRequestErrors } from "@/utils/tools";
 
@@ -22,9 +23,7 @@ export async function fetchDeviceType(deviceName: string) {
   return deviceTypeSchema.parse(jsonData);
 }
 
-export type FetchDeviceMeasurementsOptions = { start?: string; end?: string; property: number };
-
-export async function fetchDeviceMeasurements(deviceName: string, fetchOptions: FetchDeviceMeasurementsOptions) {
+export async function fetchDeviceMeasurements(deviceName: string, fetchOptions: FetchMeasurementsOptions) {
   const args: [string, string][] = Object.entries(fetchOptions)
     .filter(([, value]) => !!value)
     .map(([key, value]) => [key, String(value)]);
@@ -38,7 +37,7 @@ export async function fetchDeviceMeasurements(deviceName: string, fetchOptions: 
 
   const data = await handleRequestErrors(response);
   const jsonData = await data.json();
-  return deviceMeasurementSchema.parse(jsonData);
+  return measurementSchema.parse(jsonData);
 }
 
 export async function fetchDeviceProperties(deviceName: string) {
@@ -48,7 +47,7 @@ export async function fetchDeviceProperties(deviceName: string) {
 
   const data = await handleRequestErrors(response);
   const jsonData = await data.json();
-  return devicePropertiesSchema.parse(jsonData);
+  return propertiesSchema.parse(jsonData);
 }
 
 export async function activateDevice({ name, activationSecret }: { name: string; activationSecret: string }) {
@@ -93,7 +92,7 @@ export async function fetchDevices() {
     const parsedDevices = [];
     for (const deviceData of jsonData) {
       try {
-        const parsedDevice = allDevicesSchema.parse(deviceData);
+        const parsedDevice = allDataSourcesSchema.parse(deviceData);
         parsedDevices.push(parsedDevice);
       } catch (error) {
         console.error("Error parsing device data:", error);

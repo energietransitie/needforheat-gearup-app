@@ -11,7 +11,7 @@ import useDevice from "@/hooks/device/useDevice";
 import useDeviceActivate from "@/hooks/device/useDeviceActivate";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useDisableBackButton } from "@/hooks/useDisableBackButton";
-import { AllDevicesResponse } from "@/types/api";
+import { AllDataSourcesResponse } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
 
 type ActivateDeviceScreenProps = NativeStackScreenProps<HomeStackParamList, "ActivateDeviceScreen">;
@@ -39,7 +39,7 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onActivated = (data: any) => {
-    const device = data as AllDevicesResponse;
+    const device = data as AllDataSourcesResponse;
 
     if (device.data_source.item.name !== dataSourceType)
       errorAlert(

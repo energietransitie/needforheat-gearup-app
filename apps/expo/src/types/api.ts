@@ -15,32 +15,32 @@ export const deviceTypeSchema = z.object({
 
 export type DeviceTypeResponse = z.infer<typeof deviceTypeSchema>;
 
-export const deviceProperty = z.object({
+export const propertySchema = z.object({
   id: z.number(),
   name: z.string(),
 });
 
-export type DeviceProperty = z.infer<typeof deviceProperty>;
+export type Property = z.infer<typeof propertySchema>;
 
-// GET: /device/{id}/properties
-export const devicePropertiesSchema = z.array(deviceProperty);
+// GET: /device/{id}/properties & /energy_query/{id}/properties
+export const propertiesSchema = z.array(propertySchema);
 
-export type DevicePropertiesResponse = z.infer<typeof devicePropertiesSchema>;
+export type PropertiesResponse = z.infer<typeof propertiesSchema>;
 
-export const deviceMeasurement = z.object({
+export const measurementSchema = z.object({
   id: z.number(),
   upload_id: z.number(),
-  property: deviceProperty,
+  property: propertySchema,
   value: z.string(),
   time: stringToDate,
 });
 
-export type DeviceMeasurement = z.infer<typeof deviceMeasurement>;
+export type Measurement = z.infer<typeof measurementSchema>;
 
-// GET: /device/{id}/measurements
-export const deviceMeasurementSchema = z.array(deviceMeasurement);
+// GET: /device/{id}/measurements &  /energy_query/{id}/measurements
+export const measurementsSchema = z.array(measurementSchema);
 
-export type deviceMeasurementsResponse = z.infer<typeof deviceMeasurementSchema>;
+export type measurementsResponse = z.infer<typeof measurementsSchema>;
 
 // POST: /account
 //DataSourceList
@@ -59,13 +59,13 @@ export const dataSourceType = z.object({
 
 export type DataSourceType = z.infer<typeof dataSourceType>;
 
-export const dataSourceList = z.object({
+export const dataSourceListSchema = z.object({
   id: z.number(),
   name: z.string(),
   items: z.array(dataSourceType),
 });
 
-export type DataSourceList = z.infer<typeof dataSourceList>;
+export type DataSourceListType = z.infer<typeof dataSourceListSchema>;
 // Datasourcelist End
 
 export const accountSchema = z.object({
@@ -74,7 +74,7 @@ export const accountSchema = z.object({
   campaign: z.object({
     name: z.string(),
     info_url: z.string(),
-    data_source_list: dataSourceList,
+    data_source_list: dataSourceListSchema,
   }),
 });
 
@@ -149,7 +149,7 @@ export const activateDeviceSchema = z.object({ session_token: z.string() });
 export type ActivateDeviceResponse = z.infer<typeof activateDeviceSchema>;
 
 // GET /device/{all
-export const allDevicesSchema = z.object({
+export const allDataSourcesSchema = z.object({
   id: z.number(),
   name: z.string(),
   activated_at: stringToDate.nullable(),
@@ -158,4 +158,30 @@ export const allDevicesSchema = z.object({
   connected: z.number().default(1),
 });
 
-export type AllDevicesResponse = z.infer<typeof allDevicesSchema>;
+export type AllDataSourcesResponse = z.infer<typeof allDataSourcesSchema>;
+
+export type FetchMeasurementsOptions = { start?: string; end?: string; property: number };
+
+// EnergyQueries
+export const uploadSchema = z.object({
+  id: z.number(),
+  instance_id: z.number(),
+  instance_type: z.string(),
+  server_time: z.date(),
+  device_time: z.date(),
+  size: z.number(),
+  measurements: measurementsSchema,
+});
+
+export type Upload = z.infer<typeof uploadSchema>;
+
+export const uploadsSchema = z.array(uploadSchema);
+
+export const energyQueryScherma = z.object({
+  id: z.number(),
+  energy_query_type: z.string(),
+  activated_at: z.date(),
+  uploads: uploadsSchema,
+});
+
+export type EnergyQuery = z.infer<typeof energyQueryScherma>;

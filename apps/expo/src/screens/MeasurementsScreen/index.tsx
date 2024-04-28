@@ -16,7 +16,7 @@ import { MANUAL_URL } from "@/constants";
 import useDevices from "@/hooks/device/useDevices";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
-import { DeviceProperty } from "@/types/api";
+import { Property } from "@/types/api";
 import { capitalizeFirstLetter } from "@/utils/tools";
 
 export default function MeasurementsScreen() {
@@ -37,7 +37,7 @@ export default function MeasurementsScreen() {
   const CompleteURL = devices && devices.length > 0 ? MANUAL_URL + devices[0].data_source.item.name : "";
   const deviceDropdownDisabled = !hasMultipleDevices;
 
-  const [property, setProperty] = useState<DeviceProperty | undefined>();
+  const [property, setProperty] = useState<Property | undefined>();
 
   useEffect(() => {
     if (devices?.length) {

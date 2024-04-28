@@ -4,14 +4,14 @@ import { ListItem, Text } from "@rneui/themed";
 import { useEffect } from "react";
 
 import { HIDDEN_PROPERTY_NAMES } from "@/constants";
-import useProperties from "@/hooks/device/useProperties";
 import useTranslation from "@/hooks/translation/useTranslation";
-import { DeviceProperty } from "@/types/api";
+import useProperties from "@/hooks/upload/useProperties";
+import { Property } from "@/types/api";
 
 type PropertyBottomSheetProps = {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
   deviceName: string;
-  onPropertySelect: (property: DeviceProperty | undefined) => void;
+  onPropertySelect: (property: Property | undefined) => void;
   propertyId?: number;
 };
 
@@ -21,10 +21,10 @@ export default function PropertyBottomSheet({
   onPropertySelect,
   propertyId,
 }: PropertyBottomSheetProps) {
-  const { data: properties } = useProperties(deviceName);
+  const { data: properties } = useProperties(deviceName, "device");
   const { t } = useTranslation();
 
-  const onPress = (property: DeviceProperty) => {
+  const onPress = (property: Property) => {
     onPropertySelect(property);
     bottomSheetRef.current?.dismiss();
   };
