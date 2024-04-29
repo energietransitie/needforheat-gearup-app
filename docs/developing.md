@@ -61,7 +61,7 @@ GOOGLE_MAPS_API_KEY= # The key to enable Google Maps in the app
 ```
 
 ### 4.1. Test- or Local API?
-The recommended server to use is the existing public test server available on <https://api.tst.energietransitiewindesheim.nl/v2>
+The recommended server to use is the existing public test server available on <https://api.tst.energietransitiewindesheim.nl/v3>
 
 A local server with the [needforheat-server-api](https://github.com/energietransitie/needforheat-server-api) is possible by running it through Docker with the [feat/cors branch](https://github.com/energietransitie/needforheat-server-api/tree/feat/cors). \
 However, this is not the best way to develop and you might run in to issues you won't have by just using the public test server. This issue is because of security from [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
