@@ -52,69 +52,6 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
   };
   //End H3
 
-  //Location permission
-  const [hasPermission, setHasPermission] = useState(false);
-  const { requestPreciseLocationPermission, checkPreciseLocationPermission } = usePreciseLocationPermission();
-
-  const onRequestPreciseLocationError = (err: string) => {
-    console.log("onRequestPermissionError", err);
-    Alert.alert("Error", err, [
-      {
-        text: t("screens.home_stack.search_device.open_settings"),
-        onPress: () => {
-          // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
-          openSettings().catch(e => { });
-        },
-      },
-    ]);
-  };
-
-  const askForPreciseLocationPermission = async (): Promise<null> => {
-    const permission = await checkPreciseLocationPermission();
-    setHasPermission(permission);
-
-    return new Promise((resolve, reject) => {
-      if (!permission) {
-        const title = t("screens.home_stack.energy_query.location_permission.alert.title");
-        const message = t("screens.home_stack.energy_query.location_permission.alert.message");
-
-        Alert.alert(title, message, [
-          {
-            text: t("screens.home_stack.energy_query.location_permission.alert.button"),
-            onPress: async () => {
-              try {
-                await requestPreciseLocationPermission();
-                resolve(null);
-                setHasPermission(await checkPreciseLocationPermission());
-              } catch (err: unknown) {
-                const errorMsg =
-                  err instanceof Error ? err.message : t("screens.home_stack.energy_query.location_permission.errors.request_failed");
-                onRequestPreciseLocationError(errorMsg);
-                reject(err);
-              }
-            },
-          },
-        ]);
-      }
-    });
-  };
-
-  //Location permission END
-
-  const onPressMyLocation = async () => {
-    if (await checkPreciseLocationPermission()) {
-      Geolocation.getCurrentPosition((pos) => succes(pos))
-      const succes = (position: GeolocationResponse) => {
-        if (position) {
-          refMap.current?.animateToRegion({ longitude: position.coords.longitude, latitude: position.coords.latitude, longitudeDelta: 0.0008, latitudeDelta: 0.0008 }, 20)
-        }
-      }
-    } else {
-      await askForPreciseLocationPermission()
-      onPressMyLocation()
-    }
-  }
-
   const handleZoomIn = () => {
     setLocationState((prevRegion) => ({
       ...prevRegion,
@@ -177,8 +114,6 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
           <MapView
             ref={refMap}
             region={locationState}
-            showsUserLocation={true}
-            showsMyLocationButton={true}
             showsBuildings={true}
             showsScale={true}
             pitchEnabled={false}
@@ -201,18 +136,12 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
             <Icon name="remove" color="white" size={30} />
           </TouchableOpacity>
         </View>
-          <View style={style.myLocation}>
-            <TouchableOpacity onPress={onPressMyLocation}>
-              <Icon name="my-location" color="white" size={40} />
-            </TouchableOpacity>
-          </View>
-
         </View>
         <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
           <Button
             containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
             title={t("screens.home_stack.energy_query.weather_location_result_screen.back_button")}
-            color="primary"
+            color="grey2"
             onPress={onBack}
             icon={{
               name: "arrow-back-circle-outline",

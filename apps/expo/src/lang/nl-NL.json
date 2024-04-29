@@ -239,12 +239,12 @@
         },
         "homeselect_screen": {
           "title": "Selecteer uw woning",
-          "subtitle": "Sleep de kaart rond en plaats de pin boven uw huis/gebouw",
+          "subtitle": "Sleep de kaart rond en plaats de pin boven uw huis",
           "button": "Deze locatie gebruiken!"
         },
         "weather_location_result_screen":{
           "title": "Resultaten",
-          "subtitle": "Bevindt jouw huis/gebouw zich in deze zeshoek?",
+          "subtitle": "Bevindt jouw huis zich in deze zeshoek?",
           "send_button": "Verzenden",
           "back_button": "Opnieuw",
           "marker": "Geselecteerde locatie"
