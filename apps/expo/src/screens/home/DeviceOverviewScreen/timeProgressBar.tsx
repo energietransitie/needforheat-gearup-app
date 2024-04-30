@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
+import Svg, { Circle } from "react-native-svg";
 
 interface TimeProgressBarProps {
   progress: string;
@@ -36,94 +37,74 @@ const TimeProgressBar: React.FC<TimeProgressBarProps> = ({ progress, onTimePasse
     return () => clearInterval(intervalId);
   }, [progress]);
 
-  const progressBarWidth = tooLate ? 100 : 100 - (remainingTime / totalTime) * 100;
+  let progressPercentage = (remainingTime / totalTime) * 100;
+  if (remainingTime === totalTime && remainingTime === 0 && totalTime === 0) progressPercentage = 100;
+
+  //formattime hours and minutes
+  const formatTime = (time: number) => {
+    if (time >= 60) {
+      const hours = Math.floor(time / 60);
+      const minutes = time % 60;
+      return minutes === 0
+        ? hours + t("screens.device_overview.device_list.hours")
+        : hours + t("screens.device_overview.device_list.hours") + " " + minutes + "m";
+    } else {
+      return time + "m";
+    }
+  };
+
+  //dynamic time fontsize
+  const getFontSize = (time: number) => {
+    if (time > 59) {
+      return 8;
+    } else {
+      return 10;
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.progressBar}>
-        {/* Progress bar */}
-        <View
-          style={[
-            styles.progress,
-            superLate ? styles.superLateProgress : tooLate ? styles.tooLateProgress : null,
-            { width: `${progressBarWidth}%`, height: tooLate || superLate ? 5 : 15 },
-          ]}
+      <Svg width="50%" height="50%" viewBox="0 0 42 42">
+        <Circle cx="21" cy="21" r="15.91549430918954" strokeWidth="4" stroke="#ccc" fill="none" />
+        <Circle
+          cx="21"
+          cy="21"
+          r="15.91549430918954"
+          strokeWidth="4"
+          stroke={superLate ? "red" : tooLate ? "orange" : "green"}
+          strokeDasharray={`${progressPercentage}, 100`}
+          strokeLinecap="round"
+          fill="none"
+          transform="rotate(-90, 21, 21)"
         />
-
-        {/* Text or remaining time */}
-        {!tooLate && !superLate && (
-          <View style={[styles.textWrapper]}>
-            {remainingTime === 0 ? (
-              <Text style={[styles.progressText, progressBarWidth >= 50 && styles.textWrapperWhite]}>
-                {t("screens.device_overview.device_list.updating_now")}
-              </Text>
-            ) : (
-              <Text style={[styles.progressText, progressBarWidth >= 50 && styles.textWrapperWhite]}>
-                {t("screens.device_overview.device_list.next_update") + ` ${remainingTime}m`}
-              </Text>
-            )}
-          </View>
-        )}
-
-        {/* Remaining progress */}
-        <View style={[styles.remainingProgress, { width: `${progressBarWidth}%` }]} />
-      </View>
+      </Svg>
+      <Text style={{ ...styles.progressText, fontSize: getFontSize(remainingTime) }}>
+        {superLate
+          ? t("screens.device_overview.device_list.super_late")
+          : tooLate
+          ? t("screens.device_overview.device_list.late")
+          : remainingTime === 0
+          ? t("screens.device_overview.device_list.updating_now")
+          : formatTime(remainingTime)}
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 0,
-    width: "100%",
-  },
-  progressBar: {
-    flexDirection: "row",
-    backgroundColor: "#ccc",
-    borderRadius: 5,
-    overflow: "hidden",
     alignItems: "center",
-    position: "relative", // Ensure positioning context
+    justifyContent: "center",
+    width: 100,
+    height: 100,
+    position: "absolute",
+    right: -45,
+    top: -30,
   },
   progressText: {
-    fontWeight: "bold",
-    fontSize: 10,
-    textAlign: "center",
-    zIndex: 2, // Ensure text is above remainingProgress
-  },
-  textWrapper: {
     position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    justifyContent: "center",
-    alignItems: "center",
     textAlign: "center",
-    zIndex: 2, // Ensure text is above remainingProgress
-  },
-  textWrapperWhite: {
-    color: "white",
-  },
-  progress: {
-    backgroundColor: "green",
-    zIndex: 1, // Ensure progress is below text and remainingProgress
-  },
-  tooLateProgress: {
-    backgroundColor: "orange",
-    zIndex: 1, // Ensure tooLateProgress is below text and remainingProgress
-  },
-  superLateProgress: {
-    backgroundColor: "red",
-    zIndex: 1, // Ensure superLateProgress is below text and remainingProgress
-  },
-  remainingProgress: {
-    backgroundColor: "#ddd",
-    position: "absolute",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    zIndex: 0, // Behind progress and text
+    zIndex: 2,
   },
 });
 

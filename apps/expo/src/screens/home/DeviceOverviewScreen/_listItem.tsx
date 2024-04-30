@@ -280,7 +280,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
             {" " + getNormalName()}
           </ListItem.Title>
           {item.connected === 2 ? (
-            <ListItem.Subtitle>
+            <ListItem.Subtitle style={[style.listItemSubtitle]}>
               {item.latest_upload
                 ? t("screens.device_overview.device_list.device_info.last_seen", {
                     date: formatDateAndTime(item.latest_upload),
@@ -328,5 +328,8 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  listItemSubtitle: {
+    marginRight: 24,
   },
 }));
