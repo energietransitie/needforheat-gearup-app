@@ -8,6 +8,7 @@ import i18n from "i18next";
 import { useEffect, useState } from "react";
 import { initReactI18next } from "react-i18next";
 import { Dimensions, View } from "react-native";
+import PushNotification from "react-native-push-notification";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import AppRouter from "./src/components/routers/AppRouter";
@@ -53,6 +54,7 @@ export default function App() {
     RobotoBold: require("./assets/fonts/Roboto-Bold.ttf"),
     RobotoBlack: require("./assets/fonts/Roboto-Black.ttf"),
   });
+
   useEffect(() => {
     const removeNetInfoSubscription = NetInfo.addEventListener(state => {
       setNetworkConnected(Boolean(state.isInternetReachable));
@@ -61,6 +63,8 @@ export default function App() {
   }, []);
 
   if (!fontsLoaded) return null;
+
+  PushNotification.setApplicationIconBadgeNumber(0);
 
   return (
     <Providers>

@@ -5,7 +5,7 @@ import { toast } from "burnt";
 import { nativeBuildVersion } from "expo-application";
 import Constants from "expo-constants";
 import { useRef } from "react";
-import { Alert, FlatList } from "react-native";
+import { Alert, FlatList, Linking } from "react-native";
 
 import LanguageBottomSheet from "./_languageBottomSheet";
 import SettingListItem, { SettingItem } from "./_settingListItem";
@@ -42,6 +42,10 @@ export default function SettingsScreen() {
     );
   };
 
+  const onOpenNotificationSettings = () => {
+    Linking.openSettings();
+  };
+
   const data: SettingItem[] = [
     {
       title: t("screens.settings_stack.settings_screen.app_language"),
@@ -54,6 +58,11 @@ export default function SettingsScreen() {
       title: t("screens.settings_stack.settings_screen.wifi_passwords.title"),
       value: "",
       onPress: onDeleteWifiPasswords,
+    },
+    {
+      title: t("screens.settings_stack.settings_screen.notifications.title"),
+      value: "",
+      onPress: onOpenNotificationSettings,
     },
   ];
 

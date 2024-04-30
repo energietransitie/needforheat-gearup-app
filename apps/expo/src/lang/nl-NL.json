@@ -9,7 +9,7 @@
         "timespan": "Afgelopen {{count}} {{unit}}",
         "no_devices": "Er zijn geen apparaten gekoppeld",
         "no_property": "Selecteer een attribuut",
-        "no_data": "Geen data"
+        "no_data": "Geen data beschikbaar"
       },
       "property_sheet": {
         "title": "Selecteer een attribuut"
@@ -17,11 +17,11 @@
     },
     "device_overview": {
       "title": "Databronnen",
-      "toast_message": "Doe de geopende eerst!",
-      "toast_title": "Gesloten item",
+      "toast_message": "Voltooi eerst het geopende item.",
+      "toast_title": "Vergrendeld item",
       "buttons": {
         "add_enelogic": "Enelogic toevoegen",
-        "install_device": "Meetapparaatje scannen"
+        "install_device": "Meetapparaat scannen"
       },
       "device_list": {
         "device_info": {
@@ -31,7 +31,10 @@
         "reset_device": "Resetten",
         "empty_collection": "Er is geen Databronnen lijst gevonden voor deze campagne.",
         "updating_now": "Nu",
-        "next_update": "Volg. in"
+        "late": "Laat",
+        "super_late": "Offline",
+        "next_update": "Volg. in",
+        "hours": "u"
       }
     },
     "home_stack": {
@@ -41,9 +44,9 @@
         "status_indicator": {
           "loading": "Apparaatinformatie ophalen...",
           "working": "Apparaat activeren op server...",
-          "error": "Er is een fout opgetreden bij het activeren van het meetapparaatje. Probeer het opnieuw."
+          "error": "Er is een fout opgetreden bij het activeren van het meetapparaat. Probeer het opnieuw."
         },
-        "activated": "Apparaat geactiveeerd!",
+        "activated": "Apparaat geactiveerd!",
         "alert": {
           "unknown_error": "Er is een fout opgetreden bij het activeren van het apparaat.",
           "already_activated": "Dit meetapparaatje is al geactiveerd op een ander account.",
@@ -53,7 +56,7 @@
       "already_invited": {
         "title": "Reeds uitgenodigd",
         "expanded_title": "Ik heb al een uitnodiging",
-        "description": "In de uitnodigingsmail die u heeft ontvangen staat een activatielink. Klik op deze link om te beginnen met de installatie van uw meetapparaatjes."
+        "description": "In de uitnodigingsmail die u heeft ontvangen staat een activatielink. Klik op deze link om te beginnen met de installatie van uw meetapparaten."
       },
       "add_device": {
         "title": "Apparaat verbinden",
@@ -83,7 +86,7 @@
         },
         "authenticated": {
           "title": "Scan een QR-code",
-          "description": "Scan de QR-code van een meetapparaatje. Deze staat op het e-ink scherm van het meetapparaatje of op een sticker (kijk ook op de achterkant)."
+          "description": "Scan de QR-code van het meetapparaat. Deze staat op het e-ink scherm van het meetapparaat of op een sticker (kijk ook op de achterkant)."
         },
         "unauthenticated": {
           "title": "NeedForHeat",
@@ -121,11 +124,11 @@
         },
         "provisioning_error": {
           "title": "Er is een fout opgetreden",
-          "message": "Er is een fout opgetreden tijdens het configureren van uw apparaat. Start het meetapparaatje opnieuw en probeer opnieuw."
+          "message": "Er is een fout opgetreden tijdens het configureren van uw apparaat. Start het meetapparaat opnieuw en probeer opnieuw."
         },
         "wifi_error": {
-          "title": "Er is iets fouts gegaan tijdens het verbinden met het wifinetwerk",
-          "message": "Is uw wifiwachtwoord wel correct? Bent u wel in de buurt van het apparaat?"
+          "title": "Er is iets misgegaan tijdens het verbinden met het wifinetwerk",
+          "message": "Is uw wifi-wachtwoord wel correct? Bent u wel in de buurt van het apparaat?"
         },
         "measurements_error": {
           "title": "Geen gegevens ontvangen",
@@ -136,17 +139,17 @@
         "title": "QR-code scanner",
         "errors": {
           "no_permission": "Geen cameratoestemming",
-          "invalid_qr": "De QR-code is geen geldige QR-code voor een meetapparaatje.",
+          "invalid_qr": "De QR-code is geen geldige QR-code voor een meetapparaat.",
           "mismatched_device_name": "Het apparaat dat u probeert te activeren is niet hetzelfde als het apparaat dat u zojuist heeft gescand.",
           "unknown_error": "Er is een fout opgetreden tijdens het scannen van de QR-code.",
           "camera_request_failed": "Een fout is opgetreden bij het aanvragen van camera-machtigingen."
         },
         "camera": {
           "alert": {
-            "title": "Camera machtiging",
+            "title": "Camera-machtiging",
             "message": "Deze app maakt gebruik van de camera om QR-codes te scannen vanaf het apparaat.\n\nWilt u deze machtiging verlenen?",
             "button": "Oké, vraag maar!",
-            "enable_button": "Machtiging camera verlenen"
+            "enable_button": "Camera-machtiging verlenen"
           }
         }
       },
@@ -220,7 +223,7 @@
             },
             "invalid_wifi": {
               "title": "Fout",
-              "message": "Dit meetapparaatje kan geen verbinding maken met WPA2 Enterprise- of WPA3-netwerken."
+              "message": "Dit meetapparaat kan geen verbinding maken met WPA2 Enterprise- of WPA3-netwerken."
             }
           }
         }
@@ -232,7 +235,7 @@
         "title": "Info",
         "unsuported_url_alert": {
           "title": "Niet-ondersteunde URL",
-          "message": "De URL {{url}} word niet ondersteund."
+          "message": "De URL {{url}} wordt niet ondersteund."
         },
         "campaign": "Campagne"
       },
@@ -253,8 +256,11 @@
         "app_language": "Taal selecteren",
         "wifi_passwords": {
           "title": "Opgeslagen wifiwachtwoorden verwijderen",
-          "message": "Weet u het zeker? Na het verwijderen van de opgeslagen wifiwachtwoorden uit deze app zult u bij het koppelen van een nieuw meetapparaatje het wifiwachtwoord opnieuw moeten intypen.",
+          "message": "Weet u het zeker? Na het verwijderen van de opgeslagen wifiwachtwoorden uit deze app zult u bij het koppelen van een nieuw meetapparaat het wifiwachtwoord opnieuw moeten invoeren.",
           "toast": "wifiwachtwoorden succesvol verwijderd"
+        },
+        "notifications": {
+          "title": "Open melding instellingen"
         },
         "session_token": {
           "title": "Sessie-token resetten",
@@ -314,7 +320,7 @@
       "not_supported": "Uw smartphone biedt geen ondersteuning voor het openen van externe links.",
       "confirmation": {
         "title": "Externe link openen",
-        "description": "U staat op het punt een link buiten de applicatie te openen. Wil je doorgaan?\n\nURL: {{url}}",
+        "description": "U staat op het punt een link buiten de applicatie te openen. Wilt u doorgaan?\n\nURL: {{url}}",
         "confirm": "Open"
       }
     }
@@ -335,13 +341,26 @@
       }
     }
   },
+  "notifications": {
+    "ticker": "DataSource Offline",
+    "bigText": "Een of meer van uw DataSources hebben langdurig niet geupload en hun status is nu ROOD.\nGraag onderzoeken!",
+    "subText": "NeedForHeat DataSources",
+    "title": "DataSource Waarschuwing",
+    "message": "Een of meer van uw DataSources hebben langdurig niet geupload en hun status is nu ROOD.\nGraag onderzoeken!",
+    "alert": {
+      "title": "Melding machtiging",
+      "message": "Deze app stuurt meldingen om u te informeren als een DataSource langduring niet upload.\n\nWilt u deze machtiging verlenen?",
+      "button": "Oké, vraag maar!",
+      "enable_button": "Machtiging melding verlenen"
+    }
+  },
   "components": {
     "wifi_network_list": {
       "empty_collection": "Geen wifinetwerken gevonden."
     },
     "manual_content": {
       "loading": "Handleiding laden...",
-      "error": "De handleiding kon niet worden geladen. Neem contact op met de maker van het meetapparaatje voor meer informatie of ga verder op eigen risico."
+      "error": "De handleiding kon niet worden geladen. Neem contact op met de maker van het meetapparaat voor meer informatie of ga verder op eigen risico."
     },
     "status_indicator": {
       "loading": "Aan het laden...",

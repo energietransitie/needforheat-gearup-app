@@ -17,7 +17,8 @@
     },
     "device_overview": {
       "title": "Data Sources",
-      "toast_message": "Finish the opened data source first.",
+      "toast_message": " Please complete the enabled item first.",
+      "toast_title": "Locked item",
       "buttons": {
         "add_enelogic": "Connect Enelogic",
         "install_device": "Scan device"
@@ -30,7 +31,10 @@
         "reset_device": "Reset",
         "empty_collection": "No Data Sources List found for this Campaign",
         "updating_now": "Now",
-        "next_update": "Next in"
+        "late": "Late",
+        "super_late": "Offline",
+        "next_update": "Next in",
+        "hours": "h"
       }
     },
     "home_stack": {
@@ -162,7 +166,7 @@
           "alert": {
             "title": "Allow permissions",
             "androidmessage": "This app uses Bluetooth to connect to the module, but does not register your location.\n\nOn Android, Bluetooth falls under location services. Therefore, you will soon be asked about location access.\n\nAdditionally, you need to give permission for 'Nearby Devices' to connect to the module.",
-            "iosmessage": "This app uses Bluetooth to connect to the module. \n\n We ask of you to turn Bluetooth on to continue if you have not already given this permission.",
+            "iosmessage": "This app uses Bluetooth to connect to the module. \n\n We ask you to turn Bluetooth on to continue if you have not already given this permission.",
             "button": "Okay, go ahead!",
             "enable_button": "Enable Bluetooth",
             "cancel": "Cancel",
@@ -182,7 +186,7 @@
           "found": "Device {{name}} found!",
           "not_found": {
             "title": "Device {{name}} was not found.",
-            "message": "Please make sure that the measurement device is near your smartphone. Searching again with the button below."
+            "message": "Please make sure that the measurement device is near your smartphone. Try searching again with the button below."
           }
         },
         "scan": "Scan",
@@ -219,7 +223,7 @@
             },
             "invalid_wifi": {
               "title": "Error",
-              "message": "This measurement device can not connect to WPA2 Enterprise or WPA3 networks."
+              "message": "This measurement device cannot connect to WPA2 Enterprise or WPA3 networks."
             }
           }
         }
@@ -254,6 +258,9 @@
           "title": "Delete stored Wi-Fi passwords",
           "message": "Are you sure? After removing the stored Wi-Fi passwords from this app, you will have to enter the password again when you want to add a new measurement device.",
           "toast": "Succesfully deleted stored Wi-Fi passwords"
+        },
+        "notifications": {
+          "title": "Open notification settings"
         },
         "session_token": {
           "title": "Reset session token",
@@ -331,6 +338,19 @@
         "title": "Account activation error",
         "message": "The activation link is invalid."
       }
+    }
+  },
+  "notifications": {
+    "ticker": "DataSource Offline",
+    "bigText": "One or more of your DataSources hasn't been uploading for an extended period and its status is now RED.\nPlease investigate!",
+    "subText": "NeedForHeat DataSources",
+    "title": "DataSource Alert",
+    "message": "One or more of your DataSources hasn't been uploading for an extended period and its status is now RED.\nPlease investigate!",
+    "alert": {
+      "title": "Notification permission",
+      "message": "This app uses notifications to notify if a DataSource hasn't been uploading in a while.\n\nDo you want to grant this permission?",
+      "button": "Okay, ask away!",
+      "enable_button": "Grant Notification Permission"
     }
   },
   "components": {

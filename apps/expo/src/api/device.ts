@@ -80,7 +80,6 @@ export async function fetchDevices() {
     const response = await fetch(`${API_URL}/device/all`, {
       ...(await FETCH_HEADERS()),
     });
-
     const data = await handleRequestErrors(response);
     const jsonData = await data.json();
 

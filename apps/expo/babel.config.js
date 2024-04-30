@@ -20,8 +20,8 @@ module.exports = function (api) {
           },
         },
       ],
-      // "@babel/plugin-proposal-class-properties",
-      // "@babel/plugin-proposal-private-methods",
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-private-methods",
       "react-native-reanimated/plugin",
     ],
   };
