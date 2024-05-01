@@ -1,26 +1,22 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, Icon, makeStyles, useTheme } from "@rneui/themed";
-import MapView, { Geojson, Marker, Region, UserLocationChangeEvent } from "react-native-maps";
+import * as Burnt from "burnt";
+import { FeatureCollection } from "geojson";
 import { latLngToCell, cellToBoundary, cellToLatLng, CoordPair } from "h3-js";
+import { useEffect, useRef, useState } from "react";
+import { Platform, Text, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import MapView, { Geojson } from "react-native-maps";
+
 import Box from "@/components/elements/Box";
 import useTranslation from "@/hooks/translation/useTranslation";
-import { HomeStackParamList } from "@/types/navigation";
-import { Alert, Platform, Text, Touchable, View } from "react-native";
-import { useEffect, useRef, useState } from "react";
 import { UserLocation } from "@/types/energyquery";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import * as Burnt from "burnt";
-import { openSettings } from "expo-linking";
-import usePreciseLocationPermission from "@/hooks/location/usePreciseLocationPermission";
-import Geolocation, { GeolocationResponse } from "@react-native-community/geolocation";
-import HomeSelectExplanationBottomSheet from "./_HomeSelectExplanationBottomSheet";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { FeatureCollection, GeoJsonProperties, Geometry } from "geojson";
+import { HomeStackParamList } from "@/types/navigation";
 
 type WeatherLocationResultScreenProps = NativeStackScreenProps<HomeStackParamList, "WeatherLocationResultScreen">;
 
 export default function WeatherLocationResultScreen({ navigation, route }: WeatherLocationResultScreenProps) {
-  const { location } = route.params
+  const { location } = route.params;
   const { theme } = useTheme();
   const { t } = useTranslation();
   const style = useStyles();
@@ -43,9 +39,7 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
       preset: "done",
     });
 
-    setTimeout(() => {
-      navigation.navigate("HomeScreen");
-    }, 5000);
+    navigation.navigate("HomeScreen");
   };
 
   const onBack = () => {
@@ -53,26 +47,26 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
   };
 
   //H3
-  const cell = latLngToCell(location.latitude, location.longitude, 4)
-  const resultLocation = cellToLatLng(cell)
-  const cellBoundaries = cellToBoundary(cell, true)
+  const cell = latLngToCell(location.latitude, location.longitude, 4);
+  const resultLocation = cellToLatLng(cell);
+  const cellBoundaries = cellToBoundary(cell, true);
   const cellBoundariesGeoJson: FeatureCollection = {
-    type: 'FeatureCollection',
+    type: "FeatureCollection",
     features: [
       {
-        type: 'Feature',
+        type: "Feature",
         properties: {},
         geometry: {
-          type: 'Polygon',
-          coordinates: [cellBoundaries]
-        }
-      }
-    ]
+          type: "Polygon",
+          coordinates: [cellBoundaries],
+        },
+      },
+    ],
   };
   //End H3
 
   const handleZoomIn = () => {
-    setLocationState((prevRegion) => ({
+    setLocationState(prevRegion => ({
       ...prevRegion,
       latitudeDelta: prevRegion.latitudeDelta / 2,
       longitudeDelta: prevRegion.longitudeDelta / 2,
@@ -80,7 +74,7 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
   };
 
   const handleZoomOut = () => {
-    setLocationState((prevRegion) => ({
+    setLocationState(prevRegion => ({
       ...prevRegion,
       latitudeDelta: prevRegion.latitudeDelta * 2,
       longitudeDelta: prevRegion.longitudeDelta * 2,
@@ -120,23 +114,26 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
   };
 
   useEffect(() => {
-    setLocationState(getRegionForCoordinates(cellBoundaries))
-  }, [])
+    setLocationState(getRegionForCoordinates(cellBoundaries));
+  }, []);
 
   return (
     <>
       <Box padded style={{ flex: 1 }}>
         <View>
-          <Text style={style.subtitle}>{t("screens.home_stack.energy_query.weather_location_result_screen.subtitle")}</Text>
+          <Text style={style.subtitle}>
+            {t("screens.home_stack.energy_query.weather_location_result_screen.subtitle")}
+          </Text>
         </View>
         <View style={style.mapcontainer}>
           <MapView
             ref={refMap}
             region={locationState}
-            showsBuildings={true}
-            showsScale={true}
+            showsBuildings
+            showsScale
             pitchEnabled={false}
             style={style.map}
+            zoomControlEnabled
           >
             <Geojson
               geojson={cellBoundariesGeoJson}
@@ -147,15 +144,18 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
               fillColor="rgba(51, 136, 255, 0.2)"
             />
           </MapView>
-          <View style={style.zoomControls}>
-            <TouchableOpacity onPress={handleZoomIn} style={style.zoomButton}>
-              <Icon name="add" color="white" size={30} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleZoomOut} style={style.zoomButton}>
-              <Icon name="remove" color="white" size={30} />
-            </TouchableOpacity>
-          </View>
+          {Platform.OS === "ios" ? (
+            <View style={style.zoomControls}>
+              <TouchableOpacity onPress={handleZoomIn} style={style.zoomButton}>
+                <Icon name="add" color="white" size={30} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleZoomOut} style={style.zoomButton}>
+                <Icon name="remove" color="white" size={30} />
+              </TouchableOpacity>
+            </View>
+          ) : null}
         </View>
+
         <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
           <Button
             containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
@@ -188,9 +188,9 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
 const useStyles = makeStyles(theme => ({
   mapcontainer: {
     flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   map: {
     position: "absolute",
@@ -200,10 +200,10 @@ const useStyles = makeStyles(theme => ({
     bottom: 0,
   },
   zoomControls: {
-    position: 'absolute',
+    position: "absolute",
     top: 10,
     right: 10,
-    flexDirection: 'column',
+    flexDirection: "column",
   },
   zoomButton: {
     backgroundColor: theme.colors.primary,
@@ -221,10 +221,10 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 5,
   },
   subtitle: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    fontWeight: "bold",
+    textAlign: "center",
     fontSize: 16,
-  }
+  },
 }));

@@ -94,7 +94,8 @@ const exampleItems = [
     item: {
       id: 1,
       name: "weather-interpolation-location",
-      installation_manual_url: "https://manuals.tst.energietransitiewindesheim.nl/energy_queries/weather-interpolation-location/installation",
+      installation_manual_url:
+        "https://manuals.tst.energietransitiewindesheim.nl/energy_queries/weather-interpolation-location/installation",
       info_url: "https://manuals.tst.energietransitiewindesheim.nl/energy_queries/weather-interpolation-location/faq",
     },
     precedes: [],
