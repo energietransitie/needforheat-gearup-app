@@ -246,7 +246,17 @@
           "subtitle": "Is your home inside this hexagon?",
           "send_button": "Send my query!",
           "back_button": "Try again",
-          "marker": "Selected location"
+          "marker": "Selected location",
+          "alert": {
+            "sending": {
+              "title": "Sending...",
+              "message": "Sending your Energy Query to the Energy Doctor"
+            },
+            "success":{
+              "title": "Success!",
+              "message": "Your Energy Query has been sent to the Energy Doctor"
+            }
+          }
         },
         "location_permission": {
           "alert": {

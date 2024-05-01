@@ -9,6 +9,7 @@ import { Alert, Platform, Text, Touchable, View } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { UserLocation } from "@/types/energyquery";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import * as Burnt from "burnt";
 import { openSettings } from "expo-linking";
 import usePreciseLocationPermission from "@/hooks/location/usePreciseLocationPermission";
 import Geolocation, { GeolocationResponse } from "@react-native-community/geolocation";
@@ -25,8 +26,26 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
   const style = useStyles();
   const refMap = useRef<MapView>(null);
   const [locationState, setLocationState] = useState<UserLocation>(location);
-  const onContinue = () => {
-    navigation.navigate("HomeScreen");
+  const onSend = () => {
+    Burnt.alert({
+      title: t("screens.home_stack.energy_query.weather_location_result_screen.alert.sending.title"),
+      message: t("screens.home_stack.energy_query.weather_location_result_screen.alert.sending.message"),
+      preset: "spinner",
+      duration: 10,
+    });
+
+    //TODO: POST
+    Burnt.dismissAllAlerts();
+
+    Burnt.alert({
+      title: t("screens.home_stack.energy_query.weather_location_result_screen.alert.success.title"),
+      message: t("screens.home_stack.energy_query.weather_location_result_screen.alert.success.message"),
+      preset: "done",
+    });
+
+    setTimeout(() => {
+      navigation.navigate("HomeScreen");
+    }, 5000);
   };
 
   const onBack = () => {
@@ -68,30 +87,30 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
     }));
   };
 
-  const getRegionForCoordinates = (coordinates : CoordPair[], paddingPercent = 0.04) => {
+  const getRegionForCoordinates = (coordinates: CoordPair[], paddingPercent = 0.04) => {
     if (!coordinates || coordinates.length === 0) {
       throw new Error("Coordinates array cannot be empty.");
     }
-  
+
     // Get minimum and maximum latitude and longitude from the coordinates
     const latitudes = coordinates.map(coord => coord[1]);
     const longitudes = coordinates.map(coord => coord[0]);
-  
+
     const minLat = Math.min(...latitudes);
     const maxLat = Math.max(...latitudes);
     const minLon = Math.min(...longitudes);
     const maxLon = Math.max(...longitudes);
-  
-    const baseLatitudeDelta = maxLat - minLat;
-  const baseLongitudeDelta = maxLon - minLon;
 
-  // Apply padding to the deltas
-  const latitudeDelta = baseLatitudeDelta + baseLatitudeDelta * paddingPercent;
-  const longitudeDelta = baseLongitudeDelta + baseLongitudeDelta * paddingPercent;
-  
+    const baseLatitudeDelta = maxLat - minLat;
+    const baseLongitudeDelta = maxLon - minLon;
+
+    // Apply padding to the deltas
+    const latitudeDelta = baseLatitudeDelta + baseLatitudeDelta * paddingPercent;
+    const longitudeDelta = baseLongitudeDelta + baseLongitudeDelta * paddingPercent;
+
     const centerLatitude = (minLat + maxLat) / 2;
     const centerLongitude = (minLon + maxLon) / 2;
-  
+
     return {
       latitude: centerLatitude,
       longitude: centerLongitude,
@@ -107,7 +126,7 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
   return (
     <>
       <Box padded style={{ flex: 1 }}>
-      <View>
+        <View>
           <Text style={style.subtitle}>{t("screens.home_stack.energy_query.weather_location_result_screen.subtitle")}</Text>
         </View>
         <View style={style.mapcontainer}>
@@ -129,13 +148,13 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
             />
           </MapView>
           <View style={style.zoomControls}>
-          <TouchableOpacity onPress={handleZoomIn} style={style.zoomButton}>
-            <Icon name="add" color="white" size={30} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleZoomOut} style={style.zoomButton}>
-            <Icon name="remove" color="white" size={30} />
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity onPress={handleZoomIn} style={style.zoomButton}>
+              <Icon name="add" color="white" size={30} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleZoomOut} style={style.zoomButton}>
+              <Icon name="remove" color="white" size={30} />
+            </TouchableOpacity>
+          </View>
         </View>
         <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
           <Button
@@ -153,7 +172,7 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
             containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
             title={t("screens.home_stack.energy_query.weather_location_result_screen.send_button")}
             color="primary"
-            onPress={onContinue}
+            onPress={onSend}
             icon={{
               name: "cloud-upload-outline",
               type: "ionicon",
@@ -204,8 +223,8 @@ const useStyles = makeStyles(theme => ({
   subtitle: {
     justifyContent: 'center',
     alignItems: 'center',
-    fontWeight: 'bold', 
-    textAlign: 'center', 
+    fontWeight: 'bold',
+    textAlign: 'center',
     fontSize: 16,
   }
 }));

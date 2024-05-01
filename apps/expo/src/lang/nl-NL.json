@@ -247,7 +247,18 @@
           "subtitle": "Bevindt jouw huis zich in deze zeshoek?",
           "send_button": "Verzenden",
           "back_button": "Opnieuw",
-          "marker": "Geselecteerde locatie"
+          "marker": "Geselecteerde locatie",
+          "alert": {
+            "sending": {
+              "title": "Bezig met verzenden...",
+              "message": "Uw Energy Query wordt naar de energiedokter gestuurd"
+            },
+            "success": {
+              "title": "Succes!",
+              "message": "Uw Energy Query is naar de energiedokter gestuurd"
+            }
+          }
+        
         },
         "location_permission": {
           "alert": {
