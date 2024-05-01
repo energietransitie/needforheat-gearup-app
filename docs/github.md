@@ -9,6 +9,8 @@ This template should be filled in for every pullrequest to ensure that reviewers
 ## Workflows
 The project has multiple workflows that are all used to ensure the quality of the app. In addition, the workflow helps with the process of building the apps and making them ready for release to production or test.
 
+Please ensure that you set the secrets for the API URL and the Google Maps API Key in [GitHub Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
+
 These workflows use [GitHub Actions](https://docs.github.com/en/actions) to run.
 
 ### [For every pullrequest]

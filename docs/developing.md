@@ -57,6 +57,7 @@ Fill in the environment variable for the API:
 
 ```yaml
 API_URL= # The API URL for the need-for-heat app
+GOOGLE_MAPS_API_KEY= # The key to enable Google Maps in the app
 ```
 
 ### 4.1. Test- or Local API?
