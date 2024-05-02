@@ -4,7 +4,6 @@ import * as Burnt from "burnt";
 import cronParser from "cron-parser";
 import { format } from "date-fns";
 import { enUS, nl } from "date-fns/locale";
-import { DateTime, Duration } from "luxon";
 import { useEffect, useState } from "react";
 import { Platform, ToastAndroid, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -16,7 +15,7 @@ import useTranslation from "@/hooks/translation/useTranslation";
 import { useOpenExternalLink } from "@/hooks/useOpenExternalLink";
 import { BuildingDeviceResponse } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
-import { capitalizeFirstLetter } from "@/utils/tools";
+import { capitalizeFirstLetter, checkMissedUpload } from "@/utils/tools";
 import "intl";
 import "intl/locale-data/jsonp/en";
 
@@ -176,42 +175,6 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     }
   }
 
-  function checkMissedUpload(item: BuildingDeviceResponse): number {
-    const latestUploadString = item.latest_upload ? item.latest_upload.toISOString() : "";
-    const timeNow = new Date();
-    const cronExpression = item.upload_schedule ? item.upload_schedule : "";
-    const notificationThresholdDurationISO = item.notification_threshold_duration;
-    try {
-      const intervalIterator = cronParser.parseExpression(cronExpression, { currentDate: latestUploadString });
-      let missedIntervals = 0;
-      let upToDate = false;
-
-      // Convert ISO 8601 duration to Luxon Duration
-      if (notificationThresholdDurationISO) {
-        const thresholdTime = DateTime.fromISO(latestUploadString).plus(
-          Duration.fromISO(notificationThresholdDurationISO)
-        );
-
-        // Check if the current time has passed the threshold time
-        if (DateTime.now() >= thresholdTime) return -2;
-      }
-
-      while (!upToDate && intervalIterator.hasNext() && missedIntervals < 10) {
-        const nextInterval = intervalIterator.next().toDate();
-        if (nextInterval.getTime() === timeNow.getTime()) break;
-        if (nextInterval.getTime() < timeNow.getTime()) {
-          missedIntervals++;
-        } else {
-          upToDate = true;
-        }
-      }
-      return missedIntervals;
-    } catch (error) {
-      console.error("Error parsing cron expression:", error);
-      return -1;
-    }
-  }
-
   function updateMonitoring() {
     setTimeToUpload(checkNextUpload(item));
     setMissed(checkMissedUpload(item));
@@ -238,6 +201,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   return (
     <>
       <ListItem.Swipeable
+        testID="device-list-item"
         onPress={() => {
           if (item.connected === 1) {
             handleItemClick();
@@ -322,7 +286,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
             {" " + getNormalName()}
           </ListItem.Title>
           {item.connected === 2 ? (
-            <ListItem.Subtitle>
+            <ListItem.Subtitle style={[style.listItemSubtitle]}>
               {item.latest_upload
                 ? t("screens.device_overview.device_list.device_info.last_seen", {
                     date: formatDateAndTime(item.latest_upload),
@@ -370,5 +334,8 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  listItemSubtitle: {
+    marginRight: 24,
   },
 }));

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import * as SecureStore from "expo-secure-store"; // Import SecureStore from Expo
+import * as SecureStore from "expo-secure-store";
 import { useEffect, useState } from "react";
 
 import { fetchUser } from "@/api/user";

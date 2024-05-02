@@ -1,31 +1,26 @@
 import { API_URL } from "@env";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { makeStyles, Text } from "@rneui/themed";
-import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "burnt";
 import { nativeBuildVersion } from "expo-application";
 import Constants from "expo-constants";
 import { useContext, useRef } from "react";
-import { Alert, FlatList } from "react-native";
+import { Alert, FlatList, Linking, Platform } from "react-native";
+import PushNotification from "react-native-push-notification";
 
 import LanguageBottomSheet from "./_languageBottomSheet";
 import SettingListItem, { SettingItem } from "./_settingListItem";
 
 import Box from "@/components/elements/Box";
-import { deleteWifiNetworks, removeAuthToken } from "@/constants";
+import { deleteWifiNetworks } from "@/constants";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
-import { HomeStackParamList, SettingsStackParamList } from "@/types/navigation";
 
 export default function SettingsScreen() {
   const styles = useStyles();
   const { t, languages, resolvedLanguage } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
-  const { isAuthed, refetch } = useContext(UserContext);
-  const settingsNavigation = useNavigation<NavigationProp<SettingsStackParamList>>();
-  const homeNavigation = useNavigation<NavigationProp<HomeStackParamList>>();
-  const queryClient = useQueryClient();
+  useContext(UserContext);
 
   const onDeleteWifiPasswords = () => {
     Alert.alert(
@@ -51,30 +46,8 @@ export default function SettingsScreen() {
     );
   };
 
-  const onResetSessionToken = () => {
-    Alert.alert(
-      t("screens.settings_stack.settings_screen.session_token.title"),
-      t("screens.settings_stack.settings_screen.session_token.message"),
-      [
-        { text: t("common.cancel"), style: "cancel" },
-        {
-          text: t("common.reset"),
-          style: "destructive",
-          onPress: async () => {
-            await removeAuthToken();
-            await queryClient.invalidateQueries({ queryKey: ["user"] });
-            await refetch({ throwOnError: true });
-
-            toast({
-              title: t("screens.settings_stack.settings_screen.session_token.toast"),
-              from: "bottom",
-            });
-
-            homeNavigation.navigate("HomeScreen");
-          },
-        },
-      ]
-    );
+  const onOpenNotificationSettings = () => {
+    Linking.openSettings();
   };
 
   const data: SettingItem[] = [
@@ -90,12 +63,11 @@ export default function SettingsScreen() {
       value: "",
       onPress: onDeleteWifiPasswords,
     },
-    // {
-    //   title: t("screens.settings_stack.settings_screen.session_token.title"),
-    //   value: "",
-    //   onPress: onResetSessionToken,
-    //   isDangerous: true,
-    // },
+    {
+      title: t("screens.settings_stack.settings_screen.notifications.title"),
+      value: "",
+      onPress: onOpenNotificationSettings,
+    },
   ];
 
   return (
