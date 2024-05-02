@@ -9,8 +9,13 @@ export const validationErrorSchema = z.object({
 
 // GET: /device/{id}
 export const deviceTypeSchema = z.object({
-  id: z.number(),
-  name: z.string(),
+  id: z.number().optional().nullable(),
+  name: z.string().optional().nullable(),
+});
+
+export const TypeSchema = z.object({
+  ID: z.number(),
+  Name: z.string(),
 });
 
 export type DeviceTypeResponse = z.infer<typeof deviceTypeSchema>;
@@ -47,23 +52,29 @@ export type measurementsResponse = z.infer<typeof measurementsSchema>;
 export const dataSourceType = z.object({
   id: z.number(),
   category: z.string(),
-  item: deviceTypeSchema,
+  item: TypeSchema,
   order: z.number(),
-  installation_manual_url: z.string(),
-  FAQ_url: z.string(),
-  info_url: z.string(),
-  precedes: z.array(z.object({ id: z.number() })),
-  uploadschedule: z.string(),
-  notificationThresholdDuration: z.string(),
+  installation_url: z.string().optional().nullable(),
+  faq_url: z.string().optional().nullable(),
+  info_url: z.string().optional().nullable(),
+  precedes: z
+    .array(z.object({ id: z.number() }))
+    .optional()
+    .nullable(),
+  uploadschedule: z.string().optional().nullable(),
+  notificationThresholdDuration: z.string().optional().nullable(),
 });
 
 export type DataSourceType = z.infer<typeof dataSourceType>;
 
-export const dataSourceListSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  items: z.array(dataSourceType),
-});
+export const dataSourceListSchema = z
+  .object({
+    id: z.number().optional().nullable(),
+    name: z.string().optional().nullable(),
+    items: z.array(dataSourceType),
+  })
+  .optional()
+  .nullable();
 
 export type DataSourceListType = z.infer<typeof dataSourceListSchema>;
 // Datasourcelist End
@@ -111,7 +122,7 @@ export type cloudFeedsResponse = z.infer<typeof cloudFeedSchema>;
 export const activateAccountDeviceSchema = z.object({
   id: z.number(),
   name: z.string(),
-  device_type: deviceTypeSchema,
+  device_type: deviceTypeSchema.optional().nullable(),
   activated_at: stringToDate.nullable(),
 });
 
@@ -119,11 +130,11 @@ export type ActivateAccountDeviceResponse = z.infer<typeof activateAccountDevice
 
 // GET: /device
 export const deviceSchema = z.object({
-  id: z.number(),
-  name: z.string(),
+  id: z.number().optional().nullable(),
+  name: z.string().optional().nullable(),
   device_type: deviceTypeSchema.merge(
     z.object({
-      properties: z.array(z.object({ id: z.number(), name: z.string() })),
+      properties: z.array(z.object({ id: z.number().optional().nullable(), name: z.string().optional().nullable() })),
     })
   ),
   activation_token: z.string(),
@@ -154,7 +165,7 @@ export const allDataSourcesSchema = z.object({
   name: z.string(),
   activated_at: stringToDate.nullable(),
   latest_upload: stringToDate.nullable(),
-  data_source: dataSourceType,
+  data_source: dataSourceType.optional().nullable(),
   connected: z.number().default(1),
 });
 

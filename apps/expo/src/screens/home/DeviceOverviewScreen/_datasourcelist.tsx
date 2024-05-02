@@ -45,7 +45,7 @@ export default function DataSourceList({
     const activated_at = oldSource?.activated_at ?? null;
     if (
       (dataSource.category === "cloud_feed_type" &&
-        cloudFeedData?.find(item => item.cloud_feed_type.name === dataSource.item.name)?.connected) ||
+        cloudFeedData?.find(item => item.cloud_feed_type.name === dataSource.item.Name)?.connected) ||
       !(activated_at === null)
     ) {
       return 2;
@@ -63,9 +63,9 @@ export default function DataSourceList({
 
         let oldSource: AllDataSourcesResponse | undefined;
         if (dataSource.category === "energy_query_type") {
-          oldSource = energyQueryData?.find(item => item.data_source.item.name === dataSource.item.name);
+          oldSource = energyQueryData?.find(item => item.data_source?.item.Name === dataSource.item.Name);
         } else {
-          oldSource = data?.find(item => item.data_source.item.name === dataSource.item.name);
+          oldSource = data?.find(item => item.data_source?.item.Name === dataSource.item.Name);
         }
 
         const activated_at = oldSource?.activated_at ?? null;
@@ -78,6 +78,7 @@ export default function DataSourceList({
 
         //Check if all precedes are completed
         const itemsNotPrecedingCurrent = dataSourceList.items.filter(otherItem => {
+          if (!otherItem.precedes) return false;
           const precedesMatch = otherItem.precedes.some(precede => precede.id === dataSource.id);
           return otherItem.id !== dataSource.id && precedesMatch;
         });
@@ -85,7 +86,7 @@ export default function DataSourceList({
         let allPrecedesDone = true;
         if (itemsNotPrecedingCurrent.length > 0) {
           itemsNotPrecedingCurrent.forEach(otherItem => {
-            const otherOldSource = data?.find(item => item.data_source.item.name === otherItem.item.name);
+            const otherOldSource = data?.find(item => item.data_source?.item.Name === otherItem.item.Name);
             if (otherOldSource) {
               if (checkStatus(otherItem, otherOldSource) === 1) {
                 allPrecedesDone = false;
@@ -105,7 +106,7 @@ export default function DataSourceList({
 
         const newResponse: AllDataSourcesResponse = {
           id: dataSource.id,
-          name: oldSource?.name ? oldSource.name : dataSource.item.name,
+          name: oldSource?.name ? oldSource.name : dataSource.item.Name,
           activated_at,
           latest_upload,
           data_source: dataSource,
@@ -114,7 +115,17 @@ export default function DataSourceList({
         newData.push(newResponse);
       });
 
-      newData.sort((a, b) => a.data_source.order - b.data_source.order);
+      newData.sort((a, b) => {
+        const orderA = a.data_source?.order;
+        const orderB = b.data_source?.order;
+
+        // If either order is null, retain the original order
+        if (!orderA || !orderB) {
+          return 0;
+        } else {
+          return orderA - orderB;
+        }
+      });
       setItemData(newData);
 
       const progressString = `${connectedCount}/${dataSourceList.items.length}`;
@@ -166,6 +177,7 @@ export default function DataSourceList({
   if (isLoading || isFetching || isLoadingEnergyQueries || isRefetchingEnergyQueries) {
     return <StatusIndicator isLoading />;
   }
+
   return (
     <View style={{ flex: 1 }}>
       <ProgressBar progress={progress} />

@@ -23,6 +23,7 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
   const { t } = useTranslation();
   const focused = useIsFocused();
   const [isActivated, setIsActivated] = useState(false);
+  const { mutate: activateDevice, isLoading: isMutating, isError: isMutateError } = useDeviceActivate();
 
   const errorAlert = (message: string, title = "Error") => {
     Alert.alert(title, message, [
@@ -34,18 +35,32 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
     ]);
   };
 
-  const onError = (error: unknown) =>
+  const onError = (error: unknown) => {
+    console.log(error);
     errorAlert(`${t("screens.home_stack.activate_device.alert.unknown_error")}${error ? `\n\n${error}` : ""}`);
+  };
+
+  type Device = {
+    activated_at: Date | null;
+    device_type: {
+      id: number;
+      name: string;
+    };
+    id: number;
+    name: string;
+  };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onActivated = (data: any) => {
-    const device = data as AllDataSourcesResponse;
+    const device = data as Device;
 
-    if (device.data_source.item.name !== dataSourceType)
+    if (!dataSource.data_source || device.device_type.name !== dataSource.data_source.item.Name) {
       errorAlert(
         t("screens.home_stack.activate_device.alert.mismatched_device_name"),
         t("screens.home_stack.activate_device.alert.unknown_error")
       );
+      return;
+    }
 
     setIsActivated(true);
 
@@ -60,12 +75,9 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
     }, 500);
   };
 
-  const { mutate: activateDevice, isLoading: isMutating, isError: isMutateError } = useDeviceActivate();
-
   // Activate the device if it's not activated already
   const onFetchError = (error: Error) => {
     const errorMsg = (error as Error)?.message?.toLowerCase();
-
     if (errorMsg !== "device not found") {
       errorAlert(t("screens.home_stack.activate_device.alert.already_activated"));
       return;

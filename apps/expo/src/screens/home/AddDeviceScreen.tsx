@@ -26,7 +26,10 @@ export default function AddDeviceScreen({ navigation, route }: AddDeviceScreenPr
 
   return (
     <Box padded style={{ flex: 1 }}>
-      <ManualContent manualUrl={dataSource.data_source.installation_manual_url} languageHeader={resolvedLanguage} />
+      <ManualContent
+        manualUrl={dataSource.data_source?.installation_url ? dataSource.data_source.installation_url : undefined}
+        languageHeader={resolvedLanguage}
+      />
       <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
         <Button
           containerStyle={{ flex: 1 }}

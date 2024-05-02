@@ -35,7 +35,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   const style = useStyles();
   const { t, resolvedLanguage } = useTranslation();
   const [data, setData] = useState(null); // Initialize data state variable
-  const CompleteURL = MANUAL_URL + item.data_source.item.name;
+  const CompleteURL = MANUAL_URL + item.data_source?.item.Name;
 
   const [missed, setMissed] = useState(0);
   const [timeToUpload, setTimeToUpload] = useState<string>();
@@ -56,15 +56,15 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
       name = capitalizeFirstLetter(data["en-US"]) || name;
     }
 
-    if (!name && item.data_source.item?.name) {
-      name = capitalizeFirstLetter(item.data_source.item.name) || name;
+    if (!name && item.data_source?.item?.Name) {
+      name = capitalizeFirstLetter(item.data_source.item.Name) || name;
     }
 
     return name;
   };
 
   const onReset = (close: () => void) => {
-    if (item.data_source.item.name === "device_type") {
+    if (item.data_source?.category === "device_type") {
       navigate("QrScannerScreen", {
         expectedDeviceName: item.name,
         device_TypeName: item.name,
@@ -88,20 +88,23 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   };
 
   const openManual = () => {
-    if (item.data_source.item.name === "device_type") {
+    if (item.data_source?.category === "device_type") {
       navigate("QrScannerScreen", {
         expectedDeviceName: undefined,
         device_TypeName: "",
         dataSource: item,
         normalName: getNormalName(),
       });
-    } else if (item.data_source.item.name === "cloud_feed_type") {
+    } else if (item.data_source?.category === "cloud_feed_type") {
       navigate("AddOnlineDataSourceScreen");
     }
   };
 
-  //Used for when we start the item
-  const openHelpUrl = () => openUrl(item.data_source.FAQ_url, false);
+  const openHelpUrl = () => {
+    if (item.data_source?.faq_url) {
+      openUrl(item.data_source.faq_url, false);
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -137,7 +140,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   function checkNextUpload(item: AllDataSourcesResponse): string {
     const latestUpload = item.latest_upload ?? new Date();
     const timeNow = new Date();
-    let cronExpression = item.data_source.uploadschedule ?? "";
+    let cronExpression = item.data_source?.uploadschedule ?? "";
 
     // Replace '0' in cron expression with corresponding value from latestUpload
     const parts = cronExpression.split(" ");
@@ -208,7 +211,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
         onSwipeEnd={onSwipeEnd}
         leftWidth={0}
         rightContent={
-          item.connected === 2 && !(item.data_source.item.name === "cloud_feed_type")
+          item.connected === 2 && !(item.data_source?.category === "cloud_feed_type")
             ? close => (
                 <Button
                   title={t("screens.device_overview.device_list.reset_device")}
@@ -241,7 +244,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           <ListItem.Title>
             {item.connected === 2 ? (
               <>
-                {item.data_source.item.name === "device_type" && (
+                {item.data_source?.category === "device_type" && (
                   <>
                     {missed === 0 ? (
                       <Icon name="layers" color="green" size={16} />
@@ -252,7 +255,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
                     )}
                   </>
                 )}
-                {item.data_source.item.name === "energy_query_type" && (
+                {item.data_source?.category === "energy_query_type" && (
                   <>
                     {missed === 0 ? (
                       <Icon name="flash" color="green" size={16} />
@@ -263,7 +266,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
                     )}
                   </>
                 )}
-                {item.data_source.item.name === "cloud_feed_type" && (
+                {item.data_source?.category === "cloud_feed_type" && (
                   <>
                     {missed === 0 ? (
                       <Icon name="cloud" color="green" size={16} />
@@ -303,13 +306,13 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
             <Icon name="lock-closed-outline" size={32} />
           ) : item.connected === 2 ? null : null}
 
-          {item.data_source.FAQ_url !== "" ? (
+          {item.data_source?.faq_url !== "" ? (
             <TouchableOpacity onPress={openHelpUrl}>
               <Icon name="help-circle-outline" size={32} />
             </TouchableOpacity>
           ) : null}
         </View>
-        {item.connected === 2 && item.data_source.item.name !== "cloud_feed_type" ? (
+        {item.connected === 2 && item.data_source?.category !== "cloud_feed_type" ? (
           <Icon
             name="reorder-three-outline"
             size={10}

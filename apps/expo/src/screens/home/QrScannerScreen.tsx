@@ -100,7 +100,7 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
       navigation.navigate("ActivateDeviceScreen", {
         qrData: data,
         device_TypeName,
-        dataSourceType: dataSource.data_source.category,
+        dataSourceType: dataSource.data_source?.category ? dataSource.data_source?.category : "",
         normalName,
         dataSource,
       });
