@@ -15,11 +15,11 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>nl.windesheim.energietransitie.needforheat</string>
+	<string>nl.windesheim.energietransitie.warmtewachter</string>
 	<key>PROJECT_ID</key>
-	<string>needforheat-7687a</string>
+	<string>warmtewachter-7687a</string>
 	<key>STORAGE_BUCKET</key>
-	<string>needforheat-7687a.appspot.com</string>
+	<string>warmtewachter-7687a.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>

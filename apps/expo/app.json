@@ -23,7 +23,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "nl.windesheim.energietransitie.needforheat",
+      "bundleIdentifier": "nl.windesheim.energietransitie.warmtewachter",
       "associatedDomains": [
         "applinks:energietransitiewindesheim.page.link"
       ],
@@ -50,7 +50,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "nl.windesheim.energietransitie.needforheat",
+      "package": "nl.windesheim.energietransitie.warmtewachter",
       "permissions": [
         "BLUETOOTH",
         "BLUETOOTH_ADMIN",

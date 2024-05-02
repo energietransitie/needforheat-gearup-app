@@ -1,15 +1,15 @@
 {
   "project_info": {
     "project_number": "362703235304",
-    "project_id": "needforheat-7687a",
-    "storage_bucket": "needforheat-7687a.appspot.com"
+    "project_id": "warmtewachter-7687a",
+    "storage_bucket": "warmtewachter-7687a.appspot.com"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:362703235304:android:ce540e04720f6c65bb015d",
         "android_client_info": {
-          "package_name": "nl.windesheim.energietransitie.needforheat"
+          "package_name": "nl.windesheim.energietransitie.warmtewachter"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "362703235304-qvooohrhueba6le66etqgtj9evlu61om.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "nl.windesheim.energietransitie.needforheat",
+            "package_name": "nl.windesheim.energietransitie.warmtewachter",
             "certificate_hash": "77d0077d75f04d09d94314405ff4cb86011c6d6d"
           }
         },
