@@ -49,6 +49,7 @@ export type HomeStackParamList = {
   //EnergyQuery
   InformationScreen: { expectedDeviceName?: string | undefined; device: DataSourceItemType };
   HomeSelectScreen: undefined;
+  HomeAddressSelectScreen: undefined;
   WeatherLocationResultScreen: { location: UserLocation }
 };
 

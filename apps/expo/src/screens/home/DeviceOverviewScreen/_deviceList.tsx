@@ -1,6 +1,6 @@
 import { t } from "i18next";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { Alert, FlatList, View } from "react-native";
+import { FlatList, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 
 import DeviceListItem from "./_listItem";
@@ -13,8 +13,6 @@ import useNotificationPermission from "@/hooks/useNotificationPermission/useNoti
 import { UserContext } from "@/providers/UserProvider";
 import { BuildingDeviceResponse, DataSourcesList } from "@/types/api";
 import { processDataSource } from "@/utils/tools";
-import PushNotification from "react-native-push-notification";
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
 export default function DeviceList({
   buildingId,

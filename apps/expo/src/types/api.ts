@@ -100,7 +100,21 @@ const exampleItems = [
     },
     precedes: [],
     uploadschedule: "",
-    notificationThresholdDuration: "P2D",
+    notificationThresholdDuration: "",
+  },
+  {
+    id: 5,
+    type: { name: "energy_query_type" },
+    item: {
+      id: 2,
+      name: "building-profile",
+      installation_manual_url:
+        "https://manuals.tst.energietransitiewindesheim.nl/energy_queries/building-profile/installation",
+      info_url: "https://manuals.tst.energietransitiewindesheim.nl/energy_queries/building-profile/faq",
+    },
+    precedes: [],
+    uploadschedule: "",
+    notificationThresholdDuration: "",
   },
 ];
 
