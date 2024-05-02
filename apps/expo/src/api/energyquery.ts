@@ -87,7 +87,7 @@ export async function fetchEnergyQueries() {
 
     return parsedEnergyQueries;
   } catch (error) {
-    console.error("Error fetching or parsing energy query:", error);
+    console.warn("Error fetching or parsing energy query:", error);
     return [];
   }
 }

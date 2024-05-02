@@ -62,6 +62,7 @@ export async function activateDevice({ name, activationSecret }: { name: string;
 
   const data = await handleRequestErrors(response);
   const jsonData = await data.json();
+
   return createDeviceSchema.parse(jsonData);
 }
 
@@ -84,7 +85,7 @@ export async function fetchDevices() {
     const jsonData = await data.json();
 
     if (!Array.isArray(jsonData)) {
-      console.error("Invalid data format received from server");
+      console.warn("Invalid or null data format received from server");
       return [];
     }
 
