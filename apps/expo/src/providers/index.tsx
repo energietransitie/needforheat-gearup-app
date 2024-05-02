@@ -3,10 +3,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import { ThemeProvider } from "@rneui/themed";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode } from "react";
-import { LayoutChangeEvent } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import NotificationProvider from "./NotificationProvider";
 import UserProvider from "./UserProvider";
 
 import { theme } from "@/lib/theme";
@@ -31,11 +31,13 @@ export default function Providers(props: ProviderProps) {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <ThemeProvider theme={theme}>
           <QueryClientProvider client={queryClient}>
-            <NavigationContainer>
-              <BottomSheetModalProvider>
-                <UserProvider>{props.children}</UserProvider>
-              </BottomSheetModalProvider>
-            </NavigationContainer>
+            <NotificationProvider>
+              <NavigationContainer>
+                <BottomSheetModalProvider>
+                  <UserProvider>{props.children}</UserProvider>
+                </BottomSheetModalProvider>
+              </NavigationContainer>
+            </NotificationProvider>
           </QueryClientProvider>
         </ThemeProvider>
       </GestureHandlerRootView>
