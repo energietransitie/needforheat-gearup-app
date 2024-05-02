@@ -50,7 +50,7 @@ export type HomeStackParamList = {
   InformationScreen: { expectedDeviceName?: string | undefined; device: DataSourceItemType };
   HomeSelectScreen: undefined;
   HomeAddressSelectScreen: undefined;
-  WeatherLocationResultScreen: { location: UserLocation }
+  WeatherLocationResultScreen: { location: UserLocation };
 };
 
 export type InfoStackParamList = {
