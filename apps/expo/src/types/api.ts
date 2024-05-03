@@ -37,7 +37,7 @@ export const measurementSchema = z.object({
   upload_id: z.number(),
   property: propertySchema,
   value: z.string(),
-  time: stringToDate,
+  time: z.number(),
 });
 
 export type Measurement = z.infer<typeof measurementSchema>;
@@ -61,8 +61,8 @@ export const dataSourceType = z.object({
     .array(z.object({ id: z.number() }))
     .optional()
     .nullable(),
-  uploadschedule: z.string().optional().nullable(),
-  notificationThresholdDuration: z.string().optional().nullable(),
+  upload_schedule: z.string().optional().nullable(),
+  notification_threshold: z.string().optional().nullable(),
 });
 
 export type DataSourceType = z.infer<typeof dataSourceType>;
@@ -81,7 +81,7 @@ export type DataSourceListType = z.infer<typeof dataSourceListSchema>;
 
 export const accountSchema = z.object({
   id: z.number(),
-  activated_at: stringToDate,
+  activated_at: z.number(),
   campaign: z.object({
     name: z.string(),
     info_url: z.string(),
@@ -123,7 +123,7 @@ export const activateAccountDeviceSchema = z.object({
   id: z.number(),
   name: z.string(),
   device_type: deviceTypeSchema.optional().nullable(),
-  activated_at: stringToDate.nullable(),
+  activated_at: z.number().nullable(),
 });
 
 export type ActivateAccountDeviceResponse = z.infer<typeof activateAccountDeviceSchema>;
@@ -150,7 +150,7 @@ export const createDeviceSchema = activateAccountDeviceSchema;
 export type CreateDeviceResponse = z.infer<typeof createDeviceSchema>;
 
 // GET: /device/{id}
-export const deviceReadSchema = activateAccountDeviceSchema.merge(z.object({ latest_upload: stringToDate.nullable() }));
+export const deviceReadSchema = activateAccountDeviceSchema.merge(z.object({ latest_upload: z.number().nullable() }));
 
 export type DeviceReadResponse = z.infer<typeof deviceReadSchema>;
 
@@ -163,8 +163,9 @@ export type ActivateDeviceResponse = z.infer<typeof activateDeviceSchema>;
 export const allDataSourcesSchema = z.object({
   id: z.number(),
   name: z.string(),
-  activated_at: stringToDate.nullable(),
-  latest_upload: stringToDate.nullable(),
+  activated_at: z.number().nullable(),
+  latest_upload: z.number().optional().nullable(),
+  type: z.string(),
   data_source: dataSourceType.optional().nullable(),
   connected: z.number().default(1),
 });
@@ -191,7 +192,7 @@ export const uploadsSchema = z.array(uploadSchema);
 export const energyQueryScherma = z.object({
   id: z.number(),
   energy_query_type: z.string(),
-  activated_at: z.date(),
+  activated_at: z.number(),
   uploads: uploadsSchema,
 });
 

@@ -10,12 +10,11 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 import TimeProgressBar from "./timeProgressBar";
 
-import { MANUAL_URL } from "@/constants";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useOpenExternalLink } from "@/hooks/useOpenExternalLink";
-import { AllDataSourcesResponse } from "@/types/api";
+import { AllDataSourcesResponse, DataSourceType } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
-import { capitalizeFirstLetter, checkMissedUpload } from "@/utils/tools";
+import { capitalizeFirstLetter, checkMissedUpload, getManualUrl, toLocalDateTime } from "@/utils/tools";
 import "intl";
 import "intl/locale-data/jsonp/en";
 
@@ -35,7 +34,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   const style = useStyles();
   const { t, resolvedLanguage } = useTranslation();
   const [data, setData] = useState(null); // Initialize data state variable
-  const CompleteURL = MANUAL_URL + item.data_source?.item.Name;
+  const CompleteURL = getManualUrl(item.data_source as DataSourceType);
 
   const [missed, setMissed] = useState(0);
   const [timeToUpload, setTimeToUpload] = useState<string>();
@@ -119,7 +118,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
       const fetchedData = await response.json();
       setData(fetchedData);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data listitem:", error);
     }
   };
   // End region
@@ -138,9 +137,9 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   }
 
   function checkNextUpload(item: AllDataSourcesResponse): string {
-    const latestUpload = item.latest_upload ?? new Date();
+    const latestUpload = toLocalDateTime(item.latest_upload) ?? toLocalDateTime(item.activated_at) ?? new Date();
     const timeNow = new Date();
-    let cronExpression = item.data_source?.uploadschedule ?? "";
+    let cronExpression = item.data_source?.upload_schedule ?? "";
 
     // Replace '0' in cron expression with corresponding value from latestUpload
     const parts = cronExpression.split(" ");
@@ -176,11 +175,12 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     setTimeToUpload(checkNextUpload(item));
     setMissed(checkMissedUpload(item));
   }
+
   useEffect(() => {
     if (item.latest_upload) {
       updateMonitoring();
     }
-  }, [item]);
+  }, [item, timeToUpload, missed]);
 
   const handleTimePassedByMinute = () => {
     if (item.latest_upload) {
@@ -286,7 +286,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
             <ListItem.Subtitle style={[style.listItemSubtitle]}>
               {item.latest_upload
                 ? t("screens.device_overview.device_list.device_info.last_seen", {
-                    date: formatDateAndTime(item.latest_upload),
+                    date: formatDateAndTime(toLocalDateTime(item.latest_upload)),
                   })
                 : t("screens.device_overview.device_list.device_info.no_data")}
             </ListItem.Subtitle>
