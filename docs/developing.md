@@ -56,7 +56,8 @@ cp .env.example .env
 Fill in the environment variable for the API:
 
 ```yaml
-API_URL= # The API URL for the need-for-heat app
+API_URL= # The API URL for the needforheat app
+MANUAL_URL= # The MANUAL URL is for the manual server
 GOOGLE_MAPS_API_KEY= # The key to enable Google Maps in the app
 ```
 

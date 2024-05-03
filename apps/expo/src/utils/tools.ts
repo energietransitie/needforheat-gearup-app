@@ -3,7 +3,7 @@ import cronParser from "cron-parser";
 import { DateTime, Duration } from "luxon";
 
 import { Maybe } from "@/types";
-import { AllDataSourcesResponse, DataSourceListType, DataSourceType, EnergyQuery, cloudFeedsResponse } from "@/types/api";
+import { AllDataSourcesResponse, DataSourceListType, DataSourceType, cloudFeedsResponse } from "@/types/api";
 
 export async function handleRequestErrors(response: Response) {
   if (!response.ok) {
@@ -130,7 +130,7 @@ export function processDataSource(
   data: AllDataSourcesResponse[] | undefined,
   cloudFeedData: cloudFeedsResponse | undefined,
   energyQueryData: AllDataSourcesResponse[] | undefined,
-  dataSourceList: DataSourceListType,
+  dataSourceList: DataSourceListType
 ): AllDataSourcesResponse {
   let connectStatus = 1;
 

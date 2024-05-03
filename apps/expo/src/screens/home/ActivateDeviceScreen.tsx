@@ -11,7 +11,6 @@ import useDevice from "@/hooks/device/useDevice";
 import useDeviceActivate from "@/hooks/device/useDeviceActivate";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useDisableBackButton } from "@/hooks/useDisableBackButton";
-import { AllDataSourcesResponse } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
 
 type ActivateDeviceScreenProps = NativeStackScreenProps<HomeStackParamList, "ActivateDeviceScreen">;
