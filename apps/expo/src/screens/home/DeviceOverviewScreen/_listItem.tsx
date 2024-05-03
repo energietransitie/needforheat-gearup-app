@@ -77,7 +77,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
 
   const handleItemClick = () => {
     if (Platform.OS === "android") {
-      ToastAndroid.show(t("screens.device_overview.toast_message"), ToastAndroid.SHORT);
+      ToastAndroid.show(t("screens.device_overview.toast_message"), ToastAndroid.LONG);
     } else {
       Burnt.toast({
         title: t("screens.device_overview.toast_title"),
@@ -223,9 +223,9 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           {
             backgroundColor:
               item.connected === 0
-                ? "#d3eaf9"
+                ? "white"
                 : item.connected === 1
-                ? "#d9dadb"
+                ? "#e3e3e3"
                 : item.connected === 2 && allItemsDone
                 ? "white"
                 : item.connected === 2
@@ -234,11 +234,13 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           },
           { borderTopLeftRadius: 0 },
           { borderBottomLeftRadius: 0 },
+          { borderBottomWidth: 1 },
+          { borderBottomColor: "#dbdbd9" },
         ]}
         Component={TouchableHighlight}
       >
         <ListItem.Content>
-          <ListItem.Title>
+          <ListItem.Title style={{ color: item.connected === 1 ? "#cccccc" : "black" }}>
             {item.connected === 2 ? (
               <>
                 {item.typeCategory === "device_type" && (
@@ -274,9 +276,20 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
                     )}
                   </>
                 )}
+              </> //changes the colors of the icons if the item is enabled or disabled
+            ) : item.connected === 0 ? (
+              <>
+                {item.typeCategory === "device_type" && <Icon name="layers" color="black" size={16} />}
+                {item.typeCategory === "energy_query_type" && <Icon name="flash" color="black" size={16} />}
+                {item.typeCategory === "cloud_feed" && <Icon name="cloud" color="black" size={16} />}
+              </>
+            ) : item.connected === 1 ? (
+              <>
+                {item.typeCategory === "device_type" && <Icon name="layers" color="#cccccc" size={16} />}
+                {item.typeCategory === "energy_query_type" && <Icon name="flash" color="#cccccc" size={16} />}
+                {item.typeCategory === "cloud_feed" && <Icon name="cloud" color="#cccccc" size={16} />}
               </>
             ) : null}
-
             {" " + getNormalName()}
           </ListItem.Title>
           {item.connected === 2 ? (
@@ -297,12 +310,6 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           ) : null}
         </ListItem.Content>
         <View style={{ flexDirection: "column" }}>
-          {item.connected === 0 ? (
-            <Icon name="lock-open-outline" size={32} />
-          ) : item.connected === 1 ? (
-            <Icon name="lock-closed-outline" size={32} />
-          ) : item.connected === 2 ? null : null}
-
           {item.device_type.info_url !== "" ? (
             <TouchableOpacity onPress={openHelpUrl}>
               <Icon name="help-circle-outline" size={32} />
