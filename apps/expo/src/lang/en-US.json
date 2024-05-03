@@ -17,7 +17,7 @@
     },
     "device_overview": {
       "title": "Data Sources",
-      "toast_message": " Please complete the enabled item first.",
+      "toast_message": "Disabled item. Complete first item(s) with white background!",
       "toast_title": "Locked item",
       "buttons": {
         "add_enelogic": "Connect Enelogic",

@@ -17,7 +17,7 @@
     },
     "device_overview": {
       "title": "Databronnen",
-      "toast_message": "Voltooi eerst het geopende item.",
+      "toast_message": "Uitgeschakeld item. Werk eerst item(s) met witte achtergrond af!",
       "toast_title": "Vergrendeld item",
       "buttons": {
         "add_enelogic": "Enelogic toevoegen",
