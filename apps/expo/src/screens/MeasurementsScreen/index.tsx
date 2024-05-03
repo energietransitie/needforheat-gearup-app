@@ -12,17 +12,17 @@ import DeviceBottomSheet from "@/components/common/bottomSheets/DeviceBottomShee
 import PropertyBottomSheet from "@/components/common/bottomSheets/PropertyBottomSheet";
 import Box from "@/components/elements/Box";
 import Screen from "@/components/elements/Screen";
-import { MANUAL_URL } from "@/constants";
 import useDevices from "@/hooks/device/useDevices";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
-import { Property } from "@/types/api";
-import { capitalizeFirstLetter } from "@/utils/tools";
+import { DataSourceType, Property } from "@/types/api";
+import { capitalizeFirstLetter, getManualUrl } from "@/utils/tools";
 
 export default function MeasurementsScreen() {
   const styles = useStyles();
   const { t, resolvedLanguage } = useTranslation();
   const { isLoading } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const deviceBottomSheetRef = useRef<BottomSheetModal>(null);
   const propertyBottomSheetRef = useRef<BottomSheetModal>(null);
@@ -34,7 +34,12 @@ export default function MeasurementsScreen() {
   const [displayName, setDisplayName] = useState<string | null>(null);
 
   const hasMultipleDevices = (devices?.length ?? 0) > 1;
-  const CompleteURL = devices && devices.length > 0 ? MANUAL_URL + devices[0].data_source.item.name : "";
+
+  const foundDataSource = user?.campaign.data_source_list?.items.find(data_source => {
+    return devices && data_source.item.Name === devices[0].type;
+  });
+
+  const CompleteURL = devices && devices.length > 0 ? getManualUrl(foundDataSource as DataSourceType) : "";
   const deviceDropdownDisabled = !hasMultipleDevices;
 
   const [property, setProperty] = useState<Property | undefined>();
@@ -43,7 +48,7 @@ export default function MeasurementsScreen() {
     if (devices?.length) {
       setDeviceIdentifierName(devices[0].name);
     }
-  }, [devices]);
+  }, []);
 
   useEffect(() => {
     if (CompleteURL) {
@@ -58,7 +63,7 @@ export default function MeasurementsScreen() {
           setFetchedData(data);
         })
         .catch(error => {
-          console.error("Error fetching data:", error);
+          console.error(`Error fetching data measurementsscreen: ${CompleteURL}:`, error);
         });
     }
   }, [CompleteURL, resolvedLanguage]);

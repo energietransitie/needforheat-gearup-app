@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { QueryKey, useQuery } from "@tanstack/react-query";
 
 import { fetchDeviceMeasurements } from "@/api/device";
 import { fetchEnergyQueryMeasurements } from "@/api/energyquery";
@@ -15,7 +15,8 @@ export default function useMeasurements(name: string, type: string, fetchOptions
   }
 
   return useQuery({
-    queryKey: ["measurements", name, fetchOptions],
+    //Ignore this error, it works but complains for no reason over never
+    queryKey: ["measurementsSchema", name, fetchOptions] as QueryKey,
     queryFn: () => fetchFn(name, fetchOptions),
     enabled: !!fetchOptions.property,
   });

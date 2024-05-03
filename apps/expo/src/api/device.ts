@@ -5,11 +5,11 @@ import { FETCH_HEADERS } from "@/constants";
 import {
   allDataSourcesSchema,
   createDeviceSchema,
-  measurementSchema,
   propertiesSchema,
   deviceReadSchema,
   deviceTypeSchema,
   FetchMeasurementsOptions,
+  measurementsSchema,
 } from "@/types/api";
 import { handleRequestErrors } from "@/utils/tools";
 
@@ -37,7 +37,7 @@ export async function fetchDeviceMeasurements(deviceName: string, fetchOptions: 
 
   const data = await handleRequestErrors(response);
   const jsonData = await data.json();
-  return measurementSchema.parse(jsonData);
+  return measurementsSchema.parse(jsonData);
 }
 
 export async function fetchDeviceProperties(deviceName: string) {
@@ -92,6 +92,11 @@ export async function fetchDevices() {
     const parsedDevices = [];
     for (const deviceData of jsonData) {
       try {
+        const { device_type } = deviceData;
+        if (device_type && device_type.name) {
+          // Add a type property based on device_type.name
+          deviceData.type = device_type.name;
+        }
         const parsedDevice = allDataSourcesSchema.parse(deviceData);
         parsedDevices.push(parsedDevice);
       } catch (error) {
