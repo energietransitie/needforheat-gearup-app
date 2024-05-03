@@ -15,7 +15,6 @@ export default function useMeasurements(name: string, type: string, fetchOptions
   }
 
   return useQuery({
-    //Ignore this error, it works but complains for no reason over never
     queryKey: ["measurementsSchema", name, fetchOptions] as QueryKey,
     queryFn: () => fetchFn(name, fetchOptions),
     enabled: !!fetchOptions.property,

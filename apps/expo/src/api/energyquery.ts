@@ -4,12 +4,12 @@ import { URLSearchParams } from "react-native-url-polyfill";
 import { FETCH_HEADERS } from "@/constants";
 import {
   allDataSourcesSchema,
-  measurementSchema,
   propertiesSchema,
   deviceReadSchema,
   deviceTypeSchema,
   EnergyQuery,
   FetchMeasurementsOptions,
+  measurementsSchema,
 } from "@/types/api";
 import { handleRequestErrors } from "@/utils/tools";
 
@@ -37,7 +37,7 @@ export async function fetchEnergyQueryMeasurements(queryType: string, fetchOptio
 
   const data = await handleRequestErrors(response);
   const jsonData = await data.json();
-  return measurementSchema.parse(jsonData);
+  return measurementsSchema.parse(jsonData);
 }
 
 export async function fetchEnergyQueryProperties(queryType: string) {
