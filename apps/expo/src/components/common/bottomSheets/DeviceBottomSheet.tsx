@@ -4,10 +4,10 @@ import { ListItem, Text } from "@rneui/themed";
 import { useEffect, useState } from "react";
 
 import { fetchUser } from "@/api/user";
-import { MANUAL_URL } from "@/constants";
 import useDevices from "@/hooks/device/useDevices";
 import useTranslation from "@/hooks/translation/useTranslation";
-import { capitalizeFirstLetter } from "@/utils/tools";
+import { DataSourceType } from "@/types/api";
+import { capitalizeFirstLetter, getManualUrl } from "@/utils/tools";
 
 type DeviceBottomSheetProps = {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
@@ -62,8 +62,9 @@ export default function DeviceBottomSheet({
     if (devices) {
       try {
         const deviceDataPromises = devices.map(async device => {
-          const dataSource = user?.campaign.data_source_list.items.find(item => item.item.name === device.name);
-          const response = await fetch(`${MANUAL_URL + dataSource?.item.name}`);
+          const dataSource = user?.campaign?.data_source_list?.items.find(item => item.item.Name === device.type);
+          const response = await fetch(getManualUrl(dataSource as DataSourceType));
+
           if (response.ok) {
             const data = await response.json();
             return { id: device.id, name: data[resolvedLanguage] };

@@ -1,3 +1,4 @@
+import { MANUAL_URL } from "@env";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, useTheme } from "@rneui/themed";
 import * as Burnt from "burnt";
@@ -11,7 +12,7 @@ import ExternalProviderListItem from "../settings/ExternalProviderScreen/_extern
 import ManualContent from "@/components/common/ManualContent";
 import StatusIndicator from "@/components/common/StatusIndicator";
 import Box from "@/components/elements/Box";
-import { MANUAL_URL, getAuthState } from "@/constants";
+import { getAuthState } from "@/constants";
 import useActivateCloudFeed from "@/hooks/cloud-feed/useActivateCloudFeed";
 import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
 import useDeviceActivate from "@/hooks/device/useDeviceActivate";
@@ -137,7 +138,10 @@ export default function AddOnlineDataSourceScreen({ navigation, route }: AddOnli
 
   return (
     <Box padded style={{ flex: 1 }}>
-      <ManualContent manualUrl={MANUAL_URL + "enelogic/installation/generic/"} languageHeader={resolvedLanguage} />
+      <ManualContent
+        manualUrl={MANUAL_URL + "/cloud_feeds/enelogic/installation/generic/"}
+        languageHeader={resolvedLanguage}
+      />
       <Box
         style={{
           flexDirection: "column",
