@@ -1,9 +1,7 @@
-import NetInfo from "@react-native-community/netinfo";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "@rneui/themed";
 import * as SplashScreen from "expo-splash-screen";
-import { useContext, useEffect, useState } from "react";
-import { Image } from "react-native";
+import { useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import HomeRouter from "./HomeRouter";
@@ -12,7 +10,6 @@ import SettingsRouter from "./SettingsRouter";
 
 import useTranslation from "@/hooks/translation/useTranslation";
 import useUser from "@/hooks/user/useUser";
-import { UserContext } from "@/providers/UserProvider";
 import MeasurementsScreen from "@/screens/MeasurementsScreen";
 import { RootStackParamList } from "@/types/navigation";
 const Tab = createBottomTabNavigator<RootStackParamList>();

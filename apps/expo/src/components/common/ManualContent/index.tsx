@@ -1,4 +1,4 @@
-import { ScrollView, Text } from "react-native";
+import { ScrollView } from "react-native";
 import RenderHtml from "react-native-render-html";
 
 import RemoteErrorView from "./_remoteErrorView";
@@ -12,6 +12,7 @@ type ManualContentProps = {
 };
 
 export default function ManualContent({ manualUrl, languageHeader }: ManualContentProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [onLayout, width] = useLayoutWidth();
 
   const headers = new Headers();

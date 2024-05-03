@@ -7,7 +7,6 @@ export const HIDDEN_PROPERTY_NAMES = ["booted_fw", "heartbeat", "batteryVoltage"
 export const AUTH_TOKEN_IDENTIFIER = "auth_token";
 export const WIFI_NETWORKS_IDENTIFIER = "wifi_networks";
 export const AUTH_STATE_IDENTIFIER = "auth_state";
-export const MANUAL_URL = "https://manuals.tst.energietransitiewindesheim.nl/";
 
 /**
  * Test if localstorage has a token.

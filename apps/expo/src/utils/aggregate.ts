@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 
-import { DeviceMeasurement } from "@/types/api";
+import { toLocalDateTime } from "./tools";
+
+import { Measurement } from "@/types/api";
 
 function sortFn(a: number | string, b: number | string): 1 | -1 | 0 {
   const [dateA, dateB] = [dayjs(a), dayjs(b)];
@@ -17,11 +19,12 @@ function sortFn(a: number | string, b: number | string): 1 | -1 | 0 {
 }
 
 // Aggregate all measurements per day and return the average value per day.
-export const getAverageValuePerDay = (data: DeviceMeasurement[]): { [key: string]: number } => {
+export const getAverageValuePerDay = (data: Measurement[]): { [key: string]: number } => {
   const aggregatedData: { [key: string]: { count: number; value: number } } = {};
 
   for (const measurement of data) {
-    const date = new Date(measurement.time);
+    const date = toLocalDateTime(measurement.time);
+    if (!date) continue;
     const key = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
     if (!aggregatedData[key]) {

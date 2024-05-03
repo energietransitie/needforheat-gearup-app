@@ -1,14 +1,15 @@
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import * as SecureStore from "expo-secure-store";
+import { Platform } from "react-native";
 import PushNotification from "react-native-push-notification";
 
 import useTranslation from "../translation/useTranslation";
 
 import { fetchCloudFeeds } from "@/api/account";
 import { fetchDevices } from "@/api/device";
+import { fetchEnergyQueries } from "@/api/energyquery";
 import { fetchUser } from "@/api/user";
 import { checkMissedUpload, processDataSource } from "@/utils/tools";
-import { Platform } from "react-native";
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
 export default function useSuperLateDataSourceNotifier() {
   const { t } = useTranslation();
@@ -35,14 +36,13 @@ export default function useSuperLateDataSourceNotifier() {
     let badgeCounter = 0;
 
     const user = await fetchUser();
-    const buildingID = user?.buildings[0].id ? user?.buildings[0].id : -1;
-    const data = await fetchDevices(buildingID);
+    const data = await fetchDevices();
     const cloudFeedData = await fetchCloudFeeds();
-    const dataSourceList = user?.campaign.data_sources_list;
+    const energyQueryData = await fetchEnergyQueries();
+    const dataSourceList = user?.campaign.data_source_list;
 
     dataSourceList?.items.forEach(dataSource => {
-      if (!buildingID) return;
-      const processedDataSource = processDataSource(dataSource, data, cloudFeedData, dataSourceList, buildingID);
+      const processedDataSource = processDataSource(dataSource, data, cloudFeedData, energyQueryData, dataSourceList);
       if (checkMissedUpload(processedDataSource) === -2) {
         sendNotification = true;
         badgeCounter += 1;
@@ -66,50 +66,50 @@ export default function useSuperLateDataSourceNotifier() {
         return;
       }
 
-      if(Platform.OS === 'android'){
-      PushNotification.localNotification({
-        channelId: "777",
-        ticker: t("notifications.ticker"),
-        largeIcon: "ic_launcher",
-        largeIconUrl: "./assets/Logo-WH-social-groen-800px.png",
-        smallIcon: "ic_notification",
-        bigText: t("notifications.bigText"),
-        subText: t("notifications.subText"),
-        bigPictureUrl: "./assets/Logo-WH-social-groen-800px.png",
-        bigLargeIcon: "ic_launcher",
-        bigLargeIconUrl: "./assets/Logo-WH-social-groen-800px.png",
-        color: "#ee3135",
-        vibrate: silentNotification,
-        vibration: 300,
-        tag: "WindesheimTag",
-        group: "WindesheimGroup",
-        ongoing: false,
-        ignoreInForeground: false,
-        onlyAlertOnce: true,
+      if (Platform.OS === "android") {
+        PushNotification.localNotification({
+          channelId: "777",
+          ticker: t("notifications.ticker"),
+          largeIcon: "ic_launcher",
+          largeIconUrl: "./assets/Logo-WH-social-groen-800px.png",
+          smallIcon: "ic_notification",
+          bigText: t("notifications.bigText"),
+          subText: t("notifications.subText"),
+          bigPictureUrl: "./assets/Logo-WH-social-groen-800px.png",
+          bigLargeIcon: "ic_launcher",
+          bigLargeIconUrl: "./assets/Logo-WH-social-groen-800px.png",
+          color: "#ee3135",
+          vibrate: silentNotification,
+          vibration: 300,
+          tag: "WindesheimTag",
+          group: "WindesheimGroup",
+          ongoing: false,
+          ignoreInForeground: false,
+          onlyAlertOnce: true,
 
-        when: Date.now(),
-        showWhen: true,
+          when: Date.now(),
+          showWhen: true,
 
-        /* iOS only properties */
-        category: "Windesheim",
+          /* iOS only properties */
+          category: "Windesheim",
 
-        /* iOS and Android properties */
-        title: t("notifications.title"),
-        message: t("notifications.message"),
-        picture: "./assets/Logo-WH-social-groen-800px.png",
-        playSound: silentNotification,
-        number: badgeCounter,
-      });
-    } else {
-      PushNotificationIOS.addNotificationRequest({
-        id: "777",
-        title: t("notifications.title"),
-        body: t("notifications.message"),
-        badge: badgeCounter,
-        category: "NeedForHeat",
-        isSilent: silentNotification
-      });
-    }
+          /* iOS and Android properties */
+          title: t("notifications.title"),
+          message: t("notifications.message"),
+          picture: "./assets/Logo-WH-social-groen-800px.png",
+          playSound: silentNotification,
+          number: badgeCounter,
+        });
+      } else {
+        PushNotificationIOS.addNotificationRequest({
+          id: "777",
+          title: t("notifications.title"),
+          body: t("notifications.message"),
+          badge: badgeCounter,
+          category: "NeedForHeat",
+          isSilent: silentNotification,
+        });
+      }
 
       await saveNotificationSentToday();
     }

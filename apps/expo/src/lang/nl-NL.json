@@ -17,7 +17,7 @@
     },
     "device_overview": {
       "title": "Databronnen",
-      "toast_message": "Voltooi eerst het geopende item.",
+      "toast_message": "Uitgeschakeld item. Werk eerst item(s) met witte achtergrond af!",
       "toast_title": "Vergrendeld item",
       "buttons": {
         "add_enelogic": "Enelogic toevoegen",
@@ -35,12 +35,6 @@
         "super_late": "Offline",
         "next_update": "Volg. in",
         "hours": "u"
-      },
-      "building_list": {
-        "placeholder": "Selecteer een gebouw",
-        "building_info": {
-          "name": "Gebouw #{{id}}"
-        }
       }
     },
     "home_stack": {
@@ -55,7 +49,6 @@
         "activated": "Apparaat geactiveerd!",
         "alert": {
           "unknown_error": "Er is een fout opgetreden bij het activeren van het apparaat.",
-          "no_building": "Uw account is niet gekoppeld aan een gebouw.",
           "already_activated": "Dit meetapparaatje is al geactiveerd op een ander account.",
           "mismatched_device_name": "Er is een verkeerd apparaat gescand. Probeer het opnieuw met het juiste apparaat."
         }

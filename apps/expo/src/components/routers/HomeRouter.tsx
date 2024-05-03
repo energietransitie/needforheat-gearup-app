@@ -10,14 +10,14 @@ import AddOnlineDataSourceScreen from "@/screens/home/AddOnlineDataSourceScreen"
 import AlreadyInvitedScreen from "@/screens/home/AlreadyInvitedScreen";
 import ConnectScreen from "@/screens/home/ConnectScreen";
 import InformationScreen from "@/screens/home/EnergyQuery/InformationScreen";
+import HomeSelectScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/HomeSelectScreen";
+import WeatherLocationResultScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/WeatherLocationResultScreen";
 import HomeScreen from "@/screens/home/HomeScreen";
 import ProvisionScreen from "@/screens/home/ProvisionScreen";
 import QrScannerScreen from "@/screens/home/QrScannerScreen";
 import SearchDeviceScreen from "@/screens/home/SearchDeviceScreen";
 import WifiOverviewScreen from "@/screens/home/WifiOverviewScreen";
 import { HomeStackParamList } from "@/types/navigation";
-import HomeSelectScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/HomeSelectScreen";
-import WeatherLocationResultScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/WeatherLocationResultScreen";
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -122,7 +122,10 @@ export default function HomeRouter() {
       />
       <HomeStack.Screen
         name="WeatherLocationResultScreen"
-        options={{ title: t("screens.home_stack.energy_query.weather_location_result_screen.title"), ...disableNavigation }}
+        options={{
+          title: t("screens.home_stack.energy_query.weather_location_result_screen.title"),
+          ...disableNavigation,
+        }}
         component={WeatherLocationResultScreen}
       />
     </HomeStack.Navigator>

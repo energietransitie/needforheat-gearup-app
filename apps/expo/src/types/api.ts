@@ -9,174 +9,84 @@ export const validationErrorSchema = z.object({
 
 // GET: /device/{id}
 export const deviceTypeSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  installation_manual_url: z.string(),
-  info_url: z.string(),
+  id: z.number().optional().nullable(),
+  name: z.string().optional().nullable(),
+});
+
+export const TypeSchema = z.object({
+  ID: z.number(),
+  Name: z.string(),
 });
 
 export type DeviceTypeResponse = z.infer<typeof deviceTypeSchema>;
 
-export const deviceProperty = z.object({
+export const propertySchema = z.object({
   id: z.number(),
   name: z.string(),
 });
 
-export type DeviceProperty = z.infer<typeof deviceProperty>;
+export type Property = z.infer<typeof propertySchema>;
 
-// GET: /device/{id}/properties
-export const devicePropertiesSchema = z.array(deviceProperty);
+// GET: /device/{id}/properties & /energy_query/{id}/properties
+export const propertiesSchema = z.array(propertySchema);
 
-export type DevicePropertiesResponse = z.infer<typeof devicePropertiesSchema>;
+export type PropertiesResponse = z.infer<typeof propertiesSchema>;
 
-export const deviceMeasurement = z.object({
+export const measurementSchema = z.object({
   id: z.number(),
   upload_id: z.number(),
-  property: deviceProperty,
+  property: propertySchema,
   value: z.string(),
-  time: stringToDate,
+  time: z.number(),
 });
 
-export type DeviceMeasurement = z.infer<typeof deviceMeasurement>;
+export type Measurement = z.infer<typeof measurementSchema>;
 
-// GET: /device/{id}/measurements
-export const deviceMeasurementSchema = z.array(deviceMeasurement);
+// GET: /device/{id}/measurements &  /energy_query/{id}/measurements
+export const measurementsSchema = z.array(measurementSchema);
 
-export type deviceMeasurementsResponse = z.infer<typeof deviceMeasurementSchema>;
-
-//TODO: TEMPORARY HARDOCODE, AWAIT API UPDATE. BASED ON TST SERVER ITEMS
-const exampleItems = [
-  {
-    id: 1,
-    type: { name: "device_type" },
-    item: {
-      id: 1,
-      name: "twomes-co2-occupancy-scd41-m5coreink-firmware",
-      installation_manual_url:
-        "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-co2-occupancy-scd41-m5coreink-firmware/installation",
-      info_url:
-        "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-co2-occupancy-scd41-m5coreink-firmware/installation",
-    },
-    precedes: [{ id: 2 }, { id: 3 }],
-    uploadschedule: "*/10 * * * *",
-    notificationThresholdDuration: "P1D",
-  },
-  {
-    id: 2,
-    type: { name: "device_type" },
-    item: {
-      id: 2,
-      name: "twomes-p1-reader-firmware",
-      installation_manual_url:
-        "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
-      info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/twomes-p1-reader-firmware/installation",
-    },
-    precedes: [],
-    uploadschedule: "*/10 * * * *",
-    notificationThresholdDuration: "P1D",
-  },
-  {
-    id: 3,
-    type: { name: "cloud_feed" },
-    item: {
-      id: 3,
-      name: "enelogic",
-      installation_manual_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/enelogic/installation",
-      info_url: "https://manuals.tst.energietransitiewindesheim.nl/devices/enelogic/faq",
-    },
-    precedes: [],
-    uploadschedule: "0 0 * * *",
-    notificationThresholdDuration: "P2D",
-  },
-  {
-    id: 4,
-    type: { name: "energy_query_type" },
-    item: {
-      id: 1,
-      name: "weather-interpolation-location",
-      installation_manual_url:
-        "https://manuals.tst.energietransitiewindesheim.nl/energy_queries/weather-interpolation-location/installation",
-      info_url: "https://manuals.tst.energietransitiewindesheim.nl/energy_queries/weather-interpolation-location/faq",
-    },
-    precedes: [],
-    uploadschedule: "",
-    notificationThresholdDuration: "P2D",
-  },
-];
+export type measurementsResponse = z.infer<typeof measurementsSchema>;
 
 // POST: /account
-//TODO: TEMPORARY HARDOCODE, AWAIT API UPDATE THEN REMOVE THE DEFAULTS, OPTIONAL AND NULLABLE
-export type DataSourcesList = {
-  description: string;
-  items: DataSourceType[];
-};
+//DataSourceList
+export const dataSourceType = z.object({
+  id: z.number(),
+  category: z.string(),
+  item: TypeSchema,
+  order: z.number(),
+  installation_url: z.string().optional().nullable(),
+  faq_url: z.string().optional().nullable(),
+  info_url: z.string().optional().nullable(),
+  precedes: z
+    .array(z.object({ id: z.number() }))
+    .optional()
+    .nullable(),
+  upload_schedule: z.string().optional().nullable(),
+  notification_threshold: z.string().optional().nullable(),
+});
 
-export type DataSourceType = {
-  id: number;
-  type: {
-    name: string;
-  };
-  item: DataSourceItemType;
-  precedes: { id: number }[];
-  uploadschedule: string;
-  notificationThresholdDuration: string;
-};
+export type DataSourceType = z.infer<typeof dataSourceType>;
 
-export type DataSourceItemType = {
-  id: number;
-  name: string;
-  installation_manual_url: string;
-  info_url: string;
-};
+export const dataSourceListSchema = z
+  .object({
+    id: z.number().optional().nullable(),
+    name: z.string().optional().nullable(),
+    items: z.array(dataSourceType),
+  })
+  .optional()
+  .nullable();
+
+export type DataSourceListType = z.infer<typeof dataSourceListSchema>;
+// Datasourcelist End
 
 export const accountSchema = z.object({
   id: z.number(),
-  activated_at: stringToDate,
-  buildings: z.array(
-    z.object({
-      id: z.number(),
-    })
-  ),
-  campaign: z
-    .object({
-      name: z.string(),
-      info_url: z.string(),
-      data_sources_list: z
-        .object({
-          description: z.string().default("Hardcoded Data sources list"),
-          items: z
-            .array(
-              z.object({
-                id: z.number(),
-                type: z.object({
-                  name: z.string(),
-                }),
-                item: z.object({
-                  id: z.number(),
-                  name: z.string(),
-                  installation_manual_url: z.string(),
-                  info_url: z.string(),
-                }),
-                precedes: z.array(
-                  z.object({
-                    id: z.number(),
-                  })
-                ),
-                uploadschedule: z.string(),
-                notificationThresholdDuration: z.string(),
-              })
-            )
-            .default(exampleItems),
-        })
-        .optional()
-        .nullable()
-        .default({ description: "Hardcoded Data sources list", items: exampleItems }),
-    })
-    .default({
-      name: "",
-      info_url: "",
-      data_sources_list: { description: "Hardcoded Data sources list", items: exampleItems },
-    }),
+  activated_at: z.number(),
+  campaign: z.object({
+    name: z.string(),
+    info_url: z.string(),
+    data_source_list: dataSourceListSchema,
+  }),
 });
 
 export type AccountResponse = z.infer<typeof accountSchema>;
@@ -188,8 +98,8 @@ export const activateAccountSchema = z.object({
 
 export type ActivateAccountResponse = z.infer<typeof activateAccountSchema>;
 
-export const cloudFeed = z.object({
-  cloud_feed: z.object({
+export const cloudFeedType = z.object({
+  cloud_feed_type: z.object({
     id: z.number(),
     name: z.string(),
     authorization_url: z.string(),
@@ -201,10 +111,10 @@ export const cloudFeed = z.object({
   connected: z.boolean(),
 });
 
-export type CloudFeed = z.infer<typeof cloudFeed>;
+export type CloudFeedType = z.infer<typeof cloudFeedType>;
 
 // GET: /account/{id}/cloud_feed_auth
-export const cloudFeedSchema = z.array(cloudFeed);
+export const cloudFeedSchema = z.array(cloudFeedType);
 
 export type cloudFeedsResponse = z.infer<typeof cloudFeedSchema>;
 
@@ -212,20 +122,19 @@ export type cloudFeedsResponse = z.infer<typeof cloudFeedSchema>;
 export const activateAccountDeviceSchema = z.object({
   id: z.number(),
   name: z.string(),
-  device_type: deviceTypeSchema,
-  building_id: z.number(),
-  activated_at: stringToDate.nullable(),
+  device_type: deviceTypeSchema.optional().nullable(),
+  activated_at: z.number().nullable(),
 });
 
 export type ActivateAccountDeviceResponse = z.infer<typeof activateAccountDeviceSchema>;
 
 // GET: /device
 export const deviceSchema = z.object({
-  id: z.number(),
-  name: z.string(),
+  id: z.number().optional().nullable(),
+  name: z.string().optional().nullable(),
   device_type: deviceTypeSchema.merge(
     z.object({
-      properties: z.array(z.object({ id: z.number(), name: z.string(), unit: z.string() })),
+      properties: z.array(z.object({ id: z.number().optional().nullable(), name: z.string().optional().nullable() })),
     })
   ),
   activation_token: z.string(),
@@ -241,7 +150,7 @@ export const createDeviceSchema = activateAccountDeviceSchema;
 export type CreateDeviceResponse = z.infer<typeof createDeviceSchema>;
 
 // GET: /device/{id}
-export const deviceReadSchema = activateAccountDeviceSchema.merge(z.object({ latest_upload: stringToDate.nullable() }));
+export const deviceReadSchema = activateAccountDeviceSchema.merge(z.object({ latest_upload: z.number().nullable() }));
 
 export type DeviceReadResponse = z.infer<typeof deviceReadSchema>;
 
@@ -250,30 +159,41 @@ export const activateDeviceSchema = z.object({ session_token: z.string() });
 
 export type ActivateDeviceResponse = z.infer<typeof activateDeviceSchema>;
 
-// GET /building/{id}
-export const buildingDeviceSchema = z.object({
+// GET /device/{all
+export const allDataSourcesSchema = z.object({
   id: z.number(),
   name: z.string(),
-  building_id: z.number(),
-  activated_at: stringToDate.nullable(),
-  latest_upload: stringToDate.nullable(),
-  upload_schedule: z.string().optional().nullable(),
-  notification_threshold_duration: z.string().optional().nullable(),
-  device_type: deviceTypeSchema,
-  typeCategory: z.string().nullable().optional(),
+  activated_at: z.number().nullable(),
+  latest_upload: z.number().optional().nullable(),
+  type: z.string(),
+  data_source: dataSourceType.optional().nullable(),
   connected: z.number().default(1),
 });
 
-export type BuildingDeviceResponse = z.infer<typeof buildingDeviceSchema>;
+export type AllDataSourcesResponse = z.infer<typeof allDataSourcesSchema>;
 
-// GET /building/{id}
-export const buildingSchema = z.object({
+export type FetchMeasurementsOptions = { start?: string; end?: string; property: number };
+
+// EnergyQueries
+export const uploadSchema = z.object({
   id: z.number(),
-  account_id: z.number(),
-  longtitude: z.number(),
-  latitude: z.number(),
-  tz_name: z.string(),
-  devices: z.array(buildingDeviceSchema).optional(),
+  instance_id: z.number(),
+  instance_type: z.string(),
+  server_time: z.date(),
+  device_time: z.date(),
+  size: z.number(),
+  measurements: measurementsSchema,
 });
 
-export type BuildingResponse = z.infer<typeof buildingSchema>;
+export type Upload = z.infer<typeof uploadSchema>;
+
+export const uploadsSchema = z.array(uploadSchema);
+
+export const energyQueryScherma = z.object({
+  id: z.number(),
+  energy_query_type: z.string(),
+  activated_at: z.number(),
+  uploads: uploadsSchema,
+});
+
+export type EnergyQuery = z.infer<typeof energyQueryScherma>;

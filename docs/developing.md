@@ -26,7 +26,7 @@ This guide will explain how to prepare the local enviroment to start developing 
     - [Cocaopods](https://cocoapods.org/) (>=1.15.2)
 
 ## 1. Setup SSH Key
-Due to the dependency [needforheat-gearup-app-eup](https://github.com/energietransitie/needforheat-gearup-app-eup), a SSH key will be required to set up so Yarn can properly fetch this repo.
+Due to the potential private repositories, a SSH key will be required to set up so Yarn can properly fetch this repo. Please contact [@henriterhofte](https://github.com/henriterhofte) if there is a repository that should not be private.
 
 To do this, please follow the GitHub documentation to setup an SSH key on the device you will be using to develop:
 1. [Generate a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
@@ -56,14 +56,15 @@ cp .env.example .env
 Fill in the environment variable for the API:
 
 ```yaml
-API_URL= # The API URL for the need-for-heat app
+API_URL= # The API URL for the needforheat app
+MANUAL_URL= # The MANUAL URL is for the manual server
 GOOGLE_MAPS_API_KEY= # The key to enable Google Maps in the app
 ```
 
 ### 4.1. Test- or Local API?
-The recommended server to use is the existing public test server available on <https://api.tst.energietransitiewindesheim.nl/v2>
+The recommended server to use is the existing public test server available on <https://api.tst.energietransitiewindesheim.nl/v3>
 
-A local server with the [twomes-backoffice-api](https://github.com/energietransitie/twomes-backoffice-api) is possible by running it through Docker with the [feat/cors branch](https://github.com/energietransitie/twomes-backoffice-api/tree/feat/cors). \
+A local server with the [needforheat-server-api](https://github.com/energietransitie/needforheat-server-api) is possible by running it through Docker with the [feat/cors branch](https://github.com/energietransitie/needforheat-server-api/tree/feat/cors). \
 However, this is not the best way to develop and you might run in to issues you won't have by just using the public test server. This issue is because of security from [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 
 ### 4.2. API URL not changing?

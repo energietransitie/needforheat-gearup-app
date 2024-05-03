@@ -1,6 +1,6 @@
 import { t } from "i18next";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { Alert, FlatList, View } from "react-native";
+import { FlatList, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 
 import DeviceListItem from "./_listItem";
@@ -9,71 +9,83 @@ import ProgressBar from "./progressBar";
 import StatusIndicator from "@/components/common/StatusIndicator";
 import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
 import useDevices from "@/hooks/device/useDevices";
-import useNotificationPermission from "@/hooks/useNotificationPermission/useNotificationPermission";
+import useEnergyQueries from "@/hooks/energyquery/useEnergyQueries";
 import { UserContext } from "@/providers/UserProvider";
-import { BuildingDeviceResponse, DataSourcesList } from "@/types/api";
+import { AllDataSourcesResponse, DataSourceListType } from "@/types/api";
 import { processDataSource } from "@/utils/tools";
-import PushNotification from "react-native-push-notification";
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
-export default function DeviceList({
-  buildingId,
+export default function DataSourceList({
   refresh,
   onRefresh,
-  dataSourcesList,
+  dataSourceList,
 }: {
-  buildingId: number;
   refresh: boolean;
-  dataSourcesList: DataSourcesList;
+  dataSourceList: DataSourceListType;
   onRefresh: () => void;
 }) {
-  const { data, isLoading, refetch, isRefetching } = useDevices(buildingId);
+  const { data, isLoading, refetch, isRefetching } = useDevices();
   const { data: cloudFeedData, isFetching } = useCloudFeeds();
-  const [scrollEnabled, setScrollEnabled] = useState(true);
-  const [itemData, setItemData] = useState<BuildingDeviceResponse[]>([]);
+  const {
+    data: energyQueryData,
+    isLoading: isLoadingEnergyQueries,
+    refetch: refetchEnergyQueries,
+    isRefetching: isRefetchingEnergyQueries,
+  } = useEnergyQueries();
+  const { user } = useContext(UserContext);
+
+  const [itemData, setItemData] = useState<AllDataSourcesResponse[]>([]);
+  const [allItemsDone, setAllItemsDone] = useState(true);
   const [progress, setProgress] = useState("0/0");
+  const connectedState: number[] = [];
+
+  const [scrollEnabled, setScrollEnabled] = useState(true);
   const onSwipeBegin = useCallback(() => setScrollEnabled(false), []);
   const onSwipeEnd = useCallback(() => setScrollEnabled(true), []);
-  const { user } = useContext(UserContext);
-  const [allItemsDone, setAllItemsDone] = useState(true);
-  const connectedState: number[] = [];
-  const { requestNotificationPermission } = useNotificationPermission();
 
   useEffect(() => {
-    if (dataSourcesList) {
+    if (dataSourceList) {
       let connectedCount = 0;
-      const newData: BuildingDeviceResponse[] = [];
+      const newData: AllDataSourcesResponse[] = [];
 
-      dataSourcesList.items.forEach(dataSource => {
-        const newResponse = processDataSource(dataSource, data, cloudFeedData, dataSourcesList, buildingId);
-        newData.push(newResponse);
+      dataSourceList.items.forEach(dataSource => {
+        const newResponse = processDataSource(dataSource, data, cloudFeedData, energyQueryData, dataSourceList);
 
         //Progressbar
         if (newResponse.connected === 2) {
           connectedState.push(dataSource.id);
           connectedCount++;
         }
+        newData.push(newResponse);
       });
 
-      if (connectedCount > 0) {
-        requestNotificationPermission();
-      }
+      newData.sort((a, b) => {
+        const orderA = a.data_source?.order;
+        const orderB = b.data_source?.order;
+
+        // If either order is null, retain the original order
+        if (!orderA || !orderB) {
+          return 0;
+        } else {
+          return orderA - orderB;
+        }
+      });
       setItemData(newData);
 
-      const progressString = `${connectedCount}/${dataSourcesList.items.length}`;
+      const progressString = `${connectedCount}/${dataSourceList.items.length}`;
       setProgress(progressString);
     } else {
       setProgress("0/0");
       setItemData(data ?? []);
     }
-  }, [dataSourcesList, data, cloudFeedData]);
+  }, [dataSourceList, data, cloudFeedData, energyQueryData]);
 
   useEffect(() => {
     if (refresh) {
       refetch();
+      refetchEnergyQueries();
       onRefresh();
     }
-  }, [refresh, refetch, onRefresh]);
+  }, [refresh, refetch, onRefresh, refetchEnergyQueries]);
 
   useEffect(() => {
     let itemDone = true;
@@ -97,7 +109,7 @@ export default function DeviceList({
   };
 
   let shouldLoad = true;
-  if (!isLoading || Boolean(user)) {
+  if ((!isLoading && !isLoadingEnergyQueries) || Boolean(user)) {
     shouldLoad = false;
   }
 
@@ -105,13 +117,14 @@ export default function DeviceList({
     return <StatusIndicator isLoading={shouldLoad} />;
   }
 
-  if (isLoading || isFetching) {
+  if (isLoading || isFetching || isLoadingEnergyQueries || isRefetchingEnergyQueries) {
     return <StatusIndicator isLoading />;
   }
+
   return (
     <View style={{ flex: 1 }}>
       <ProgressBar progress={progress} />
-      <FlatList<BuildingDeviceResponse>
+      <FlatList<AllDataSourcesResponse>
         data={itemData || data}
         contentContainerStyle={{ flexGrow: 1 }}
         style={{ width: "100%" }}

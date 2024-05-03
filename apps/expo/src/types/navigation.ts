@@ -1,5 +1,5 @@
 import { BleDeviceType, SensorQrCode, WifiEntry } from ".";
-import { DataSourceItemType } from "./api";
+import { AllDataSourcesResponse, DataSourceType } from "./api";
 import { UserLocation } from "./energyquery";
 
 export type RootStackParamList = {
@@ -16,40 +16,42 @@ export type HomeStackParamList = {
   AlreadyInvitedScreen: undefined;
   QrScannerScreen: {
     expectedDeviceName: string | undefined;
-    device_TypeName: any;
-    dataSourceType: DataSourceItemType;
+    device_TypeName: string;
+    dataSource: AllDataSourcesResponse;
     normalName: string;
   };
   AddDeviceScreen: {
     qrData: SensorQrCode;
     expectedDeviceName?: string | undefined;
-    device: DataSourceItemType;
+    device: string;
     normalName: string;
+    dataSource: AllDataSourcesResponse;
   };
-  SearchDeviceScreen: { deviceName: string; proofOfPossession: string; device_TypeName: any; normalName: string };
+  SearchDeviceScreen: { deviceName: string; proofOfPossession: string; device_TypeName: string; normalName: string };
   ActivateDeviceScreen: {
     qrData: SensorQrCode;
-    device_TypeName: any;
-    dataSourceType: DataSourceItemType;
+    device_TypeName: string;
+    dataSourceType: string;
     normalName: string;
+    dataSource: AllDataSourcesResponse;
   };
-  ConnectScreen: { device: BleDeviceType; proofOfPossession: string; device_TypeName: any; normalName: string };
-  WifiOverviewScreen: { device: BleDeviceType; proofOfPossession: string; device_TypeName: any; normalName: string };
+  ConnectScreen: { device: BleDeviceType; proofOfPossession: string; device_TypeName: string; normalName: string };
+  WifiOverviewScreen: { device: BleDeviceType; proofOfPossession: string; device_TypeName: string; normalName: string };
   ProvisionScreen: {
     device: BleDeviceType;
     network: WifiEntry;
     proofOfPossession: string;
     password?: string;
-    device_TypeName: any;
+    device_TypeName: string;
     normalName: string;
   };
   DeviceOverviewScreen: undefined;
   //CloudFeed
   AddOnlineDataSourceScreen: undefined;
   //EnergyQuery
-  InformationScreen: { expectedDeviceName?: string | undefined; device: DataSourceItemType };
+  InformationScreen: { expectedDeviceName?: string | undefined; device: DataSourceType };
   HomeSelectScreen: undefined;
-  WeatherLocationResultScreen: { location: UserLocation }
+  WeatherLocationResultScreen: { location: UserLocation };
 };
 
 export type InfoStackParamList = {

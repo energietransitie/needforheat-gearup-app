@@ -1,7 +1,7 @@
 import { useIsFocused } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useTheme } from "@rneui/themed";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ActivityIndicator, Alert, Text } from "react-native";
 import RNExitApp from "react-native-exit-app";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -20,7 +20,6 @@ export default function ConnectScreen({ navigation, route }: ConnectScreenProps)
   const { t } = useTranslation();
   const { theme } = useTheme();
   const { isConnected, connectToDevice } = useDeviceConnect({ device, proofOfPossession });
-  const [connectionAttempted, setConnectionAttempted] = useState(false);
   const exitTheApp = () => RNExitApp.exitApp();
 
   // Disable going back while connecting to prevent unexpected behaviour
@@ -31,7 +30,7 @@ export default function ConnectScreen({ navigation, route }: ConnectScreenProps)
       deviceName: device.deviceName,
       proofOfPossession,
       device_TypeName,
-      normalName
+      normalName,
     });
   };
 
@@ -87,7 +86,6 @@ export default function ConnectScreen({ navigation, route }: ConnectScreenProps)
       );
 
       const connectionTimeout = setTimeout(() => {
-        setConnectionAttempted(true);
         if (!isConnected) {
           Alert.alert(
             `${t("screens.home_stack.connect.title_timeout")}`,

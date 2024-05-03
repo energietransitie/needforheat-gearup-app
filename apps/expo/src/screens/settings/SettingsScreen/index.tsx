@@ -4,9 +4,8 @@ import { makeStyles, Text } from "@rneui/themed";
 import { toast } from "burnt";
 import { nativeBuildVersion } from "expo-application";
 import Constants from "expo-constants";
-import { useContext, useRef } from "react";
-import { Alert, FlatList, Linking, Platform } from "react-native";
-import PushNotification from "react-native-push-notification";
+import { useRef } from "react";
+import { Alert, FlatList, Linking } from "react-native";
 
 import LanguageBottomSheet from "./_languageBottomSheet";
 import SettingListItem, { SettingItem } from "./_settingListItem";
@@ -14,13 +13,10 @@ import SettingListItem, { SettingItem } from "./_settingListItem";
 import Box from "@/components/elements/Box";
 import { deleteWifiNetworks } from "@/constants";
 import useTranslation from "@/hooks/translation/useTranslation";
-import { UserContext } from "@/providers/UserProvider";
-
 export default function SettingsScreen() {
   const styles = useStyles();
   const { t, languages, resolvedLanguage } = useTranslation();
   const bottomSheetRef = useRef<BottomSheetModal>(null);
-  useContext(UserContext);
 
   const onDeleteWifiPasswords = () => {
     Alert.alert(
