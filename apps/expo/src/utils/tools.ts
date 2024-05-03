@@ -1,8 +1,9 @@
+import { MANUAL_URL } from "@env";
 import cronParser from "cron-parser";
 import { DateTime, Duration } from "luxon";
 
 import { Maybe } from "@/types";
-import { BuildingDeviceResponse, CloudFeed, DataSourceType, DataSourcesList } from "@/types/api";
+import { AllDataSourcesResponse, DataSourceListType, DataSourceType, EnergyQuery, cloudFeedsResponse } from "@/types/api";
 
 export async function handleRequestErrors(response: Response) {
   if (!response.ok) {
@@ -55,11 +56,19 @@ export function capitalizeFirstLetter(text: string | undefined) {
   return text;
 }
 
-export function checkMissedUpload(item: BuildingDeviceResponse): number {
-  const latestUploadString = item.latest_upload ? item.latest_upload.toISOString() : "";
+export const toLocalDateTime = (unixTime: number | undefined | null) =>
+  unixTime ? new Date(unixTime * 1000) : undefined;
+
+export function checkMissedUpload(item: AllDataSourcesResponse): number {
+  let latestUploadString = item.latest_upload
+    ? toLocalDateTime(item.latest_upload)
+    : toLocalDateTime(item.activated_at) ?? "";
+  if (!latestUploadString) latestUploadString = "";
+
   const timeNow = new Date();
-  const cronExpression = item.upload_schedule ? item.upload_schedule : "";
-  const notificationThresholdDurationISO = item.notification_threshold_duration;
+  const cronExpression = item.data_source?.upload_schedule ? item.data_source.upload_schedule : "";
+  const notificationThresholdDurationISO = item.data_source?.notification_threshold;
+
   try {
     const intervalIterator = cronParser.parseExpression(cronExpression, { currentDate: latestUploadString });
     let missedIntervals = 0;
@@ -67,7 +76,7 @@ export function checkMissedUpload(item: BuildingDeviceResponse): number {
 
     // Convert ISO 8601 duration to Luxon Duration
     if (notificationThresholdDurationISO) {
-      const thresholdTime = DateTime.fromISO(latestUploadString).plus(
+      const thresholdTime = DateTime.fromJSDate(new Date(latestUploadString.toString())).plus(
         Duration.fromISO(notificationThresholdDurationISO)
       );
 
@@ -92,20 +101,14 @@ export function checkMissedUpload(item: BuildingDeviceResponse): number {
 }
 
 export function checkStatus(
-  dataSource: {
-    id: number;
-    type: { name: string };
-    item: { id: number; name: string; installation_manual_url: string; info_url: string };
-    precedes: { id: number }[];
-    uploadschedule: string;
-  },
-  oldSource: BuildingDeviceResponse,
-  cloudFeedData: CloudFeed[] | undefined
+  dataSource: DataSourceType,
+  oldSource: AllDataSourcesResponse,
+  cloudFeedData: cloudFeedsResponse | undefined
 ) {
   const activated_at = oldSource?.activated_at ?? null;
   if (
-    (dataSource.type.name === "cloud_feed" &&
-      cloudFeedData?.find(item => item.cloud_feed.name === dataSource.item.name)?.connected) ||
+    (dataSource.category === "cloud_feed_type" &&
+      cloudFeedData?.find(item => item.cloud_feed_type.name === dataSource.item.Name)?.connected) ||
     !(activated_at === null)
   ) {
     return 2;
@@ -113,33 +116,46 @@ export function checkStatus(
   return 1;
 }
 
+export function getManualUrl(dataSource: DataSourceType | undefined) {
+  let manualType = "devices";
+
+  if (dataSource?.category === "cloud_feed_type") manualType = "cloud_feeds";
+  if (dataSource?.category === "energy_query_type") manualType = "energy_queries";
+
+  return `${MANUAL_URL}/${manualType}/${dataSource?.item.Name}`;
+}
+
 export function processDataSource(
   dataSource: DataSourceType,
-  data: BuildingDeviceResponse[] | undefined,
-  cloudFeedData: CloudFeed[] | undefined,
-  dataSourcesList: DataSourcesList,
-  buildingId: number
-): BuildingDeviceResponse {
+  data: AllDataSourcesResponse[] | undefined,
+  cloudFeedData: cloudFeedsResponse | undefined,
+  energyQueryData: AllDataSourcesResponse[] | undefined,
+  dataSourceList: DataSourceListType,
+): AllDataSourcesResponse {
   let connectStatus = 1;
-  const oldSource = data?.find(item => item.device_type.name === dataSource.item.name);
-  const activated_at = oldSource?.activated_at ?? null;
-  const latest_upload = oldSource?.latest_upload ?? null;
-  const upload_schedule = dataSource.uploadschedule;
+
+  let oldSource: AllDataSourcesResponse | undefined;
+  if (dataSource.category === "energy_query_type") {
+    oldSource = energyQueryData?.find(item => item.type === dataSource.item.Name);
+  } else {
+    oldSource = data?.find(item => item.type === dataSource.item.Name);
+  }
 
   if (oldSource) {
     connectStatus = checkStatus(dataSource, oldSource, cloudFeedData);
   }
 
-  // Check if all precedes are completed
-  const itemsNotPrecedingCurrent = dataSourcesList.items.filter(otherItem => {
+  //Check if all precedes are completed
+  const itemsNotPrecedingCurrent = dataSourceList?.items.filter(otherItem => {
+    if (!otherItem.precedes) return false;
     const precedesMatch = otherItem.precedes.some(precede => precede.id === dataSource.id);
     return otherItem.id !== dataSource.id && precedesMatch;
   });
 
   let allPrecedesDone = true;
-  if (itemsNotPrecedingCurrent.length > 0) {
+  if (itemsNotPrecedingCurrent && itemsNotPrecedingCurrent.length > 0) {
     itemsNotPrecedingCurrent.forEach(otherItem => {
-      const otherOldSource = data?.find(item => item.device_type.name === otherItem.item.name);
+      const otherOldSource = data?.find(item => item.data_source?.item.Name === otherItem.item.Name);
       if (otherOldSource) {
         if (checkStatus(otherItem, otherOldSource, cloudFeedData) === 1) {
           allPrecedesDone = false;
@@ -152,16 +168,15 @@ export function processDataSource(
 
   connectStatus = connectStatus === 2 ? connectStatus : allPrecedesDone ? 0 : 1;
 
-  return {
+  const newResponse: AllDataSourcesResponse = {
     id: dataSource.id,
-    name: oldSource?.name ? oldSource.name : dataSource.item.name,
-    building_id: buildingId,
-    device_type: dataSource.item,
-    activated_at,
-    latest_upload,
-    upload_schedule,
-    typeCategory: dataSource.type.name,
+    name: oldSource?.name ? oldSource.name : dataSource.item.Name,
+    activated_at: oldSource?.activated_at ? oldSource?.activated_at : null,
+    type: oldSource?.type ? oldSource?.type : dataSource.item.Name,
+    latest_upload: oldSource?.latest_upload,
+    data_source: dataSource,
     connected: connectStatus,
-    notification_threshold_duration: dataSource.notificationThresholdDuration,
   };
+
+  return newResponse;
 }

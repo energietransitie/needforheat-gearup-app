@@ -11,7 +11,8 @@ import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
 import useDevices from "@/hooks/device/useDevices";
 import useEnergyQueries from "@/hooks/energyquery/useEnergyQueries";
 import { UserContext } from "@/providers/UserProvider";
-import { AllDataSourcesResponse, DataSourceType, DataSourceListType } from "@/types/api";
+import { AllDataSourcesResponse, DataSourceListType } from "@/types/api";
+import { processDataSource } from "@/utils/tools";
 
 export default function DataSourceList({
   refresh,
@@ -41,77 +42,19 @@ export default function DataSourceList({
   const onSwipeBegin = useCallback(() => setScrollEnabled(false), []);
   const onSwipeEnd = useCallback(() => setScrollEnabled(true), []);
 
-  function checkStatus(dataSource: DataSourceType, oldSource: AllDataSourcesResponse) {
-    const activated_at = oldSource?.activated_at ?? null;
-    if (
-      (dataSource.category === "cloud_feed_type" &&
-        cloudFeedData?.find(item => item.cloud_feed_type.name === dataSource.item.Name)?.connected) ||
-      !(activated_at === null)
-    ) {
-      return 2;
-    }
-    return 1;
-  }
-
   useEffect(() => {
     if (dataSourceList) {
       let connectedCount = 0;
       const newData: AllDataSourcesResponse[] = [];
 
       dataSourceList.items.forEach(dataSource => {
-        let connectStatus = 1;
-
-        let oldSource: AllDataSourcesResponse | undefined;
-        if (dataSource.category === "energy_query_type") {
-          oldSource = energyQueryData?.find(item => item.data_source?.item.Name === dataSource.item.Name);
-        } else {
-          oldSource = data?.find(item => item.data_source?.item.Name === dataSource.item.Name);
-        }
-
-        const activated_at = oldSource?.activated_at ?? null;
-        const latest_upload = oldSource?.latest_upload ?? null;
-
-        if (oldSource) {
-          connectStatus = checkStatus(dataSource, oldSource);
-          if (connectStatus === 2) connectedState.push(dataSource.id);
-        }
-
-        //Check if all precedes are completed
-        const itemsNotPrecedingCurrent = dataSourceList.items.filter(otherItem => {
-          if (!otherItem.precedes) return false;
-          const precedesMatch = otherItem.precedes.some(precede => precede.id === dataSource.id);
-          return otherItem.id !== dataSource.id && precedesMatch;
-        });
-
-        let allPrecedesDone = true;
-        if (itemsNotPrecedingCurrent.length > 0) {
-          itemsNotPrecedingCurrent.forEach(otherItem => {
-            const otherOldSource = data?.find(item => item.data_source?.item.Name === otherItem.item.Name);
-            if (otherOldSource) {
-              if (checkStatus(otherItem, otherOldSource) === 1) {
-                allPrecedesDone = false;
-              }
-            } else {
-              allPrecedesDone = false;
-            }
-          });
-        }
-
-        connectStatus = connectStatus === 2 ? connectStatus : allPrecedesDone ? 0 : 1;
+        const newResponse = processDataSource(dataSource, data, cloudFeedData, energyQueryData, dataSourceList);
 
         //Progressbar
-        if (connectStatus === 2) {
+        if (newResponse.connected === 2) {
+          connectedState.push(dataSource.id);
           connectedCount++;
         }
-
-        const newResponse: AllDataSourcesResponse = {
-          id: dataSource.id,
-          name: oldSource?.name ? oldSource.name : dataSource.item.Name,
-          activated_at,
-          latest_upload,
-          data_source: dataSource,
-          connected: connectStatus,
-        };
         newData.push(newResponse);
       });
 
