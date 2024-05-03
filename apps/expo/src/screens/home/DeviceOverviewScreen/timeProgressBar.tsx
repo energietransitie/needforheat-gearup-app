@@ -35,7 +35,7 @@ const TimeProgressBar: React.FC<TimeProgressBarProps> = ({ progress, onTimePasse
     }, 30000);
 
     return () => clearInterval(intervalId);
-  }, [progress]);
+  }, [progress, notificationSent, onTimePassedByMinute]);
 
   let progressPercentage = (remainingTime / totalTime) * 100;
   if (remainingTime === totalTime && remainingTime === 0 && totalTime === 0) progressPercentage = 100;
