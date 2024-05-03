@@ -98,7 +98,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
       navigate("AddOnlineDataSourceScreen");
     } else if (item.data_source?.category === "energy_query_type") {
       if (item.name === "weather-interpolation-location") {
-        navigate("InformationScreen", { device: item.data_source });
+        navigate("InformationScreen", { dataSource: item.data_source });
       }
     }
   };

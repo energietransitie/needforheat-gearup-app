@@ -21,7 +21,7 @@ export const TypeSchema = z.object({
 export type DeviceTypeResponse = z.infer<typeof deviceTypeSchema>;
 
 export const propertySchema = z.object({
-  id: z.number(),
+  id: z.number().optional(),
   name: z.string(),
 });
 
@@ -33,8 +33,8 @@ export const propertiesSchema = z.array(propertySchema);
 export type PropertiesResponse = z.infer<typeof propertiesSchema>;
 
 export const measurementSchema = z.object({
-  id: z.number(),
-  upload_id: z.number(),
+  id: z.number().optional(),
+  upload_id: z.number().optional(),
   property: propertySchema,
   value: z.string(),
   time: z.number(),
@@ -176,11 +176,11 @@ export type FetchMeasurementsOptions = { start?: string; end?: string; property:
 
 // EnergyQueries
 export const uploadSchema = z.object({
-  id: z.number(),
+  id: z.number().optional(),
   instance_id: z.number(),
   instance_type: z.string(),
-  server_time: z.date(),
-  device_time: z.date(),
+  server_time: z.number().optional(),
+  device_time: z.number(),
   size: z.number(),
   measurements: measurementsSchema,
 });
@@ -190,9 +190,11 @@ export type Upload = z.infer<typeof uploadSchema>;
 export const uploadsSchema = z.array(uploadSchema);
 
 export const energyQueryScherma = z.object({
-  id: z.number(),
-  energy_query_type: z.string(),
-  activated_at: z.number(),
+  id: z.number().optional(),
+  energy_query_type: z.object({
+    id: z.number(),
+  }),
+  activated_at: z.number().optional(),
   uploads: uploadsSchema,
 });
 

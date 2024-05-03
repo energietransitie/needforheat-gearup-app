@@ -101,7 +101,7 @@ export async function postEnergyQuery(energyQuery: EnergyQuery) {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch: ${response.statusText}`);
+      throw new Error(`Failed to post EnergyQuery: ${response.statusText}`);
     }
 
     const jsonData = await response.json();

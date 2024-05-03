@@ -49,9 +49,9 @@ export type HomeStackParamList = {
   //CloudFeed
   AddOnlineDataSourceScreen: undefined;
   //EnergyQuery
-  InformationScreen: { expectedDeviceName?: string | undefined; device: DataSourceType };
-  HomeSelectScreen: undefined;
-  WeatherLocationResultScreen: { location: UserLocation };
+  InformationScreen: { dataSource: DataSourceType };
+  HomeSelectScreen: { dataSource: DataSourceType };
+  WeatherLocationResultScreen: { location: UserLocation; dataSource: DataSourceType };
 };
 
 export type InfoStackParamList = {

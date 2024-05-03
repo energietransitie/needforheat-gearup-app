@@ -5,23 +5,24 @@ import ManualContent from "@/components/common/ManualContent";
 import Box from "@/components/elements/Box";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { HomeStackParamList } from "@/types/navigation";
+import { getManualUrl } from "@/utils/tools";
 
 type InformationScreenProps = NativeStackScreenProps<HomeStackParamList, "InformationScreen">;
 
 export default function InformationScreen({ navigation, route }: InformationScreenProps) {
-  const { device } = route.params;
+  const { dataSource } = route.params;
   const { theme } = useTheme();
   const { t, resolvedLanguage } = useTranslation();
 
   const onExecuteQuery = () => {
-    navigation.navigate("HomeSelectScreen");
+    navigation.navigate("HomeSelectScreen", { dataSource });
   };
 
   const onCancel = () => navigation.navigate("HomeScreen");
 
   return (
     <Box padded style={{ flex: 1 }}>
-      <ManualContent manualUrl={device.installation_manual_url} languageHeader={resolvedLanguage} />
+      <ManualContent manualUrl={getManualUrl(dataSource) + "/installation"} languageHeader={resolvedLanguage} />
       <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
         <Button
           containerStyle={{ flex: 1 }}

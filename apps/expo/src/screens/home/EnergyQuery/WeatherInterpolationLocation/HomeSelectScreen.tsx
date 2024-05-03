@@ -1,4 +1,3 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import Geolocation, { GeolocationResponse } from "@react-native-community/geolocation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, Icon, makeStyles, useTheme } from "@rneui/themed";
@@ -17,6 +16,7 @@ import { HomeStackParamList } from "@/types/navigation";
 type HomeSelectScreenProps = NativeStackScreenProps<HomeStackParamList, "HomeSelectScreen">;
 
 export default function HomeSelectScreen({ navigation, route }: HomeSelectScreenProps) {
+  const { dataSource } = route.params;
   const { theme } = useTheme();
   const { t } = useTranslation();
   const style = useStyles();
@@ -38,7 +38,7 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
   }, []);
 
   const onContinue = () => {
-    navigation.navigate("WeatherLocationResultScreen", { location });
+    navigation.navigate("WeatherLocationResultScreen", { location, dataSource });
   };
 
   //Location permission
