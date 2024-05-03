@@ -2,10 +2,11 @@ import { QueryKey, useQuery } from "@tanstack/react-query";
 
 import { fetchDeviceMeasurements } from "@/api/device";
 import { fetchEnergyQueryMeasurements } from "@/api/energyquery";
-import { FetchMeasurementsOptions } from "@/types/api";
+import { FetchMeasurementsOptions, Measurement } from "@/types/api";
 
 export default function useMeasurements(name: string, type: string, fetchOptions: FetchMeasurementsOptions) {
-  let fetchFn;
+  let fetchFn: (deviceName: string, fetchOptions: FetchMeasurementsOptions) => Promise<Measurement[]>;
+
   if (type === "device") {
     fetchFn = fetchDeviceMeasurements;
   } else if (type === "energy_query") {
