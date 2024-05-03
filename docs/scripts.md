@@ -18,5 +18,5 @@
 | `app`     | release:android:install | Installs the release APK to all ADB-connected devices.                                                    |
 | `app`     | dev:android:build       | Builds a dev APK using Gradle.                                                                            |
 | `app`     | dev:android:install     | Installs the dev APK to all ADB-connected devices.                                                        |
-| `app`     | ios:pod:annihilate     | Clean up caches and destroy pod                                                       |
-| `app`     | ios:pod:install     | Create new pod, akin to `yarn install` but for iOS                                                      |
+| `app`     | ios:pod:annihilate      | Clean up caches and destroy pod                                                                           |
+| `app`     | ios:pod:install         | Create new pod, akin to `yarn install` but for iOS                                                        |
