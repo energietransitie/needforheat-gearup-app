@@ -34,6 +34,7 @@ module.exports = {
             from: `"versionCode": .*$`,
             to: match => {
               const hadComma = match.includes(",");
+              // eslint-disable-next-line radix
               const currVersion = parseInt(match.split(":")[1].trim()) || 0;
               const nextVersion = currVersion + 1;
               return `"versionCode": ${nextVersion}${hadComma ? "," : ""}`;

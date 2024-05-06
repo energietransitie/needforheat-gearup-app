@@ -1,7 +1,7 @@
 # Deploying the app
 NeedForHeat is published to the Apple App Store and Google Play Store App Store on the Windesheim account.
 
-For access to either of those developer accounts, please contact [@n-vr](https://github.com/n-vr) or [@henriterhofte](https://github.com/henriterhofte).
+For access to either of those developer accounts, please contact [@henriterhofte](https://github.com/henriterhofte).
 
 ## Table of contents
 - [General information](#general-information)

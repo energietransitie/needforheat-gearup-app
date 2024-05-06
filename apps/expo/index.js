@@ -1,7 +1,6 @@
-//import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { registerRootComponent } from "expo";
 import PushNotification from "react-native-push-notification";
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
 import App from "./App";
 PushNotification.configure({

@@ -40,7 +40,7 @@ export default function ExternalProviderScreen() {
 
       await activate({ cloudFeedId, authCode });
 
-      const providerName = data?.find(item => item.cloud_feed.id === cloudFeedId)?.cloud_feed?.name;
+      const providerName = data?.find(item => item.cloud_feed_type.id === cloudFeedId)?.cloud_feed_type?.name;
 
       Burnt.dismissAllAlerts();
       Burnt.alert({

@@ -4,6 +4,7 @@ import { Input, InputProps } from "@rneui/themed";
 import { forwardRef, useCallback } from "react";
 import { NativeSyntheticEvent, TextInputFocusEventData } from "react-native";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const BottomSheetTextInput = forwardRef<InputProps, InputPropsBase & { component?: React.ComponentType<any> }>(
   ({ component, onFocus, onBlur, ...restProps }, ref) => {
     const Component = component || Input;

@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ThemeProvider } from "@rneui/themed";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react-native";
+import { render, waitFor } from "@testing-library/react-native";
 import React, { ReactNode } from "react";
 
 import { theme } from "@/lib/theme";
@@ -29,21 +29,24 @@ type MockNavigationContainerProps = {
 
 describe("DeviceListItem", () => {
   const mockItem = {
-    device_type: {
-      name: "Test Device Type",
-      id: 123,
-      installation_manual_url: "https://example.com/installation",
-      info_url: "https://example.com/info",
-    },
-    name: "Test Device",
     id: 456,
-    building_id: 789,
-    activated_at: new Date("2024-04-15T12:00:00Z"),
-    latest_upload: new Date("2024-04-18T09:30:00Z"),
+    name: "Test Device Type",
+    activated_at: 1714742241,
+    latest_upload: 1714742241,
+    type: "device_type",
+    data_source: {
+      id: 1,
+      category: "device_type",
+      item: { ID: 1, Name: "Test_Device" },
+      order: 1,
+      installation_url: "https://example.com/installation",
+      faq_url: "https://example.com/faq",
+      info_url: "https://example.com/info",
+      precedes: null,
+      upload_schedule: "0 0 * * *",
+      notification_threshold: "PT24H",
+    },
     connected: 2,
-    upload_schedule: "0 0 * * *", // Example cron expression
-    notification_threshold_duration: "PT24H", // Example ISO 8601 duration (1 day)
-    typeCategory: "device_type",
   };
 
   const mockProps = {
@@ -94,7 +97,7 @@ describe("DeviceListItem", () => {
       expect(getByText(expectedLastSeenText)).toBeTruthy();
     });
   });
-  
+
   afterEach(() => {
     jest.restoreAllMocks();
   });

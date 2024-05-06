@@ -150,6 +150,23 @@ android {
         versionName "2.11.0"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
+        def envFile = file('../../../../.env')
+        def envVariables = [:]
+
+        // Read and parse the .env file
+        envFile.withReader { reader ->
+            reader.eachLine { line ->
+                def (key, value) = line.split('=')
+                envVariables[key.trim()] = value.trim()
+            }
+        }
+
+        // Access the required environment variable
+        def googleMapsApiKey = envVariables['GOOGLE_MAPS_API_KEY']
+
+        manifestPlaceholders = [google_maps_api_key: googleMapsApiKey]
+        println "Manifest placeholders: ${manifestPlaceholders}"
+
         if (isNewArchitectureEnabled()) {
             // We configure the CMake build only if you decide to opt-in for the New Architecture.
             externalNativeBuild {

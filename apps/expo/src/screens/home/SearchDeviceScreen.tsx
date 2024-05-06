@@ -155,7 +155,7 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
     }
   };
 
-  const onConnect = (device: BleDeviceType, proofOfPossession: string, device_TypeName: any) => {
+  const onConnect = (device: BleDeviceType, proofOfPossession: string, device_TypeName: string) => {
     // Before connecting to the device, navigate to the activation screen
     // to register the device on the server
     setTimeout(() => {

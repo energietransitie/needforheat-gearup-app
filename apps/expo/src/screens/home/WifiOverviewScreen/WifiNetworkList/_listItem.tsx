@@ -19,7 +19,6 @@ function convertRSSIToLevel(rssi: Required<WifiEntry>["rssi"]) {
   } else if (rssi >= -70) {
     return 2;
   }
-
   return 1;
 }
 

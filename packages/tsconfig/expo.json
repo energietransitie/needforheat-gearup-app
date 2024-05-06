@@ -2,12 +2,18 @@
   "//": "taken from https://github.com/expo/expo/blob/master/packages/expo-module-scripts/tsconfig.base.json",
   "compilerOptions": {
     "target": "esnext",
-    "lib": ["dom", "esnext"],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
     "jsx": "react-jsx",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "types": [],
-    "typeRoots": ["./ts-declarations", "node_modules/@types"],
+    "typeRoots": [
+      "./ts-declarations",
+      "node_modules/@types"
+    ],
     "sourceMap": true,
     "declaration": true,
     "inlineSources": true,
