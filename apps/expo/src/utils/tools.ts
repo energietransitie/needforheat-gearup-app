@@ -133,8 +133,6 @@ export function processDataSource(
   energyQueryData: AllDataSourcesResponse[] | undefined,
   dataSourceList: DataSourceListType
 ): AllDataSourcesResponse {
-  console.log("=================");
-  console.log(dataSource.item.Name);
   let connectStatus = 1;
 
   const oldSource = getOldSource(dataSource, energyQueryData, data);
@@ -148,8 +146,6 @@ export function processDataSource(
     const precedesMatch = otherItem.precedes.some(precede => precede.id === dataSource.id);
     return otherItem.id !== dataSource.id && precedesMatch;
   });
-
-  console.log("itemsPreceding: " + JSON.stringify(itemsNotPrecedingCurrent));
 
   let allPrecedesDone = true;
   if (itemsNotPrecedingCurrent && itemsNotPrecedingCurrent.length > 0) {
