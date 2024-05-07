@@ -252,6 +252,10 @@
             "success":{
               "title": "Success!",
               "message": "Your Energy Query has been sent to the Energy Doctor"
+            },
+            "fail":{
+              "title": "Fail!",
+              "message": "An error occured when trying to send the query:"
             }
           }
         },

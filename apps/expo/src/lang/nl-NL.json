@@ -252,46 +252,10 @@
             "success": {
               "title": "Succes!",
               "message": "Uw Energy Query is naar de energiedokter gestuurd"
-            }
-          }
-        
-        },
-        "location_permission": {
-          "alert": {
-            "title": "Locatie machtiging",
-            "message": "Deze app maakt gebruik van uw GPS om uw locatie op te halen.\n\nWilt u deze machtiging verlenen?",
-            "button": "Oké, vraag maar!",
-            "enable_button": "Machtiging locatie verlenen"
-          },
-          "errors": {
-            "request_failed": "Een fout is opgetreden bij het aanvragen van de locatie-machtigingen."
-          }
-        }
-      },
-      "energy_query": {
-        "information_screen": {
-          "title": "EnergyQuery Informatie",
-          "button": "Begrepen!"
-        },
-        "homeselect_screen": {
-          "title": "Selecteer uw woning",
-          "subtitle": "Sleep de kaart rond en plaats de pin boven uw huis",
-          "button": "Deze locatie gebruiken!"
-        },
-        "weather_location_result_screen":{
-          "title": "Resultaten",
-          "subtitle": "Bevindt jouw huis zich in deze zeshoek?",
-          "send_button": "Verzenden",
-          "back_button": "Opnieuw",
-          "marker": "Geselecteerde locatie",
-          "alert": {
-            "sending": {
-              "title": "Bezig met verzenden...",
-              "message": "Uw Energy Query wordt naar de energiedokter gestuurd"
             },
-            "success": {
-              "title": "Succes!",
-              "message": "Uw Energy Query is naar de energiedokter gestuurd"
+            "fail":{
+              "title": "Fout!",
+              "message": "Er is een fout opgetreden bij het verzenden van de query:"
             }
           }
         
