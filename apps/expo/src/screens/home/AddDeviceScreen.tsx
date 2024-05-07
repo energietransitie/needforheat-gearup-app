@@ -1,6 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, useTheme } from "@rneui/themed";
-import { useEffect, useState } from "react";
 
 import ManualContent from "@/components/common/ManualContent";
 import Box from "@/components/elements/Box";

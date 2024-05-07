@@ -150,7 +150,9 @@ export const createDeviceSchema = activateAccountDeviceSchema;
 export type CreateDeviceResponse = z.infer<typeof createDeviceSchema>;
 
 // GET: /device/{id}
-export const deviceReadSchema = activateAccountDeviceSchema.merge(z.object({ latest_upload: z.number().nullable() }));
+export const deviceReadSchema = activateAccountDeviceSchema.merge(
+  z.object({ latest_upload: z.number().optional().nullable() })
+);
 
 export type DeviceReadResponse = z.infer<typeof deviceReadSchema>;
 
