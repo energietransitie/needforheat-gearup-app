@@ -133,15 +133,11 @@ export function processDataSource(
   energyQueryData: AllDataSourcesResponse[] | undefined,
   dataSourceList: DataSourceListType
 ): AllDataSourcesResponse {
+  console.log("=================");
+  console.log(dataSource.item.Name);
   let connectStatus = 1;
 
-  let oldSource: AllDataSourcesResponse | undefined;
-  if (dataSource.category === "energy_query_type") {
-    oldSource = energyQueryData?.find(item => item.type === dataSource.item.Name);
-  } else {
-    oldSource = data?.find(item => item.type === dataSource.item.Name);
-  }
-
+  const oldSource = getOldSource(dataSource, energyQueryData, data);
   if (oldSource) {
     connectStatus = checkStatus(dataSource, oldSource, cloudFeedData);
   }
@@ -153,10 +149,12 @@ export function processDataSource(
     return otherItem.id !== dataSource.id && precedesMatch;
   });
 
+  console.log("itemsPreceding: " + JSON.stringify(itemsNotPrecedingCurrent));
+
   let allPrecedesDone = true;
   if (itemsNotPrecedingCurrent && itemsNotPrecedingCurrent.length > 0) {
     itemsNotPrecedingCurrent.forEach(otherItem => {
-      const otherOldSource = data?.find(item => item.data_source?.item.Name === otherItem.item.Name);
+      const otherOldSource = getOldSource(otherItem, energyQueryData, data);
       if (otherOldSource) {
         if (checkStatus(otherItem, otherOldSource, cloudFeedData) === 1) {
           allPrecedesDone = false;
@@ -180,4 +178,17 @@ export function processDataSource(
   };
 
   return newResponse;
+}
+function getOldSource(
+  dataSource: DataSourceType,
+  energyQueryData: AllDataSourcesResponse[] | undefined,
+  data: AllDataSourcesResponse[] | undefined
+) {
+  let oldSource: AllDataSourcesResponse | undefined;
+  if (dataSource.category === "energy_query_type") {
+    oldSource = energyQueryData?.find(item => item.type === dataSource.item.Name);
+  } else {
+    oldSource = data?.find(item => item.type === dataSource.item.Name);
+  }
+  return oldSource;
 }
