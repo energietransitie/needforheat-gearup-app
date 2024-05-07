@@ -77,7 +77,12 @@ export async function fetchEnergyQueries() {
     const parsedEnergyQueries = [];
     for (const energyQueryData of jsonData) {
       try {
-        //TODO: rename allDevicesSchema
+        const { energy_query_type } = energyQueryData;
+        if (energy_query_type && energy_query_type.name) {
+          energyQueryData.name = energy_query_type.name;
+          energyQueryData.type = energy_query_type.name;
+        }
+
         const parsedEnergyQuery = allDataSourcesSchema.parse(energyQueryData);
         parsedEnergyQueries.push(parsedEnergyQuery);
       } catch (error) {
