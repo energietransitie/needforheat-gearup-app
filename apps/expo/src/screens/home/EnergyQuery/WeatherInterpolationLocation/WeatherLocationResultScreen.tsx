@@ -183,7 +183,7 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
   return (
     <>
       <Box padded style={{ flex: 1 }}>
-        <View>
+        <View style={{ width: "100%" }}>
           <Text style={style.subtitle}>
             {t("screens.home_stack.energy_query.weather_location_result_screen.subtitle")}
           </Text>

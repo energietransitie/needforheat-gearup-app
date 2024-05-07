@@ -142,7 +142,7 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
   return (
     <>
       <Box padded style={{ flex: 1 }}>
-        <View>
+        <View style={{ width: "100%" }}>
           <Text style={style.subtitle}>{t("screens.home_stack.energy_query.homeselect_screen.subtitle")}</Text>
         </View>
         <View style={style.mapcontainer}>
