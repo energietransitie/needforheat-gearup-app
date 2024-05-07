@@ -1,9 +1,11 @@
+import { GOOGLE_MAPS_API_KEY } from "@env";
 import Geolocation, { GeolocationResponse } from "@react-native-community/geolocation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, Icon, makeStyles, useTheme } from "@rneui/themed";
 import { openSettings } from "expo-linking";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Alert, Platform, Text, View } from "react-native";
+import Geocoder from "react-native-geocoding";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import MapView, { Region } from "react-native-maps";
 
@@ -27,6 +29,20 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
     latitudeDelta: 4,
     longitudeDelta: 4,
   });
+  const [selectedAddress, setSelectedAddress] = useState<string>("");
+
+  const getAddressFromCoordinates = async (latitude: number, longitude: number) => {
+    try {
+      const response = await Geocoder.from(latitude, longitude);
+      const address = response.results[0].formatted_address;
+      setSelectedAddress(address);
+    } catch (error) {
+      console.error("Error fetching address: ", error);
+      setSelectedAddress(""); // Als er een fout optreedt, leeg het adres
+    }
+  };
+
+  Geocoder.init(GOOGLE_MAPS_API_KEY);
 
   useEffect(() => {
     const checkPermission = async () => {
@@ -120,6 +136,7 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
 
   const handleRegionChangeCompleted = (newRegion: Region) => {
     setLocation(newRegion);
+    getAddressFromCoordinates(newRegion.latitude, newRegion.longitude);
   };
 
   const handleZoomIn = useCallback(() => {
@@ -157,6 +174,11 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
             onRegionChangeComplete={handleRegionChangeCompleted}
             zoomControlEnabled
           />
+          <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
+            <View style={style.addressContainer}>
+              <Text style={style.addressText}>{selectedAddress}</Text>
+            </View>
+          </Box>
           {Platform.OS === "ios" ? (
             <View style={style.zoomControlsiOS}>
               <TouchableOpacity onPress={handleZoomIn} style={style.zoomButton}>
@@ -246,5 +268,17 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "bold",
     textAlign: "center",
     fontSize: 16,
+  },
+  addressContainer: {
+    backgroundColor: theme.colors.background,
+    padding: theme.spacing.sm,
+    borderRadius: 0,
+    marginTop: theme.spacing.sm, // Add marginTop for spacing
+    alignSelf: "center",
+    bottom: -270,
+  },
+  addressText: {
+    fontSize: 14,
+    textAlign: "center",
   },
 }));
