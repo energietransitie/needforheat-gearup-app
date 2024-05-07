@@ -10,6 +10,7 @@ import {
   EnergyQuery,
   FetchMeasurementsOptions,
   measurementsSchema,
+  energyQueryScherma,
 } from "@/types/api";
 import { handleRequestErrors } from "@/utils/tools";
 
@@ -110,7 +111,7 @@ export async function postEnergyQuery(energyQuery: EnergyQuery) {
     }
 
     const jsonData = await response.json();
-    return deviceReadSchema.parse(jsonData);
+    return energyQueryScherma.parse(jsonData);
   } catch (error) {
     console.error("Error posting energy query:", error);
     throw error;
