@@ -299,7 +299,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
             ) : null}
             {" " + getNormalName()}
           </ListItem.Title>
-          {item.connected === 2 ? (
+          {item.connected === 2 && item.data_source?.category !== "energy_query_type" ? (
             <ListItem.Subtitle style={[style.listItemSubtitle]}>
               {item.latest_upload
                 ? t("screens.device_overview.device_list.device_info.last_seen", {
@@ -308,7 +308,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
                 : t("screens.device_overview.device_list.device_info.no_data")}
             </ListItem.Subtitle>
           ) : null}
-          {timeToUpload && item.connected === 2 ? (
+          {timeToUpload && item.connected === 2 && item.data_source?.category !== "energy_query_type" ? (
             <TimeProgressBar
               progress={timeToUpload}
               onTimePassedByMinute={handleTimePassedByMinute}
@@ -323,7 +323,9 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
             </TouchableOpacity>
           ) : null}
         </View>
-        {item.connected === 2 && item.data_source?.category !== "cloud_feed_type" ? (
+        {item.connected === 2 &&
+        item.data_source?.category !== "cloud_feed_type" &&
+        item.data_source?.category !== "energy_query_type" ? (
           <Icon
             name="reorder-three-outline"
             size={10}
