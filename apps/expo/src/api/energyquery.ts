@@ -70,7 +70,7 @@ export async function fetchEnergyQueries() {
     const jsonData = await data.json();
 
     if (!Array.isArray(jsonData)) {
-      console.error("Invalid data format received from server for energy queries");
+      console.warn("Invalid or null data format received from server for energy queries");
       return [];
     }
 

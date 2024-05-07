@@ -162,7 +162,7 @@ export type ActivateDeviceResponse = z.infer<typeof activateDeviceSchema>;
 // GET /device/{all
 export const allDataSourcesSchema = z.object({
   id: z.number(),
-  name: z.string(),
+  name: z.string().optional().nullable(),
   activated_at: z.number().nullable(),
   latest_upload: z.number().optional().nullable(),
   type: z.string(),
