@@ -103,6 +103,14 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     }
   };
 
+  const openResult = () => {
+    if (item.data_source?.category === "energy_query_type") {
+      if (item.name === "weather-interpolation-location") {
+        navigate("WeatherLocationPostedScreen");
+      }
+    }
+  };
+
   const openHelpUrl = () => {
     if (item.data_source?.faq_url) {
       openUrl(item.data_source.faq_url, false);
@@ -209,6 +217,9 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           }
           if (item.connected === 0) {
             openManual();
+          }
+          if (item.connected === 2) {
+            openResult();
           }
         }}
         onSwipeBegin={onSwipeBegin}

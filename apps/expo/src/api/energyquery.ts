@@ -5,7 +5,6 @@ import { FETCH_HEADERS } from "@/constants";
 import {
   allDataSourcesSchema,
   propertiesSchema,
-  deviceReadSchema,
   deviceTypeSchema,
   EnergyQuery,
   FetchMeasurementsOptions,
@@ -58,7 +57,7 @@ export async function fetchEnergyQuery(queryType: string) {
 
   const data = await handleRequestErrors(response);
   const jsonData = await data.json();
-  return deviceReadSchema.parse(jsonData);
+  return energyQueryScherma.parse(jsonData);
 }
 
 export async function fetchEnergyQueries() {

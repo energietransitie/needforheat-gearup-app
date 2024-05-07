@@ -258,7 +258,11 @@
               "message": "Er is een fout opgetreden bij het verzenden van de query:"
             }
           }
-        
+        },
+        "weather_location_posted_screen":{
+          "title": "Verzonden resultaat",
+          "subtitle": "U heeft de volgende weerzone verzonden op",
+          "back_button": "Ga terug"
         },
         "location_permission": {
           "alert": {

@@ -52,6 +52,7 @@ export type HomeStackParamList = {
   InformationScreen: { dataSource: DataSourceType };
   HomeSelectScreen: { dataSource: DataSourceType };
   WeatherLocationResultScreen: { location: UserLocation; dataSource: DataSourceType };
+  WeatherLocationPostedScreen: undefined;
 };
 
 export type InfoStackParamList = {

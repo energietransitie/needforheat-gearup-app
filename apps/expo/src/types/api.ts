@@ -172,7 +172,7 @@ export const allDataSourcesSchema = z.object({
 
 export type AllDataSourcesResponse = z.infer<typeof allDataSourcesSchema>;
 
-export type FetchMeasurementsOptions = { start?: string; end?: string; property: number };
+export type FetchMeasurementsOptions = { start?: string; end?: string; property?: number };
 
 // EnergyQueries
 export const uploadSchema = z.object({
@@ -195,7 +195,7 @@ export const energyQueryScherma = z.object({
     id: z.number(),
   }),
   activated_at: z.number().optional(),
-  uploads: uploadsSchema,
+  uploads: uploadsSchema.optional(),
 });
 
 export type EnergyQuery = z.infer<typeof energyQueryScherma>;

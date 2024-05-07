@@ -259,6 +259,11 @@
             }
           }
         },
+        "weather_location_posted_screen":{
+          "title": "Sent Result",
+          "subtitle": "You sent the following weather zone at",
+          "back_button": "Go back"
+        },
         "location_permission": {
           "alert": {
             "title": "Locatie Permission",

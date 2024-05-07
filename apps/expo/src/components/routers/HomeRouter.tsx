@@ -11,6 +11,7 @@ import AlreadyInvitedScreen from "@/screens/home/AlreadyInvitedScreen";
 import ConnectScreen from "@/screens/home/ConnectScreen";
 import InformationScreen from "@/screens/home/EnergyQuery/InformationScreen";
 import HomeSelectScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/HomeSelectScreen";
+import WeatherLocationPostedScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/WeatherLocationPostedScreen";
 import WeatherLocationResultScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/WeatherLocationResultScreen";
 import HomeScreen from "@/screens/home/HomeScreen";
 import ProvisionScreen from "@/screens/home/ProvisionScreen";
@@ -127,6 +128,14 @@ export default function HomeRouter() {
           ...disableNavigation,
         }}
         component={WeatherLocationResultScreen}
+      />
+      <HomeStack.Screen
+        name="WeatherLocationPostedScreen"
+        options={{
+          title: t("screens.home_stack.energy_query.weather_location_posted_screen.title"),
+          ...disableNavigation,
+        }}
+        component={WeatherLocationPostedScreen}
       />
     </HomeStack.Navigator>
   );
