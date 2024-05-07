@@ -189,13 +189,13 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   }
 
   useEffect(() => {
-    if (item.latest_upload) {
+    if (item.latest_upload || item.activated_at) {
       updateMonitoring();
     }
   }, [item, timeToUpload, missed]);
 
   const handleTimePassedByMinute = () => {
-    if (item.latest_upload) {
+    if (item.latest_upload || item.activated_at) {
       updateMonitoring();
 
       if (timeToUpload) {
@@ -312,9 +312,13 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           </ListItem.Title>
           {item.connected === 2 && item.data_source?.category !== "energy_query_type" ? (
             <ListItem.Subtitle style={[style.listItemSubtitle]}>
-              {item.latest_upload
+              {item.latest_upload || item.activated_at
                 ? t("screens.device_overview.device_list.device_info.last_seen", {
-                    date: formatDateAndTime(toLocalDateTime(item.latest_upload)),
+                    date: formatDateAndTime(
+                      toLocalDateTime(
+                        item.latest_upload && item.latest_upload > 0 ? item.latest_upload : item.activated_at
+                      )
+                    ),
                   })
                 : t("screens.device_overview.device_list.device_info.no_data")}
             </ListItem.Subtitle>

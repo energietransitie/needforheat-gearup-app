@@ -60,9 +60,10 @@ export const toLocalDateTime = (unixTime: number | undefined | null) =>
   unixTime ? new Date(unixTime * 1000) : undefined;
 
 export function checkMissedUpload(item: AllDataSourcesResponse): number {
-  let latestUploadString = item.latest_upload
-    ? toLocalDateTime(item.latest_upload)
-    : toLocalDateTime(item.activated_at) ?? "";
+  let latestUploadString =
+    item.latest_upload && item.latest_upload > 0
+      ? toLocalDateTime(item.latest_upload)
+      : toLocalDateTime(item.activated_at) ?? "";
   if (!latestUploadString) latestUploadString = "";
 
   const timeNow = new Date();
