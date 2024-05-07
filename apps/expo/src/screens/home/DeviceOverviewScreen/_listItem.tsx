@@ -274,10 +274,8 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
                 )}
                 {item.data_source?.category === "energy_query_type" && (
                   <>
-                    {missed === 0 ? (
+                    {item.connected === 2 ? (
                       <Icon name="flash" color="green" size={16} />
-                    ) : missed === -1 || missed >= 1 ? (
-                      <Icon name="flash" color="orange" size={16} />
                     ) : (
                       <Icon name="flash" color="red" size={16} />
                     )}
