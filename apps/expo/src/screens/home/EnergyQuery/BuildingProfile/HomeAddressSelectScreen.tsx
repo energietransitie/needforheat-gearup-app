@@ -204,6 +204,11 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
           ) : null}
         </View>
         <Box style={{ flexDirection: "column", width: "100%" }}>
+
+          {/* TODO: Explain in address that you can edit it if its wrong */}
+          {/* TODO: Disable automatic getting address when moving map when you interact with the map until the next TODO */}
+          {/* TODO: Button to reset after using address field so you can move the map again */}
+          {/* TODO: When editing address field, reverse geo the lat long and move the map to it */}
           <Text style={style.label}>Address</Text>
           <View style={style.inputContainer}>
             <TextInput style={style.input} value={selectedAddress} />
