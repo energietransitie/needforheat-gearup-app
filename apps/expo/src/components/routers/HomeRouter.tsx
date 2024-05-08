@@ -129,7 +129,10 @@ export default function HomeRouter() {
       />
       <HomeStack.Screen
         name="WeatherLocationResultScreen"
-        options={{ title: t("screens.home_stack.energy_query.weather_location_result_screen.title"), ...disableNavigation }}
+        options={{
+          title: t("screens.home_stack.energy_query.weather_location_result_screen.title"),
+          ...disableNavigation,
+        }}
         component={WeatherLocationResultScreen}
       />
       <HomeStack.Screen

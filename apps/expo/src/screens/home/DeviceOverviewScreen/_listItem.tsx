@@ -106,8 +106,6 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   const openResult = () => {
     if (item.data_source?.category === "energy_query_type") {
       if (item.name === "weather-interpolation-location") {
-        navigate("InformationScreen", { device: item.device_type });
-      } else if (item.name === "building-profile") {
         navigate("WeatherLocationPostedScreen");
       }
     }
