@@ -120,7 +120,15 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
   };
 
   const handleRegionChangeCompleted = (newRegion: Region) => {
-    setLocation(newRegion);
+    //Fixes moving the map on its own
+    const threshold = 0.1;
+
+    const latDifference = Math.abs(newRegion.latitude - location.latitude);
+    const lonDifference = Math.abs(newRegion.longitude - location.longitude);
+
+    if (latDifference > threshold || lonDifference > threshold) {
+      setLocation(newRegion);
+    }
   };
 
   const handleZoomIn = useCallback(() => {
@@ -151,7 +159,7 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
             region={location}
             showsUserLocation
             showsMyLocationButton
-            showsBuildings
+            showsBuildings     
             showsScale
             pitchEnabled={false}
             style={style.map}
