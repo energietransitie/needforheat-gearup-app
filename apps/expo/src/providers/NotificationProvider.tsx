@@ -1,8 +1,7 @@
 import { PropsWithChildren, useEffect } from "react";
 import BackgroundFetch from "react-native-background-fetch";
-import useTranslation from "../hooks/translation/useTranslation";
+
 import useSuperLateDataSourceNotifier from "@/hooks/notification/useNotificationChecker";
-import PushNotification from "react-native-push-notification";
 
 export default function NotificationProvider({ children }: PropsWithChildren<unknown>) {
   const { checkDataSources } = useSuperLateDataSourceNotifier();

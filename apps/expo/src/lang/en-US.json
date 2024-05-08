@@ -17,7 +17,7 @@
     },
     "device_overview": {
       "title": "Data Sources",
-      "toast_message": " Please complete the enabled item first.",
+      "toast_message": "Disabled item. Complete first item(s) with white background!",
       "toast_title": "Locked item",
       "buttons": {
         "add_enelogic": "Connect Enelogic",
@@ -35,13 +35,6 @@
         "super_late": "Offline",
         "next_update": "Next in",
         "hours": "h"
-
-      },
-      "building_list": {
-        "placeholder": "Select a building",
-        "building_info": {
-          "name": "Building #{{id}}"
-        }
       }
     },
     "home_stack": {
@@ -56,7 +49,6 @@
         "activated": "Device activated!",
         "alert": {
           "unknown_error": "An error occurred while activating the device.",
-          "no_building": "Your account is not associated with a building.",
           "already_activated": "This measurement device was already activated on another account.",
           "mismatched_device_name": "The wrong device has been scanned. Please try again with the correct device."
         }
@@ -260,8 +252,17 @@
             "success":{
               "title": "Success!",
               "message": "Your Energy Query has been sent to the Energy Doctor"
+            },
+            "fail":{
+              "title": "Fail!",
+              "message": "An error occured when trying to send the query:"
             }
           }
+        },
+        "weather_location_posted_screen":{
+          "title": "Sent Result",
+          "subtitle": "You sent the following weather zone at",
+          "back_button": "Go back"
         },
         "location_permission": {
           "alert": {

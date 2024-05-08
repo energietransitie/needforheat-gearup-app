@@ -51,7 +51,7 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
       network,
       password,
       device_TypeName,
-      normalName
+      normalName,
     });
   };
 
@@ -60,7 +60,7 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
       deviceName: device.deviceName,
       proofOfPossession,
       device_TypeName,
-      normalName
+      normalName,
     });
   };
 

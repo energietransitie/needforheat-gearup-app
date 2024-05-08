@@ -4,47 +4,27 @@ import * as Burnt from "burnt";
 import { FeatureCollection } from "geojson";
 import { latLngToCell, cellToBoundary, cellToLatLng, CoordPair } from "h3-js";
 import { useEffect, useRef, useState } from "react";
-import { Platform, Text, View } from "react-native";
+import { Alert, Platform, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import MapView, { Geojson } from "react-native-maps";
 
+import { postEnergyQuery } from "@/api/energyquery";
 import Box from "@/components/elements/Box";
 import useTranslation from "@/hooks/translation/useTranslation";
+import { EnergyQuery } from "@/types/api";
 import { UserLocation } from "@/types/energyquery";
 import { HomeStackParamList } from "@/types/navigation";
 
 type WeatherLocationResultScreenProps = NativeStackScreenProps<HomeStackParamList, "WeatherLocationResultScreen">;
 
 export default function WeatherLocationResultScreen({ navigation, route }: WeatherLocationResultScreenProps) {
-  const { location } = route.params;
+  const { location, dataSource } = route.params;
   const { theme } = useTheme();
   const { t } = useTranslation();
   const style = useStyles();
   const refMap = useRef<MapView>(null);
   const [locationState, setLocationState] = useState<UserLocation>(location);
-  const onSend = () => {
-    Burnt.alert({
-      title: t("screens.home_stack.energy_query.weather_location_result_screen.alert.sending.title"),
-      message: t("screens.home_stack.energy_query.weather_location_result_screen.alert.sending.message"),
-      preset: "spinner",
-      duration: 10,
-    });
-
-    //TODO: POST
-    Burnt.dismissAllAlerts();
-
-    Burnt.alert({
-      title: t("screens.home_stack.energy_query.weather_location_result_screen.alert.success.title"),
-      message: t("screens.home_stack.energy_query.weather_location_result_screen.alert.success.message"),
-      preset: "done",
-    });
-
-    navigation.navigate("HomeScreen");
-  };
-
-  const onBack = () => {
-    navigation.navigate("HomeSelectScreen");
-  };
+  const [disableButtons, setDisableButtons] = useState<boolean>(false);
 
   //H3
   const cell = latLngToCell(location.latitude, location.longitude, 4);
@@ -65,6 +45,87 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
   };
   //End H3
 
+  //Region Buttons
+  const onSend = async () => {
+    setDisableButtons(true);
+    Burnt.alert({
+      title: t("screens.home_stack.energy_query.weather_location_result_screen.alert.sending.title"),
+      message: t("screens.home_stack.energy_query.weather_location_result_screen.alert.sending.message"),
+      preset: "spinner",
+      duration: 10,
+    });
+
+    if (!dataSource) {
+      console.warn("No datasource available for posting energy query WIL");
+      return;
+    }
+
+    const currentLocaleTimeInUnix = Math.floor(Date.now() / 1000);
+
+    const energyQuery: EnergyQuery = {
+      energy_query_type: {
+        id: dataSource.item.ID,
+      },
+      uploads: [
+        {
+          measurements: [
+            {
+              value: resultLocation[0].toString(),
+              property: {
+                name: "latitude",
+              },
+              time: currentLocaleTimeInUnix,
+            },
+            {
+              value: resultLocation[1].toString(),
+              property: {
+                name: "longitude",
+              },
+              time: currentLocaleTimeInUnix,
+            },
+          ],
+          instance_id: dataSource.item.ID,
+          instance_type: "energy_query_type",
+          device_time: currentLocaleTimeInUnix,
+          size: 2,
+        },
+      ],
+    };
+
+    try {
+      await postEnergyQuery(energyQuery);
+      Burnt.dismissAllAlerts();
+
+      Burnt.alert({
+        title: t("screens.home_stack.energy_query.weather_location_result_screen.alert.success.title"),
+        message: t("screens.home_stack.energy_query.weather_location_result_screen.alert.success.message"),
+        preset: "done",
+      });
+
+      navigation.navigate("HomeScreen");
+    } catch (error) {
+      console.error("An error occurred posting Weather Energy Query:", error);
+      Burnt.dismissAllAlerts();
+      Alert.alert(
+        t("screens.home_stack.energy_query.weather_location_result_screen.alert.fail.title"),
+        t("screens.home_stack.energy_query.weather_location_result_screen.alert.fail.message") +
+          ` ${error ? `\n\n${error}` : ""}`,
+        [
+          {
+            text: t("common.back_to_home"),
+            onPress: () => navigation.navigate("HomeScreen"),
+            style: "cancel",
+          },
+        ]
+      );
+    }
+  };
+
+  const onBack = () => {
+    navigation.navigate("HomeSelectScreen", { dataSource });
+  };
+
+  //Map zoom controls
   const handleZoomIn = () => {
     setLocationState(prevRegion => ({
       ...prevRegion,
@@ -80,6 +141,8 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
       longitudeDelta: prevRegion.longitudeDelta * 2,
     }));
   };
+
+  //End region
 
   const getRegionForCoordinates = (coordinates: CoordPair[], paddingPercent = 0.04) => {
     if (!coordinates || coordinates.length === 0) {
@@ -120,7 +183,7 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
   return (
     <>
       <Box padded style={{ flex: 1 }}>
-        <View>
+        <View style={{ width: "100%" }}>
           <Text style={style.subtitle}>
             {t("screens.home_stack.energy_query.weather_location_result_screen.subtitle")}
           </Text>
@@ -159,6 +222,7 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
         <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
           <Button
             containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
+            disabled={disableButtons}
             title={t("screens.home_stack.energy_query.weather_location_result_screen.back_button")}
             color="grey2"
             onPress={onBack}
@@ -170,6 +234,7 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
           />
           <Button
             containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
+            disabled={disableButtons}
             title={t("screens.home_stack.energy_query.weather_location_result_screen.send_button")}
             color="primary"
             onPress={onSend}

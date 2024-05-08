@@ -17,7 +17,7 @@
     },
     "device_overview": {
       "title": "Databronnen",
-      "toast_message": "Voltooi eerst het geopende item.",
+      "toast_message": "Uitgeschakeld item. Werk eerst item(s) met witte achtergrond af!",
       "toast_title": "Vergrendeld item",
       "buttons": {
         "add_enelogic": "Enelogic toevoegen",
@@ -35,12 +35,6 @@
         "super_late": "Offline",
         "next_update": "Volg. in",
         "hours": "u"
-      },
-      "building_list": {
-        "placeholder": "Selecteer een gebouw",
-        "building_info": {
-          "name": "Gebouw #{{id}}"
-        }
       }
     },
     "home_stack": {
@@ -55,7 +49,6 @@
         "activated": "Apparaat geactiveerd!",
         "alert": {
           "unknown_error": "Er is een fout opgetreden bij het activeren van het apparaat.",
-          "no_building": "Uw account is niet gekoppeld aan een gebouw.",
           "already_activated": "Dit meetapparaatje is al geactiveerd op een ander account.",
           "mismatched_device_name": "Er is een verkeerd apparaat gescand. Probeer het opnieuw met het juiste apparaat."
         }
@@ -235,108 +228,106 @@
           }
         }
       },
-      "location_permission": {
-        "alert": {
-          "title": "Locatie machtiging",
-          "message": "Deze app maakt gebruik van uw GPS om uw locatie op te halen.\n\nWilt u deze machtiging verlenen?",
-          "button": "Oké, vraag maar!",
-          "enable_button": "Machtiging locatie verlenen"
+      "energy_query": {
+        "information_screen": {
+          "title": "EnergyQuery Informatie",
+          "button": "Begrepen!"
         },
-        "errors": {
-          "request_failed": "Een fout is opgetreden bij het aanvragen van de locatie-machtigingen."
-        }
-      }
-    },
-    "energy_query": {
-      "information_screen": {
-        "title": "EnergyQuery Informatie",
-        "button": "Begrepen!"
-      },
-      "homeselect_screen": {
-        "title": "Selecteer uw woning",
-        "subtitle": "Sleep de kaart rond en plaats de pin boven uw huis",
-        "button": "Deze locatie gebruiken!"
-      },
-      "weather_location_result_screen": {
-        "title": "Resultaten",
-        "subtitle": "Bevindt jouw huis zich in deze zeshoek?",
-        "send_button": "Verzenden",
-        "back_button": "Opnieuw",
-        "marker": "Geselecteerde locatie",
-        "alert": {
-          "sending": {
-            "title": "Bezig met verzenden...",
-            "message": "Uw Energy Query wordt naar de energiedokter gestuurd"
+        "homeselect_screen": {
+          "title": "Selecteer uw woning",
+          "subtitle": "Sleep de kaart rond en plaats de pin boven uw huis",
+          "button": "Deze locatie gebruiken!"
+        },
+        "weather_location_result_screen":{
+          "title": "Resultaten",
+          "subtitle": "Bevindt jouw huis zich in deze zeshoek?",
+          "send_button": "Verzenden",
+          "back_button": "Opnieuw",
+          "marker": "Geselecteerde locatie",
+          "alert": {
+            "sending": {
+              "title": "Bezig met verzenden...",
+              "message": "Uw Energy Query wordt naar de energiedokter gestuurd"
+            },
+            "success": {
+              "title": "Succes!",
+              "message": "Uw Energy Query is naar de energiedokter gestuurd"
+            },
+            "fail":{
+              "title": "Fout!",
+              "message": "Er is een fout opgetreden bij het verzenden van de query:"
+            }
+          }
+        },
+        "weather_location_posted_screen":{
+          "title": "Verzonden resultaat",
+          "subtitle": "U heeft de volgende weerzone verzonden op",
+          "back_button": "Ga terug"
+        },
+        "location_permission": {
+          "alert": {
+            "title": "Locatie machtiging",
+            "message": "Deze app maakt gebruik van uw GPS om uw locatie op te halen.\n\nWilt u deze machtiging verlenen?",
+            "button": "Oké, vraag maar!",
+            "enable_button": "Machtiging locatie verlenen"
           },
-          "success": {
-            "title": "Succes!",
-            "message": "Uw Energy Query is naar de energiedokter gestuurd"
+          "errors": {
+            "request_failed": "Een fout is opgetreden bij het aanvragen van de locatie-machtigingen."
           }
         }
-      },
-      "location_permission": {
-        "alert": {
-          "title": "Locatie machtiging",
-          "message": "Deze app maakt gebruik van uw GPS om uw locatie op te halen.\n\nWilt u deze machtiging verlenen?",
-          "button": "Oké, vraag maar!",
-          "enable_button": "Machtiging locatie verlenen"
-        },
-        "errors": {
-          "request_failed": "Een fout is opgetreden bij het aanvragen van de locatie-machtigingen."
-        }
       }
-    }
-  },
-  "info_stack": {
-    "title": "Info",
-    "info": {
+    },
+    "info_stack": {
       "title": "Info",
-      "unsuported_url_alert": {
-        "title": "Niet-ondersteunde URL",
-        "message": "De URL {{url}} wordt niet ondersteund."
+      "info": {
+        "title": "Info",
+        "unsuported_url_alert": {
+          "title": "Niet-ondersteunde URL",
+          "message": "De URL {{url}} wordt niet ondersteund."
+        },
+        "campaign": "Campagne"
       },
-      "campaign": "Campagne"
+      "about": {
+        "title": "Over deze app"
+      },
+      "faq": {
+        "title": "Veelgestelde vragen"
+      },
+      "privacy": {
+        "title": "Privacyverklaring"
+      }
     },
-    "about": {
-      "title": "Over deze app"
-    },
-    "faq": {
-      "title": "Veelgestelde vragen"
-    },
-    "privacy": {
-      "title": "Privacyverklaring"
-    }
-  },
-  "settings_stack": {
-    "title": "Instellingen",
-    "settings_screen": {
+    "settings_stack": {
       "title": "Instellingen",
-      "app_language": "Taal selecteren",
-      "wifi_passwords": {
-        "title": "Opgeslagen wifiwachtwoorden verwijderen",
-        "message": "Weet u het zeker? Na het verwijderen van de opgeslagen wifiwachtwoorden uit deze app zult u bij het koppelen van een nieuw meetapparaatje het wifiwachtwoord opnieuw moeten intypen.",
-        "toast": "wifiwachtwoorden succesvol verwijderd"
+      "settings_screen": {
+        "title": "Instellingen",
+        "app_language": "Taal selecteren",
+        "wifi_passwords": {
+          "title": "Opgeslagen wifiwachtwoorden verwijderen",
+          "message": "Weet u het zeker? Na het verwijderen van de opgeslagen wifiwachtwoorden uit deze app zult u bij het koppelen van een nieuw meetapparaatje het wifiwachtwoord opnieuw moeten intypen.",
+          "toast": "wifiwachtwoorden succesvol verwijderd"
+        },
+        "notifications": {
+          "title": "Open melding instellingen"
+        },
+        "session_token": {
+          "title": "Sessie-token resetten",
+          "message": "Weet u het zeker? Dit is een debug-voorziening. Na de reset moet u de app heractiveren met een persoonlijke activatielink.",
+          "toast": "Sessie-token succesvol verwijderd"
+        },
+        "app_info": "App versie: {{version}} | Build: {{build}}",
+        "external_providers": "Verbind online databronnen"
       },
-      "notifications": {
-        "title": "Open melding instellingen"
-      },
-      "session_token": {
-        "title": "Sessie-token resetten",
-        "message": "Weet u het zeker? Dit is een debug-voorziening. Na de reset moet u de app heractiveren met een persoonlijke activatielink.",
-        "toast": "Sessie-token succesvol verwijderd"
-      },
-      "app_info": "App versie: {{version}} | Build: {{build}}",
-      "external_providers": "Verbind online databronnen"
-    },
-    "external_provider_screen": {
-      "title": "Online databronnen",
-      "state": {
-        "not_connected": "Verbind",
-        "connected": "Verbonden"
-      },
-      "description": {
-        "not_connected": "Verbinden met {{name}}",
-        "connected": "Verbonden met {{name}}"
+      "external_provider_screen": {
+        "title": "Online databronnen",
+        "state": {
+          "not_connected": "Verbind",
+          "connected": "Verbonden"
+        },
+        "description": {
+          "not_connected": "Verbinden met {{name}}",
+          "connected": "Verbonden met {{name}}"
+        }
       }
     }
   },

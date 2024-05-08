@@ -10,17 +10,16 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 import TimeProgressBar from "./timeProgressBar";
 
-import { MANUAL_URL } from "@/constants";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useOpenExternalLink } from "@/hooks/useOpenExternalLink";
-import { BuildingDeviceResponse } from "@/types/api";
+import { AllDataSourcesResponse, DataSourceType } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
-import { capitalizeFirstLetter, checkMissedUpload } from "@/utils/tools";
+import { capitalizeFirstLetter, checkMissedUpload, getManualUrl, toLocalDateTime } from "@/utils/tools";
 import "intl";
 import "intl/locale-data/jsonp/en";
 
 type WifiNetworkListItemProps = {
-  item: BuildingDeviceResponse;
+  item: AllDataSourcesResponse;
   onSwipeBegin?: () => void;
   onSwipeEnd?: () => void;
   allItemsDone: boolean;
@@ -35,14 +34,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   const style = useStyles();
   const { t, resolvedLanguage } = useTranslation();
   const [data, setData] = useState(null); // Initialize data state variable
-
-  const manual_type =
-    item.typeCategory === "device_type"
-      ? "devices"
-      : item.typeCategory === "cloud_feed"
-      ? "cloud_feeds"
-      : "energy_queries";
-  const CompleteURL = `${MANUAL_URL + manual_type}/${item.device_type.name}`;
+  const CompleteURL = getManualUrl(item.data_source as DataSourceType);
 
   const [missed, setMissed] = useState(0);
   const [timeToUpload, setTimeToUpload] = useState<string>();
@@ -63,19 +55,19 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
       name = capitalizeFirstLetter(data["en-US"]) || name;
     }
 
-    if (!name && item.device_type?.name) {
-      name = capitalizeFirstLetter(item.device_type.name) || name;
+    if (!name && item.data_source?.item?.Name) {
+      name = capitalizeFirstLetter(item.data_source.item.Name) || name;
     }
 
     return name;
   };
 
   const onReset = (close: () => void) => {
-    if (item.typeCategory === "device_type") {
+    if (item.data_source?.category === "device_type") {
       navigate("QrScannerScreen", {
         expectedDeviceName: item.name,
         device_TypeName: item.name,
-        dataSourceType: item.device_type,
+        dataSource: item,
         normalName: getNormalName(),
       });
     }
@@ -84,7 +76,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
 
   const handleItemClick = () => {
     if (Platform.OS === "android") {
-      ToastAndroid.show(t("screens.device_overview.toast_message"), ToastAndroid.SHORT);
+      ToastAndroid.show(t("screens.device_overview.toast_message"), ToastAndroid.LONG);
     } else {
       Burnt.toast({
         title: t("screens.device_overview.toast_title"),
@@ -95,26 +87,37 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   };
 
   const openManual = () => {
-    if (item.typeCategory === "device_type") {
+    if (item.data_source?.category === "device_type") {
       navigate("QrScannerScreen", {
         expectedDeviceName: undefined,
-        device_TypeName: undefined,
-        dataSourceType: item.device_type,
+        device_TypeName: "",
+        dataSource: item,
         normalName: getNormalName(),
       });
-    } else if (item.typeCategory === "cloud_feed") {
+    } else if (item.data_source?.category === "cloud_feed_type") {
       navigate("AddOnlineDataSourceScreen");
-    } else if (item.typeCategory === "energy_query_type") {
+    } else if (item.data_source?.category === "energy_query_type") {
       if (item.name === "weather-interpolation-location") {
-        navigate("InformationScreen", { device: item.device_type });
-      } else if (item.name === "building-profile") {
-        navigate("InformationScreen", { device: item.device_type });
+        navigate("InformationScreen", { dataSource: item.data_source });
       }
     }
   };
 
-  //Used for when we start the item
-  const openHelpUrl = () => openUrl(item.device_type.info_url, false);
+  const openResult = () => {
+    if (item.data_source?.category === "energy_query_type") {
+      if (item.name === "weather-interpolation-location") {
+        navigate("InformationScreen", { device: item.device_type });
+      } else if (item.name === "building-profile") {
+        navigate("WeatherLocationPostedScreen");
+      }
+    }
+  };
+
+  const openHelpUrl = () => {
+    if (item.data_source?.faq_url) {
+      openUrl(item.data_source.faq_url, false);
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -129,7 +132,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
       const fetchedData = await response.json();
       setData(fetchedData);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data listitem:", error);
     }
   };
   // End region
@@ -147,10 +150,10 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     return format(inputDate, formatString, { locale });
   }
 
-  function checkNextUpload(item: BuildingDeviceResponse): string {
-    const latestUpload = item.latest_upload ?? new Date();
+  function checkNextUpload(item: AllDataSourcesResponse): string {
+    const latestUpload = toLocalDateTime(item.latest_upload) ?? toLocalDateTime(item.activated_at) ?? new Date();
     const timeNow = new Date();
-    let cronExpression = item.upload_schedule ?? "";
+    let cronExpression = item.data_source?.upload_schedule ?? "";
 
     // Replace '0' in cron expression with corresponding value from latestUpload
     const parts = cronExpression.split(" ");
@@ -186,14 +189,15 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     setTimeToUpload(checkNextUpload(item));
     setMissed(checkMissedUpload(item));
   }
+
   useEffect(() => {
-    if (item.latest_upload) {
+    if (item.latest_upload || item.activated_at) {
       updateMonitoring();
     }
-  }, [item]);
+  }, [item, timeToUpload, missed]);
 
   const handleTimePassedByMinute = () => {
-    if (item.latest_upload) {
+    if (item.latest_upload || item.activated_at) {
       updateMonitoring();
 
       if (timeToUpload) {
@@ -216,12 +220,17 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           if (item.connected === 0) {
             openManual();
           }
+          if (item.connected === 2) {
+            openResult();
+          }
         }}
         onSwipeBegin={onSwipeBegin}
         onSwipeEnd={onSwipeEnd}
         leftWidth={0}
         rightContent={
-          item.connected === 2 && !(item.typeCategory === "cloud_feed")
+          item.connected === 2 &&
+          !(item.data_source?.category === "cloud_feed_type") &&
+          !(item.data_source?.category === "energy_query_type")
             ? close => (
                 <Button
                   title={t("screens.device_overview.device_list.reset_device")}
@@ -236,9 +245,9 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           {
             backgroundColor:
               item.connected === 0
-                ? "#d3eaf9"
+                ? "white"
                 : item.connected === 1
-                ? "#d9dadb"
+                ? "#e3e3e3"
                 : item.connected === 2 && allItemsDone
                 ? "white"
                 : item.connected === 2
@@ -247,14 +256,16 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           },
           { borderTopLeftRadius: 0 },
           { borderBottomLeftRadius: 0 },
+          { borderBottomWidth: 1 },
+          { borderBottomColor: "#dbdbd9" },
         ]}
         Component={TouchableHighlight}
       >
         <ListItem.Content>
-          <ListItem.Title>
+          <ListItem.Title style={{ color: item.connected === 1 ? "#cccccc" : "black" }}>
             {item.connected === 2 ? (
               <>
-                {item.typeCategory === "device_type" && (
+                {item.data_source?.category === "device_type" && (
                   <>
                     {missed === 0 ? (
                       <Icon name="layers" color="green" size={16} />
@@ -265,18 +276,16 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
                     )}
                   </>
                 )}
-                {item.typeCategory === "energy_query_type" && (
+                {item.data_source?.category === "energy_query_type" && (
                   <>
-                    {missed === 0 ? (
+                    {item.connected === 2 ? (
                       <Icon name="flash" color="green" size={16} />
-                    ) : missed === -1 || missed >= 1 ? (
-                      <Icon name="flash" color="orange" size={16} />
                     ) : (
                       <Icon name="flash" color="red" size={16} />
                     )}
                   </>
                 )}
-                {item.typeCategory === "cloud_feed" && (
+                {item.data_source?.category === "cloud_feed_type" && (
                   <>
                     {missed === 0 ? (
                       <Icon name="cloud" color="green" size={16} />
@@ -287,21 +296,36 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
                     )}
                   </>
                 )}
+              </> //changes the colors of the icons if the item is enabled or disabled
+            ) : item.connected === 0 ? (
+              <>
+                {item.data_source?.category === "device_type" && <Icon name="layers" color="black" size={16} />}
+                {item.data_source?.category === "energy_query_type" && <Icon name="flash" color="black" size={16} />}
+                {item.data_source?.category === "cloud_feed_type" && <Icon name="cloud" color="black" size={16} />}
+              </>
+            ) : item.connected === 1 ? (
+              <>
+                {item.data_source?.category === "device_type" && <Icon name="layers" color="#cccccc" size={16} />}
+                {item.data_source?.category === "energy_query_type" && <Icon name="flash" color="#cccccc" size={16} />}
+                {item.data_source?.category === "cloud_feedType" && <Icon name="cloud" color="#cccccc" size={16} />}
               </>
             ) : null}
-
             {" " + getNormalName()}
           </ListItem.Title>
-          {item.connected === 2 ? (
+          {item.connected === 2 && item.data_source?.category !== "energy_query_type" ? (
             <ListItem.Subtitle style={[style.listItemSubtitle]}>
-              {item.latest_upload
+              {item.latest_upload || item.activated_at
                 ? t("screens.device_overview.device_list.device_info.last_seen", {
-                    date: formatDateAndTime(item.latest_upload),
+                    date: formatDateAndTime(
+                      toLocalDateTime(
+                        item.latest_upload && item.latest_upload > 0 ? item.latest_upload : item.activated_at
+                      )
+                    ),
                   })
                 : t("screens.device_overview.device_list.device_info.no_data")}
             </ListItem.Subtitle>
           ) : null}
-          {timeToUpload && item.connected === 2 ? (
+          {timeToUpload && item.connected === 2 && item.data_source?.category !== "energy_query_type" ? (
             <TimeProgressBar
               progress={timeToUpload}
               onTimePassedByMinute={handleTimePassedByMinute}
@@ -310,19 +334,15 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           ) : null}
         </ListItem.Content>
         <View style={{ flexDirection: "column" }}>
-          {item.connected === 0 ? (
-            <Icon name="lock-open-outline" size={32} />
-          ) : item.connected === 1 ? (
-            <Icon name="lock-closed-outline" size={32} />
-          ) : item.connected === 2 ? null : null}
-
-          {item.device_type.info_url !== "" ? (
+          {item.data_source?.faq_url !== "" ? (
             <TouchableOpacity onPress={openHelpUrl}>
               <Icon name="help-circle-outline" size={32} />
             </TouchableOpacity>
           ) : null}
         </View>
-        {item.connected === 2 && item.typeCategory !== "cloud_feed" ? (
+        {item.connected === 2 &&
+        item.data_source?.category !== "cloud_feed_type" &&
+        item.data_source?.category !== "energy_query_type" ? (
           <Icon
             name="reorder-three-outline"
             size={10}

@@ -2,9 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 
 import { fetchDevices } from "@/api/device";
 
-export default function useDevices(buildingId: number) {
+export default function useDevices() {
   return useQuery({
-    queryKey: ["devices", { buildingId }],
-    queryFn: () => fetchDevices(buildingId),
+    queryKey: ["devices"],
+    queryFn: () => fetchDevices(),
   });
 }

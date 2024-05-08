@@ -1,6 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, useTheme } from "@rneui/themed";
-import { useEffect, useState } from "react";
 
 import ManualContent from "@/components/common/ManualContent";
 import Box from "@/components/elements/Box";
@@ -10,7 +9,7 @@ import { HomeStackParamList } from "@/types/navigation";
 type AddDeviceScreenProps = NativeStackScreenProps<HomeStackParamList, "AddDeviceScreen">;
 
 export default function AddDeviceScreen({ navigation, route }: AddDeviceScreenProps) {
-  const { qrData, device, normalName } = route.params;
+  const { qrData, device, normalName, dataSource } = route.params;
   const { theme } = useTheme();
   const { t, resolvedLanguage } = useTranslation();
 
@@ -18,7 +17,7 @@ export default function AddDeviceScreen({ navigation, route }: AddDeviceScreenPr
     navigation.navigate("SearchDeviceScreen", {
       deviceName: qrData.name,
       proofOfPossession: qrData.pop,
-      device_TypeName: device.name,
+      device_TypeName: device,
       normalName,
     });
   };
@@ -27,7 +26,10 @@ export default function AddDeviceScreen({ navigation, route }: AddDeviceScreenPr
 
   return (
     <Box padded style={{ flex: 1 }}>
-      <ManualContent manualUrl={device.installation_manual_url} languageHeader={resolvedLanguage} />
+      <ManualContent
+        manualUrl={dataSource.data_source?.installation_url ? dataSource.data_source.installation_url : undefined}
+        languageHeader={resolvedLanguage}
+      />
       <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
         <Button
           containerStyle={{ flex: 1 }}

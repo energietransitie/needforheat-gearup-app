@@ -3,25 +3,15 @@ import { URLSearchParams } from "react-native-url-polyfill";
 
 import { FETCH_HEADERS } from "@/constants";
 import {
-  buildingSchema,
+  allDataSourcesSchema,
   createDeviceSchema,
-  deviceMeasurementSchema,
-  devicePropertiesSchema,
+  propertiesSchema,
   deviceReadSchema,
   deviceTypeSchema,
+  FetchMeasurementsOptions,
+  measurementsSchema,
 } from "@/types/api";
 import { handleRequestErrors } from "@/utils/tools";
-
-export async function fetchBuilding(buildingId: number | string) {
-  const response = await fetch(`${API_URL}/building/${buildingId}`, {
-    ...(await FETCH_HEADERS()),
-  });
-
-  const data = await handleRequestErrors(response);
-  const jsonData = await data.json();
-
-  return buildingSchema.parse(jsonData);
-}
 
 export async function fetchDeviceType(deviceName: string) {
   const response = await fetch(`${API_URL}/device_type/${deviceName}`, {
@@ -33,9 +23,7 @@ export async function fetchDeviceType(deviceName: string) {
   return deviceTypeSchema.parse(jsonData);
 }
 
-export type FetchDeviceMeasurementsOptions = { start?: string; end?: string; property: number };
-
-export async function fetchDeviceMeasurements(deviceName: string, fetchOptions: FetchDeviceMeasurementsOptions) {
+export async function fetchDeviceMeasurements(deviceName: string, fetchOptions: FetchMeasurementsOptions) {
   const args: [string, string][] = Object.entries(fetchOptions)
     .filter(([, value]) => !!value)
     .map(([key, value]) => [key, String(value)]);
@@ -49,7 +37,7 @@ export async function fetchDeviceMeasurements(deviceName: string, fetchOptions: 
 
   const data = await handleRequestErrors(response);
   const jsonData = await data.json();
-  return deviceMeasurementSchema.parse(jsonData);
+  return measurementsSchema.parse(jsonData);
 }
 
 export async function fetchDeviceProperties(deviceName: string) {
@@ -59,30 +47,22 @@ export async function fetchDeviceProperties(deviceName: string) {
 
   const data = await handleRequestErrors(response);
   const jsonData = await data.json();
-  return devicePropertiesSchema.parse(jsonData);
+  return propertiesSchema.parse(jsonData);
 }
 
-export async function activateDevice({
-  name,
-  activationSecret,
-  buildingId,
-}: {
-  name: string;
-  activationSecret: string;
-  buildingId: number;
-}) {
+export async function activateDevice({ name, activationSecret }: { name: string; activationSecret: string }) {
   const response = await fetch(`${API_URL}/device`, {
     ...(await FETCH_HEADERS()),
     method: "POST",
     body: JSON.stringify({
       name,
       activation_secret: activationSecret,
-      building_id: buildingId,
     }),
   });
 
   const data = await handleRequestErrors(response);
   const jsonData = await data.json();
+
   return createDeviceSchema.parse(jsonData);
 }
 
@@ -96,11 +76,37 @@ export async function fetchDevice(deviceName: string) {
   return deviceReadSchema.parse(jsonData);
 }
 
-export async function fetchDevices(buildingId: number) {
-  const response = await fetch(`${API_URL}/building/${buildingId}`, {
-    ...(await FETCH_HEADERS()),
-  });
-  const data = await handleRequestErrors(response);
-  const jsonData = await data.json();
-  return buildingSchema.parse(jsonData)?.devices ?? [];
+export async function fetchDevices() {
+  try {
+    const response = await fetch(`${API_URL}/device/all`, {
+      ...(await FETCH_HEADERS()),
+    });
+    const data = await handleRequestErrors(response);
+    const jsonData = await data.json();
+
+    if (!Array.isArray(jsonData)) {
+      console.warn("Invalid or null data format received from server for devices");
+      return [];
+    }
+
+    const parsedDevices = [];
+    for (const deviceData of jsonData) {
+      try {
+        const { device_type } = deviceData;
+        if (device_type && device_type.name) {
+          // Add a type property based on device_type.name
+          deviceData.type = device_type.name;
+        }
+        const parsedDevice = allDataSourcesSchema.parse(deviceData);
+        parsedDevices.push(parsedDevice);
+      } catch (error) {
+        console.error("Error parsing device data:", error);
+      }
+    }
+
+    return parsedDevices;
+  } catch (error) {
+    console.error("Error fetching or parsing devices:", error);
+    return [];
+  }
 }

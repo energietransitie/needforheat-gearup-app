@@ -18,7 +18,7 @@ import { HomeStackParamList } from "@/types/navigation";
 type QrScannerScreenProps = NativeStackScreenProps<HomeStackParamList, "QrScannerScreen">;
 
 export default function QrScannerScreen({ navigation, route }: QrScannerScreenProps) {
-  const { expectedDeviceName, device_TypeName, dataSourceType, normalName } = route.params ?? {};
+  const { expectedDeviceName, device_TypeName, dataSource, normalName } = route.params ?? {};
   const [scanned, setScanned] = useState(false);
   const [hasPermission, setHasPermission] = useState(false);
   const styles = useStyles();
@@ -92,7 +92,13 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
         throw new MismatchedDeviceNameException();
       }
 
-      navigation.navigate("ActivateDeviceScreen", { qrData: data, device_TypeName, dataSourceType, normalName });
+      navigation.navigate("ActivateDeviceScreen", {
+        qrData: data,
+        device_TypeName,
+        dataSourceType: dataSource.data_source?.category ? dataSource.data_source?.category : "",
+        normalName,
+        dataSource,
+      });
     } catch (e) {
       if (e instanceof InvalidQrCodeException) {
         onError(t("screens.home_stack.qr_scanner.errors.invalid_qr"));

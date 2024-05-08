@@ -42,7 +42,6 @@ export default function useDeviceConnect({ device, proofOfPossession }: useDevic
     };
   }, []);
 
-
   function onConnectionEvent(status: string, callback: () => void, onError?: onError) {
     // Listen to connection events, only effective on Android (iOS will reject the promise in connectBleDevice)
     if (status === "EVENT_DEVICE_CONNECTION_FAILED") {
@@ -72,4 +71,3 @@ export default function useDeviceConnect({ device, proofOfPossession }: useDevic
 function callback(): void {
   throw new Error("Function not implemented.");
 }
-

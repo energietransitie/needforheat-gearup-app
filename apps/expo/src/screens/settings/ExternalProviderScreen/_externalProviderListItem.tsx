@@ -1,19 +1,18 @@
-import { Button, ListItem, makeStyles, useTheme } from "@rneui/themed";
+import { Button, useTheme } from "@rneui/themed";
 import { useState } from "react";
 
+import Box from "@/components/elements/Box";
 import { setAuthState } from "@/constants";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useOpenExternalLink } from "@/hooks/useOpenExternalLink";
-import { CloudFeed } from "@/types/api";
-import Box from "@/components/elements/Box";
+import { CloudFeedType } from "@/types/api";
 
 type ExternalProviderListItemProps = {
-  item: CloudFeed;
+  item: CloudFeedType;
 };
 
 export default function ExternalProviderListItem(props: ExternalProviderListItemProps) {
   const { item } = props;
-  const styles = useStyles();
   const { theme } = useTheme();
   const { t } = useTranslation();
   const { openUrl } = useOpenExternalLink();
@@ -25,16 +24,17 @@ export default function ExternalProviderListItem(props: ExternalProviderListItem
 
     await setAuthState(state);
 
-    const redirectUrl = `${item.cloud_feed.authorization_url}?response_type=code&client_id=${item.cloud_feed.client_id
-      }&redirect_uri=${encodeURIComponent(item.cloud_feed.redirect_url)}&scope=${encodeURIComponent(
-        item.cloud_feed.scope
-      )}&state=${state}`;
+    const redirectUrl = `${item.cloud_feed_type.authorization_url}?response_type=code&client_id=${
+      item.cloud_feed_type.client_id
+    }&redirect_uri=${encodeURIComponent(item.cloud_feed_type.redirect_url)}&scope=${encodeURIComponent(
+      item.cloud_feed_type.scope
+    )}&state=${state}`;
 
     await openUrl(redirectUrl, false).then(() => setLoading(false));
   };
 
   return (
-    <Box style={{ marginTop: 10, width: "100%", justifyContent: 'center' }}>
+    <Box style={{ marginTop: 10, width: "100%", justifyContent: "center" }}>
       <Button
         disabled={item.connected || loading}
         title={t(
@@ -47,15 +47,3 @@ export default function ExternalProviderListItem(props: ExternalProviderListItem
     </Box>
   );
 }
-
-const useStyles = makeStyles(theme => ({
-  item: {
-    flexDirection: "row",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  title: {
-    color: theme.colors.black,
-  },
-}));

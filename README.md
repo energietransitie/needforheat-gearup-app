@@ -27,8 +27,8 @@ A list with all setup devices connected to the account is also available.
 
 The app currently supports the following languages:
 
-- English
-- Dutch
+- Nederlands (Dutch)
+- English (American)
 
 ## Installing the app
 The LTS version of the app is available on the [Google Play Store (Android)](https://play.google.com/store/apps/details?id=nl.windesheim.energietransitie.warmtewachter) and [Apple App Store (iOS)](https://apps.apple.com/nl/app/needforheat/id1563201993).
@@ -58,7 +58,12 @@ List of features in the NeedForHeat app:
   - Present device specific installation instructions provided by the API.
   - Connect via Bluetooth Low Energy (BLE) to a NFH measurement device to provision internet connectivity.
   - Verification of successful device provisioning by checking for a device heartbeat.
-- Multi-language support   
+- Multi-language support  
+- DataSourceList
+  - Setup a list of items that need to be completed for a campaign
+- Monitoring
+  - Get a GREEN, YELLOW or RED status depending on how late uploads are for a DataSource
+  - See how long it takes until the next upload should happen.   
 
 ## License
 This software is available under the [Apache 2.0 license](./LICENSE), Copyright 2023 [Research group Energy Transition, Windesheim University of Applied Sciences](https://windesheim.nl/energietransitie)
@@ -92,8 +97,8 @@ Thanks also go to the developers of previous versions of NeedForHeat and WarmteW
 
 Product owners:
 
-- Nick van Ravenzwaaij - [@n-vr](https://github.com/n-vr)
 - Henri ter Hofte - [@henriterhofte](https://github.com/henriterhofte) - Twitter [@HeNRGi](https://twitter.com/HeNRGi)
+- (Formely) Nick van Ravenzwaaij - [@n-vr](https://github.com/n-vr)
 
 We use and gratefully acknowlegde the efforts of the makers of the following source code and libraries:
 
@@ -107,5 +112,6 @@ We use and gratefully acknowlegde the efforts of the makers of the following sou
 - [h3](https://github.com/uber/h3), by Uber, licensed under [Apache 2.0](https://github.com/uber/h3/blob/master/LICENSE)
 - [cron-parser](https://github.com/harrisiirak/cron-parser/), by Harri Siirak, licensed under [MIT](https://github.com/harrisiirak/cron-parser/blob/master/LICENSE)
 -[react-native-push-notification](https://github.com/zo0r/react-native-push-notification), by zo0r (aka Dieam), licensed under [MIT](https://github.com/zo0r/react-native-push-notification/blob/master/LICENSE)
+- [lz-string](https://github.com/pieroxy/lz-string), by pieroxy, licensed under [MIT](https://github.com/pieroxy/lz-string/blob/master/LICENSE.md)
 
 This `README` uses [badges](https://github.com/badges/shields/blob/master/LICENSE), by [Shield.io](https://github.com/badges), licensed under [CC0 v1.0 Universal](https://github.com/badges/shields/blob/master/LICENSE)

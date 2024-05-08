@@ -56,9 +56,9 @@ The following hardware is unavailable in Simulator:
 This means that specificly testing the `NeedForHeat` app that the emulator isn't of any use because the camera is needed to detect the QR code.
 
 ## 4. Compiling an APK for testing
-There are [Yarn scripts](./scripts.md) that can do this for you if you set everything up properly including [adding platform-tools](https://developer.android.com/tools/adb) to `PATH`.
-<br><br>
+There are [Yarn scripts](./scripts.md) that can do this for you if you set everything up properly including [adding platform-tools](https://developer.android.com/tools/adb) to `PATH`. Otherwise, do the guide below.
 
+### 4.1. Manual compiling
 In the `apps\expo\android\` folder, run the following command in a Terminal window to build an APK:
 
 >***Note*** You might need to add `./` in front of the command like `./gradlew` to get it to run 
@@ -83,7 +83,7 @@ yarn workspace app dev
 The app gets built to the `apps\expo\android\app\build\outputs\apk` folder in either the `debug` or `release` folder.
 
 ### 4.1. Installing the app
-You can then use the following ADB command from the [platform-tools](https://developer.android.com/tools/adb) to install the release APK to ***all*** ADB-connected devices:
+You can then use the following ADB command from the [platform-tools](https://developer.android.com/tools/adb) to install the release APK to ADB-connected devices:
 
 ```bash
 adb install app-release.apk 
