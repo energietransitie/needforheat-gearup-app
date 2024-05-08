@@ -97,9 +97,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     } else if (item.data_source?.category === "cloud_feed_type") {
       navigate("AddOnlineDataSourceScreen");
     } else if (item.data_source?.category === "energy_query_type") {
-      if (item.name === "weather-interpolation-location") {
-        navigate("InformationScreen", { dataSource: item.data_source });
-      }
+      navigate("InformationScreen", { dataSource: item.data_source });
     }
   };
 

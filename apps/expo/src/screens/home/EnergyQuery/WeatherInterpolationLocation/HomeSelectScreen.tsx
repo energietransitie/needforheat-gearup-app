@@ -121,7 +121,7 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
 
   const handleRegionChangeCompleted = (newRegion: Region) => {
     //Fixes moving the map on its own
-    const threshold = 0.1;
+    const threshold = 0.00001;
 
     const latDifference = Math.abs(newRegion.latitude - location.latitude);
     const lonDifference = Math.abs(newRegion.longitude - location.longitude);
@@ -159,7 +159,7 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
             region={location}
             showsUserLocation
             showsMyLocationButton
-            showsBuildings     
+            showsBuildings
             showsScale
             pitchEnabled={false}
             style={style.map}

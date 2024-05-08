@@ -18,7 +18,7 @@ export default function InformationScreen({ navigation, route }: InformationScre
     if (dataSource.item.Name === "weather-interpolation-location") {
       navigation.navigate("HomeSelectScreen", { dataSource });
     } else if (dataSource.item.Name === "building-profile") {
-      navigation.navigate("HomeAddressSelectScreen");
+      navigation.navigate("HomeAddressSelectScreen", { dataSource });
     }
   };
 

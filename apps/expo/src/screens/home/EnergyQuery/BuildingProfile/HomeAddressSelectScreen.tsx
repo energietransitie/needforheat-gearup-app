@@ -6,8 +6,7 @@ import { openSettings } from "expo-linking";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Alert, Platform, Text, View } from "react-native";
 import Geocoder from "react-native-geocoding";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import MapView, { Region } from "react-native-maps";
 
 import Box from "@/components/elements/Box";
@@ -19,6 +18,7 @@ import { HomeStackParamList } from "@/types/navigation";
 type HomeAddressSelectScreenProps = NativeStackScreenProps<HomeStackParamList, "HomeAddressSelectScreen">;
 
 export default function HomeAddressSelectScreen({ navigation, route }: HomeAddressSelectScreenProps) {
+  const { dataSource } = route.params;
   const { theme } = useTheme();
   const { t } = useTranslation();
   const style = useStyles();
@@ -30,7 +30,6 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
     latitudeDelta: 4,
     longitudeDelta: 4,
   });
-
   const [selectedAddress, setSelectedAddress] = useState<string>("");
 
   Geocoder.init(GOOGLE_MAPS_API_KEY);
@@ -45,7 +44,6 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
       setSelectedAddress(""); // Als er een fout optreedt, leeg het adres
     }
   };
-
   useEffect(() => {
     const checkPermission = async () => {
       const permission = await checkPreciseLocationPermission();
@@ -55,7 +53,7 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
   }, []);
 
   const onContinue = () => {
-    navigation.navigate("WeatherLocationResultScreen", { location });
+    //navigation.navigate("WeatherLocationResultScreen", { location, dataSource });
   };
 
   //Location permission
@@ -68,7 +66,7 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
         text: t("screens.home_stack.search_device.open_settings"),
         onPress: () => {
           // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
-          openSettings().catch(e => {});
+          openSettings().catch(e => { });
         },
       },
     ]);
@@ -137,8 +135,16 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
   };
 
   const handleRegionChangeCompleted = (newRegion: Region) => {
-    setLocation(newRegion);
-    getAddressFromCoordinates(newRegion.latitude, newRegion.longitude);
+    //Fixes moving the map on its own
+    const threshold = 0.00001;
+
+    const latDifference = Math.abs(newRegion.latitude - location.latitude);
+    const lonDifference = Math.abs(newRegion.longitude - location.longitude);
+
+    if (latDifference > threshold || lonDifference > threshold) {
+      setLocation(newRegion);
+      getAddressFromCoordinates(newRegion.latitude, newRegion.longitude);
+    }
   };
 
   const handleZoomIn = useCallback(() => {
@@ -160,7 +166,7 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
   return (
     <>
       <Box padded style={{ flex: 1 }}>
-        <View>
+        <View style={{ width: "100%" }}>
           <Text style={style.subtitle}>{t("screens.home_stack.energy_query.homeselect_screen.subtitle")}</Text>
         </View>
         <View style={style.mapcontainer}>
@@ -176,31 +182,6 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
             onRegionChangeComplete={handleRegionChangeCompleted}
             zoomControlEnabled
           />
-          <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
-            <View style={style.addressContainer}>
-              <Text style={style.addressText}>{selectedAddress}</Text>
-            </View>
-            <GooglePlacesAutocomplete
-              placeholder="Type a place"
-              query={{ key: GOOGLE_MAPS_API_KEY, language: "nl" }}
-              fetchDetails
-              onPress={(data, details = null) => console.log(data, details)}
-              onFail={error => console.log(error)}
-              onNotFound={() => console.log("no results")}
-              styles={{
-                container: {
-                  position: "absolute",
-                  top: -200,
-                  left: 10,
-                  zIndex: 9999,
-                  backgroundColor: "#fff",
-                },
-                textInputContainer: {
-                  width: 200,
-                },
-              }}
-            />
-          </Box>
           {Platform.OS === "ios" ? (
             <View style={style.zoomControlsiOS}>
               <TouchableOpacity onPress={handleZoomIn} style={style.zoomButton}>
@@ -222,7 +203,8 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
             </View>
           ) : null}
         </View>
-        <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
+        <Box style={{ flexDirection: "column", marginTop: 16, width: "100%" }}>
+          <TextInput style={style.addressText} value={selectedAddress} />
           <Button
             containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
             title={t("screens.home_stack.energy_query.homeselect_screen.button")}
@@ -241,16 +223,6 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
 }
 
 const useStyles = makeStyles(theme => ({
-  autocompleteContainer: {
-    position: "absolute",
-    top: 20,
-    left: 20,
-    zIndex: 9999,
-    backgroundColor: "#fff",
-  },
-  input: {
-    width: 200, // Adjust width as needed
-  },
   mapcontainer: {
     flex: 1,
     width: "100%",

@@ -51,7 +51,7 @@ export type HomeStackParamList = {
   //EnergyQuery
   InformationScreen: { dataSource: DataSourceType };
   HomeSelectScreen: { dataSource: DataSourceType };
-  HomeAddressSelectScreen: undefined;
+  HomeAddressSelectScreen: { dataSource: DataSourceType };
   WeatherLocationResultScreen: { location: UserLocation; dataSource: DataSourceType };
   WeatherLocationPostedScreen: undefined;
 };
