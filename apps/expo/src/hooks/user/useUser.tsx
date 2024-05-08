@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import * as SecureStore from "expo-secure-store";
+import LZString from "lz-string";
 import { useEffect, useState } from "react";
 
 import { fetchUser } from "@/api/user";
@@ -8,9 +9,10 @@ import { AccountResponse } from "@/types/api";
 export default function useUser() {
   const { data: user, isFetching, refetch } = useQuery({ queryKey: ["user"], queryFn: () => fetchUser(), retry: 0 });
 
-  const storeUserData = (userData: AccountResponse) => {
+  const storeUserData = async (userData: AccountResponse) => {
     try {
-      SecureStore.setItemAsync("userData", JSON.stringify(userData));
+      const compressedData = LZString.compressToUTF16(JSON.stringify(userData));
+      await SecureStore.setItemAsync("userData", compressedData);
     } catch (error) {
       console.error("Error storing user data:", error);
     }
@@ -18,9 +20,10 @@ export default function useUser() {
 
   const getUserData = async () => {
     try {
-      const userData = await SecureStore.getItemAsync("userData");
-      if (userData) {
-        return JSON.parse(userData);
+      const compressedData = await SecureStore.getItemAsync("userData");
+      if (compressedData) {
+        const userData = JSON.parse(LZString.decompressFromUTF16(compressedData));
+        return userData;
       }
     } catch (error) {
       console.error("Error retrieving user data:", error);
@@ -31,7 +34,7 @@ export default function useUser() {
   useEffect(() => {
     async function fetchData() {
       if (user) {
-        storeUserData(user);
+        await storeUserData(user);
       }
       const storedUser = await getUserData();
       setStoredUser(storedUser);

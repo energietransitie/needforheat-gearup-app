@@ -36,7 +36,7 @@ export default function MeasurementsScreen() {
   const hasMultipleDevices = (devices?.length ?? 0) > 1;
 
   const foundDataSource = user?.campaign.data_source_list?.items.find(data_source => {
-    return devices && data_source.item.Name === devices[0].type;
+    return devices && devices[0] && devices[0].type && data_source.item.Name === devices[0].type;
   });
 
   const CompleteURL = devices && devices.length > 0 ? getManualUrl(foundDataSource as DataSourceType) : "";

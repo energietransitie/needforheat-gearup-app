@@ -96,6 +96,18 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
       });
     } else if (item.data_source?.category === "cloud_feed_type") {
       navigate("AddOnlineDataSourceScreen");
+    } else if (item.data_source?.category === "energy_query_type") {
+      if (item.name === "weather-interpolation-location") {
+        navigate("InformationScreen", { dataSource: item.data_source });
+      }
+    }
+  };
+
+  const openResult = () => {
+    if (item.data_source?.category === "energy_query_type") {
+      if (item.name === "weather-interpolation-location") {
+        navigate("WeatherLocationPostedScreen");
+      }
     }
   };
 
@@ -177,13 +189,13 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   }
 
   useEffect(() => {
-    if (item.latest_upload) {
+    if (item.latest_upload || item.activated_at) {
       updateMonitoring();
     }
   }, [item, timeToUpload, missed]);
 
   const handleTimePassedByMinute = () => {
-    if (item.latest_upload) {
+    if (item.latest_upload || item.activated_at) {
       updateMonitoring();
 
       if (timeToUpload) {
@@ -206,12 +218,17 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           if (item.connected === 0) {
             openManual();
           }
+          if (item.connected === 2) {
+            openResult();
+          }
         }}
         onSwipeBegin={onSwipeBegin}
         onSwipeEnd={onSwipeEnd}
         leftWidth={0}
         rightContent={
-          item.connected === 2 && !(item.data_source?.category === "cloud_feed_type")
+          item.connected === 2 &&
+          !(item.data_source?.category === "cloud_feed_type") &&
+          !(item.data_source?.category === "energy_query_type")
             ? close => (
                 <Button
                   title={t("screens.device_overview.device_list.reset_device")}
@@ -259,10 +276,8 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
                 )}
                 {item.data_source?.category === "energy_query_type" && (
                   <>
-                    {missed === 0 ? (
+                    {item.connected === 2 ? (
                       <Icon name="flash" color="green" size={16} />
-                    ) : missed === -1 || missed >= 1 ? (
-                      <Icon name="flash" color="orange" size={16} />
                     ) : (
                       <Icon name="flash" color="red" size={16} />
                     )}
@@ -295,16 +310,20 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
             ) : null}
             {" " + getNormalName()}
           </ListItem.Title>
-          {item.connected === 2 ? (
+          {item.connected === 2 && item.data_source?.category !== "energy_query_type" ? (
             <ListItem.Subtitle style={[style.listItemSubtitle]}>
-              {item.latest_upload
+              {item.latest_upload || item.activated_at
                 ? t("screens.device_overview.device_list.device_info.last_seen", {
-                    date: formatDateAndTime(toLocalDateTime(item.latest_upload)),
+                    date: formatDateAndTime(
+                      toLocalDateTime(
+                        item.latest_upload && item.latest_upload > 0 ? item.latest_upload : item.activated_at
+                      )
+                    ),
                   })
                 : t("screens.device_overview.device_list.device_info.no_data")}
             </ListItem.Subtitle>
           ) : null}
-          {timeToUpload && item.connected === 2 ? (
+          {timeToUpload && item.connected === 2 && item.data_source?.category !== "energy_query_type" ? (
             <TimeProgressBar
               progress={timeToUpload}
               onTimePassedByMinute={handleTimePassedByMinute}
@@ -319,7 +338,9 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
             </TouchableOpacity>
           ) : null}
         </View>
-        {item.connected === 2 && item.data_source?.category !== "cloud_feed_type" ? (
+        {item.connected === 2 &&
+        item.data_source?.category !== "cloud_feed_type" &&
+        item.data_source?.category !== "energy_query_type" ? (
           <Icon
             name="reorder-three-outline"
             size={10}

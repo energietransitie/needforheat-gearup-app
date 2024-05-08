@@ -1,5 +1,6 @@
 import { BleDeviceType, SensorQrCode, WifiEntry } from ".";
-import { AllDataSourcesResponse } from "./api";
+import { AllDataSourcesResponse, DataSourceType } from "./api";
+import { UserLocation } from "./energyquery";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -26,7 +27,6 @@ export type HomeStackParamList = {
     normalName: string;
     dataSource: AllDataSourcesResponse;
   };
-  AddOnlineDataSourceScreen: undefined;
   SearchDeviceScreen: { deviceName: string; proofOfPossession: string; device_TypeName: string; normalName: string };
   ActivateDeviceScreen: {
     qrData: SensorQrCode;
@@ -46,6 +46,13 @@ export type HomeStackParamList = {
     normalName: string;
   };
   DeviceOverviewScreen: undefined;
+  //CloudFeed
+  AddOnlineDataSourceScreen: undefined;
+  //EnergyQuery
+  InformationScreen: { dataSource: DataSourceType };
+  HomeSelectScreen: { dataSource: DataSourceType };
+  WeatherLocationResultScreen: { location: UserLocation; dataSource: DataSourceType };
+  WeatherLocationPostedScreen: undefined;
 };
 
 export type InfoStackParamList = {

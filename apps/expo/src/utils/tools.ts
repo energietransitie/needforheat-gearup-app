@@ -60,9 +60,10 @@ export const toLocalDateTime = (unixTime: number | undefined | null) =>
   unixTime ? new Date(unixTime * 1000) : undefined;
 
 export function checkMissedUpload(item: AllDataSourcesResponse): number {
-  let latestUploadString = item.latest_upload
-    ? toLocalDateTime(item.latest_upload)
-    : toLocalDateTime(item.activated_at) ?? "";
+  let latestUploadString =
+    item.latest_upload && item.latest_upload > 0
+      ? toLocalDateTime(item.latest_upload)
+      : toLocalDateTime(item.activated_at) ?? "";
   if (!latestUploadString) latestUploadString = "";
 
   const timeNow = new Date();
@@ -134,13 +135,7 @@ export function processDataSource(
 ): AllDataSourcesResponse {
   let connectStatus = 1;
 
-  let oldSource: AllDataSourcesResponse | undefined;
-  if (dataSource.category === "energy_query_type") {
-    oldSource = energyQueryData?.find(item => item.type === dataSource.item.Name);
-  } else {
-    oldSource = data?.find(item => item.type === dataSource.item.Name);
-  }
-
+  const oldSource = getOldSource(dataSource, energyQueryData, data);
   if (oldSource) {
     connectStatus = checkStatus(dataSource, oldSource, cloudFeedData);
   }
@@ -155,7 +150,7 @@ export function processDataSource(
   let allPrecedesDone = true;
   if (itemsNotPrecedingCurrent && itemsNotPrecedingCurrent.length > 0) {
     itemsNotPrecedingCurrent.forEach(otherItem => {
-      const otherOldSource = data?.find(item => item.data_source?.item.Name === otherItem.item.Name);
+      const otherOldSource = getOldSource(otherItem, energyQueryData, data);
       if (otherOldSource) {
         if (checkStatus(otherItem, otherOldSource, cloudFeedData) === 1) {
           allPrecedesDone = false;
@@ -179,4 +174,17 @@ export function processDataSource(
   };
 
   return newResponse;
+}
+function getOldSource(
+  dataSource: DataSourceType,
+  energyQueryData: AllDataSourcesResponse[] | undefined,
+  data: AllDataSourcesResponse[] | undefined
+) {
+  let oldSource: AllDataSourcesResponse | undefined;
+  if (dataSource.category === "energy_query_type") {
+    oldSource = energyQueryData?.find(item => item.type === dataSource.item.Name);
+  } else {
+    oldSource = data?.find(item => item.type === dataSource.item.Name);
+  }
+  return oldSource;
 }

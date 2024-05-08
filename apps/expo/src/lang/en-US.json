@@ -227,6 +227,54 @@
             }
           }
         }
+      },
+      "energy_query": {
+        "information_screen": {
+          "title": "EnergyQuery Information",
+          "button": "Understood!"
+        },
+        "homeselect_screen": {
+          "title": "Select your Home",
+          "subtitle": "Drag the map around and place the pin above your home",
+          "button": "Use this location!"
+        },
+        "weather_location_result_screen":{
+          "title": "Check Results",
+          "subtitle": "Is your home inside this hexagon?",
+          "send_button": "Send my query!",
+          "back_button": "Try again",
+          "marker": "Selected location",
+          "alert": {
+            "sending": {
+              "title": "Sending...",
+              "message": "Sending your Energy Query to the Energy Doctor"
+            },
+            "success":{
+              "title": "Success!",
+              "message": "Your Energy Query has been sent to the Energy Doctor"
+            },
+            "fail":{
+              "title": "Fail!",
+              "message": "An error occured when trying to send the query:"
+            }
+          }
+        },
+        "weather_location_posted_screen":{
+          "title": "Sent Result",
+          "subtitle": "You sent the following weather zone at",
+          "back_button": "Go back"
+        },
+        "location_permission": {
+          "alert": {
+            "title": "Locatie Permission",
+            "message": "This app uses GPS to get your location.\n\nDo you want to grant this permission?",
+            "button": "Sure, ask away!",
+            "enable_button": "Grant Location permission"
+          },
+          "errors": {
+            "request_failed": "An error occurred while requesting Location permissions."
+          }
+        }
       }
     },
     "info_stack": {

@@ -397,6 +397,10 @@ PODS:
     - Alamofire
     - ESPProvision
     - React
+  - react-native-geolocation (3.2.1):
+    - React-Core
+  - react-native-maps (1.14.0):
+    - React-Core
   - react-native-netinfo (11.3.1):
     - React-Core
   - react-native-render-html (6.3.4):
@@ -588,6 +592,8 @@ DEPENDENCIES:
   - React-jsinspector (from `../../../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../../../node_modules/react-native/ReactCommon/logger`)
   - react-native-esp-idf-provisioning (from `../../../node_modules/react-native-esp-idf-provisioning`)
+  - "react-native-geolocation (from `../../../node_modules/@react-native-community/geolocation`)"
+  - react-native-maps (from `../../../node_modules/react-native-maps`)
   - "react-native-netinfo (from `../../../node_modules/@react-native-community/netinfo`)"
   - react-native-render-html (from `../../../node_modules/react-native-render-html`)
   - react-native-safe-area-context (from `../../../node_modules/react-native-safe-area-context`)
@@ -729,6 +735,10 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native/ReactCommon/logger"
   react-native-esp-idf-provisioning:
     :path: "../../../node_modules/react-native-esp-idf-provisioning"
+  react-native-geolocation:
+    :path: "../../../node_modules/@react-native-community/geolocation"
+  react-native-maps:
+    :path: "../../../node_modules/react-native-maps"
   react-native-netinfo:
     :path: "../../../node_modules/@react-native-community/netinfo"
   react-native-render-html:
@@ -846,6 +856,8 @@ SPEC CHECKSUMS:
   React-jsinspector: 5e5497c844f2381e8648ec3a7d0ad25b3f27f23e
   React-logger: b277ad8f4473f2506fb30b762b6348534a3de10e
   react-native-esp-idf-provisioning: 22776ea4401cbbe5e5c016566d9cbc3386dfcbcf
+  react-native-geolocation: 491408e38ed91f999525600867e579e715f3465a
+  react-native-maps: cbf2f03bfeebfd7ec45966b066db13a075fd2af3
   react-native-netinfo: bdb108d340cdb41875c9ced535977cac6d2ff321
   react-native-render-html: 984dfe2294163d04bf5fe25d7c9f122e60e05ebe
   react-native-safe-area-context: 99b24a0c5acd0d5dcac2b1a7f18c49ea317be99a

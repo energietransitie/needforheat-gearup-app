@@ -5,11 +5,11 @@ import { FETCH_HEADERS } from "@/constants";
 import {
   allDataSourcesSchema,
   propertiesSchema,
-  deviceReadSchema,
   deviceTypeSchema,
   EnergyQuery,
   FetchMeasurementsOptions,
   measurementsSchema,
+  energyQueryScherma,
 } from "@/types/api";
 import { handleRequestErrors } from "@/utils/tools";
 
@@ -57,7 +57,7 @@ export async function fetchEnergyQuery(queryType: string) {
 
   const data = await handleRequestErrors(response);
   const jsonData = await data.json();
-  return deviceReadSchema.parse(jsonData);
+  return energyQueryScherma.parse(jsonData);
 }
 
 export async function fetchEnergyQueries() {
@@ -70,14 +70,19 @@ export async function fetchEnergyQueries() {
     const jsonData = await data.json();
 
     if (!Array.isArray(jsonData)) {
-      console.error("Invalid data format received from server for energy queries");
+      console.warn("Invalid or null data format received from server for energy queries");
       return [];
     }
 
     const parsedEnergyQueries = [];
     for (const energyQueryData of jsonData) {
       try {
-        //TODO: rename allDevicesSchema
+        const { energy_query_type } = energyQueryData;
+        if (energy_query_type && energy_query_type.name) {
+          energyQueryData.name = energy_query_type.name;
+          energyQueryData.type = energy_query_type.name;
+        }
+
         const parsedEnergyQuery = allDataSourcesSchema.parse(energyQueryData);
         parsedEnergyQueries.push(parsedEnergyQuery);
       } catch (error) {
@@ -101,11 +106,11 @@ export async function postEnergyQuery(energyQuery: EnergyQuery) {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch: ${response.statusText}`);
+      throw new Error(`Failed to post EnergyQuery: ${response.statusText}`);
     }
 
     const jsonData = await response.json();
-    return deviceReadSchema.parse(jsonData);
+    return energyQueryScherma.parse(jsonData);
   } catch (error) {
     console.error("Error posting energy query:", error);
     throw error;

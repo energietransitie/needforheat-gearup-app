@@ -17,5 +17,6 @@ export async function fetchUser() {
 
   const data = await handleRequestErrors(response);
   const jsonData = await data.json();
+
   return accountSchema.parse(jsonData);
 }

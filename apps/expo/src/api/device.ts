@@ -85,7 +85,7 @@ export async function fetchDevices() {
     const jsonData = await data.json();
 
     if (!Array.isArray(jsonData)) {
-      console.warn("Invalid or null data format received from server");
+      console.warn("Invalid or null data format received from server for devices");
       return [];
     }
 

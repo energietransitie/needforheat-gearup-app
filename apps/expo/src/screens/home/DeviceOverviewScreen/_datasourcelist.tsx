@@ -81,8 +81,7 @@ export default function DataSourceList({
 
   useEffect(() => {
     if (refresh) {
-      refetch();
-      refetchEnergyQueries();
+      refreshData();
       onRefresh();
     }
   }, [refresh, refetch, onRefresh, refetchEnergyQueries]);
@@ -143,10 +142,15 @@ export default function DataSourceList({
         ListEmptyComponent={
           <StatusIndicator isError errorText={t("screens.device_overview.device_list.empty_collection")} />
         }
-        refreshControl={<RefreshControl enabled onRefresh={refetch} refreshing={refresh} />}
+        refreshControl={<RefreshControl enabled onRefresh={refreshData} refreshing={refresh} />}
         refreshing={isRefetching}
         scrollEnabled={scrollEnabled}
       />
     </View>
   );
+
+  function refreshData() {
+    refetch();
+    refetchEnergyQueries();
+  }
 }
