@@ -226,7 +226,8 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
         onSwipeEnd={onSwipeEnd}
         leftWidth={0}
         rightContent={
-          item.connected === 2 && !(item.data_source?.category === "cloud_feed_type")
+          item.connected === 2 &&
+          !(item.data_source?.category === "cloud_feed_type" || !(item.data_source?.category === "energy_query_type"))
             ? close => (
                 <Button
                   title={t("screens.device_overview.device_list.reset_device")}
