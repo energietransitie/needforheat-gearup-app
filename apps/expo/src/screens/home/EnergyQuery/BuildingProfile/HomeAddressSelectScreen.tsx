@@ -66,7 +66,7 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
         text: t("screens.home_stack.search_device.open_settings"),
         onPress: () => {
           // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
-          openSettings().catch(e => { });
+          openSettings().catch(e => {});
         },
       },
     ]);
@@ -203,10 +203,13 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
             </View>
           ) : null}
         </View>
-        <Box style={{ flexDirection: "column", marginTop: 16, width: "100%" }}>
-          <TextInput style={style.addressText} value={selectedAddress} />
+        <Box style={{ flexDirection: "column", width: "100%" }}>
+          <Text style={style.label}>Address</Text>
+          <View style={style.inputContainer}>
+            <TextInput style={style.input} value={selectedAddress} />
+          </View>
           <Button
-            containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
+            containerStyle={{ width: "100%" }}
             title={t("screens.home_stack.energy_query.homeselect_screen.button")}
             color="primary"
             onPress={onContinue}
@@ -284,5 +287,22 @@ const useStyles = makeStyles(theme => ({
   addressText: {
     fontSize: 14,
     textAlign: "center",
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  inputContainer: {
+    borderWidth: 1,
+    borderColor: "gray",
+    backgroundColor: "white",
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    marginBottom: 8,
+    width: "100%",
+  },
+  input: {
+    fontSize: 14,
   },
 }));
