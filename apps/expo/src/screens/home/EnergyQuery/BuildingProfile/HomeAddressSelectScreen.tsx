@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Alert, Platform, Text, View } from "react-native";
 import Geocoder from "react-native-geocoding";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import MapView, { Region } from "react-native-maps";
 
 import Box from "@/components/elements/Box";
@@ -29,7 +30,10 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
     latitudeDelta: 4,
     longitudeDelta: 4,
   });
+
   const [selectedAddress, setSelectedAddress] = useState<string>("");
+
+  Geocoder.init(GOOGLE_MAPS_API_KEY);
 
   const getAddressFromCoordinates = async (latitude: number, longitude: number) => {
     try {
@@ -41,8 +45,6 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
       setSelectedAddress(""); // Als er een fout optreedt, leeg het adres
     }
   };
-
-  Geocoder.init(GOOGLE_MAPS_API_KEY);
 
   useEffect(() => {
     const checkPermission = async () => {
@@ -178,6 +180,26 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
             <View style={style.addressContainer}>
               <Text style={style.addressText}>{selectedAddress}</Text>
             </View>
+            <GooglePlacesAutocomplete
+              placeholder="Type a place"
+              query={{ key: GOOGLE_MAPS_API_KEY, language: "nl" }}
+              fetchDetails
+              onPress={(data, details = null) => console.log(data, details)}
+              onFail={error => console.log(error)}
+              onNotFound={() => console.log("no results")}
+              styles={{
+                container: {
+                  position: "absolute",
+                  top: -200,
+                  left: 10,
+                  zIndex: 9999,
+                  backgroundColor: "#fff",
+                },
+                textInputContainer: {
+                  width: 200,
+                },
+              }}
+            />
           </Box>
           {Platform.OS === "ios" ? (
             <View style={style.zoomControlsiOS}>
@@ -219,6 +241,16 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
 }
 
 const useStyles = makeStyles(theme => ({
+  autocompleteContainer: {
+    position: "absolute",
+    top: 20,
+    left: 20,
+    zIndex: 9999,
+    backgroundColor: "#fff",
+  },
+  input: {
+    width: 200, // Adjust width as needed
+  },
   mapcontainer: {
     flex: 1,
     width: "100%",
