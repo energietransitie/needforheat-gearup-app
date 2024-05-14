@@ -35,7 +35,6 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   const { t, resolvedLanguage } = useTranslation();
   const [data, setData] = useState(null); // Initialize data state variable
   const CompleteURL = getManualUrl(item.data_source as DataSourceType);
-
   const [missed, setMissed] = useState(0);
   const [timeToUpload, setTimeToUpload] = useState<string>();
 

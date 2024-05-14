@@ -3,7 +3,7 @@ import Geolocation, { GeolocationResponse } from "@react-native-community/geoloc
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, Icon, makeStyles, useTheme } from "@rneui/themed";
 import { openSettings } from "expo-linking";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { Alert, Platform, Text, View } from "react-native";
 import Geocoder from "react-native-geocoding";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
@@ -33,6 +33,43 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
   const [selectedAddress, setSelectedAddress] = useState<string>("");
 
   Geocoder.init(GOOGLE_MAPS_API_KEY);
+
+  // const setAdressChange = async (adress: SetStateAction<string>) => {
+  //   setSelectedAddress(adress);
+  //   return selectedAddress;
+  // };
+  const setAdressChange = async (address: string) => {
+    setSelectedAddress(address);
+    return selectedAddress;
+  };
+
+  const updateAddress = async (address: string) => {
+    address = selectedAddress;
+    if (address.trim() !== "") {
+      try {
+        const response = await Geocoder.from(address);
+        const addressResponse = response.results[0].formatted_address;
+        setSelectedAddress(addressResponse);
+        // const { lat, lng } = response.results[0].geometry.location;
+        // setLocation({
+        //   latitude: lat,
+        //   longitude: lng,
+        //   latitudeDelta: location.latitudeDelta,
+        //   longitudeDelta: location.longitudeDelta,
+        // });
+        // // Optionally, you can animate the map to the new location
+        // refMap.current?.animateToRegion({
+        //   latitude: lat,
+        //   longitude: lng,
+        //   latitudeDelta: location.latitudeDelta,
+        //   longitudeDelta: location.longitudeDelta,
+        // }, 500);
+      } catch (error) {
+        console.error("Error fetching location from address: ", error);
+      }
+    }
+    return selectedAddress;
+  };
 
   const getAddressFromCoordinates = async (latitude: number, longitude: number) => {
     try {
@@ -211,7 +248,11 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
           {/* TODO: When editing address field, reverse geo the lat long and move the map to it */}
           <Text style={style.label}>Address</Text>
           <View style={style.inputContainer}>
-            <TextInput style={style.input} value={selectedAddress} />
+            <TextInput style={style.input}
+            value={selectedAddress}
+            onChangeText={setAdressChange}
+            // onSubmitEditing={updateAddress}
+            />
           </View>
           <Button
             containerStyle={{ width: "100%" }}
