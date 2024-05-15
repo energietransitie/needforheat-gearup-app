@@ -17,6 +17,7 @@ import { HomeStackParamList } from "@/types/navigation";
 import { capitalizeFirstLetter, checkMissedUpload, getManualUrl, toLocalDateTime } from "@/utils/tools";
 import "intl";
 import "intl/locale-data/jsonp/en";
+import { DateTime } from "luxon";
 
 type WifiNetworkListItemProps = {
   item: AllDataSourcesResponse;
@@ -149,9 +150,12 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   }
 
   function checkNextUpload(item: AllDataSourcesResponse): string {
-    const latestUpload = toLocalDateTime(item.latest_upload) ?? toLocalDateTime(item.activated_at) ?? new Date();
-    const timeNow = new Date();
+    const latestUpload = (item.latest_upload && item.latest_upload > 1073347200) ? toLocalDateTime(item.latest_upload) : toLocalDateTime(item.activated_at)
+    
+    const now = DateTime.now().toISO({includeOffset: false})!
+    const timeNow = DateTime.fromISO(now)
     let cronExpression = item.data_source?.upload_schedule ?? "";
+    if(!latestUpload) return "0/0";
 
     // Replace '0' in cron expression with corresponding value from latestUpload
     const parts = cronExpression.split(" ");
@@ -170,11 +174,11 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
       const intervalIterator = cronParser.parseExpression(cronExpression, { currentDate: latestUpload });
       const scheduledTime = intervalIterator.next().toDate();
       // Calculate minutes until the next upload
-      const timeToUpload = Math.ceil((scheduledTime.getTime() - timeNow.getTime()) / (1000 * 60));
+      const timeToUpload = Math.ceil((scheduledTime.getTime() - timeNow.toMillis()) / (1000 * 60))
       if (timeToUpload < 0) {
         return "0/0";
       } else {
-        const timeTotal = Math.ceil((scheduledTime.getTime() - latestUpload.getTime()) / (1000 * 60));
+        const timeTotal = Math.ceil((scheduledTime.getTime() - latestUpload.getTime()) / (1000 * 60))
         return `${timeToUpload}/${timeTotal}`;
       }
     } catch (error) {
