@@ -1,4 +1,4 @@
-package nl.windesheim.energietransitie.warmtewachter.newarchitecture.modules;
+package nl.windesheim.energietransitie.needforheat.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>nl.windesheim.energietransitie.warmtewachter</string>
+	<string>nl.windesheim.energietransitie.needforheat</string>
 	<key>PROJECT_ID</key>
 	<string>warmtewachter-7687a</string>
 	<key>STORAGE_BUCKET</key>
