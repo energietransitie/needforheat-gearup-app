@@ -1,4 +1,4 @@
-package nl.windesheim.energietransitie.needforheat;
+package nl.windesheim.energietransitie.warmtewachter;
 
 import android.os.Build;
 import android.os.Bundle;
