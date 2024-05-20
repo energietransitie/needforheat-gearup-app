@@ -86,7 +86,7 @@
         },
         "authenticated": {
           "title": "Scan een QR-code",
-          "description": "Scan de QR-code van het meetapparaat. Deze staat op het e-ink scherm van het meetapparaat of op een sticker (kijk ook op de achterkant)."
+          "description": "Scan de QR-code van het meetapparaat. Deze staat op het e-ink scherm of op een sticker op het meetapparaat."
         },
         "unauthenticated": {
           "title": "NeedForHeat",
@@ -165,8 +165,8 @@
           "enabling": "Bluetooth is momenteel uitgeschakeld. Om verder te kunnen gaan, dient u uw Bluetooth in te schakelen",
           "alert": {
             "title": "Machtigingen toestaan",
-            "androidmessage": "Deze app maakt gebruik van Bluetooth om te verbinden met de module, maar registreert uw locatie niet.\n\nOp Android valt Bluetooth onder locatiediensten. Daarom zult u binnenkort een vraag krijgen over locatietoegang.\n\nBovendien dient u toestemming te geven voor 'Apparaten in de Buurt' om verbinding te maken met de module.",
-            "iosmessage": "Deze app maakt gebruik van Bluetooth om te verbinden met de module. \n\n Wij vragen aan u om Bluetooth in te schakelen om door te gaan mits u dit niet al heeft gegeven.",
+            "androidmessage": "Om verbinding te maken met de module, heeft deze app Bluetooth, Precieze Locatie en Apparaten in de Buurt machtigingen nodig.\n\nJe wordt gevraagd om deze machtigingen te geven wanneer dat nodig is.",
+            "iosmessage": "Om een verbinding met de module tot stand te brengen, maakt deze app gebruik van Bluetooth.\n\nJe wordt gevraagd om Bluetooth te geven wanneer dat nodig is.",
             "button": "Oké, vraag maar!",
             "enable_button": "Bluetooth Inschakelen",
             "cancel": "Annuleren",
@@ -240,7 +240,7 @@
         },
         "weather_location_result_screen":{
           "title": "Resultaten",
-          "subtitle": "Bevindt jouw huis zich in deze zeshoek?",
+          "subtitle": "Bevindt jouw huis zich in deze weerzone?",
           "send_button": "Verzenden",
           "back_button": "Opnieuw",
           "marker": "Geselecteerde locatie",
@@ -391,13 +391,13 @@
   },
   "notifications": {
     "ticker": "DataSource Offline",
-    "bigText": "Een of meer van uw DataSources hebben langdurig niet geupload en hun status is nu ROOD.\nGraag onderzoeken!",
+    "bigText": "Een of meer van uw DataSources hebben langdurig niet geupload en hun status is nu Offline.\nGraag onderzoeken!",
     "subText": "NeedForHeat DataSources",
     "title": "DataSource Waarschuwing",
-    "message": "Een of meer van uw DataSources hebben langdurig niet geupload en hun status is nu ROOD.\nGraag onderzoeken!",
+    "message": "Een of meer van uw DataSources hebben langdurig niet geupload en hun status is nu Offline.\nGraag onderzoeken!",
     "alert": {
       "title": "Melding machtiging",
-      "message": "Deze app stuurt meldingen om u te informeren als een DataSource langduring niet upload.\n\nWilt u deze machtiging verlenen?",
+      "message": "Deze app stuurt meldingen om u te informeren als een DataSource langduring niet uploadt.\n\nWilt u deze machtiging verlenen?",
       "button": "Oké, vraag maar!",
       "enable_button": "Machtiging melding verlenen"
     }
@@ -408,7 +408,7 @@
     },
     "manual_content": {
       "loading": "Handleiding laden...",
-      "error": "De handleiding kon niet worden geladen. Neem contact op met de maker van het meetapparaatje voor meer informatie of ga verder op eigen risico."
+      "error": "De handleiding kon niet worden geladen. Neem contact op met de maker van het meetapparaatje en/of de helpdesk voor meer informatie of ga verder op eigen risico."
     },
     "status_indicator": {
       "loading": "Aan het laden...",
