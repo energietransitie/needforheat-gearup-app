@@ -140,7 +140,7 @@
         "errors": {
           "no_permission": "No camera permission",
           "invalid_qr": "The QR code is not a valid QR code for a measurement device.",
-          "mismatched_device_name": "The device name in the QR code does not match the name of the device you are trying to reset.",
+          "mismatched_device_name": "You are scanning the wrong device. Please scan again with the right one.",
           "unknown_error": "An error occurred while scanning the QR code.",
           "camera_request_failed": "An error occurred while requesting camera permissions."
         },

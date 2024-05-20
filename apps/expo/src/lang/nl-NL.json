@@ -140,7 +140,7 @@
         "errors": {
           "no_permission": "Geen cameratoestemming",
           "invalid_qr": "De QR-code is geen geldige QR-code voor een meetapparaat.",
-          "mismatched_device_name": "Het apparaat dat u probeert te activeren is niet hetzelfde als het apparaat dat u zojuist heeft gescand.",
+          "mismatched_device_name": "Er is een verkeerd apparaat gescand. Probeer het opnieuw met het juiste apparaat.",
           "unknown_error": "Er is een fout opgetreden tijdens het scannen van de QR-code.",
           "camera_request_failed": "Een fout is opgetreden bij het aanvragen van camera-machtigingen."
         },
