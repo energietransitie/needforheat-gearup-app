@@ -32,6 +32,17 @@ To do this, please follow the GitHub documentation to setup an SSH key on the de
 1. [Generate a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 2. [Adding a SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
 
+Don't forgot to add `github.com` to the known hosts by doing:
+
+```bash
+ssh -T git@github.com
+```
+
+It should then respond with:
+```bash
+Hi Labhatorian! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
 ## 2. Clone the repository
 Go to a folder you plan on cloning the code to on your device and run:
 ```bash

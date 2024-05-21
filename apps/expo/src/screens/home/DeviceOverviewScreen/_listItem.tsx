@@ -4,6 +4,7 @@ import * as Burnt from "burnt";
 import cronParser from "cron-parser";
 import { format } from "date-fns";
 import { enUS, nl } from "date-fns/locale";
+import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { Platform, ToastAndroid, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -146,9 +147,16 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   }
 
   function checkNextUpload(item: AllDataSourcesResponse): string {
-    const latestUpload = toLocalDateTime(item.latest_upload) ?? toLocalDateTime(item.activated_at) ?? new Date();
-    const timeNow = new Date();
+    const latestUpload =
+      item.latest_upload && item.latest_upload > 1073347200
+        ? toLocalDateTime(item.latest_upload)
+        : toLocalDateTime(item.activated_at);
+
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const now = DateTime.now().toISO({ includeOffset: false })!;
+    const timeNow = DateTime.fromISO(now);
     let cronExpression = item.data_source?.upload_schedule ?? "";
+    if (!latestUpload) return "0/0";
 
     // Replace '0' in cron expression with corresponding value from latestUpload
     const parts = cronExpression.split(" ");
@@ -167,7 +175,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
       const intervalIterator = cronParser.parseExpression(cronExpression, { currentDate: latestUpload });
       const scheduledTime = intervalIterator.next().toDate();
       // Calculate minutes until the next upload
-      const timeToUpload = Math.ceil((scheduledTime.getTime() - timeNow.getTime()) / (1000 * 60));
+      const timeToUpload = Math.ceil((scheduledTime.getTime() - timeNow.toMillis()) / (1000 * 60));
       if (timeToUpload < 0) {
         return "0/0";
       } else {

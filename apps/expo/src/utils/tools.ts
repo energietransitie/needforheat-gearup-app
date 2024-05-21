@@ -56,8 +56,14 @@ export function capitalizeFirstLetter(text: string | undefined) {
   return text;
 }
 
-export const toLocalDateTime = (unixTime: number | undefined | null) =>
-  unixTime ? new Date(unixTime * 1000) : undefined;
+export const toLocalDateTime = (unixTime: number | undefined | null): Date | undefined => {
+  if (unixTime) {
+    const dateTime = DateTime.fromSeconds(unixTime);
+    return dateTime.toJSDate();
+  } else {
+    return undefined;
+  }
+};
 
 export function checkMissedUpload(item: AllDataSourcesResponse): number {
   let latestUploadString =

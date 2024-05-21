@@ -41,8 +41,8 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
   const { user } = useUser();
 
   function getFAQUri() {
-    if (user?.campaign) {
-      return user.campaign.info_url + "/" + (resolvedLanguage ? "/" + resolvedLanguage : "");
+    if (user?.campaign && user.campaign.info_url) {
+      return user.campaign.info_url + "/faq/" + (resolvedLanguage ? resolvedLanguage : "") + "/";
     } else {
       return (
         "https://manuals.energietransitiewindesheim.nl/campaigns/generic/faq/" +
@@ -52,8 +52,8 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
   }
 
   function getInfoUri() {
-    if (user?.campaign) {
-      return user.campaign.info_url + "/" + (resolvedLanguage ? "/" + resolvedLanguage : "");
+    if (user?.campaign && user.campaign.info_url) {
+      return user.campaign.info_url + "/info/" + (resolvedLanguage ? resolvedLanguage : "") + "/";
     } else {
       return (
         "https://manuals.energietransitiewindesheim.nl/campaigns/generic/info/" +
@@ -63,8 +63,8 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
   }
 
   function getPrivacyUri() {
-    if (user?.campaign) {
-      return user.campaign.info_url + "/" + (resolvedLanguage ? "/" + resolvedLanguage : "");
+    if (user?.campaign && user.campaign.info_url) {
+      return user.campaign.info_url + "/privacy/" + (resolvedLanguage ? resolvedLanguage : "") + "/";
     } else {
       return (
         "https://manuals.energietransitiewindesheim.nl/campaigns/generic/privacy/" +
