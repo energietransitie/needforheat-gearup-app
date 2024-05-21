@@ -60,6 +60,7 @@
     "intl": "^1.2.5",
     "luxon": "^3.4.4",
     "lz-string": "^1.5.0",
+    "mathjs": "^12.4.2",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-i18next": "12.2.0",

@@ -14,6 +14,7 @@ import InformationScreen from "@/screens/home/EnergyQuery/InformationScreen";
 import HomeSelectScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/HomeSelectScreen";
 import WeatherLocationPostedScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/WeatherLocationPostedScreen";
 import WeatherLocationResultScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/WeatherLocationResultScreen";
+import BuildingProfileProgressScreen from "@/screens/home/EnergyQuery/BuildingProfile/BuildingProfileProgressScreen";
 import HomeScreen from "@/screens/home/HomeScreen";
 import ProvisionScreen from "@/screens/home/ProvisionScreen";
 import QrScannerScreen from "@/screens/home/QrScannerScreen";
@@ -142,6 +143,14 @@ export default function HomeRouter() {
           ...disableNavigation,
         }}
         component={WeatherLocationPostedScreen}
+      />
+      <HomeStack.Screen
+        name="BuildingProfileProgressScreen"
+        options={{
+          title: t("screens.home_stack.energy_query.building_profile.title"),
+          ...disableNavigation,
+        }}
+        component={BuildingProfileProgressScreen}
       />
     </HomeStack.Navigator>
   );

@@ -274,7 +274,31 @@
           "errors": {
             "request_failed": "An error occurred while requesting Location permissions."
           }
+        },
+        "building_profile":{
+          "title": "Processing Data",
+          "send_button": "Send",
+          "back_button": "Cancel",
+          "alert": {
+            "sending": {
+              "title": "Fetching Data...",
+              "message": "Data is being retrieved for your home"
+            },
+            "calculating": {
+              "title": "Calculating...",
+              "message": "Complex calculations are being performed with the data"
+            },
+            "success": {
+              "title": "Success!",
+              "message": "Your calculations have been sent to the energy doctor"
+            },
+            "fail":{
+              "title": "Error!",
+              "message": "An error occurred while sending the query:"
+            }
+          }
         }
+        
       }
     },
     "info_stack": {

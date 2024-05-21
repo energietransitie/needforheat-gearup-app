@@ -274,6 +274,29 @@
           "errors": {
             "request_failed": "Een fout is opgetreden bij het aanvragen van de locatie-machtigingen."
           }
+        },
+        "building_profile":{
+          "title": "Verwerken gegevens",
+          "send_button": "Verzenden",
+          "back_button": "Annuleren",
+          "alert": {
+            "sending": {
+              "title": "Bezig met ophalen...",
+              "message": "Er wordt data opgehaald over uw huis"
+            },
+            "calculating": {
+              "title": "Bezig met berekenen...",
+              "message": "Met de gegevens worden moeilijke berekeningen gedaan"
+            },
+            "success": {
+              "title": "Succes!",
+              "message": "Uw berekeningen zijn naar de energiedokter gestuurd"
+            },
+            "fail":{
+              "title": "Fout!",
+              "message": "Er is een fout opgetreden bij het verzenden van de query:"
+            }
+          }
         }
       }
     },

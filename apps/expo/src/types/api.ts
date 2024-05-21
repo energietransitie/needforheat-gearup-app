@@ -16,6 +16,7 @@ export const deviceTypeSchema = z.object({
 export const TypeSchema = z.object({
   ID: z.number(),
   Name: z.string(),
+  Formula: z.string().optional().nullable(),
 });
 
 export type DeviceTypeResponse = z.infer<typeof deviceTypeSchema>;
@@ -201,3 +202,11 @@ export const energyQueryScherma = z.object({
 });
 
 export type EnergyQuery = z.infer<typeof energyQueryScherma>;
+
+export const APIKeySchema = z.object({
+  id: z.number().optional().nullable(),
+  api_name: z.string().optional().nullable(),
+  api_key: z.string().optional().nullable(),
+});
+
+export type APIKeyResponse = z.infer<typeof APIKeySchema>;

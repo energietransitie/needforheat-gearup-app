@@ -3,7 +3,7 @@ import Geolocation, { GeolocationResponse } from "@react-native-community/geoloc
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, Icon, makeStyles, useTheme } from "@rneui/themed";
 import { openSettings } from "expo-linking";
-import { SetStateAction, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Alert, Platform, Text, View } from "react-native";
 import Geocoder from "react-native-geocoding";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
@@ -43,30 +43,40 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
     return selectedAddress;
   };
 
-  const updateAddress = async (address: string) => {
-    address = selectedAddress;
-    if (address.trim() !== "") {
-      try {
-        const response = await Geocoder.from(address);
-        const addressResponse = response.results[0].formatted_address;
-        setSelectedAddress(addressResponse);
-        // const { lat, lng } = response.results[0].geometry.location;
-        // setLocation({
-        //   latitude: lat,
-        //   longitude: lng,
-        //   latitudeDelta: location.latitudeDelta,
-        //   longitudeDelta: location.longitudeDelta,
-        // });
-        // // Optionally, you can animate the map to the new location
-        // refMap.current?.animateToRegion({
-        //   latitude: lat,
-        //   longitude: lng,
-        //   latitudeDelta: location.latitudeDelta,
-        //   longitudeDelta: location.longitudeDelta,
-        // }, 500);
-      } catch (error) {
-        console.error("Error fetching location from address: ", error);
+  const updateAddress = async () => {
+    try {
+      if (selectedAddress !== "") {
+        const response = await Geocoder.from(selectedAddress);
+        // Check if the response contains valid results
+        if (response.results.length === 0) {
+          // Address not found, handle accordingly (e.g., show an error message)
+          console.log("Address not found");
+          return;
+        }
+        // Address found, update the marker's location
+        const { lat, lng } = response.results[0].geometry.location;
+        getAddressFromCoordinates(lat, lng);
+        setLocation({
+          latitude: lat,
+          longitude: lng,
+          latitudeDelta: location.latitudeDelta,
+          longitudeDelta: location.longitudeDelta,
+        });
+        // Optionally, you can animate the map to the new location
+        refMap.current?.animateToRegion(
+          {
+            latitude: lat,
+            longitude: lng,
+            latitudeDelta: location.latitudeDelta,
+            longitudeDelta: location.longitudeDelta,
+          },
+          500
+        );
+      } else {
+        getAddressFromCoordinates(location.latitude, location.longitude);
       }
+    } catch (error) {
+      console.error("Error fetching location from address: ", error);
     }
     return selectedAddress;
   };
@@ -90,7 +100,7 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
   }, []);
 
   const onContinue = () => {
-    //navigation.navigate("WeatherLocationResultScreen", { location, dataSource });
+    navigation.navigate("BuildingProfileProgressScreen", { location: selectedAddress, dataSource});
   };
 
   //Location permission
@@ -151,7 +161,7 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
           setLocation({
             longitude: position.coords.longitude,
             latitude: position.coords.latitude,
-            longitudeDelta: location.longitude,
+            longitudeDelta: location.longitudeDelta,
             latitudeDelta: location.latitudeDelta,
           });
           refMap.current?.animateToRegion(
@@ -251,7 +261,7 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
             <TextInput style={style.input}
             value={selectedAddress}
             onChangeText={setAdressChange}
-            // onSubmitEditing={updateAddress}
+            onSubmitEditing={updateAddress}
             />
           </View>
           <Button
