@@ -30,7 +30,6 @@ export default function WeatherLocationPostedScreen({ navigation }: WeatherLocat
     latitudeDelta: 1,
     longitudeDelta: 1,
   });
-
   const [h3Cell, setH3Cell] = useState<FeatureCollection>();
 
   useEffect(() => {

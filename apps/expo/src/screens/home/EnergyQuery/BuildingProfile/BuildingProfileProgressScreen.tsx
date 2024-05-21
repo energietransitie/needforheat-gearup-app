@@ -1,5 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, useTheme } from "@rneui/themed";
+import * as SecureStore from "expo-secure-store";
 import { evaluate } from "mathjs";
 import { useEffect, useState } from "react";
 import { getTimeZone } from "react-native-localize";
@@ -14,6 +15,7 @@ import useTranslation from "@/hooks/translation/useTranslation";
 import { useDisableBackButton } from "@/hooks/useDisableBackButton";
 import { EnergyQuery, bag3DSchema, bagSchema } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
+import { fetchTimeZone } from "@/utils/timezone";
 import { handleRequestErrors } from "@/utils/tools";
 
 type BuildingProfileProgressScreenProps = NativeStackScreenProps<HomeStackParamList, "BuildingProfileProgressScreen">;
@@ -194,6 +196,10 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
 
     const currentLocaleTimeInUnix = Math.floor(Date.now() / 1000);
 
+    const timeZone = getTimeZone();
+    await SecureStore.setItemAsync("timeZone", timeZone);
+    fetchTimeZone(); //Update in RAM
+
     const energyQuery: EnergyQuery = {
       energy_query_type: {
         id: dataSource.item.ID,
@@ -209,7 +215,7 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
               time: currentLocaleTimeInUnix,
             },
             {
-              value: getTimeZone(),
+              value: timeZone,
               property: {
                 name: "device_timezone__tmz",
               },

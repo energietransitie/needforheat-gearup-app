@@ -2,6 +2,8 @@ import { MANUAL_URL } from "@env";
 import cronParser from "cron-parser";
 import { DateTime, Duration } from "luxon";
 
+import { getTimeZone } from "./timezone";
+
 import { Maybe } from "@/types";
 import { AllDataSourcesResponse, DataSourceListType, DataSourceType, cloudFeedsResponse } from "@/types/api";
 
@@ -57,8 +59,12 @@ export function capitalizeFirstLetter(text: string | undefined) {
 }
 
 export const toLocalDateTime = (unixTime: number | undefined | null): Date | undefined => {
+  const timeZone = getTimeZone();
   if (unixTime) {
     const dateTime = DateTime.fromSeconds(unixTime);
+    if (timeZone) {
+      return dateTime.setZone(timeZone).toJSDate();
+    }
     return dateTime.toJSDate();
   } else {
     return undefined;

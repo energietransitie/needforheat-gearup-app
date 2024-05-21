@@ -16,6 +16,10 @@ Certain Energy Queries require additional knowledge for optimal use.
 
 The BuildingProfile energy query leverages Dutch BAG (Basisregistratie Adressen en Gebouwen) data to retrieve information about a user's residence. NeedForHeat can then perform calculations based on a formula defined within the [needforheat-server-api](https://github.com/energietransitie/needforheat-server-api).
 
+Please note that the GearUp version of the app expects there to be the following EnergyQueryTypes:
+- weather-interpolation-location
+- building-profile
+
 #### 1.1.1. Formula-Based Calculations
 
 Essentially, you can configure the app to compute values based on available data and a custom JavaScript formula. The formula can resemble this structure:
