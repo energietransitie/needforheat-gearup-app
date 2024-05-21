@@ -4,7 +4,7 @@ import { makeStyles, Button } from "@rneui/themed";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { BarCodeScanningResult, Camera } from "expo-camera";
 import { useEffect, useState } from "react";
-import { Alert, Text, Platform } from "react-native";
+import { Alert, Text } from "react-native";
 import { openSettings } from "react-native-permissions";
 
 import Box from "@/components/elements/Box";

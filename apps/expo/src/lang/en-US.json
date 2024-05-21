@@ -17,7 +17,7 @@
     },
     "device_overview": {
       "title": "Data Sources",
-      "toast_message": "Disabled item. Complete first item(s) with white background!",
+      "toast_message": "Disabled item. First complete the item(s) with a white background!",
       "toast_title": "Locked item",
       "buttons": {
         "add_enelogic": "Connect Enelogic",
@@ -35,6 +35,10 @@
         "super_late": "Offline",
         "next_update": "Next in",
         "hours": "h"
+      },
+      "explanation_sheet": {
+        "title": "Welcome to the NeedForHeat App!",
+        "description": "This screen displays a list of Data Sources that you need to complete.\n\nHere's what you need to know:\n- Open Data Sources are shown in white.\n- Locked Data Sources are shown in grey.\n- Onboarded Data Sources are shown in green.\n\nYour mission is to complete all Data Sources to fully participate in the campaign! You can track your progress with the progress bar at the top.\n\nTo proceed, tap on an open Data Source to begin. Use the ? icon for frequently asked questions.\n\nYou can reopen this explanation by tapping on the green ? icon at the bottom right of the screen when this explanation disappears."
       }
     },
     "home_stack": {
@@ -86,7 +90,7 @@
         },
         "authenticated": {
           "title": "Scan a QR code",
-          "description": "Scan the QR code of a measurement device. It can be found on the e-ink screen or on a sticker on (the back of) the device."
+          "description": "Scan the QR code of a measurement device. It can be found on the e-ink screen or on a sticker on the device."
         },
         "unauthenticated": {
           "title": "NeedForHeat",
@@ -132,7 +136,7 @@
         },
         "measurements_error": {
           "title": "No data was received",
-          "message": "Even after a long wait, no data was received from the device."
+          "message": "After a long period, no data was received from the device."
         }
       },
       "qr_scanner": {
@@ -140,7 +144,7 @@
         "errors": {
           "no_permission": "No camera permission",
           "invalid_qr": "The QR code is not a valid QR code for a measurement device.",
-          "mismatched_device_name": "The device name in the QR code does not match the name of the device you are trying to reset.",
+          "mismatched_device_name": "You are scanning the wrong device. Please scan again with the right one.",
           "unknown_error": "An error occurred while scanning the QR code.",
           "camera_request_failed": "An error occurred while requesting camera permissions."
         },
@@ -165,8 +169,8 @@
           "enabling": "Bluetooth is currently disabled. To proceed, please enable your Bluetooth.",
           "alert": {
             "title": "Allow permissions",
-            "androidmessage": "This app uses Bluetooth to connect to the module, but does not register your location.\n\nOn Android, Bluetooth falls under location services. Therefore, you will soon be asked about location access.\n\nAdditionally, you need to give permission for 'Nearby Devices' to connect to the module.",
-            "iosmessage": "This app uses Bluetooth to connect to the module. \n\n We ask you to turn Bluetooth on to continue if you have not already given this permission.",
+            "androidmessage": "To connect to the module, this app requires Bluetooth, Precise Location, and Nearby Devices permissions.\n\nYou will be prompted to enable these permissions when necessary.",
+            "iosmessage": "To establish a connection with the module, this app utilizes Bluetooth.\n\nYou will be prompted to enable Bluetooth when necessary.",
             "button": "Okay, go ahead!",
             "enable_button": "Enable Bluetooth",
             "cancel": "Cancel",
@@ -186,7 +190,7 @@
           "found": "Device {{name}} found!",
           "not_found": {
             "title": "Device {{name}} was not found.",
-            "message": "Please make sure that the measurement device is near your smartphone. Try searching again with the button below."
+            "message": "Please make sure that the measurement device is nearby your smartphone. Try searching again with the button below."
           }
         },
         "scan": "Scan",
@@ -238,9 +242,9 @@
           "subtitle": "Drag the map around and place the pin above your home",
           "button": "Use this location!"
         },
-        "weather_location_result_screen":{
+        "weather_location_result_screen": {
           "title": "Check Results",
-          "subtitle": "Is your home inside this hexagon?",
+          "subtitle": "Is your home inside this weather zone?",
           "send_button": "Send my query!",
           "back_button": "Try again",
           "marker": "Selected location",
@@ -249,17 +253,17 @@
               "title": "Sending...",
               "message": "Sending your Energy Query to the Energy Doctor"
             },
-            "success":{
+            "success": {
               "title": "Success!",
               "message": "Your Energy Query has been sent to the Energy Doctor"
             },
-            "fail":{
+            "fail": {
               "title": "Fail!",
               "message": "An error occured when trying to send the query:"
             }
           }
         },
-        "weather_location_posted_screen":{
+        "weather_location_posted_screen": {
           "title": "Sent Result",
           "subtitle": "You sent the following weather zone at",
           "back_button": "Go back"
@@ -357,7 +361,7 @@
     },
     "bluetooth_permission": {
       "not_granted_ios": "Bluetooth permission is not granted. Please grant the permission and try again.",
-      "not_granted_android": "Make sure Bluetooth is turned on and that you grant permissions for Location and Nearby Devices.\nYou can do this through settings."
+      "not_granted_android": "Make sure Bluetooth is turned on and that you grant permissions for Precise Location and Nearby Devices.\nYou can do this through settings."
     },
     "camera_permission": {
       "not_granted_ios": "Camera permission is not granted. Please grant the permission and try again.",
@@ -390,10 +394,10 @@
   },
   "notifications": {
     "ticker": "DataSource Offline",
-    "bigText": "One or more of your DataSources hasn't been uploading for an extended period and its status is now RED.\nPlease investigate!",
+    "bigText": "One or more of your DataSources hasn't been uploading for an extended period and its status is now Offline.\nPlease investigate!",
     "subText": "NeedForHeat DataSources",
     "title": "DataSource Alert",
-    "message": "One or more of your DataSources hasn't been uploading for an extended period and its status is now RED.\nPlease investigate!",
+    "message": "One or more of your DataSources hasn't been uploading for an extended period and its status is now Offline.\nPlease investigate!",
     "alert": {
       "title": "Notification permission",
       "message": "This app uses notifications to notify if a DataSource hasn't been uploading in a while.\n\nDo you want to grant this permission?",
