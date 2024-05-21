@@ -39,6 +39,9 @@ Please include in your request the email address of the Apple ID or Google accou
 To deploy and successfully use the app you need to have received an e-mail with a proper Firebase Dynamic Link and you need be in the possession of at least one NFH measurement device.
 
 ## Documentation
+### EnergyDoctor
+Documentation specifically for the EnergyDoctor can be found in [here](./docs/energydoctor.md).
+
 ### Deploying
 Documentation for deploying to the Google Play Store and Apple App Store can be found in [here](./docs/deploying.md).
 
