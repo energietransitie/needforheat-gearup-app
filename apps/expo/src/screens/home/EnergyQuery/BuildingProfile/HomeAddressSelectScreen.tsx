@@ -10,6 +10,7 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import MapView, { Region } from "react-native-maps";
 
 import Box from "@/components/elements/Box";
+import { NL_ADDRESS_REGEX } from "@/constants";
 import usePreciseLocationPermission from "@/hooks/location/usePreciseLocationPermission";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserLocation } from "@/types/energyquery";
@@ -34,10 +35,6 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
 
   Geocoder.init(GOOGLE_MAPS_API_KEY);
 
-  // const setAdressChange = async (adress: SetStateAction<string>) => {
-  //   setSelectedAddress(adress);
-  //   return selectedAddress;
-  // };
   const setAdressChange = async (address: string) => {
     setSelectedAddress(address);
     return selectedAddress;
@@ -100,7 +97,29 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
   }, []);
 
   const onContinue = () => {
-    navigation.navigate("BuildingProfileProgressScreen", { location: selectedAddress, dataSource});
+    const match = selectedAddress.match(NL_ADDRESS_REGEX);
+
+    if (match) {
+      const houseNumber = match[2];
+      const postalCode = match[3];
+
+      if (houseNumber && postalCode) {
+        navigation.navigate("BuildingProfileProgressScreen", { location: selectedAddress, dataSource });
+      } else {
+        Alert.alert("Error", "dn", [
+          {
+            text: t("screens.home_stack.search_device.open_settings"),
+          },
+        ]);
+      }
+    } else {
+      console.error("Error: Address does not match the expected format.");
+      Alert.alert("Error", "dn", [
+        {
+          text: t("screens.home_stack.search_device.open_settings"),
+        },
+      ]);
+    }
   };
 
   //Location permission
@@ -251,17 +270,13 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
           ) : null}
         </View>
         <Box style={{ flexDirection: "column", width: "100%" }}>
-
-          {/* TODO: Explain in address that you can edit it if its wrong */}
-          {/* TODO: Disable automatic getting address when moving map when you interact with the map until the next TODO */}
-          {/* TODO: Button to reset after using address field so you can move the map again */}
-          {/* TODO: When editing address field, reverse geo the lat long and move the map to it */}
           <Text style={style.label}>Address</Text>
           <View style={style.inputContainer}>
-            <TextInput style={style.input}
-            value={selectedAddress}
-            onChangeText={setAdressChange}
-            onSubmitEditing={updateAddress}
+            <TextInput
+              style={style.input}
+              value={selectedAddress}
+              onChangeText={setAdressChange}
+              onSubmitEditing={updateAddress}
             />
           </View>
           <Button
