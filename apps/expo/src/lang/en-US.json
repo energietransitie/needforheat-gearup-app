@@ -35,6 +35,10 @@
         "super_late": "Offline",
         "next_update": "Next in",
         "hours": "h"
+      },
+      "explanation_sheet": {
+        "title": "Welcome to the NeedForHeat App!",
+        "description": "This screen displays a list of Data Sources that you need to complete.\n\nHere's what you need to know:\n- Open Data Sources are shown in white.\n- Locked Data Sources are shown in grey.\n- Onboarded Data Sources are shown in green.\n\nYour mission is to complete all Data Sources to fully participate in the campaign! You can track your progress with the progress bar at the top.\n\nTo proceed, tap on an open Data Source to begin. Use the ? icon for frequently asked questions.\n\nYou can reopen this explanation by tapping on the green ? icon at the bottom right of the screen when this explanation disappears."
       }
     },
     "home_stack": {
@@ -238,7 +242,7 @@
           "subtitle": "Drag the map around and place the pin above your home",
           "button": "Use this location!"
         },
-        "weather_location_result_screen":{
+        "weather_location_result_screen": {
           "title": "Check Results",
           "subtitle": "Is your home inside this weather zone?",
           "send_button": "Send my query!",
@@ -249,17 +253,17 @@
               "title": "Sending...",
               "message": "Sending your Energy Query to the Energy Doctor"
             },
-            "success":{
+            "success": {
               "title": "Success!",
               "message": "Your Energy Query has been sent to the Energy Doctor"
             },
-            "fail":{
+            "fail": {
               "title": "Fail!",
               "message": "An error occured when trying to send the query:"
             }
           }
         },
-        "weather_location_posted_screen":{
+        "weather_location_posted_screen": {
           "title": "Sent Result",
           "subtitle": "You sent the following weather zone at",
           "back_button": "Go back"

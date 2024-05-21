@@ -35,6 +35,10 @@
         "super_late": "Offline",
         "next_update": "Volg. in",
         "hours": "u"
+      },
+      "explanation_sheet": {
+        "title": "Welkom bij de NeedForHeat App!",
+        "description": "Dit scherm toont een lijst van Databronnen die u moet voltooien.\n\nDit moet u weten:\n- Open Databronnen zijn wit.\n- Vergrendelde Databronnen zijn grijs.\n- Onboarded Databronnen zijn groen.\n\nUw doel is om alle Databronnen te voltooien en volledig deel te nemen aan de campagne! Uw voortgang wordt weergegeven in de progressiebalk bovenaan.\n\nTik op een open Databron om te beginnen. Gebruik het ?-pictogram voor veelgestelde vragen.\n\nU kunt deze uitleg opnieuw openen door op het groene ?-pictogram rechtsonder op het scherm te drukken wanneer deze uitleg verdwijnt."
       }
     },
     "home_stack": {
@@ -238,7 +242,7 @@
           "subtitle": "Sleep de kaart rond en plaats de pin boven uw huis",
           "button": "Deze locatie gebruiken!"
         },
-        "weather_location_result_screen":{
+        "weather_location_result_screen": {
           "title": "Resultaten",
           "subtitle": "Bevindt jouw huis zich in deze weerzone?",
           "send_button": "Verzenden",
@@ -253,13 +257,13 @@
               "title": "Succes!",
               "message": "Uw Energy Query is naar de energiedokter gestuurd"
             },
-            "fail":{
+            "fail": {
               "title": "Fout!",
               "message": "Er is een fout opgetreden bij het verzenden van de query:"
             }
           }
         },
-        "weather_location_posted_screen":{
+        "weather_location_posted_screen": {
           "title": "Verzonden resultaat",
           "subtitle": "U heeft de volgende weerzone verzonden op",
           "back_button": "Ga terug"
