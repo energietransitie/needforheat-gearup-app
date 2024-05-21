@@ -9,12 +9,12 @@ import AddDeviceScreen from "@/screens/home/AddDeviceScreen";
 import AddOnlineDataSourceScreen from "@/screens/home/AddOnlineDataSourceScreen";
 import AlreadyInvitedScreen from "@/screens/home/AlreadyInvitedScreen";
 import ConnectScreen from "@/screens/home/ConnectScreen";
+import BuildingProfileProgressScreen from "@/screens/home/EnergyQuery/BuildingProfile/BuildingProfileProgressScreen";
 import HomeAddressSelectScreen from "@/screens/home/EnergyQuery/BuildingProfile/HomeAddressSelectScreen";
 import InformationScreen from "@/screens/home/EnergyQuery/InformationScreen";
 import HomeSelectScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/HomeSelectScreen";
 import WeatherLocationPostedScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/WeatherLocationPostedScreen";
 import WeatherLocationResultScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/WeatherLocationResultScreen";
-import BuildingProfileProgressScreen from "@/screens/home/EnergyQuery/BuildingProfile/BuildingProfileProgressScreen";
 import HomeScreen from "@/screens/home/HomeScreen";
 import ProvisionScreen from "@/screens/home/ProvisionScreen";
 import QrScannerScreen from "@/screens/home/QrScannerScreen";
@@ -125,7 +125,7 @@ export default function HomeRouter() {
       />
       <HomeStack.Screen
         name="HomeAddressSelectScreen"
-        options={{ title: t("screens.home_stack.energy_query.homeselect_screen.title"), ...disableNavigation }}
+        options={{ title: t("screens.home_stack.energy_query.homeaddress_screen.title"), ...disableNavigation }}
         component={HomeAddressSelectScreen}
       />
       <HomeStack.Screen
@@ -147,7 +147,7 @@ export default function HomeRouter() {
       <HomeStack.Screen
         name="BuildingProfileProgressScreen"
         options={{
-          title: t("screens.home_stack.energy_query.building_profile.title"),
+          title: t("screens.home_stack.energy_query.building_profile_progress.title"),
           ...disableNavigation,
         }}
         component={BuildingProfileProgressScreen}

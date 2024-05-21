@@ -40,29 +40,29 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
 
   const timelineData = [
     {
-      title: t("screens.home_stack.energy_query.building_profile.alert.sending.title"),
-      description: t("screens.home_stack.energy_query.building_profile.alert.sending.message"),
+      title: t("screens.home_stack.energy_query.building_profile_progress.alert.initial_data.title"),
+      description: t("screens.home_stack.energy_query.building_profile_progress.alert.initial_data.message"),
       finished: isBAGReceived,
       loading: !isBAGReceived,
       error: isAPIKeyError || isBAGReceivedError,
     },
     {
-      title: t("screens.home_stack.energy_query.building_profile.alert.sending.title"),
-      description: t("screens.home_stack.energy_query.building_profile.alert.sending.message"),
+      title: t("screens.home_stack.energy_query.building_profile_progress.alert.data.title"),
+      description: t("screens.home_stack.energy_query.building_profile_progress.alert.data.message"),
       finished: is3DBAGReceived,
       loading: !is3DBAGReceived,
       error: is3DBAGReceivedError,
     },
     {
-      title: t("screens.home_stack.energy_query.building_profile.alert.calculating.title"),
-      description: t("screens.home_stack.energy_query.building_profile.alert.calculating.message"),
+      title: t("screens.home_stack.energy_query.building_profile_progress.alert.calculating.title"),
+      description: t("screens.home_stack.energy_query.building_profile_progress.alert.calculating.message"),
       finished: isCalculating,
       loading: !isCalculating,
       error: isCalculatingError,
     },
     {
-      title: t("screens.home_stack.energy_query.building_profile.alert.success.title"),
-      description: t("screens.home_stack.energy_query.building_profile.alert.success.message"),
+      title: t("screens.home_stack.energy_query.building_profile_progress.alert.success.title"),
+      description: t("screens.home_stack.energy_query.building_profile_progress.alert.success.message"),
       finished: isSucces,
       loading: !isSucces,
       error: isSuccesError,
@@ -250,35 +250,35 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
       <Box padded>
         {isSucces ? (
           <StatusMessage
-            label={t("screens.home_stack.provision.success.title")}
-            message={t("screens.home_stack.provision.success.message")}
+            label={t("screens.home_stack.energy_query.building_profile_progress.success.title")}
+            message={t("screens.home_stack.energy_query.building_profile_progress.success.message")}
           />
         ) : null}
 
         {isAPIKeyError ? (
           <StatusMessage
-            label={t("screens.home_stack.provision.success.title")}
-            message={t("screens.home_stack.provision.success.message")}
+            label={t("screens.home_stack.energy_query.building_profile_progress.fail.title")}
+            message={t("screens.home_stack.energy_query.building_profile_progress.fail.api.message")}
           />
         ) : isBAGReceivedError ? (
           <StatusMessage
-            label={t("screens.home_stack.provision.success.title")}
-            message={t("screens.home_stack.provision.success.message")}
+            label={t("screens.home_stack.energy_query.building_profile_progress.fail.title")}
+            message={t("screens.home_stack.energy_query.building_profile_progress.fail.bag.message")}
           />
         ) : is3DBAGReceivedError ? (
           <StatusMessage
-            label={t("screens.home_stack.provision.success.title")}
-            message={t("screens.home_stack.provision.success.message")}
+            label={t("screens.home_stack.energy_query.building_profile_progress.fail.title")}
+            message={t("screens.home_stack.energy_query.building_profile_progress.fail.3dbag.message")}
           />
         ) : isCalculatingError ? (
           <StatusMessage
-            label={t("screens.home_stack.provision.success.title")}
-            message={t("screens.home_stack.provision.success.message")}
+            label={t("screens.home_stack.energy_query.building_profile_progress.fail.title")}
+            message={t("screens.home_stack.energy_query.building_profile_progress.fail.calculating.message")}
           />
         ) : isSuccesError ? (
           <StatusMessage
-            label={t("screens.home_stack.provision.success.title")}
-            message={t("screens.home_stack.provision.success.message")}
+            label={t("screens.home_stack.energy_query.building_profile_progress.fail.title")}
+            message={t("screens.home_stack.energy_query.building_profile_progress.fail.sending.message")}
           />
         ) : null}
       </Box>

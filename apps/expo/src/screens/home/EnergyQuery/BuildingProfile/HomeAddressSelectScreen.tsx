@@ -44,12 +44,11 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
     try {
       if (selectedAddress !== "") {
         const response = await Geocoder.from(selectedAddress);
-        // Check if the response contains valid results
         if (response.results.length === 0) {
-          // Address not found, handle accordingly (e.g., show an error message)
           console.log("Address not found");
           return;
         }
+
         // Address found, update the marker's location
         const { lat, lng } = response.results[0].geometry.location;
         getAddressFromCoordinates(lat, lng);
@@ -59,7 +58,7 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
           latitudeDelta: location.latitudeDelta,
           longitudeDelta: location.longitudeDelta,
         });
-        // Optionally, you can animate the map to the new location
+
         refMap.current?.animateToRegion(
           {
             latitude: lat,
@@ -106,19 +105,27 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
       if (houseNumber && postalCode) {
         navigation.navigate("BuildingProfileProgressScreen", { location: selectedAddress, dataSource });
       } else {
-        Alert.alert("Error", "dn", [
-          {
-            text: t("screens.home_stack.search_device.open_settings"),
-          },
-        ]);
+        Alert.alert(
+          t("screens.home_stack.energy_query.homeaddress_screen.error.title"),
+          t("screens.home_stack.energy_query.homeaddress_screen.error.message"),
+          [
+            {
+              text: t("common.retry"),
+            },
+          ]
+        );
       }
     } else {
       console.error("Error: Address does not match the expected format.");
-      Alert.alert("Error", "dn", [
-        {
-          text: t("screens.home_stack.search_device.open_settings"),
-        },
-      ]);
+      Alert.alert(
+        t("screens.home_stack.energy_query.homeaddress_screen.error.title"),
+        t("screens.home_stack.energy_query.homeaddress_screen.error.message"),
+        [
+          {
+            text: t("common.retry"),
+          },
+        ]
+      );
     }
   };
 
@@ -233,7 +240,7 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
     <>
       <Box padded style={{ flex: 1 }}>
         <View style={{ width: "100%" }}>
-          <Text style={style.subtitle}>{t("screens.home_stack.energy_query.homeselect_screen.subtitle")}</Text>
+          <Text style={style.subtitle}>{t("screens.home_stack.energy_query.homeaddress_screen.subtitle")}</Text>
         </View>
         <View style={style.mapcontainer}>
           <MapView
@@ -281,7 +288,7 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
           </View>
           <Button
             containerStyle={{ width: "100%" }}
-            title={t("screens.home_stack.energy_query.homeselect_screen.button")}
+            title={t("screens.home_stack.energy_query.homeaddress_screen.button")}
             color="primary"
             onPress={onContinue}
             icon={{

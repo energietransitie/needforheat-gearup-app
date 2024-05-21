@@ -242,6 +242,15 @@
           "subtitle": "Sleep de kaart rond en plaats de pin boven uw huis",
           "button": "Deze locatie gebruiken!"
         },
+        "homeaddress_screen": {
+          "title": "Vul je adres in",
+          "subtitle": "Sleep de kaart rond en plaats de pin boven je woning.\nJe adres kan je later nog aanpassen.",
+          "button": "Gebruik dit adres!",
+          "error": {
+            "title": "Ongeldig adres",
+            "message": "Dit is geen adres dat we kunnen herkennen.\nProbeer het opnieuw en check eventueel de handleiding of FAQ voor meer informatie."
+          }
+        },
         "weather_location_result_screen": {
           "title": "Resultaten",
           "subtitle": "Bevindt jouw huis zich in deze weerzone?",
@@ -279,27 +288,47 @@
             "request_failed": "Een fout is opgetreden bij het aanvragen van de locatie-machtigingen."
           }
         },
-        "building_profile":{
-          "title": "Verwerken gegevens",
-          "send_button": "Verzenden",
-          "back_button": "Annuleren",
+        "building_profile_progress": {
+          "title": "Adres verwerken",
           "alert": {
-            "sending": {
-              "title": "Bezig met ophalen...",
-              "message": "Er wordt data opgehaald over uw huis"
+            "initial_data": {
+              "title": "Initiële gegevens ophalen...",
+              "message": "Initiële gegevens voor uw woning worden opgehaald"
+            },
+            "data": {
+              "title": "Gegevens ophalen...",
+              "message": "Er worden gegevens opgehaald over uw woning voor de berekening"
             },
             "calculating": {
-              "title": "Bezig met berekenen...",
-              "message": "Met de gegevens worden moeilijke berekeningen gedaan"
+              "title": "Berekenen...",
+              "message": "Er worden complexe berekeningen uitgevoerd met de gegevens"
             },
             "success": {
               "title": "Succes!",
-              "message": "Uw berekeningen zijn naar de energiedokter gestuurd"
-            },
-            "fail":{
-              "title": "Fout!",
-              "message": "Er is een fout opgetreden bij het verzenden van de query:"
+              "message": "Uw berekeningen zijn naar de EnergyDokter gestuurd!"
             }
+          },
+          "fail": {
+            "title": "Fout!",
+            "api": {
+              "message": "Er is een fout opgetreden tijdens het ophalen van sleutels om gegevens te verkrijgen.\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+            },
+            "bag": {
+              "message": "Er is een fout opgetreden tijdens het ophalen van initiële gegevens.\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+            },
+            "3dbag": {
+              "message": "Er is een fout opgetreden tijdens het ophalen van gegevens.\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+            },
+            "calculating": {
+              "message": "Er is een fout opgetreden tijdens het berekenen met gevonden gegevens.\nProbeer de query opnieuw, anders neemt u contact op met de helpdesk."
+            },
+            "sending": {
+              "message": "Er is een fout opgetreden tijdens het verzenden van de EnergieQuery naar de EnergyDoctor\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+            }
+          },
+          "success": {
+            "title": "Query verstuurd!",
+            "message": "De EnergieQuery is naar de EnergyDokter verzonden."
           }
         }
       }

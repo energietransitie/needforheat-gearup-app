@@ -242,6 +242,15 @@
           "subtitle": "Drag the map around and place the pin above your home",
           "button": "Use this location!"
         },
+        "homeaddress_screen": {
+          "title": "Fill in your address",
+          "subtitle": "Drag the map around and place the pin above your home.\nYou can also edit your address if you need to after.",
+          "button": "Use this address!",
+          "error": {
+            "title": "Incorrect address",
+            "message": "This is not an address we can ues.\nPlease try again and check the manual and FAQ for more info."
+          }
+        },
         "weather_location_result_screen": {
           "title": "Check Results",
           "subtitle": "Is your home inside this weather zone?",
@@ -279,14 +288,16 @@
             "request_failed": "An error occurred while requesting Location permissions."
           }
         },
-        "building_profile":{
-          "title": "Processing Data",
-          "send_button": "Send",
-          "back_button": "Cancel",
+        "building_profile_progress":{
+          "title": "Processing Address",
           "alert": {
-            "sending": {
-              "title": "Fetching Data...",
-              "message": "Data is being retrieved for your home"
+            "initial_data": {
+              "title": "Fetching initial data...",
+              "message": "Initial data is being retrieved for your home"
+            },
+            "data": {
+              "title": "Fetching data...",
+              "message": "Data is being retrieved for your home for the calculation"
             },
             "calculating": {
               "title": "Calculating...",
@@ -294,15 +305,32 @@
             },
             "success": {
               "title": "Success!",
-              "message": "Your calculations have been sent to the energy doctor"
-            },
-            "fail":{
-              "title": "Error!",
-              "message": "An error occurred while sending the query:"
+              "message": "Your calculations have been sent to the energy doctor!"
             }
+          },
+          "fail":{
+            "title": "Error!",
+            "api": {
+              "message": "An error occurred while fetching keys to get data.\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+            },
+            "bag": {
+              "message": "An error occurred while fetching initial data.\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+            },
+            "3dbag": {
+              "message": "An error occurred while fetching data.\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+            },
+            "calculating": {
+              "message": "An error occurred while calcuating with found data.\nTry the query again, otherwise contact the helpdesk."
+            },
+            "sending": {
+              "message": "An error occurred while sending the EnergyQuery to the EnergyDoctor\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+            }
+          },
+          "success": {
+            "title": "Query sent!",
+            "message": "The Energy Query has been sent to the EnergyDoctor."
           }
         }
-        
       }
     },
     "info_stack": {
