@@ -1,5 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, useTheme } from "@rneui/themed";
+import { evaluate } from "mathjs";
 import { useEffect, useState } from "react";
 
 import Timeline from "@/components/common/Timeline";
@@ -93,17 +94,45 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
     const BAG3DInfo = await getData3dBAG(building_bag_id);
     setis3DBAGReceived(true);
 
-    //TODO: map values to x,y,d. make a new docs to explain these
-    // const variables:
+    //Mapped values, explained in EnergyDoctor docs
+    const variables = {
+      a: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_bag_bag_overlap,
+      b: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_bouwlagen,
+      c: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_h_dak_50p,
+      d: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_h_dak_70p,
+      e: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_h_dak_max,
+      f: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_h_dak_min,
+      g: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_h_maaiveld,
+      h: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_nodata_fractie_ahn3,
+      i: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_nodata_fractie_ahn4,
+      j: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_nodata_radius_ahn3,
+      k: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_nodata_radius_ahn4,
+      l: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_opp_buitenmuur,
+      m: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_opp_dak_plat,
+      n: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_opp_dak_schuin,
+      o: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_opp_grond,
+      p: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_opp_scheidingsmuur,
+      q: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_puntdichtheid_ahn3,
+      r: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_puntdichtheid_ahn4,
+      s: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_pw_datum,
+      t: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_rmse_lod12,
+      u: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_rmse_lod13,
+      v: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_rmse_lod22,
+      w: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_volume_lod12,
+      x: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_volume_lod13,
+      y: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_volume_lod22,
+      z: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.oorspronkelijkbouwjaar,
+      aa: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.voorkomenidentificatie,
+    };
 
     //Calculate with above values
     const formula = dataSource.item.Formula;
-    if (formula) {
-      //const result = await evaluate(formula, variables);
-      setisCalculating(true);
-      //TODO: Send data to database
-      setisSucces(true);
-    }
+    if (!formula) return; //TODO: error
+    const result = await evaluate(formula, variables);
+    setisCalculating(true);
+
+    //TODO: send
+    setisSucces(true);
   };
 
   useEffect(() => {
