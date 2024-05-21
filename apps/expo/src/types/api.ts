@@ -210,3 +210,84 @@ export const APIKeySchema = z.object({
 });
 
 export type APIKeyResponse = z.infer<typeof APIKeySchema>;
+
+//BAG, only need identification for 3d bag
+export const bagSchema = z.object({
+  _embedded: z.object({
+    adressen: z.array(
+      z.object({
+        pandIdentificaties: z.array(z.string()),
+      })
+    ),
+  }),
+});
+
+export type BAGSchemaResponse = z.infer<typeof bagSchema>;
+
+//3DBAG, where its all about
+export const bag3DSchema = z.object({
+  feature: z.object({
+    CityObjects: z.record(
+      z.string(),
+      z.object({
+        attributes: z
+          .object({
+            b3_bag_bag_overlap: z.number().nullable(),
+            b3_bouwlagen: z.number().nullable(),
+            b3_dak_type: z.string(),
+            b3_h_dak_50p: z.number(),
+            b3_h_dak_70p: z.number(),
+            b3_h_dak_max: z.number(),
+            b3_h_dak_min: z.number(),
+            b3_h_maaiveld: z.number(),
+            b3_kas_warenhuis: z.boolean(),
+            b3_mutatie_ahn3_ahn4: z.boolean(),
+            b3_nodata_fractie_ahn3: z.number(),
+            b3_nodata_fractie_ahn4: z.number(),
+            b3_nodata_radius_ahn3: z.number(),
+            b3_nodata_radius_ahn4: z.number(),
+            b3_opp_buitenmuur: z.number(),
+            b3_opp_dak_plat: z.number(),
+            b3_opp_dak_schuin: z.number(),
+            b3_opp_grond: z.number(),
+            b3_opp_scheidingsmuur: z.number(),
+            b3_puntdichtheid_ahn3: z.number(),
+            b3_puntdichtheid_ahn4: z.number(),
+            b3_pw_bron: z.string(),
+            b3_pw_datum: z.number(),
+            b3_pw_selectie_reden: z.string(),
+            b3_reconstructie_onvolledig: z.boolean(),
+            b3_rmse_lod12: z.number(),
+            b3_rmse_lod13: z.number(),
+            b3_rmse_lod22: z.number(),
+            b3_val3dity_lod12: z.string(),
+            b3_val3dity_lod13: z.string(),
+            b3_val3dity_lod22: z.string(),
+            b3_volume_lod12: z.number(),
+            b3_volume_lod13: z.number(),
+            b3_volume_lod22: z.number(),
+            begingeldigheid: z.string(),
+            documentdatum: z.string(),
+            documentnummer: z.string(),
+            eindgeldigheid: z.string().nullable(),
+            eindregistratie: z.string().nullable(),
+            geconstateerd: z.boolean(),
+            identificatie: z.string(),
+            oorspronkelijkbouwjaar: z.number(),
+            status: z.string(),
+            tijdstipeindregistratielv: z.string().nullable(),
+            tijdstipinactief: z.string().nullable(),
+            tijdstipinactieflv: z.string().nullable(),
+            tijdstipnietbaglv: z.string().nullable(),
+            tijdstipregistratie: z.string(),
+            tijdstipregistratielv: z.string(),
+            voorkomenidentificatie: z.number(),
+          })
+          .optional()
+          .nullable(),
+      })
+    ),
+  }),
+});
+
+export type BAG3DSchemaResponse = z.infer<typeof bag3DSchema>;

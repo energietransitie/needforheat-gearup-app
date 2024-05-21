@@ -8,6 +8,7 @@ import { NL_ADDRESS_REGEX } from "@/constants";
 import useAPIKey from "@/hooks/API/useAPIKey";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useDisableBackButton } from "@/hooks/useDisableBackButton";
+import { bag3DSchema, bagSchema } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
 import { handleRequestErrors } from "@/utils/tools";
 
@@ -48,14 +49,6 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
   ];
   const onLeave = () => navigation.navigate("HomeScreen");
 
-  const header = async () => {
-    return {
-      headers: {
-        accept: "application/hal+json",
-        "X-Api-Key": `${key?.api_key}`,
-      },
-    };
-  };
   const getDataBAG = async () => {
     const match = location.match(NL_ADDRESS_REGEX);
 
@@ -67,17 +60,18 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
     const response = await fetch(
       `https://api.bag.kadaster.nl/lvbag/individuelebevragingen/v2/adressen?postcode=${postalCode}&huisnummer=${houseNumber}`,
       {
-        ...(await header()),
+        headers: {
+          accept: "application/hal+json",
+          "X-Api-Key": `${key?.api_key}`,
+        },
       }
     );
     const data = await handleRequestErrors(response);
     const jsonData = await data.json();
-    return jsonData;
+    return bagSchema.parse(jsonData);
   };
 
-  const getData3dBAG = async (building_bag_id: any) => {
-    if (!building_bag_id) return; //TODO properly error
-
+  const getData3dBAG = async (building_bag_id: string) => {
     const response = await fetch(`https://api.3dbag.nl/collections/pand/items/NL.IMBAG.Pand.${building_bag_id}`, {
       headers: {
         accept: "application/json",
@@ -85,23 +79,24 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
     });
     const data = await handleRequestErrors(response);
     const jsonData = await data.json();
-    return jsonData;
+    return bag3DSchema.parse(jsonData);
   };
 
   const MainFunction = async () => {
     //BAG INFO
     const BAGInfo = await getDataBAG();
-    const building_bag_id = BAGInfo._embedded.adressen[0].pandIdentificaties[0];
+    const building_bag_id = BAGInfo?._embedded.adressen[0].pandIdentificaties[0];
+    if (!building_bag_id) return; //TODO: properly error
     setisBAGReceived(true);
 
     //3D BAG INFO
     const BAG3DInfo = await getData3dBAG(building_bag_id);
     setis3DBAGReceived(true);
 
-    //Map values
+    //TODO: map values to x,y,d. make a new docs to explain these
+    // const variables:
 
-    //Calculate
-
+    //Calculate with above values
     const formula = dataSource.item.Formula;
     if (formula) {
       //const result = await evaluate(formula, variables);
@@ -113,7 +108,7 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
 
   useEffect(() => {
     MainFunction();
-  }, []);
+  }, [key]);
 
   // Disable going back to force the user to use the buttons
   useDisableBackButton(true);
