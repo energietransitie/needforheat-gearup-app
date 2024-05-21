@@ -1,10 +1,11 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Button, Text, useTheme } from "@rneui/themed";
+import { Button, useTheme } from "@rneui/themed";
 import { format } from "date-fns";
 import { enUS, nl } from "date-fns/locale";
 import { useEffect } from "react";
 
 import DelayedButton from "@/components/common/DelayedButton";
+import { StatusMessage } from "@/components/common/StatusMessage";
 import Timeline from "@/components/common/Timeline";
 import Box from "@/components/elements/Box";
 import useReceivingMeasurements from "@/hooks/device/useReceivingMeasurements";
@@ -168,22 +169,6 @@ export default function ProvisionScreen({ navigation, route }: ProvisionScreenPr
           </>
         )}
       </Box>
-    </Box>
-  );
-}
-
-type StatusMessageProps = {
-  label: string;
-  message: string;
-};
-
-function StatusMessage({ label, message }: StatusMessageProps) {
-  return (
-    <Box>
-      <Text bold style={{ marginBottom: 6 }}>
-        {label}
-      </Text>
-      <Text>{message}</Text>
     </Box>
   );
 }

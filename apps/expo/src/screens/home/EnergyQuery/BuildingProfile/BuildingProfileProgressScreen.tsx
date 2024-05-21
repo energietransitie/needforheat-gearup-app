@@ -2,14 +2,17 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, useTheme } from "@rneui/themed";
 import { evaluate } from "mathjs";
 import { useEffect, useState } from "react";
+import { getTimeZone } from "react-native-localize";
 
+import { postEnergyQuery } from "@/api/energyquery";
+import { StatusMessage } from "@/components/common/StatusMessage";
 import Timeline from "@/components/common/Timeline";
 import Box from "@/components/elements/Box";
 import { NL_ADDRESS_REGEX } from "@/constants";
 import useAPIKey from "@/hooks/API/useAPIKey";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useDisableBackButton } from "@/hooks/useDisableBackButton";
-import { bag3DSchema, bagSchema } from "@/types/api";
+import { EnergyQuery, bag3DSchema, bagSchema } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
 import { handleRequestErrors } from "@/utils/tools";
 
@@ -19,33 +22,50 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
   const { theme } = useTheme();
   const { t } = useTranslation();
   const { location, dataSource } = route.params;
-  const { data: key } = useAPIKey("BAG");
+  const { data: key, isError: isAPIKeyError } = useAPIKey("BAG");
+  const [showButton, setShowButton] = useState<boolean>(false);
   //Timeline items
   const [isBAGReceived, setisBAGReceived] = useState<boolean>(false);
+  const [isBAGReceivedError, setisBAGReceivedError] = useState<boolean>(false);
+
   const [is3DBAGReceived, setis3DBAGReceived] = useState<boolean>(false);
+  const [is3DBAGReceivedError, setis3DBAGReceivedError] = useState<boolean>(false);
+
   const [isCalculating, setisCalculating] = useState<boolean>(false);
+  const [isCalculatingError, setisCalculatingError] = useState<boolean>(false);
+
   const [isSucces, setisSucces] = useState<boolean>(false);
+  const [isSuccesError, setisSuccesError] = useState<boolean>(false);
+  //End timeline items
 
   const timelineData = [
     {
       title: t("screens.home_stack.energy_query.building_profile.alert.sending.title"),
       description: t("screens.home_stack.energy_query.building_profile.alert.sending.message"),
       finished: isBAGReceived,
+      loading: !isBAGReceived,
+      error: isAPIKeyError || isBAGReceivedError,
     },
     {
       title: t("screens.home_stack.energy_query.building_profile.alert.sending.title"),
       description: t("screens.home_stack.energy_query.building_profile.alert.sending.message"),
       finished: is3DBAGReceived,
+      loading: !is3DBAGReceived,
+      error: is3DBAGReceivedError,
     },
     {
       title: t("screens.home_stack.energy_query.building_profile.alert.calculating.title"),
       description: t("screens.home_stack.energy_query.building_profile.alert.calculating.message"),
-      finished: isCalculating, // change to true when done
+      finished: isCalculating,
+      loading: !isCalculating,
+      error: isCalculatingError,
     },
     {
       title: t("screens.home_stack.energy_query.building_profile.alert.success.title"),
       description: t("screens.home_stack.energy_query.building_profile.alert.success.message"),
-      finished: isSucces, // change to true when done
+      finished: isSucces,
+      loading: !isSucces,
+      error: isSuccesError,
     },
   ];
   const onLeave = () => navigation.navigate("HomeScreen");
@@ -85,14 +105,33 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
 
   const MainFunction = async () => {
     //BAG INFO
-    const BAGInfo = await getDataBAG();
-    const building_bag_id = BAGInfo?._embedded.adressen[0].pandIdentificaties[0];
-    if (!building_bag_id) return; //TODO: properly error
-    setisBAGReceived(true);
+    let building_bag_id;
+    try {
+      const BAGInfo = await getDataBAG();
+      building_bag_id = BAGInfo?._embedded.adressen[0].pandIdentificaties[0];
+      if (!building_bag_id) {
+        throw new Error();
+      }
+      setisBAGReceived(true);
+    } catch {
+      setShowButton(true);
+      setisBAGReceivedError(true);
+      return;
+    }
 
     //3D BAG INFO
-    const BAG3DInfo = await getData3dBAG(building_bag_id);
-    setis3DBAGReceived(true);
+    let BAG3DInfo;
+    try {
+      BAG3DInfo = await getData3dBAG(building_bag_id);
+      setis3DBAGReceived(true);
+      if (!BAG3DInfo) {
+        throw new Error();
+      }
+    } catch {
+      setShowButton(true);
+      setis3DBAGReceivedError(true);
+      return;
+    }
 
     //Mapped values, explained in EnergyDoctor docs
     const variables = {
@@ -127,12 +166,73 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
 
     //Calculate with above values
     const formula = dataSource.item.Formula;
-    if (!formula) return; //TODO: error
-    const result = await evaluate(formula, variables);
-    setisCalculating(true);
+    if (!formula) {
+      setisCalculatingError(true);
+      setShowButton(true);
+      return;
+    }
 
-    //TODO: send
-    setisSucces(true);
+    let result;
+    try {
+      result = await evaluate(formula, variables);
+      if (!result) {
+        throw new Error();
+      }
+      setisCalculating(true);
+    } catch {
+      setShowButton(true);
+      setisCalculatingError(true);
+      return;
+    }
+
+    if (!dataSource) {
+      console.warn("No datasource available for posting energy query BP");
+      setisSuccesError(true);
+      setShowButton(true);
+      return;
+    }
+
+    const currentLocaleTimeInUnix = Math.floor(Date.now() / 1000);
+
+    const energyQuery: EnergyQuery = {
+      energy_query_type: {
+        id: dataSource.item.ID,
+      },
+      uploads: [
+        {
+          measurements: [
+            {
+              value: result,
+              property: {
+                name: "formula_result",
+              },
+              time: currentLocaleTimeInUnix,
+            },
+            {
+              value: getTimeZone(),
+              property: {
+                name: "device_timezone__tmz",
+              },
+              time: currentLocaleTimeInUnix,
+            },
+          ],
+          instance_id: dataSource.item.ID,
+          instance_type: "energy_query_type",
+          device_time: currentLocaleTimeInUnix,
+          size: 2,
+        },
+      ],
+    };
+
+    try {
+      await postEnergyQuery(energyQuery);
+      setisSucces(true);
+      setShowButton(true);
+    } catch (error) {
+      console.error("An error occurred posting Weather Energy Query:", error);
+      setisSuccesError(true);
+      setShowButton(true);
+    }
   };
 
   useEffect(() => {
@@ -147,13 +247,49 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
       <Box>
         <Timeline items={timelineData} />
       </Box>
+      <Box padded>
+        {isSucces ? (
+          <StatusMessage
+            label={t("screens.home_stack.provision.success.title")}
+            message={t("screens.home_stack.provision.success.message")}
+          />
+        ) : null}
+
+        {isAPIKeyError ? (
+          <StatusMessage
+            label={t("screens.home_stack.provision.success.title")}
+            message={t("screens.home_stack.provision.success.message")}
+          />
+        ) : isBAGReceivedError ? (
+          <StatusMessage
+            label={t("screens.home_stack.provision.success.title")}
+            message={t("screens.home_stack.provision.success.message")}
+          />
+        ) : is3DBAGReceivedError ? (
+          <StatusMessage
+            label={t("screens.home_stack.provision.success.title")}
+            message={t("screens.home_stack.provision.success.message")}
+          />
+        ) : isCalculatingError ? (
+          <StatusMessage
+            label={t("screens.home_stack.provision.success.title")}
+            message={t("screens.home_stack.provision.success.message")}
+          />
+        ) : isSuccesError ? (
+          <StatusMessage
+            label={t("screens.home_stack.provision.success.title")}
+            message={t("screens.home_stack.provision.success.message")}
+          />
+        ) : null}
+      </Box>
       <Box style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "flex-end" }}>
-        {/* Show when done */}
-        <Button
-          title={t("common.back_to_home")}
-          containerStyle={{ width: "100%", marginTop: theme.spacing.md }}
-          onPress={onLeave}
-        />
+        {showButton ? (
+          <Button
+            title={t("common.back_to_home")}
+            containerStyle={{ width: "100%", marginTop: theme.spacing.md }}
+            onPress={onLeave}
+          />
+        ) : null}
       </Box>
     </Box>
   );
