@@ -15,8 +15,8 @@ import useTranslation from "@/hooks/translation/useTranslation";
 import { useDisableBackButton } from "@/hooks/useDisableBackButton";
 import { EnergyQuery, bag3DSchema, bagSchema } from "@/types/api";
 import { HomeStackParamList } from "@/types/navigation";
+import { handleRequestErrors } from "@/utils/handleRequestErrors";
 import { fetchTimeZone } from "@/utils/timezone";
-import { handleRequestErrors } from "@/utils/tools";
 
 type BuildingProfileProgressScreenProps = NativeStackScreenProps<HomeStackParamList, "BuildingProfileProgressScreen">;
 
@@ -75,11 +75,17 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
   const getDataBAG = async () => {
     const match = location.match(NL_ADDRESS_REGEX);
 
-    if (!match) return; //TODO properly error
+    if (!match || !key?.api_key) {
+      setShowButton(true);
+      setisBAGReceivedError(true);
+      return;
+    } else {
+      setShowButton(false);
+      setisBAGReceivedError(false);
+    }
     const houseNumber = match[2];
     const postalCode = match[3];
 
-    if (!key?.api_key) return null;
     const response = await fetch(
       `https://api.bag.kadaster.nl/lvbag/individuelebevragingen/v2/adressen?postcode=${postalCode}&huisnummer=${houseNumber}`,
       {
@@ -136,34 +142,36 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
     }
 
     //Mapped values, explained in EnergyDoctor docs
+    const cityObjects = BAG3DInfo.feature.CityObjects;
+    const firstBuildingKey = Object.keys(cityObjects)[0]; //Just assume we can get the first one
     const variables = {
-      a: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_bag_bag_overlap,
-      b: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_bouwlagen,
-      c: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_h_dak_50p,
-      d: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_h_dak_70p,
-      e: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_h_dak_max,
-      f: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_h_dak_min,
-      g: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_h_maaiveld,
-      h: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_nodata_fractie_ahn3,
-      i: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_nodata_fractie_ahn4,
-      j: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_nodata_radius_ahn3,
-      k: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_nodata_radius_ahn4,
-      l: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_opp_buitenmuur,
-      m: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_opp_dak_plat,
-      n: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_opp_dak_schuin,
-      o: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_opp_grond,
-      p: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_opp_scheidingsmuur,
-      q: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_puntdichtheid_ahn3,
-      r: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_puntdichtheid_ahn4,
-      s: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_pw_datum,
-      t: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_rmse_lod12,
-      u: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_rmse_lod13,
-      v: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_rmse_lod22,
-      w: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_volume_lod12,
-      x: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_volume_lod13,
-      y: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.b3_volume_lod22,
-      z: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.oorspronkelijkbouwjaar,
-      aa: BAG3DInfo.feature.CityObjects[building_bag_id].attributes?.voorkomenidentificatie,
+      a: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_bag_bag_overlap,
+      b: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_bouwlagen,
+      c: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_h_dak_50p,
+      d: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_h_dak_70p,
+      e: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_h_dak_max,
+      f: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_h_dak_min,
+      g: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_h_maaiveld,
+      h: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_nodata_fractie_ahn3,
+      i: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_nodata_fractie_ahn4,
+      j: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_nodata_radius_ahn3,
+      k: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_nodata_radius_ahn4,
+      l: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_opp_buitenmuur,
+      m: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_opp_dak_plat,
+      n: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_opp_dak_schuin,
+      o: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_opp_grond,
+      p: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_opp_scheidingsmuur,
+      q: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_puntdichtheid_ahn3,
+      r: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_puntdichtheid_ahn4,
+      s: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_pw_datum,
+      t: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_rmse_lod12,
+      u: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_rmse_lod13,
+      v: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_rmse_lod22,
+      w: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_volume_lod12,
+      x: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_volume_lod13,
+      y: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.b3_volume_lod22,
+      z: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.oorspronkelijkbouwjaar,
+      aa: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.voorkomenidentificatie,
     };
 
     //Calculate with above values
@@ -235,7 +243,7 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
       setisSucces(true);
       setShowButton(true);
     } catch (error) {
-      console.error("An error occurred posting Weather Energy Query:", error);
+      console.error("An error occurred posting Building profile query:", error);
       setisSuccesError(true);
       setShowButton(true);
     }

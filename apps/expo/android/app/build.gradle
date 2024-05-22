@@ -118,7 +118,7 @@ def enableProguardInReleaseBuilds = (findProperty('android.enableProguardInRelea
  * give correct results when using with locales other than en-US.  Note that
  * this variant is about 6MiB larger per architecture than default.
  */
-def jscFlavor = 'org.webkit:android-jsc:+'
+def jscFlavor = 'org.webkit:android-jsc-intl:+'
 
 /**
  * Whether to enable the Hermes VM.
@@ -128,6 +128,14 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  * and the benefits of using Hermes will therefore be sharply reduced.
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
+
+ /**
+   * Use the international variant of JavaScriptCore
+   * This variant includes the ICU i18n library to make APIs like `Date.toLocaleString`
+   * and `String.localeCompare` work when using with locales other than en-US.
+   * Note that this variant is about 6MiB larger per architecture than the default.
+   */
+def useIntlJsc = true
 
 /**
  * Architectures to build native code for.
@@ -256,6 +264,11 @@ android {
         }
     }
 
+    packagingOptions {
+       pickFirst '**/libjsc.so'
+       pickFirst '**/libc++_shared.so'
+    }
+
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
@@ -293,6 +306,8 @@ android {
 }
 
 dependencies {
+    implementation "org.webkit:android-jsc-intl:+"
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     implementation project(':react-native-exit-app')

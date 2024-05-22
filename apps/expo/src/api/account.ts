@@ -2,8 +2,8 @@ import { API_URL } from "@env";
 
 import { BASE_FETCH_HEADERS, FETCH_HEADERS, getAuthToken } from "@/constants";
 import { activateAccountSchema, cloudFeedSchema } from "@/types/api";
+import { handleRequestErrors } from "@/utils/handleRequestErrors";
 import { getJwtPayload } from "@/utils/jwt";
-import { handleRequestErrors } from "@/utils/tools";
 
 export async function activateAccount(accountToken: string) {
   const response = await fetch(`${API_URL}/account/activate`, {

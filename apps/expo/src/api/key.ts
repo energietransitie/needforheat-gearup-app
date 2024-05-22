@@ -1,9 +1,8 @@
 import { API_URL } from "@env";
-import { URLSearchParams } from "react-native-url-polyfill";
 
 import { FETCH_HEADERS } from "@/constants";
 import { APIKeySchema } from "@/types/api";
-import { handleRequestErrors } from "@/utils/tools";
+import { handleRequestErrors } from "@/utils/handleRequestErrors";
 
 export async function fetchAPIKey(APIName: string) {
   const response = await fetch(`${API_URL}/api_key/${APIName}`, {

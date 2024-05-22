@@ -7,25 +7,6 @@ import { getTimeZone } from "./timezone";
 import { Maybe } from "@/types";
 import { AllDataSourcesResponse, DataSourceListType, DataSourceType, cloudFeedsResponse } from "@/types/api";
 
-export async function handleRequestErrors(response: Response) {
-  if (!response.ok) {
-    const responseClone = response.clone();
-    let errors;
-
-    // If json response contains "detail", throw that as an Error.
-    try {
-      errors = await responseClone.json();
-      // eslint-disable-next-line no-empty, @typescript-eslint/no-unused-vars
-    } catch (error) {}
-
-    throw new Error(
-      errors?.message || `An unknown error occurred${responseClone.status ? ` (${responseClone.status})` : ""}.`
-    );
-  }
-
-  return response;
-}
-
 export function readableDateTime(date: Maybe<string | Date>, language: string) {
   if (!date) {
     return "";
@@ -60,13 +41,27 @@ export function capitalizeFirstLetter(text: string | undefined) {
 
 export const toLocalDateTime = (unixTime: number | undefined | null): Date | undefined => {
   const timeZone = getTimeZone();
-  if (unixTime) {
+
+  if (typeof unixTime !== "number" || unixTime <= 0) {
+    return undefined;
+  }
+
+  try {
     const dateTime = DateTime.fromSeconds(unixTime);
+
     if (timeZone) {
-      return dateTime.setZone(timeZone).toJSDate();
+      const zonedDateTime = dateTime.setZone(timeZone);
+      if (!zonedDateTime.isValid) {
+        return undefined;
+      }
+      const jsDate = zonedDateTime.toJSDate();
+      return jsDate;
+    } else {
+      const jsDate = dateTime.toJSDate();
+      return jsDate;
     }
-    return dateTime.toJSDate();
-  } else {
+  } catch (error) {
+    console.error("Error converting unixTime to local date time:", error);
     return undefined;
   }
 };
