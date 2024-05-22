@@ -1,5 +1,5 @@
 import { t } from "i18next";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 
@@ -10,7 +10,6 @@ import StatusIndicator from "@/components/common/StatusIndicator";
 import useCloudFeeds from "@/hooks/cloud-feed/useCloudFeeds";
 import useDevices from "@/hooks/device/useDevices";
 import useEnergyQueries from "@/hooks/energyquery/useEnergyQueries";
-import { UserContext } from "@/providers/UserProvider";
 import { AllDataSourcesResponse, DataSourceListType } from "@/types/api";
 import { processDataSource } from "@/utils/tools";
 
@@ -29,9 +28,7 @@ export default function DataSourceList({
     data: energyQueryData,
     isLoading: isLoadingEnergyQueries,
     refetch: refetchEnergyQueries,
-    isRefetching: isRefetchingEnergyQueries,
   } = useEnergyQueries();
-  const { user } = useContext(UserContext);
 
   const [itemData, setItemData] = useState<AllDataSourcesResponse[]>([]);
   const [allItemsDone, setAllItemsDone] = useState(true);
@@ -107,16 +104,7 @@ export default function DataSourceList({
     }, 20000); // 10000 milliseconds = 10 seconds
   };
 
-  let shouldLoad = true;
-  if ((!isLoading && !isLoadingEnergyQueries) || Boolean(user)) {
-    shouldLoad = false;
-  }
-
-  if (shouldLoad) {
-    return <StatusIndicator isLoading={shouldLoad} />;
-  }
-
-  if (isLoading || isFetching || isLoadingEnergyQueries || isRefetchingEnergyQueries) {
+  if (isLoading || isFetching || isLoadingEnergyQueries) {
     return <StatusIndicator isLoading />;
   }
 

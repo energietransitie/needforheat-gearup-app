@@ -29,7 +29,7 @@
           "no_data": "No data received yet"
         },
         "reset_device": "Reset",
-        "empty_collection": "No Data Sources List found for this Campaign",
+        "empty_collection": "No Data Sources List found for this Campaign or there is no internet/wifi.",
         "updating_now": "Now",
         "late": "Late",
         "super_late": "Offline",
@@ -470,7 +470,7 @@
       "error": "The manual could not be loaded. Contact the device manufacturer for more information or continue at your own risk."
     },
     "status_indicator": {
-      "loading": "Loading...",
+      "loading": "Loading...\nPlease make sure you have an internet connection available.",
       "error": "An error has occurred."
     }
   },

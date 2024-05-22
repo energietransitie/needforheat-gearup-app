@@ -11,8 +11,22 @@ export default function useUser() {
 
   const storeUserData = async (userData: AccountResponse) => {
     try {
-      const compressedData = LZString.compressToUTF16(JSON.stringify(userData));
-      await SecureStore.setItemAsync("userData", compressedData);
+      // Check if userData contains campaign property
+      if (userData && userData.campaign) {
+        const {
+          campaign: { data_source_list, ...campaignWithoutDatasourcelist },
+          ...userDataWithoutCampaignDatasourcelist
+        } = userData;
+
+        // Store modified userData
+        const modifiedUserData = {
+          ...userDataWithoutCampaignDatasourcelist,
+          campaign: campaignWithoutDatasourcelist,
+        };
+
+        const compressedData = LZString.compressToUTF16(JSON.stringify(modifiedUserData));
+        await SecureStore.setItemAsync("userData", compressedData);
+      }
     } catch (error) {
       console.error("Error storing user data:", error);
     }
@@ -23,6 +37,7 @@ export default function useUser() {
       const compressedData = await SecureStore.getItemAsync("userData");
       if (compressedData) {
         const userData = JSON.parse(LZString.decompressFromUTF16(compressedData));
+        console.log(JSON.stringify(userData));
         return userData;
       }
     } catch (error) {

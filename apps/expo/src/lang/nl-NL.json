@@ -29,7 +29,7 @@
           "no_data": "Nog geen data ontvangen"
         },
         "reset_device": "Resetten",
-        "empty_collection": "Er is geen Databronnen lijst gevonden voor deze campagne.",
+        "empty_collection": "Er is geen Databronnen lijst gevonden voor deze campagne of er is geen internet/wifi.",
         "updating_now": "Nu",
         "late": "Laat",
         "super_late": "Offline",
@@ -471,7 +471,7 @@
       "error": "De handleiding kon niet worden geladen. Neem contact op met de maker van het meetapparaatje en/of de helpdesk voor meer informatie of ga verder op eigen risico."
     },
     "status_indicator": {
-      "loading": "Aan het laden...",
+      "loading": "Aan het laden...\n Zorg ervoor dat u een internetverbinding heeft.",
       "error": "Er is een fout opgetreden."
     }
   },
