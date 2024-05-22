@@ -63,8 +63,8 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
       error: isCalculatingError,
     },
     {
-      title: t("screens.home_stack.energy_query.building_profile_progress.alert.success.title"),
-      description: t("screens.home_stack.energy_query.building_profile_progress.alert.success.message"),
+      title: t("screens.home_stack.energy_query.building_profile_progress.alert.sending.title"),
+      description: t("screens.home_stack.energy_query.building_profile_progress.alert.sending.message"),
       finished: isSucces,
       loading: !isSucces,
       error: isSuccesError,
@@ -216,7 +216,7 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
         {
           measurements: [
             {
-              value: result,
+              value: result.toString(),
               property: {
                 name: "formula_result",
               },

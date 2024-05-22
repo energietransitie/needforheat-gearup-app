@@ -303,6 +303,10 @@
               "title": "Berekenen...",
               "message": "Er worden complexe berekeningen uitgevoerd met de gegevens"
             },
+            "sending": {
+              "title": "Uw query verzenden...",
+              "message": "Uw berekeningen worden naar de EnergyDokter gestuurd!"
+            },
             "success": {
               "title": "Succes!",
               "message": "Uw berekeningen zijn naar de EnergyDokter gestuurd!"

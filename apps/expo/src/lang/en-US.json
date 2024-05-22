@@ -303,6 +303,10 @@
               "title": "Calculating...",
               "message": "Complex calculations are being performed with the data"
             },
+            "sending": {
+              "title": "Sending your query...",
+              "message": "Your calculations are being sent to the energy doctor!"
+            },
             "success": {
               "title": "Success!",
               "message": "Your calculations have been sent to the energy doctor!"
