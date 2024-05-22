@@ -11,11 +11,13 @@ export const fetchTimeZone = async () => {
   if (!timeZone) {
     const properties = await fetchEnergyQueryProperties("building-profile");
     const timeZoneProperty = properties.find(property => property.name === "device_timezone__tmz");
-    const measurements = await fetchEnergyQueryMeasurements("building-profile", { property: timeZoneProperty?.id });
-    if (measurements[0]) {
-      const timeZoneMeasurement = measurements[0];
-      await SecureStore.setItemAsync("timeZone", timeZoneMeasurement.value);
-      timeZone = timeZoneMeasurement.value;
+    if (timeZoneProperty) {
+      const measurements = await fetchEnergyQueryMeasurements("building-profile", { property: timeZoneProperty?.id });
+      if (measurements[0]) {
+        const timeZoneMeasurement = measurements[0];
+        await SecureStore.setItemAsync("timeZone", timeZoneMeasurement.value);
+        timeZone = timeZoneMeasurement.value;
+      }
     }
   }
 };
