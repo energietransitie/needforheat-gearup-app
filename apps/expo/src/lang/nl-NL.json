@@ -332,7 +332,7 @@
           },
           "success": {
             "title": "Query verstuurd!",
-            "message": "De EnergieQuery is naar de EnergyDokter verzonden."
+            "message": "De EnergyQuery is naar de EnergyDokter verzonden."
           }
         }
       }
