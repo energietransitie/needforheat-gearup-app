@@ -174,20 +174,36 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
       aa: BAG3DInfo.feature.CityObjects[firstBuildingKey].attributes?.voorkomenidentificatie,
     };
 
-    //Calculate with above values
-    const formula = dataSource.item.Formula;
-    if (!formula) {
+    // Calculate with above values
+    const currentLocaleTimeInUnix = Math.floor(Date.now() / 1000);
+    const formulas = dataSource.item.Formula;
+
+    if (!formulas) {
       setisCalculatingError(true);
       setShowButton(true);
       return;
     }
 
-    let result;
+    const measurements = [];
     try {
-      result = await evaluate(formula, variables);
-      if (!result) {
-        throw new Error();
+      const formulaArray = formulas.split(",");
+      for (const formula of formulaArray) {
+        const cleanFormula = formula.replace(/\[.*?\]/g, ""); // Remove content within square brackets
+        const result = await evaluate(cleanFormula, variables);
+        if (!result) {
+          throw new Error();
+        }
+        const propertyMatch = formula.match(/\[(.*?)\]/); // Extract content within square brackets
+        const propertyName = propertyMatch ? propertyMatch[1] : "unknown"; // Use content within square brackets as property name, or 'unknown' if not found
+        measurements.push({
+          value: result.toString(),
+          property: {
+            name: propertyName,
+          },
+          time: currentLocaleTimeInUnix,
+        });
       }
+
       setisCalculating(true);
     } catch {
       setShowButton(true);
@@ -195,45 +211,31 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
       return;
     }
 
-    if (!dataSource) {
-      console.warn("No datasource available for posting energy query BP");
-      setisSuccesError(true);
-      setShowButton(true);
-      return;
-    }
-
-    const currentLocaleTimeInUnix = Math.floor(Date.now() / 1000);
-
+    // Add timezone measurement
     const timeZone = getTimeZone();
     await SecureStore.setItemAsync("timeZone", timeZone);
     fetchTimeZone(); //Update in RAM
 
+    measurements.push({
+      value: timeZone,
+      property: {
+        name: "device_timezone__tmz",
+      },
+      time: currentLocaleTimeInUnix,
+    });
+
+    // Creating energy query
     const energyQuery: EnergyQuery = {
       energy_query_type: {
         id: dataSource.item.ID,
       },
       uploads: [
         {
-          measurements: [
-            {
-              value: result.toString(),
-              property: {
-                name: "formula_result",
-              },
-              time: currentLocaleTimeInUnix,
-            },
-            {
-              value: timeZone,
-              property: {
-                name: "device_timezone__tmz",
-              },
-              time: currentLocaleTimeInUnix,
-            },
-          ],
+          measurements,
           instance_id: dataSource.item.ID,
           instance_type: "energy_query_type",
           device_time: currentLocaleTimeInUnix,
-          size: 2,
+          size: measurements.length,
         },
       ],
     };

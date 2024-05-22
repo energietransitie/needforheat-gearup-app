@@ -37,7 +37,6 @@ export default function useUser() {
       const compressedData = await SecureStore.getItemAsync("userData");
       if (compressedData) {
         const userData = JSON.parse(LZString.decompressFromUTF16(compressedData));
-        console.log(JSON.stringify(userData));
         return userData;
       }
     } catch (error) {
