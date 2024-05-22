@@ -24,7 +24,9 @@ Please note that the GearUp version of the app expects there to be the following
 
 Essentially, you can configure the app to compute values based on available data and a custom JavaScript formula. The formula can resemble this structure:
 
-> x + y * q^p / (z - h)
+> x+y[test1],q-p+100[tes2]
+
+You can input multiple formulas separated by commas. The [property_name] at the end of each formula denotes the name for the property to which the measurement will be assigned.
 
 The following table details the correspondence between each letter and its corresponding value retrieved from the [3DBAG API](https://docs.3dbag.nl/nl/delivery/webservices/#3dbag-api-3d):
 
@@ -57,4 +59,3 @@ The following table details the correspondence between each letter and its corre
 | y  | b3_volume_lod22         |
 | z  | oorspronkelijkbouwjaar  |
 | aa | voorkomingidentificatie |
-
