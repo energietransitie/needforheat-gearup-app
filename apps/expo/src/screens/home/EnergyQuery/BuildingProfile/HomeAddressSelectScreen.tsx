@@ -97,10 +97,10 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
 
   const onContinue = () => {
     const match = selectedAddress.match(NL_ADDRESS_REGEX);
-
+    console.log("Matched address:" + match);
     if (match) {
       const houseNumber = match[2];
-      const postalCode = match[3];
+      const postalCode = match[5];
 
       if (houseNumber && postalCode) {
         navigation.navigate("BuildingProfileProgressScreen", { location: selectedAddress, dataSource });

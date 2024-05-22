@@ -84,17 +84,26 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
       setisBAGReceivedError(false);
     }
     const houseNumber = match[2];
-    const postalCode = match[3];
+    const postalCode = match[5];
+    const houseLetter = match[3] || null;
+    const houseNumberAddition = match[4] || null;
 
-    const response = await fetch(
-      `https://api.bag.kadaster.nl/lvbag/individuelebevragingen/v2/adressen?postcode=${postalCode}&huisnummer=${houseNumber}`,
-      {
-        headers: {
-          accept: "application/hal+json",
-          "X-Api-Key": `${key?.api_key}`,
-        },
-      }
-    );
+    let url = `https://api.bag.kadaster.nl/lvbag/individuelebevragingen/v2/adressen?postcode=${postalCode}&huisnummer=${houseNumber}`;
+
+    if (houseLetter) {
+      url += `&huisletter=${houseLetter}`;
+    }
+
+    if (houseNumberAddition) {
+      url += `&huisnummertoevoeging=${houseNumberAddition}`;
+    }
+
+    const response = await fetch(url, {
+      headers: {
+        accept: "application/hal+json",
+        "X-Api-Key": `${key?.api_key}`,
+      },
+    });
     const data = await handleRequestErrors(response);
     const jsonData = await data.json();
     return bagSchema.parse(jsonData);
