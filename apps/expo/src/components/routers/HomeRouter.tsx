@@ -9,6 +9,8 @@ import AddDeviceScreen from "@/screens/home/AddDeviceScreen";
 import AddOnlineDataSourceScreen from "@/screens/home/AddOnlineDataSourceScreen";
 import AlreadyInvitedScreen from "@/screens/home/AlreadyInvitedScreen";
 import ConnectScreen from "@/screens/home/ConnectScreen";
+import BuildingProfileProgressScreen from "@/screens/home/EnergyQuery/BuildingProfile/BuildingProfileProgressScreen";
+import HomeAddressSelectScreen from "@/screens/home/EnergyQuery/BuildingProfile/HomeAddressSelectScreen";
 import InformationScreen from "@/screens/home/EnergyQuery/InformationScreen";
 import HomeSelectScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/HomeSelectScreen";
 import WeatherLocationPostedScreen from "@/screens/home/EnergyQuery/WeatherInterpolationLocation/WeatherLocationPostedScreen";
@@ -122,6 +124,11 @@ export default function HomeRouter() {
         component={HomeSelectScreen}
       />
       <HomeStack.Screen
+        name="HomeAddressSelectScreen"
+        options={{ title: t("screens.home_stack.energy_query.homeaddress_screen.title"), ...disableNavigation }}
+        component={HomeAddressSelectScreen}
+      />
+      <HomeStack.Screen
         name="WeatherLocationResultScreen"
         options={{
           title: t("screens.home_stack.energy_query.weather_location_result_screen.title"),
@@ -136,6 +143,14 @@ export default function HomeRouter() {
           ...disableNavigation,
         }}
         component={WeatherLocationPostedScreen}
+      />
+      <HomeStack.Screen
+        name="BuildingProfileProgressScreen"
+        options={{
+          title: t("screens.home_stack.energy_query.building_profile_progress.title"),
+          ...disableNavigation,
+        }}
+        component={BuildingProfileProgressScreen}
       />
     </HomeStack.Navigator>
   );

@@ -29,7 +29,7 @@
           "no_data": "No data received yet"
         },
         "reset_device": "Reset",
-        "empty_collection": "No Data Sources List found for this Campaign",
+        "empty_collection": "No Data Sources List found for this Campaign or there is no internet/wifi.",
         "updating_now": "Now",
         "late": "Late",
         "super_late": "Offline",
@@ -242,6 +242,15 @@
           "subtitle": "Drag the map around and place the pin above your home",
           "button": "Use this location!"
         },
+        "homeaddress_screen": {
+          "title": "Fill in your address",
+          "subtitle": "Drag the map around and place the pin above your home.\nYou can also edit your address if you need to after.",
+          "button": "Use this address!",
+          "error": {
+            "title": "Incorrect address",
+            "message": "This is not an address we can ues.\nPlease try again and check the manual and FAQ for more info."
+          }
+        },
         "weather_location_result_screen": {
           "title": "Check Results",
           "subtitle": "Is your home inside this weather zone?",
@@ -277,6 +286,53 @@
           },
           "errors": {
             "request_failed": "An error occurred while requesting Location permissions."
+          }
+        },
+        "building_profile_progress":{
+          "title": "Processing Address",
+          "alert": {
+            "initial_data": {
+              "title": "Fetching initial data...",
+              "message": "Initial data is being retrieved for your home"
+            },
+            "data": {
+              "title": "Fetching data...",
+              "message": "Data is being retrieved for your home for the calculation"
+            },
+            "calculating": {
+              "title": "Calculating...",
+              "message": "Complex calculations are being performed with the data"
+            },
+            "sending": {
+              "title": "Sending your query...",
+              "message": "Your calculations are being sent to the energy doctor!"
+            },
+            "success": {
+              "title": "Success!",
+              "message": "Your calculations have been sent to the energy doctor!"
+            }
+          },
+          "fail":{
+            "title": "Error!",
+            "api": {
+              "message": "An error occurred while fetching keys to get data.\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+            },
+            "bag": {
+              "message": "An error occurred while fetching initial data.\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+            },
+            "3dbag": {
+              "message": "An error occurred while fetching data.\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+            },
+            "calculating": {
+              "message": "An error occurred while calcuating with found data.\nTry the query again, otherwise contact the helpdesk."
+            },
+            "sending": {
+              "message": "An error occurred while sending the EnergyQuery to the EnergyDoctor\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+            }
+          },
+          "success": {
+            "title": "Query sent!",
+            "message": "The Energy Query has been sent to the EnergyDoctor."
           }
         }
       }
@@ -414,7 +470,7 @@
       "error": "The manual could not be loaded. Contact the device manufacturer for more information or continue at your own risk."
     },
     "status_indicator": {
-      "loading": "Loading...",
+      "loading": "Loading...\nPlease make sure you have an internet connection available.",
       "error": "An error has occurred."
     }
   },

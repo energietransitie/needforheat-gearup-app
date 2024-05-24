@@ -1,21 +1,24 @@
+import { GOOGLE_MAPS_API_KEY } from "@env";
 import Geolocation, { GeolocationResponse } from "@react-native-community/geolocation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button, Icon, makeStyles, useTheme } from "@rneui/themed";
 import { openSettings } from "expo-linking";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Alert, Platform, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import Geocoder from "react-native-geocoding";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import MapView, { Region } from "react-native-maps";
 
 import Box from "@/components/elements/Box";
+import { NL_ADDRESS_REGEX } from "@/constants";
 import usePreciseLocationPermission from "@/hooks/location/usePreciseLocationPermission";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { UserLocation } from "@/types/energyquery";
 import { HomeStackParamList } from "@/types/navigation";
 
-type HomeSelectScreenProps = NativeStackScreenProps<HomeStackParamList, "HomeSelectScreen">;
+type HomeAddressSelectScreenProps = NativeStackScreenProps<HomeStackParamList, "HomeAddressSelectScreen">;
 
-export default function HomeSelectScreen({ navigation, route }: HomeSelectScreenProps) {
+export default function HomeAddressSelectScreen({ navigation, route }: HomeAddressSelectScreenProps) {
   const { dataSource } = route.params;
   const { theme } = useTheme();
   const { t } = useTranslation();
@@ -28,7 +31,62 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
     latitudeDelta: 4,
     longitudeDelta: 4,
   });
+  const [selectedAddress, setSelectedAddress] = useState<string>("");
 
+  Geocoder.init(GOOGLE_MAPS_API_KEY);
+
+  const setAdressChange = async (address: string) => {
+    setSelectedAddress(address);
+    return selectedAddress;
+  };
+
+  const updateAddress = async () => {
+    try {
+      if (selectedAddress !== "") {
+        const response = await Geocoder.from(selectedAddress);
+        if (response.results.length === 0) {
+          console.log("Address not found");
+          return;
+        }
+
+        // Address found, update the marker's location
+        const { lat, lng } = response.results[0].geometry.location;
+        getAddressFromCoordinates(lat, lng);
+        setLocation({
+          latitude: lat,
+          longitude: lng,
+          latitudeDelta: location.latitudeDelta,
+          longitudeDelta: location.longitudeDelta,
+        });
+
+        refMap.current?.animateToRegion(
+          {
+            latitude: lat,
+            longitude: lng,
+            latitudeDelta: location.latitudeDelta,
+            longitudeDelta: location.longitudeDelta,
+          },
+          500
+        );
+      } else {
+        getAddressFromCoordinates(location.latitude, location.longitude);
+      }
+    } catch (error) {
+      console.error("Error fetching location from address: ", error);
+    }
+    return selectedAddress;
+  };
+
+  const getAddressFromCoordinates = async (latitude: number, longitude: number) => {
+    try {
+      const response = await Geocoder.from(latitude, longitude);
+      const address = response.results[0].formatted_address;
+      setSelectedAddress(address);
+    } catch (error) {
+      console.error("Error fetching address: ", error);
+      setSelectedAddress(""); // Als er een fout optreedt, leeg het adres
+    }
+  };
   useEffect(() => {
     const checkPermission = async () => {
       const permission = await checkPreciseLocationPermission();
@@ -38,7 +96,37 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
   }, []);
 
   const onContinue = () => {
-    navigation.navigate("WeatherLocationResultScreen", { location, dataSource });
+    const match = selectedAddress.match(NL_ADDRESS_REGEX);
+    console.log("Matched address:" + match);
+    if (match) {
+      const houseNumber = match[2];
+      const postalCode = match[5];
+
+      if (houseNumber && postalCode) {
+        navigation.navigate("BuildingProfileProgressScreen", { location: selectedAddress, dataSource });
+      } else {
+        Alert.alert(
+          t("screens.home_stack.energy_query.homeaddress_screen.error.title"),
+          t("screens.home_stack.energy_query.homeaddress_screen.error.message"),
+          [
+            {
+              text: t("common.retry"),
+            },
+          ]
+        );
+      }
+    } else {
+      console.error("Error: Address does not match the expected format.");
+      Alert.alert(
+        t("screens.home_stack.energy_query.homeaddress_screen.error.title"),
+        t("screens.home_stack.energy_query.homeaddress_screen.error.message"),
+        [
+          {
+            text: t("common.retry"),
+          },
+        ]
+      );
+    }
   };
 
   //Location permission
@@ -99,7 +187,7 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
           setLocation({
             longitude: position.coords.longitude,
             latitude: position.coords.latitude,
-            longitudeDelta: location.longitude,
+            longitudeDelta: location.longitudeDelta,
             latitudeDelta: location.latitudeDelta,
           });
           refMap.current?.animateToRegion(
@@ -128,6 +216,7 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
 
     if (latDifference > threshold || lonDifference > threshold) {
       setLocation(newRegion);
+      getAddressFromCoordinates(newRegion.latitude, newRegion.longitude);
     }
   };
 
@@ -151,7 +240,7 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
     <>
       <Box padded style={{ flex: 1 }}>
         <View style={{ width: "100%" }}>
-          <Text style={style.subtitle}>{t("screens.home_stack.energy_query.homeselect_screen.subtitle")}</Text>
+          <Text style={style.subtitle}>{t("screens.home_stack.energy_query.homeaddress_screen.subtitle")}</Text>
         </View>
         <View style={style.mapcontainer}>
           <MapView
@@ -187,10 +276,19 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
             </View>
           ) : null}
         </View>
-        <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
+        <Box style={{ flexDirection: "column", width: "100%" }}>
+          <Text style={style.label}>Address</Text>
+          <View style={style.inputContainer}>
+            <TextInput
+              style={style.input}
+              value={selectedAddress}
+              onChangeText={setAdressChange}
+              onSubmitEditing={updateAddress}
+            />
+          </View>
           <Button
-            containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
-            title={t("screens.home_stack.energy_query.homeselect_screen.button")}
+            containerStyle={{ width: "100%" }}
+            title={t("screens.home_stack.energy_query.homeaddress_screen.button")}
             color="primary"
             onPress={onContinue}
             icon={{
@@ -255,5 +353,34 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "bold",
     textAlign: "center",
     fontSize: 16,
+  },
+  addressContainer: {
+    backgroundColor: theme.colors.background,
+    padding: theme.spacing.sm,
+    borderRadius: 0,
+    marginTop: theme.spacing.sm, // Add marginTop for spacing
+    alignSelf: "center",
+    bottom: -270,
+  },
+  addressText: {
+    fontSize: 14,
+    textAlign: "center",
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  inputContainer: {
+    borderWidth: 1,
+    borderColor: "gray",
+    backgroundColor: "white",
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    marginBottom: 8,
+    width: "100%",
+  },
+  input: {
+    fontSize: 14,
   },
 }));

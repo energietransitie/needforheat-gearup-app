@@ -11,7 +11,7 @@ import {
   measurementsSchema,
   energyQueryScherma,
 } from "@/types/api";
-import { handleRequestErrors } from "@/utils/tools";
+import { handleRequestErrors } from "@/utils/handleRequestErrors";
 
 export async function fetchEnergyQueryType(queryType: string) {
   const response = await fetch(`${API_URL}/energy_query/${queryType}`, {

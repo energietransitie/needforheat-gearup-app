@@ -39,6 +39,9 @@ Please include in your request the email address of the Apple ID or Google accou
 To deploy and successfully use the app you need to have received an e-mail with a proper Firebase Dynamic Link and you need be in the possession of at least one NFH measurement device.
 
 ## Documentation
+### EnergyDoctor
+Documentation specifically for the EnergyDoctor can be found in [here](./docs/energydoctor.md).
+
 ### Deploying
 Documentation for deploying to the Google Play Store and Apple App Store can be found in [here](./docs/deploying.md).
 
@@ -113,5 +116,6 @@ We use and gratefully acknowlegde the efforts of the makers of the following sou
 - [cron-parser](https://github.com/harrisiirak/cron-parser/), by Harri Siirak, licensed under [MIT](https://github.com/harrisiirak/cron-parser/blob/master/LICENSE)
 -[react-native-push-notification](https://github.com/zo0r/react-native-push-notification), by zo0r (aka Dieam), licensed under [MIT](https://github.com/zo0r/react-native-push-notification/blob/master/LICENSE)
 - [lz-string](https://github.com/pieroxy/lz-string), by pieroxy, licensed under [MIT](https://github.com/pieroxy/lz-string/blob/master/LICENSE.md)
+- [react-native-localize](https://github.com/zoontek/react-native-localize), by Mathieu Acthernoene (aka zoontek), licensed under [MIT](https://github.com/zoontek/react-native-localize/blob/master/LICENSE)
 
 This `README` uses [badges](https://github.com/badges/shields/blob/master/LICENSE), by [Shield.io](https://github.com/badges), licensed under [CC0 v1.0 Universal](https://github.com/badges/shields/blob/master/LICENSE)

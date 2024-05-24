@@ -29,7 +29,7 @@
           "no_data": "Nog geen data ontvangen"
         },
         "reset_device": "Resetten",
-        "empty_collection": "Er is geen Databronnen lijst gevonden voor deze campagne.",
+        "empty_collection": "Er is geen Databronnen lijst gevonden voor deze campagne of er is geen internet/wifi.",
         "updating_now": "Nu",
         "late": "Laat",
         "super_late": "Offline",
@@ -242,6 +242,15 @@
           "subtitle": "Sleep de kaart rond en plaats de pin boven uw huis",
           "button": "Deze locatie gebruiken!"
         },
+        "homeaddress_screen": {
+          "title": "Vul je adres in",
+          "subtitle": "Sleep de kaart rond en plaats de pin boven je woning.\nJe adres kan je later nog aanpassen.",
+          "button": "Gebruik dit adres!",
+          "error": {
+            "title": "Ongeldig adres",
+            "message": "Dit is geen adres dat we kunnen herkennen.\nProbeer het opnieuw en check eventueel de handleiding of FAQ voor meer informatie."
+          }
+        },
         "weather_location_result_screen": {
           "title": "Resultaten",
           "subtitle": "Bevindt jouw huis zich in deze weerzone?",
@@ -277,6 +286,53 @@
           },
           "errors": {
             "request_failed": "Een fout is opgetreden bij het aanvragen van de locatie-machtigingen."
+          }
+        },
+        "building_profile_progress": {
+          "title": "Adres verwerken",
+          "alert": {
+            "initial_data": {
+              "title": "Initiële gegevens ophalen...",
+              "message": "Initiële gegevens voor uw woning worden opgehaald"
+            },
+            "data": {
+              "title": "Gegevens ophalen...",
+              "message": "Er worden gegevens opgehaald over uw woning voor de berekening"
+            },
+            "calculating": {
+              "title": "Berekenen...",
+              "message": "Er worden complexe berekeningen uitgevoerd met de gegevens"
+            },
+            "sending": {
+              "title": "Uw query verzenden...",
+              "message": "Uw berekeningen worden naar de EnergyDokter gestuurd!"
+            },
+            "success": {
+              "title": "Succes!",
+              "message": "Uw berekeningen zijn naar de EnergyDokter gestuurd!"
+            }
+          },
+          "fail": {
+            "title": "Fout!",
+            "api": {
+              "message": "Er is een fout opgetreden tijdens het ophalen van sleutels om gegevens te verkrijgen.\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+            },
+            "bag": {
+              "message": "Er is een fout opgetreden tijdens het ophalen van initiële gegevens.\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+            },
+            "3dbag": {
+              "message": "Er is een fout opgetreden tijdens het ophalen van gegevens.\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+            },
+            "calculating": {
+              "message": "Er is een fout opgetreden tijdens het berekenen met gevonden gegevens.\nProbeer de query opnieuw, anders neemt u contact op met de helpdesk."
+            },
+            "sending": {
+              "message": "Er is een fout opgetreden tijdens het verzenden van de EnergieQuery naar de EnergyDoctor\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+            }
+          },
+          "success": {
+            "title": "Query verstuurd!",
+            "message": "De EnergyQuery is naar de EnergyDokter verzonden."
           }
         }
       }
@@ -415,7 +471,7 @@
       "error": "De handleiding kon niet worden geladen. Neem contact op met de maker van het meetapparaatje en/of de helpdesk voor meer informatie of ga verder op eigen risico."
     },
     "status_indicator": {
-      "loading": "Aan het laden...",
+      "loading": "Aan het laden...\n Zorg ervoor dat u een internetverbinding heeft.",
       "error": "Er is een fout opgetreden."
     }
   },

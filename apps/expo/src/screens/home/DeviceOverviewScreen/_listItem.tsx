@@ -36,7 +36,6 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
   const { t, resolvedLanguage } = useTranslation();
   const [data, setData] = useState(null); // Initialize data state variable
   const CompleteURL = getManualUrl(item.data_source as DataSourceType);
-
   const [missed, setMissed] = useState(0);
   const [timeToUpload, setTimeToUpload] = useState<string>();
 
@@ -98,9 +97,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     } else if (item.data_source?.category === "cloud_feed_type") {
       navigate("AddOnlineDataSourceScreen");
     } else if (item.data_source?.category === "energy_query_type") {
-      if (item.name === "weather-interpolation-location") {
-        navigate("InformationScreen", { dataSource: item.data_source });
-      }
+      navigate("InformationScreen", { dataSource: item.data_source });
     }
   };
 

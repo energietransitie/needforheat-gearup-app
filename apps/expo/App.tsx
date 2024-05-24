@@ -18,6 +18,7 @@ import { useOnAppStateChange } from "@/hooks/useOnAppStateChange";
 import LANG_EN_US from "@/lang/en-US.json";
 import LANG_NL_NL from "@/lang/nl-NL.json";
 import { LanguageDetector } from "@/lib/languageDetector";
+import { fetchTimeZone } from "@/utils/timezone";
 
 i18n
   .use(LanguageDetector)
@@ -60,6 +61,11 @@ export default function App() {
       setNetworkConnected(Boolean(state.isInternetReachable));
     });
     return () => removeNetInfoSubscription();
+  }, []);
+
+  useEffect(() => {
+    //Store it in RAM so we know
+    fetchTimeZone();
   }, []);
 
   if (!fontsLoaded) return null;

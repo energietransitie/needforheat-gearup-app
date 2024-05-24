@@ -11,7 +11,7 @@ import {
   FetchMeasurementsOptions,
   measurementsSchema,
 } from "@/types/api";
-import { handleRequestErrors } from "@/utils/tools";
+import { handleRequestErrors } from "@/utils/handleRequestErrors";
 
 export async function fetchDeviceType(deviceName: string) {
   const response = await fetch(`${API_URL}/device_type/${deviceName}`, {

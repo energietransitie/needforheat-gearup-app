@@ -15,7 +15,11 @@ export default function InformationScreen({ navigation, route }: InformationScre
   const { t, resolvedLanguage } = useTranslation();
 
   const onExecuteQuery = () => {
-    navigation.navigate("HomeSelectScreen", { dataSource });
+    if (dataSource.item.Name === "weather-interpolation-location") {
+      navigation.navigate("HomeSelectScreen", { dataSource });
+    } else if (dataSource.item.Name === "building-profile") {
+      navigation.navigate("HomeAddressSelectScreen", { dataSource });
+    }
   };
 
   const onCancel = () => navigation.navigate("HomeScreen");

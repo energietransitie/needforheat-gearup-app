@@ -3,7 +3,8 @@ import * as SecureStore from "expo-secure-store";
 import { WifiEntry } from "./types";
 
 export const HIDDEN_PROPERTY_NAMES = ["booted_fw", "heartbeat", "batteryVoltage"];
-
+export const NL_ADDRESS_REGEX =
+  /^([\w\s]+)\s(\d+)([A-Za-z]?)\s?([^\d,]+)?,\s(\d{4}\s?[A-Z]{2})\s([\w\s]+),\s([\w\s]+)$/;
 export const AUTH_TOKEN_IDENTIFIER = "auth_token";
 export const WIFI_NETWORKS_IDENTIFIER = "wifi_networks";
 export const AUTH_STATE_IDENTIFIER = "auth_state";
