@@ -1,4 +1,4 @@
-package nl.windesheim.energietransitie.warmtewachter.newarchitecture;
+package nl.windesheim.energietransitie.needforheat.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -20,9 +20,9 @@ import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import nl.windesheim.energietransitie.warmtewachter.BuildConfig;
-import nl.windesheim.energietransitie.warmtewachter.newarchitecture.components.MainComponentsRegistry;
-import nl.windesheim.energietransitie.warmtewachter.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import nl.windesheim.energietransitie.needforheat.BuildConfig;
+import nl.windesheim.energietransitie.needforheat.newarchitecture.components.MainComponentsRegistry;
+import nl.windesheim.energietransitie.needforheat.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
