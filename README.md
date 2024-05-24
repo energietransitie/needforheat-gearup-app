@@ -66,7 +66,13 @@ List of features in the NeedForHeat app:
   - Setup a list of items that need to be completed for a campaign
 - Monitoring
   - Get a GREEN, YELLOW or RED status depending on how late uploads are for a DataSource
-  - See how long it takes until the next upload should happen.   
+  - See how long it takes until the next upload should happen.
+  - Send a notification locally if a DataSource is READ
+- EnergyQueries
+  - WeatherInterpolationLocation
+    - Use a map to put a marker on your home and calculate the WeatherZone
+  - BuildingProfile
+    - Use a map to get your home address and perform calculcations using BAG APIs 
 
 ## License
 This software is available under the [Apache 2.0 license](./LICENSE), Copyright 2023 [Research group Energy Transition, Windesheim University of Applied Sciences](https://windesheim.nl/energietransitie)
