@@ -56,6 +56,9 @@ In addition. Setup the environment variables in GitHub Secrets as shown in the w
 - `GOOGLE_MAPS_API_KEY`
 - `NFH_MANUAL_URL`
 
+> **Note** \
+> Make sure the Google Maps API Key is setup to allow the app identifier
+
 ### 2.4. App Review
 Now comes the hard part. We need to prepare the app to be sent over for review to Google and Apple. It is crucial that Firebase is working and you can get into the app with an invitation link.
 
