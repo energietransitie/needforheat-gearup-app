@@ -22,10 +22,10 @@ For more information on the workflows, check out the [GitHub documentation of th
 
 > **Note** \
 > App signing should be handled by Expo, so you don't have to worry about that. \
-> First time deployment is not handled by Expo. A manual below on how to do that.
+> Doing it manually is possible but not recommended. There is information in this documentation about that but we really do recommend just using Expo and EAS.
 
 ## 2. Manual for deploying first time
-Deploying is no mean feat. Having to rely on certificates, Firebase and Apple and Google to properly deploy this to public can take a bit. Especially for new developers. That's why this manual will help go through everything to ensure that **you** will know how to do it as well.
+Deploying is no mean feat. Having to rely on certificates, Firebase and Apple and Google to properly deploy this to public can take a bit tinkering. Especially for new developers. That's why this manual will help go through everything to ensure that **you** will know how to do it as well.
 
 Note that Google and Apple provide more extensive documentation for doing this. You should check them out too when you are doing this as limitations and rules change over time.
 
@@ -56,8 +56,40 @@ In addition. Setup the environment variables in GitHub Secrets as shown in the w
 - `GOOGLE_MAPS_API_KEY`
 - `NFH_MANUAL_URL`
 
-> **Note** \
-> Make sure the Google Maps API Key is setup to allow the app identifier
+> **Note `EXPO_TOKEN`** \
+> `EXPO_TOKEN` is only important for the workflow.
+
+> **Note `GOOGLE_MAPS_API_KEY`** \
+> Make sure the Google Maps API Key is setup to allow the app identifier.
+
+#### Note about `GH_SSH_KEY`
+This requires a bit more setting up to do. You need to generate a new key and add it to a GitHub account: \
+See [GitHub docs for creating one](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/) and [adding it to your account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+
+To set it up for Expo so it can use with [eas-build-pre-install.sh](../apps/expo/scripts/eas-build-pre-install.sh). \
+You need to do the `Copy the SSH public key to your clipboard.` step again of adding the key to your account. But omit the `.pub`:
+
+```bash
+clip < ~/.ssh/id_ed25519
+```
+
+Then [encode it in Base64](https://www.base64encode.org/) before adding it as a secret in Expo Secrets on the project page
+
+---
+
+Now we're ready to setup the project with Expo:
+#### 2.3.1. Setting up Expo in the project.
+This is straight forward, but crucial to make it easier to create binaries with the right certificates and all. Full documentation is [here](https://docs.expo.dev/eas-update/getting-started/).
+
+Make sure you have `eas-cli` installed: 
+```bash
+npm install --global eas-cli
+```
+
+Now login to Expo with `eas login`. Afterwards `cd` into `./apps/expo` and run `eas build:configure`. \
+Update Expo config if you need to so it points to your project. Same goes for the workflow.
+
+Expo should now be setup and we can create binaries later on.
 
 ### 2.4. App Review
 Now comes the hard part. We need to prepare the app to be sent over for review to Google and Apple. It is crucial that Firebase is working and you can get into the app with an invitation link.
@@ -68,10 +100,25 @@ Step one is simple. Create a campaign and accounts for Google and Apple so the r
 #### 2.4.2. Prepare binaries
 Now the second step is preparing the binaries for Google and Apple to review for. Google asks for `.aab` and Apple for an `.ipa`. These binaries need to be signed with the proper upload certificate.
 
-For Google, the documentation for this can be found here: [Sign your app](https://developer.android.com/studio/publish/app-signing)
+For Google, signing can be handled by Google themselves. See [Expo First Android Submission](https://github.com/expo/fyi/blob/main/first-android-submission.md)
 
-For Apple, which requires a Macbook, with a Distribution Certificate an Provisioning Profile. This is not well documented by Apple and is rather confusing. \
-You should be able to export and upload it with xCode. The  organisation might have the certificates already setup for you.
+For Apple, which requires a Macbook, with a Distribution Certificate an Provisioning Profile. Finding the right documentation is hard but no worries, we can do it through Expo: [Submit iOS](https://docs.expo.dev/submit/ios/). \
+You should also be able to export and upload it with xCode. The  organisation might have the certificates already setup for you.
+
+Now for creating the binaires we use Expo. To make sure everything runs well, we manually start the build for Android and iOS each with:
+```bash
+yarn workspace app eas:android:build
+```
+and
+```bash
+yarn workspace app eas:ios:build
+```
+Running these commands for the first time on a new project will make you go through a setup. Just let it do it thing and it will be smooth sailing. \
+If it mentions an existing project, make sure its the right one before proceeding.
+
+For iOS, make sure you use the `NeedforHeat Release` scheme as the other one is the `Expo Go` version.
+
+Now the binaries should be getting built on the [EAS NFH GearUp Project build page](https://expo.dev/accounts/nfh/projects/needforheat-gearup/builds). You can download these to send over.
 
 #### 2.4.3. Review!
 Upload the binaries to their stores and put in the right notes so the reviewers know how to review it!
@@ -80,7 +127,7 @@ It might take a bit and you might need to do some additional changes. But after 
 You can then continue setting up the rest of the Store page up for Google and Apple and publish it for testing or public.
 
 ### 2.5. Finish Expo Setup with certificates
-Now that we have our entries finished and ready. We can continue setting up Expo to do all that building and signing for us.
+Now that we have our entries finished and ready. Expo should have set up the certificates for us, but doing it manually is possible too:
 
 For information on this, check out the [Expo Documentation](https://docs.expo.dev/app-signing/app-credentials/).
 
