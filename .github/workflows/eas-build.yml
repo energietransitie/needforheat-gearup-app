@@ -49,4 +49,4 @@ jobs:
 
       - name: Build app
         working-directory: apps/expo
-        run: eas build --platform all --profile production --non-interactive --no-wait --project needforheat-gearup
+        run: eas build --platform all --profile production --non-interactive --no-wait
