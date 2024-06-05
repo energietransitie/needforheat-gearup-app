@@ -15,6 +15,7 @@ For access to either of those developer accounts, please contact [@henriterhofte
     - [3.1. Apple App Store](#31-apple-app-store)
     - [3.2. Google Play Store](#32-google-play-store)
 
+
 ## 1. General information
 Using GitHub Actions, the app is automatically built when merging a new version to the `main` branch. This is done using the `expo build` command, which you don't have to run yourself. The build is then uploaded to the `@nfh` organization on Expo under the `needforheat-gearup` project.
 
@@ -105,6 +106,19 @@ For Google, signing can be handled by Google themselves. See [Expo First Android
 For Apple, which requires a Macbook, with a Distribution Certificate an Provisioning Profile. Finding the right documentation is hard but no worries, we can do it through Expo: [Submit iOS](https://docs.expo.dev/submit/ios/). \
 You should also be able to export and upload it with xCode. The  organisation might have the certificates already setup for you.
 
+---
+***Important Notice Regarding `eas-build-pre-install.sh`*** \
+This file **NEEDS** `LF`-line endings and not `CRLF`. Git will usually automatic convert it to `CRLF`.
+
+In Visual Studio Code you can change it in the bottom right corner.
+
+You may need to disable Git's auto-CRLF with:
+```bash
+git config --global core.autocrlf false
+```
+
+---
+
 Now for creating the binaires we use Expo. To make sure everything runs well, we manually start the build for Android and iOS each with:
 ```bash
 yarn workspace app eas:android:build
@@ -166,3 +180,6 @@ The Play Store is updated using the Google Play Console, but not uploaded automa
 2. Go to the [Google Play Console](https://play.google.com/console/u/2/developers/5055222802254203943/app/4976394412478460038/tracks/production?tab=releases) and upload the `.aab` file you've just downloaded.
 3. Fill in the release version name & notes (for each language) and click `Save`.
 4. Click `Review` and then `Start rollout to production`.
+
+### 4. Semantics
+If you want to update to a major version (3.0.0, for instance). What (according to ChatGPT) should be done is only create a new tag in GitHub before pushing and it should use it instead.
