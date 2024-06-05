@@ -152,7 +152,8 @@ For information on this, check out the [Expo Documentation](https://docs.expo.de
 Whenever you push to main now, the binaries will be automatically be created and signed for you. This finished the manual for deploying first time. Check out [Deploying to App Stores after first time](#3-deploying-to-app-stores-after-first-time) on how you should deploy after.
 
 ## 3. Deploying to App Stores after first time
-After setting up everything, the workflow after pushing to main takes care most of the work now.
+After setting up everything, the workflow after pushing to main takes care most of the work now. \
+You can also manually start this workflow through GitHub Actions.
 
 Here is an explanation of how to deploy after doing it the first time for each store:
 
