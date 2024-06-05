@@ -1,3 +1,33 @@
+# [2.12.0](https://github.com/energietransitie/needforheat-gearup-app/compare/v2.11.0...v2.12.0) (2024-06-05)
+
+
+### Bug Fixes
+
+* added dynamic time fontsize ([834142b](https://github.com/energietransitie/needforheat-gearup-app/commit/834142b40a012d75e7dfac21451e1885283548eb))
+* added formattime to the timeprogressbar ([d4d0dce](https://github.com/energietransitie/needforheat-gearup-app/commit/d4d0dce255ab5894f872cba3a05e97ac49375674))
+* bluetooth message adjusted ([89eafff](https://github.com/energietransitie/needforheat-gearup-app/commit/89eafffd0434477d53a761d3c58b41fedfca5c1c))
+* bluetooth message for iOS ([642eb67](https://github.com/energietransitie/needforheat-gearup-app/commit/642eb67ed3792ad52a1f113de0d5deb6082ea767))
+* Bluetooth permission solved with button ([05c94a0](https://github.com/energietransitie/needforheat-gearup-app/commit/05c94a0d49a2f1fc8c1e9186c2592d8d98e1dd7b))
+* comment removed in the code ([030e07e](https://github.com/energietransitie/needforheat-gearup-app/commit/030e07e6e0da2cbf785ca4181daad7c056e1d88a))
+* fix bluetooth permission ([b125cec](https://github.com/energietransitie/needforheat-gearup-app/commit/b125cec6f4415f1fe129b3b4b9869d716cd21522))
+* open Wi-Fi no password needed ([37b37ab](https://github.com/energietransitie/needforheat-gearup-app/commit/37b37ab93b81b82631f78479f40264064371670e))
+* removed console.log() message ([1915581](https://github.com/energietransitie/needforheat-gearup-app/commit/19155813f3c43bab2d0d8e8524bd4f61aca06355))
+* removed dialog for iOS ([9ab623e](https://github.com/energietransitie/needforheat-gearup-app/commit/9ab623e608ea49bf142f737d40b54523d2929d00))
+* time progressbar changed to circular progressbar ([6846a6e](https://github.com/energietransitie/needforheat-gearup-app/commit/6846a6e97e140ce2efe6dc44207d52c11618b85e))
+* translation improved ([56384f8](https://github.com/energietransitie/needforheat-gearup-app/commit/56384f857676ad5afe8d6d6287a0d11c902d5e52))
+* translation text adjusted ([bd25394](https://github.com/energietransitie/needforheat-gearup-app/commit/bd25394f675d6183a67a93c8ce2806e9747afb54))
+
+
+### Features
+
+* change status dataSourceListItems ([bfc6fd9](https://github.com/energietransitie/needforheat-gearup-app/commit/bfc6fd992f84d4ce92b409eb86e6d0cbde5b711f))
+* work on monitoring ([ffd9154](https://github.com/energietransitie/needforheat-gearup-app/commit/ffd91543ca61570a9b6e8d4784c6d4ea5682409c))
+
+
+### Reverts
+
+* Revert "Refactor: Rename bundleidentifier to needforheat" ([69743f5](https://github.com/energietransitie/needforheat-gearup-app/commit/69743f5c2d776a38148a89e4f34ab3300aa04357))
+
 # [2.11.0](https://github.com/energietransitie/twomes-app-needforheat/compare/v2.10.2...v2.11.0) (2023-11-27)
 
 
