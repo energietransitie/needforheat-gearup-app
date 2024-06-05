@@ -154,8 +154,8 @@ android {
         applicationId 'nl.windesheim.energietransitie.needforheat'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 20026
-        versionName "2.12.0"
+        versionCode 20027
+        versionName "3.0.0"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
         def envFile = file('../../../../.env')
