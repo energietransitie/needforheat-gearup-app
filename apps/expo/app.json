@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "NeedForHeat",
-    "slug": "need-for-heat",
+    "name": "NeedForHeat GearUp",
+    "slug": "needforheat-gearup",
     "scheme": "nfh",
-    "version": "2.11.0",
+    "version": "3.0.0",
     "owner": "nfh",
     "jsEngine": "hermes",
     "privacy": "hidden",
@@ -23,7 +23,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "nl.windesheim.energietransitie.warmtewachter",
+      "bundleIdentifier": "nl.windesheim.energietransitie.needforheat",
       "associatedDomains": [
         "applinks:energietransitiewindesheim.page.link"
       ],
@@ -31,7 +31,14 @@
         "NSBluetoothAlwaysUsageDescription": "This app needs Bluetooth to connect to the sensor.",
         "NSBluetoothPeripheralUsageDescription": "This app needs Bluetooth to connect to the sensor.",
         "NSLocationWhenInUseUsageDescription": "This app needs location access to list nearby Wifi networks.",
-        "NSCameraUsageDescription": "This app needs camera access to scan QR codes."
+        "NSCameraUsageDescription": "This app needs camera access to scan QR codes.",
+        "UIBackgroundModes": [
+          "fetch",
+          "processing"
+        ],
+        "BGTaskSchedulerPermittedIdentifiers": [
+          "com.transistorsoft.fetch"
+        ]
       },
       "config": {
         "usesNonExemptEncryption": false
@@ -43,23 +50,22 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "nl.windesheim.energietransitie.warmtewachter",
+      "package": "nl.windesheim.energietransitie.needforheat",
       "permissions": [
         "BLUETOOTH",
         "BLUETOOTH_ADMIN",
         "BLUETOOTH_SCAN",
         "BLUETOOTH_CONNECT",
-        "CAMERA"
+        "CAMERA",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
       ]
-    },
-    "extra": {
-      "eas": {
-        "projectId": "724cbb02-b449-4206-afe0-d708a749f118"
-      }
     },
     "plugins": [
       "@react-native-firebase/app",
       "react-native-wifi-reborn",
+      "react-native-background-fetch",
       "./legacy-packaging",
       [
         "expo-build-properties",
@@ -72,6 +78,11 @@
           }
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "3195097e-7eff-4eeb-8d89-0e33484eb731"
+      }
+    }
   }
 }

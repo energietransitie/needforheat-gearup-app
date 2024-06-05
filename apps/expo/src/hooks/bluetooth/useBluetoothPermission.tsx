@@ -9,7 +9,7 @@ const BLUETOOTH_PERMISSIONS = Platform.select<Permission[]>({
     PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
     PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
   ],
-  ios: [PERMISSIONS.IOS.BLUETOOTH_PERIPHERAL, PERMISSIONS.IOS.LOCATION_WHEN_IN_USE],
+  ios: [PERMISSIONS.IOS.BLUETOOTH_PERIPHERAL],
   default: [],
 });
 
@@ -23,7 +23,11 @@ export default function useBluetoothPermission() {
     // Request permissions if not granted
     const requestStatusses = await requestMultiple(BLUETOOTH_PERMISSIONS);
     if (Object.values(requestStatusses).some(status => status !== "granted")) {
-      throw new Error(t("hooks.bluetooth_permission.not_granted"));
+      if (Platform.OS === "ios") {
+        throw new Error(t("hooks.bluetooth_permission.not_granted_ios"));
+      } else {
+        throw new Error(t("hooks.bluetooth_permission.not_granted_android"));
+      }
     }
   };
 

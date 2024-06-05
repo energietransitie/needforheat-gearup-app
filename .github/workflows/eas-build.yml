@@ -44,7 +44,9 @@ jobs:
       - name: Setup environment file
         run: |
           echo "API_URL=${{ secrets.NFH_API_URL }}" > .env
+          echo "GOOGLE_MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}" >> .env
+          echo "MANUAL_URL=${{ secrets.NFH_MANUAL_URL }}" >> .env
 
       - name: Build app
         working-directory: apps/expo
-        run: eas build --platform all --profile production --non-interactive --no-wait
+        run: eas build --platform all --profile production --non-interactive --no-wait --project needforheat-gearup

@@ -2,10 +2,11 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ListItem, makeStyles, Text, useTheme } from "@rneui/themed";
 import { Alert, FlatList, Linking, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+
 import Box from "@/components/elements/Box";
 import useTranslation from "@/hooks/translation/useTranslation";
-import { InfoStackParamList } from "@/types/navigation";
 import useUser from "@/hooks/user/useUser";
+import { InfoStackParamList } from "@/types/navigation";
 
 type InfoItemBase = { title: string; icon: string };
 type InfoItemURI = InfoItemBase & { uri: string };
@@ -35,31 +36,57 @@ function InfoListItem({ item, onPress }: InfoItemProps) {
 type InfoScreenProps = NativeStackScreenProps<InfoStackParamList, "InfoScreen">;
 
 export default function InfoScreen({ navigation }: InfoScreenProps) {
+  const styles = useStyles();
   const { t, resolvedLanguage } = useTranslation();
   const { user } = useUser();
 
-  function getFaqUri() {
-    if (user?.campaign) {
-      return user.campaign.info_url + "/" + (resolvedLanguage ? "/" + resolvedLanguage : "");
+  function getFAQUri() {
+    if (user?.campaign && user.campaign.info_url) {
+      return user.campaign.info_url + "/faq/" + (resolvedLanguage ? resolvedLanguage : "") + "/";
     } else {
-      return "https://manuals.energietransitiewindesheim.nl/campaigns/generic/faq/" + (resolvedLanguage ? "/" + resolvedLanguage : "");
+      return (
+        "https://manuals.energietransitiewindesheim.nl/campaigns/generic/faq/" +
+        (resolvedLanguage ? "/" + resolvedLanguage : "")
+      );
+    }
+  }
+
+  function getInfoUri() {
+    if (user?.campaign && user.campaign.info_url) {
+      return user.campaign.info_url + "/info/" + (resolvedLanguage ? resolvedLanguage : "") + "/";
+    } else {
+      return (
+        "https://manuals.energietransitiewindesheim.nl/campaigns/generic/info/" +
+        (resolvedLanguage ? "/" + resolvedLanguage : "")
+      );
+    }
+  }
+
+  function getPrivacyUri() {
+    if (user?.campaign && user.campaign.info_url) {
+      return user.campaign.info_url + "/privacy/" + (resolvedLanguage ? resolvedLanguage : "") + "/";
+    } else {
+      return (
+        "https://manuals.energietransitiewindesheim.nl/campaigns/generic/privacy/" +
+        (resolvedLanguage ? "/" + resolvedLanguage : "")
+      );
     }
   }
 
   const data: InfoItem[] = [
     {
       title: t("screens.info_stack.about.title"),
-      uri: "https://manuals.energietransitiewindesheim.nl/campaigns/reducedheatcarb2023/info/" + (resolvedLanguage ? "/" + resolvedLanguage : ""),
+      uri: getInfoUri(),
       icon: "book-outline",
     },
     {
       title: t("screens.info_stack.faq.title"),
-      uri: getFaqUri(),
+      uri: getFAQUri(),
       icon: "help-circle-outline",
     },
     {
       title: t("screens.info_stack.privacy.title"),
-      uri: "https://manuals.energietransitiewindesheim.nl/campaigns/reducedheatcarb2023/privacy/" + (resolvedLanguage ? "/" + resolvedLanguage : ""),
+      uri: getPrivacyUri(),
       icon: "shield",
     },
   ];
@@ -81,6 +108,11 @@ export default function InfoScreen({ navigation }: InfoScreenProps) {
   return (
     <Box style={{ flex: 1 }}>
       <FlatList data={data} renderItem={({ item }) => <InfoListItem item={item} onPress={() => onPress(item)} />} />
+      <Box fullWidth style={styles.centerContainer}>
+        <Text>
+          {t("screens.info_stack.info.campaign")}: {user?.campaign.name}
+        </Text>
+      </Box>
     </Box>
   );
 }
@@ -93,5 +125,9 @@ const useStyles = makeStyles(theme => ({
   },
   icon: {
     paddingRight: theme.spacing.lg,
+  },
+  centerContainer: {
+    alignItems: "center",
+    paddingVertical: theme.spacing.sm,
   },
 }));

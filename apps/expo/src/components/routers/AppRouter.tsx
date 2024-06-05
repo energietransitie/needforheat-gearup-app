@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "@rneui/themed";
-import { useContext } from "react";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import HomeRouter from "./HomeRouter";
@@ -8,17 +9,29 @@ import InfoRouter from "./InfoRouter";
 import SettingsRouter from "./SettingsRouter";
 
 import useTranslation from "@/hooks/translation/useTranslation";
-import { UserContext } from "@/providers/UserProvider";
-import DeviceOverviewScreen from "@/screens/home/DeviceOverviewScreen";
+import useUser from "@/hooks/user/useUser";
 import MeasurementsScreen from "@/screens/MeasurementsScreen";
 import { RootStackParamList } from "@/types/navigation";
-
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
-export default function AppRouter() {
+interface AppRouterProps {
+  fontsLoaded: boolean;
+}
+
+export default function AppRouter({ fontsLoaded }: AppRouterProps) {
   const { t } = useTranslation();
   const { theme } = useTheme();
-  const { isAuthed } = useContext(UserContext);
+  const { isAuthed } = useUser();
+
+  useEffect(() => {
+    const checkSplash = async () => {
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync();
+      }
+    };
+
+    checkSplash().catch(console.error);
+  }, [fontsLoaded, isAuthed]);
 
   return (
     <Tab.Navigator screenOptions={{ headerShown: false, tabBarActiveTintColor: theme.colors.primary }}>
@@ -34,17 +47,6 @@ export default function AppRouter() {
       />
       {isAuthed ? (
         <>
-          {/* <Tab.Screen
-            name="DeviceOverview"
-            component={DeviceOverviewScreen}
-            options={{
-              title: t("screens.device_overview.title"),
-              headerShown: true,
-              tabBarIcon: ({ color, size }) => {
-                return <Ionicons name="list-outline" size={size} color={color} />;
-              },
-            }}
-          /> */}
           <Tab.Screen
             name="Measurements"
             component={MeasurementsScreen}

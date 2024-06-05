@@ -1,7 +1,7 @@
 import { useIsFocused } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Text, makeStyles, useTheme } from "@rneui/themed";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -11,19 +11,18 @@ import useDevice from "@/hooks/device/useDevice";
 import useDeviceActivate from "@/hooks/device/useDeviceActivate";
 import useTranslation from "@/hooks/translation/useTranslation";
 import { useDisableBackButton } from "@/hooks/useDisableBackButton";
-import { UserContext } from "@/providers/UserProvider";
 import { HomeStackParamList } from "@/types/navigation";
 
 type ActivateDeviceScreenProps = NativeStackScreenProps<HomeStackParamList, "ActivateDeviceScreen">;
 
 export default function ActivateDeviceScreen({ navigation, route }: ActivateDeviceScreenProps) {
-  const { qrData } = route.params;
+  const { qrData, device_TypeName, dataSourceType, normalName, dataSource } = route.params;
   const { theme } = useTheme();
   const styles = useStyles();
   const { t } = useTranslation();
   const focused = useIsFocused();
-  const { user } = useContext(UserContext);
   const [isActivated, setIsActivated] = useState(false);
+  const { mutate: activateDevice, isLoading: isMutating, isError: isMutateError } = useDeviceActivate();
 
   const errorAlert = (message: string, title = "Error") => {
     Alert.alert(title, message, [
@@ -35,38 +34,55 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
     ]);
   };
 
-  const onError = (error: unknown) =>
+  const onError = (error: unknown) => {
+    console.log(error);
     errorAlert(`${t("screens.home_stack.activate_device.alert.unknown_error")}${error ? `\n\n${error}` : ""}`);
+  };
 
-  const onActivated = () => {
+  type Device = {
+    activated_at: Date | null;
+    device_type: {
+      id: number;
+      name: string;
+    };
+    id: number;
+    name: string;
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onActivated = (data: any) => {
+    const device = data as Device;
+
+    if (!dataSource.data_source || device.device_type.name !== dataSource.data_source.item.Name) {
+      errorAlert(
+        t("screens.home_stack.activate_device.alert.mismatched_device_name"),
+        t("screens.home_stack.activate_device.alert.unknown_error")
+      );
+      return;
+    }
+
     setIsActivated(true);
 
     setTimeout(() => {
-      navigation.navigate("AddDeviceScreen", { qrData });
+      navigation.navigate("AddDeviceScreen", {
+        qrData,
+        expectedDeviceName: device_TypeName,
+        device: dataSourceType,
+        normalName,
+        dataSource,
+      });
     }, 500);
   };
-
-  const { mutate: activateDevice, isLoading: isMutating, isError: isMutateError } = useDeviceActivate();
 
   // Activate the device if it's not activated already
   const onFetchError = (error: Error) => {
     const errorMsg = (error as Error)?.message?.toLowerCase();
-    const buildingId = user?.buildings?.[0]?.id;
-
-    if (!buildingId) {
-      errorAlert(t("screens.home_stack.activate_device.alert.no_building"));
-      return;
-    }
-
     if (errorMsg !== "device not found") {
       errorAlert(t("screens.home_stack.activate_device.alert.already_activated"));
       return;
     }
 
-    activateDevice(
-      { name: qrData.name, activationSecret: qrData.pop, buildingId },
-      { onSuccess: onActivated, onError }
-    );
+    activateDevice({ name: qrData.name, activationSecret: qrData.pop }, { onSuccess: onActivated, onError });
   };
 
   const { isFetching, isError, refetch } = useDevice(qrData.name, onActivated, onFetchError);

@@ -1,40 +1,45 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Text, useTheme, Button } from "@rneui/themed";
-import { useCallback, useContext, useRef, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import { useFocusEffect } from "@react-navigation/native";
+import * as SecureStore from "expo-secure-store";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { View } from "react-native";
 
-import DeviceList from "./_deviceList";
+import DataSourceList from "./_datasourcelist";
 import CircleMenu from "./circleMenu";
-import BuildingBottomSheet from "../../../components/common/bottomSheets/BuildingBottomSheet";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
+import DataSourceExplanationSheet from "@/components/common/bottomSheets/DataSourceExplanationSheet";
 import Box from "@/components/elements/Box";
 import Screen from "@/components/elements/Screen";
-import useTranslation from "@/hooks/translation/useTranslation";
 import { UserContext } from "@/providers/UserProvider";
-import { RootStackParamList } from "@/types/navigation";
-import { useFocusEffect } from "@react-navigation/native";
-
-type DeviceOverviewScreenProps = NativeStackScreenProps<RootStackParamList, "DeviceOverview">;
+import { DataSourceListType } from "@/types/api";
 
 export default function DeviceOverviewScreen() {
-  const { theme } = useTheme();
-  const { t } = useTranslation();
   const { user, isLoading } = useContext(UserContext);
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
-
-  const buildings = user?.buildings ?? [];
-  const [buildingId, setBuildingId] = useState<number | undefined>(buildings[0]?.id);
   const [refreshDeviceList, setRefreshDeviceList] = useState(false);
-  const hasMultipleBuildings = buildings.length > 1;
+  const refExplanationSheet = useRef<BottomSheetModal>(null);
+
+  useEffect(() => {
+    const showExplanationIfFirstTime = async () => {
+      const seenExplanation = await SecureStore.getItemAsync("seenExplanationFirstTime");
+      if (!seenExplanation) {
+        showExplanationSheet();
+        await SecureStore.setItemAsync("seenExplanationFirstTime", "true");
+      }
+    };
+
+    showExplanationIfFirstTime();
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
       setRefreshDeviceList(true);
     }, [])
   );
+
+  const showExplanationSheet = () => {
+    refExplanationSheet.current?.present();
+  };
 
   const onDeviceListRefreshed = () => {
     setRefreshDeviceList(false);
@@ -43,45 +48,27 @@ export default function DeviceOverviewScreen() {
   return (
     <Screen>
       <Box style={{ flex: 1, justifyContent: "center", alignItems: "center" }} padded>
-        {isLoading || !buildingId ? (
-          <StatusIndicator isLoading isError={!buildingId} />
+        {isLoading ? (
+          <StatusIndicator isLoading />
         ) : (
           <>
             <View style={{ flex: 1 }}>
-              {hasMultipleBuildings ? (
-                <TouchableOpacity
-                  style={{
-                    width: "100%",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    paddingHorizontal: theme.spacing.lg,
-                    paddingVertical: theme.spacing.sm,
-                  }}
-                  onPress={() => bottomSheetRef.current?.present()}
-                >
-                  <Text>
-                    {t("screens.device_overview.building_list.building_info.name", { id: buildingId }) ??
-                      t("screens.device_overview.building_list.placeholder")}
-                  </Text>
-                  <Icon name="chevron-down" size={16} />
-                </TouchableOpacity>
-              ) : null}
               <View style={{ flex: 1, justifyContent: "flex-start" }}>
-                <DeviceList buildingId={buildingId} refresh={refreshDeviceList} onRefresh={onDeviceListRefreshed} />
-              </View>
-              {hasMultipleBuildings ? (
-                <BuildingBottomSheet
-                  bottomSheetRef={bottomSheetRef}
-                  buildingId={buildingId}
-                  onBuildingSelect={setBuildingId}
+                <DataSourceList
+                  refresh={refreshDeviceList}
+                  onRefresh={onDeviceListRefreshed}
+                  dataSourceList={user?.campaign.data_source_list as DataSourceListType}
                 />
-              ) : null}
+              </View>
             </View>
           </>
         )}
       </Box>
       <View style={{ position: "absolute", bottom: 10, right: 10 }}>
-        <CircleMenu />
+        <CircleMenu onClickEvent={showExplanationSheet} />
+      </View>
+      <View style={{ marginBottom: -50 }}>
+        <DataSourceExplanationSheet bottomSheetRef={refExplanationSheet} />
       </View>
     </Screen>
   );

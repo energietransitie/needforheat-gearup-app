@@ -1,41 +1,39 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { makeStyles, Text, useTheme } from "@rneui/themed";
 import dayjs from "dayjs";
-import { useRef, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import { View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { AbstractChartConfig } from "react-native-chart-kit/dist/AbstractChart";
 import { LineChartData } from "react-native-chart-kit/dist/line-chart/LineChart";
 
 import StatusIndicator from "@/components/common/StatusIndicator";
-import PropertyBottomSheet from "@/components/common/bottomSheets/PropertyBottomSheet";
 import Box from "@/components/elements/Box";
-import useMeasurements from "@/hooks/device/useMeasurements";
 import useTranslation from "@/hooks/translation/useTranslation";
-import { DeviceProperty } from "@/types/api";
+import useMeasurements from "@/hooks/upload/useMeasurements";
+import { Measurement, Property } from "@/types/api";
 import { getAverageValuePerDay } from "@/utils/aggregate";
 
 type DeviceGraphProps = {
   deviceName: string;
   dayRange?: number;
+  property: Property | undefined;
 };
 
 const BOX_HEIGHT = 250;
 
 export default function DeviceGraph(props: DeviceGraphProps) {
-  const { deviceName, dayRange = 14 } = props;
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const { deviceName, dayRange = 14, property } = props;
   const styles = useStyles();
   const { theme } = useTheme();
-  const [property, setProperty] = useState<DeviceProperty | undefined>();
-  const { data, isFetching } = useMeasurements(deviceName, {
+  const { data, isFetching } = useMeasurements(deviceName, "device", {
     property: property?.id ?? 0,
-    start: dayjs().subtract(dayRange, "d").startOf("day").toISOString(),
+    start: dayjs().subtract(dayRange, "d").startOf("day").format("YYYY-MM-DD HH:mm:ss.SSS"),
   });
+  const measurements: Measurement[] = Array.isArray(data) ? data : [];
   const [width, setWidth] = useState<number>(0);
   const { t } = useTranslation();
 
-  const filteredData = data?.filter(measurement => !isNaN(parseFloat(measurement.value)));
+  const filteredData = measurements?.filter(measurement => !isNaN(parseFloat(measurement.value)));
 
   // get the aggregated average value of every day
   const aggregatedData = getAverageValuePerDay(filteredData ?? []);
@@ -80,13 +78,6 @@ export default function DeviceGraph(props: DeviceGraphProps) {
           <Text bold>
             {t("screens.measurements.graph.timespan", { count: dayRange, unit: t("common.units.days") })}
           </Text>
-          <TouchableOpacity style={{ flexGrow: 1 }} onPress={() => bottomSheetRef.current?.present()}>
-            <Text style={{ fontSize: 14, textAlign: "right" }}>
-              {t(`hooks.property_translation.${property?.name}`, {
-                defaultValue: t("screens.measurements.graph.no_property"),
-              })}
-            </Text>
-          </TouchableOpacity>
         </View>
         <View style={{ overflow: "hidden", width: "100%" }} onLayout={e => setWidth(e.nativeEvent.layout.width)}>
           {isFetching ? (
@@ -113,12 +104,6 @@ export default function DeviceGraph(props: DeviceGraphProps) {
           )}
         </View>
       </Box>
-      <PropertyBottomSheet
-        bottomSheetRef={bottomSheetRef}
-        deviceName={deviceName}
-        propertyId={property?.id}
-        onPropertySelect={setProperty}
-      />
     </Box>
   );
 }

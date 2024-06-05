@@ -51,6 +51,7 @@ target 'NeedforHeat' do
   permissions_path = '../../../node_modules/react-native-permissions/ios'
   pod 'Permission-BluetoothPeripheral', :path => "#{permissions_path}/BluetoothPeripheral"
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
 
   post_install do |installer|
     installer.pods_project.targets.each do |target|

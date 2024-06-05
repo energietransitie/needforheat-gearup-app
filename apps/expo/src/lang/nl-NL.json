@@ -9,7 +9,7 @@
         "timespan": "Afgelopen {{count}} {{unit}}",
         "no_devices": "Er zijn geen apparaten gekoppeld",
         "no_property": "Selecteer een attribuut",
-        "no_data": "Geen data"
+        "no_data": "Geen data beschikbaar"
       },
       "property_sheet": {
         "title": "Selecteer een attribuut"
@@ -17,9 +17,11 @@
     },
     "device_overview": {
       "title": "Databronnen",
+      "toast_message": "Uitgeschakeld item. Werk eerst item(s) met witte achtergrond af!",
+      "toast_title": "Vergrendeld item",
       "buttons": {
         "add_enelogic": "Enelogic toevoegen",
-        "install_device": "Meetapparaatje scannen"
+        "install_device": "Meetapparaat scannen"
       },
       "device_list": {
         "device_info": {
@@ -27,35 +29,38 @@
           "no_data": "Nog geen data ontvangen"
         },
         "reset_device": "Resetten",
-        "empty_collection": "Er zijn nog geen databronnen toegevoegd."
+        "empty_collection": "Er is geen Databronnen lijst gevonden voor deze campagne of er is geen internet/wifi.",
+        "updating_now": "Nu",
+        "late": "Laat",
+        "super_late": "Offline",
+        "next_update": "Volg. in",
+        "hours": "u"
       },
-      "building_list": {
-        "placeholder": "Selecteer een gebouw",
-        "building_info": {
-          "name": "Gebouw #{{id}}"
-        }
+      "explanation_sheet": {
+        "title": "Welkom bij de NeedForHeat App!",
+        "description": "Dit scherm toont een lijst van Databronnen die u moet voltooien.\n\nDit moet u weten:\n- Open Databronnen zijn wit.\n- Vergrendelde Databronnen zijn grijs.\n- Onboarded Databronnen zijn groen.\n\nUw doel is om alle Databronnen te voltooien en volledig deel te nemen aan de campagne! Uw voortgang wordt weergegeven in de progressiebalk bovenaan.\n\nTik op een open Databron om te beginnen. Gebruik het ?-pictogram voor veelgestelde vragen.\n\nU kunt deze uitleg opnieuw openen door op het groene ?-pictogram rechtsonder op het scherm te drukken wanneer deze uitleg verdwijnt."
       }
     },
     "home_stack": {
-      "title": "Bronnen",
+      "title": "Databronnen",
       "activate_device": {
         "title": "Apparaat activeren",
         "status_indicator": {
           "loading": "Apparaatinformatie ophalen...",
           "working": "Apparaat activeren op server...",
-          "error": "Er is een fout opgetreden bij het activeren van het meetapparaatje. Probeer het opnieuw."
+          "error": "Er is een fout opgetreden bij het activeren van het meetapparaat. Probeer het opnieuw."
         },
-        "activated": "Apparaat geactiveeerd!",
+        "activated": "Apparaat geactiveerd!",
         "alert": {
           "unknown_error": "Er is een fout opgetreden bij het activeren van het apparaat.",
-          "no_building": "Uw account is niet gekoppeld aan een gebouw.",
-          "already_activated": "Dit meetapparaatje is al geactiveerd op een ander account."
+          "already_activated": "Dit meetapparaatje is al geactiveerd op een ander account.",
+          "mismatched_device_name": "Er is een verkeerd apparaat gescand. Probeer het opnieuw met het juiste apparaat."
         }
       },
       "already_invited": {
         "title": "Reeds uitgenodigd",
         "expanded_title": "Ik heb al een uitnodiging",
-        "description": "In de uitnodigingsmail die u heeft ontvangen staat een activatielink. Klik op deze link om te beginnen met de installatie van uw meetapparaatjes."
+        "description": "In de uitnodigingsmail die u heeft ontvangen staat een activatielink. Klik op deze link om te beginnen met de installatie van uw meetapparaten."
       },
       "add_device": {
         "title": "Apparaat verbinden",
@@ -85,7 +90,7 @@
         },
         "authenticated": {
           "title": "Scan een QR-code",
-          "description": "Scan de QR-code van een meetapparaatje. Deze staat op het e-ink scherm van het meetapparaatje of op een sticker (kijk ook op de achterkant)."
+          "description": "Scan de QR-code van het meetapparaat. Deze staat op het e-ink scherm of op een sticker op het meetapparaat."
         },
         "unauthenticated": {
           "title": "NeedForHeat",
@@ -123,11 +128,11 @@
         },
         "provisioning_error": {
           "title": "Er is een fout opgetreden",
-          "message": "Er is een fout opgetreden tijdens het configureren van uw apparaat. Start het meetapparaatje opnieuw en probeer opnieuw."
+          "message": "Er is een fout opgetreden tijdens het configureren van uw apparaat. Start het meetapparaat opnieuw en probeer opnieuw."
         },
         "wifi_error": {
-          "title": "Er is iets fouts gegaan tijdens het verbinden met het wifinetwerk",
-          "message": "Is uw wifiwachtwoord wel correct? Bent u wel in de buurt van het apparaat?"
+          "title": "Er is iets misgegaan tijdens het verbinden met het wifinetwerk",
+          "message": "Is uw wifi-wachtwoord wel correct? Bent u wel in de buurt van het apparaat?"
         },
         "measurements_error": {
           "title": "Geen gegevens ontvangen",
@@ -138,9 +143,18 @@
         "title": "QR-code scanner",
         "errors": {
           "no_permission": "Geen cameratoestemming",
-          "invalid_qr": "De QR-code is geen geldige QR-code voor een meetapparaatje.",
-          "mismatched_device_name": "Het apparaat dat u probeert te activeren is niet hetzelfde als het apparaat dat u zojuist heeft gescand.",
-          "unknown_error": "Er is een fout opgetreden tijdens het scannen van de QR-code."
+          "invalid_qr": "De QR-code is geen geldige QR-code voor een meetapparaat.",
+          "mismatched_device_name": "Er is een verkeerd apparaat gescand. Probeer het opnieuw met het juiste apparaat.",
+          "unknown_error": "Er is een fout opgetreden tijdens het scannen van de QR-code.",
+          "camera_request_failed": "Een fout is opgetreden bij het aanvragen van camera-machtigingen."
+        },
+        "camera": {
+          "alert": {
+            "title": "Camera-machtiging",
+            "message": "Deze app maakt gebruik van de camera om QR-codes te scannen vanaf het apparaat.\n\nWilt u deze machtiging verlenen?",
+            "button": "Oké, vraag maar!",
+            "enable_button": "Camera-machtiging verlenen"
+          }
         }
       },
       "search_device": {
@@ -152,15 +166,23 @@
           }
         },
         "bluetooth": {
-          "enabling": "Bluetooth inschakelen...",
+          "enabling": "Bluetooth is momenteel uitgeschakeld. Om verder te kunnen gaan, dient u uw Bluetooth in te schakelen",
           "alert": {
-            "title": "Bluetooth toestemming",
-            "message": "Deze app gebruikt Bluetooth, maar registreert uw locatie niet. Op Android valt Bluetooth onder locatiediensten. Daarom krijgt u zo een vraag over locatie.",
-            "button": "Oké, vraag maar!"
+            "title": "Machtigingen toestaan",
+            "androidmessage": "Om verbinding te maken met de module, heeft deze app Bluetooth, Precieze Locatie en Apparaten in de Buurt machtigingen nodig.\n\nJe wordt gevraagd om deze machtigingen te geven wanneer dat nodig is.",
+            "iosmessage": "Om een verbinding met de module tot stand te brengen, maakt deze app gebruik van Bluetooth.\n\nJe wordt gevraagd om Bluetooth te geven wanneer dat nodig is.",
+            "button": "Oké, vraag maar!",
+            "enable_button": "Bluetooth Inschakelen",
+            "cancel": "Annuleren",
+            "switch_on": "Inschakelen",
+            "disabled_bluetooth": "Bluetooth is uitgeschakeld. Wilt u Bluetooth inschakelen?"
           },
           "error": {
             "title": "Er is een fout opgetreden.",
-            "message": "Zorg ervoor dat Bluetooth is ingeschakeld en probeer opnieuw."
+            "message": "Zorg ervoor dat Bluetooth is ingeschakeld en probeer opnieuw.",
+            "cancel_message": "Bluetooth inschakelen geannuleerd",
+            "error_message": "Bluetooth inschakelen is mislukt.",
+            "status_check": "Fout bij controleren van Bluetooth-status:"
           }
         },
         "scanning": {
@@ -205,8 +227,112 @@
             },
             "invalid_wifi": {
               "title": "Fout",
-              "message": "Dit meetapparaatje kan geen verbinding maken met WPA2 Enterprise- of WPA3-netwerken."
+              "message": "Dit meetapparaat kan geen verbinding maken met WPA2 Enterprise- of WPA3-netwerken."
             }
+          }
+        }
+      },
+      "energy_query": {
+        "information_screen": {
+          "title": "EnergyQuery Informatie",
+          "button": "Begrepen!"
+        },
+        "homeselect_screen": {
+          "title": "Selecteer uw woning",
+          "subtitle": "Sleep de kaart rond en plaats de pin boven uw huis",
+          "button": "Deze locatie gebruiken!"
+        },
+        "homeaddress_screen": {
+          "title": "Vul je adres in",
+          "subtitle": "Sleep de kaart rond en plaats de pin boven je woning.\nJe adres kan je later nog aanpassen.",
+          "button": "Gebruik dit adres!",
+          "error": {
+            "title": "Ongeldig adres",
+            "message": "Dit is geen adres dat we kunnen herkennen.\nProbeer het opnieuw en check eventueel de handleiding of FAQ voor meer informatie."
+          }
+        },
+        "weather_location_result_screen": {
+          "title": "Resultaten",
+          "subtitle": "Bevindt jouw huis zich in deze weerzone?",
+          "send_button": "Verzenden",
+          "back_button": "Opnieuw",
+          "marker": "Geselecteerde locatie",
+          "alert": {
+            "sending": {
+              "title": "Bezig met verzenden...",
+              "message": "Uw Energy Query wordt naar de energiedokter gestuurd"
+            },
+            "success": {
+              "title": "Succes!",
+              "message": "Uw Energy Query is naar de energiedokter gestuurd"
+            },
+            "fail": {
+              "title": "Fout!",
+              "message": "Er is een fout opgetreden bij het verzenden van de query:"
+            }
+          }
+        },
+        "weather_location_posted_screen": {
+          "title": "Verzonden resultaat",
+          "subtitle": "U heeft de volgende weerzone verzonden op",
+          "back_button": "Ga terug"
+        },
+        "location_permission": {
+          "alert": {
+            "title": "Locatie machtiging",
+            "message": "Deze app maakt gebruik van uw GPS om uw locatie op te halen.\n\nWilt u deze machtiging verlenen?",
+            "button": "Oké, vraag maar!",
+            "enable_button": "Machtiging locatie verlenen"
+          },
+          "errors": {
+            "request_failed": "Een fout is opgetreden bij het aanvragen van de locatie-machtigingen."
+          }
+        },
+        "building_profile_progress": {
+          "title": "Adres verwerken",
+          "alert": {
+            "initial_data": {
+              "title": "Initiële gegevens ophalen...",
+              "message": "Initiële gegevens voor uw woning worden opgehaald"
+            },
+            "data": {
+              "title": "Gegevens ophalen...",
+              "message": "Er worden gegevens opgehaald over uw woning voor de berekening"
+            },
+            "calculating": {
+              "title": "Berekenen...",
+              "message": "Er worden complexe berekeningen uitgevoerd met de gegevens"
+            },
+            "sending": {
+              "title": "Uw query verzenden...",
+              "message": "Uw berekeningen worden naar de EnergyDokter gestuurd!"
+            },
+            "success": {
+              "title": "Succes!",
+              "message": "Uw berekeningen zijn naar de EnergyDokter gestuurd!"
+            }
+          },
+          "fail": {
+            "title": "Fout!",
+            "api": {
+              "message": "Er is een fout opgetreden tijdens het ophalen van sleutels om gegevens te verkrijgen.\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+            },
+            "bag": {
+              "message": "Er is een fout opgetreden tijdens het ophalen van initiële gegevens.\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+            },
+            "3dbag": {
+              "message": "Er is een fout opgetreden tijdens het ophalen van gegevens.\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+            },
+            "calculating": {
+              "message": "Er is een fout opgetreden tijdens het berekenen met gevonden gegevens.\nProbeer de query opnieuw, anders neemt u contact op met de helpdesk."
+            },
+            "sending": {
+              "message": "Er is een fout opgetreden tijdens het verzenden van de EnergieQuery naar de EnergyDoctor\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+            }
+          },
+          "success": {
+            "title": "Query verstuurd!",
+            "message": "De EnergyQuery is naar de EnergyDokter verzonden."
           }
         }
       }
@@ -217,8 +343,9 @@
         "title": "Info",
         "unsuported_url_alert": {
           "title": "Niet-ondersteunde URL",
-          "message": "De URL {{url}} word niet ondersteund."
-        }
+          "message": "De URL {{url}} wordt niet ondersteund."
+        },
+        "campaign": "Campagne"
       },
       "about": {
         "title": "Over deze app"
@@ -239,6 +366,9 @@
           "title": "Opgeslagen wifiwachtwoorden verwijderen",
           "message": "Weet u het zeker? Na het verwijderen van de opgeslagen wifiwachtwoorden uit deze app zult u bij het koppelen van een nieuw meetapparaatje het wifiwachtwoord opnieuw moeten intypen.",
           "toast": "wifiwachtwoorden succesvol verwijderd"
+        },
+        "notifications": {
+          "title": "Open melding instellingen"
         },
         "session_token": {
           "title": "Sessie-token resetten",
@@ -263,19 +393,42 @@
   },
   "hooks": {
     "property_translation": {
-      "roomTemp": "Temperatuur",
-      "CO2concentration": "CO₂ concentratie",
-      "relativeHumidity": "Luchtvochtigheid",
-      "countPresence": "Aanwezigheid"
+      "heartbeat": "Hartslag",
+      "batteryVoltage": "Batterijspanning (V)",
+      "booted_fw": "Opgestarte firmware",
+      "countPresence": "Aanwezigheidsteller",
+      "CO2concentration": "CO₂-concentratie",
+      "roomTemp": "Kamertemperatuur",
+      "relativeHumidity": "Relatieve luchtvochtigheid (%)",
+      "e_use_lo_cum__kWh": "Cumulatief energieverbruik (Laag) (kWh)",
+      "e_use_hi_cum__kWh": "Cumulatief energieverbruik (Hoog) (kWh)",
+      "e_ret_lo_cum__kWh": "Cumulatief energieteruglevering (Laag) (kWh)",
+      "e_ret_hi_cum__kWh": "Cumulatief energieteruglevering (Hoog) (kWh)",
+      "g_use_cum__m3": "Cumulatief gasverbruik (m³)",
+      "battery_voltage__V": "Batterijspanning (V)",
+      "occupancy__p": "Aantal personen aanwezig",
+      "co2__ppm": "CO₂-concentratie (ppm)",
+      "temp_in__degC": "Temperatuur (˚C)",
+      "rel_humidity__0": "Relatieve luchtvochtigheid (%)",
+      "onboarded__p": "Aantal personen aan boord",
+      "dsmr_version__0": "DSMR Versie",
+      "meter_code__str": "Metercode",
+      "e_ret_cum__kWh": "Cumulatief energieteruglevering (kWh)",
+      "e_use_cum__kWh": "Cumulatief energieverbruik (kWh)"
     },
     "bluetooth_permission": {
-      "not_granted": "Bluetooth-machtigingen zijn niet verleend. Zorg ervoor dat de app Bluetooth-machtigingen heeft en probeer opnieuw."
+      "not_granted_ios": "Bluetooth-machtigingen zijn niet verleend.\nZorg ervoor dat de app Bluetooth-machtigingen heeft en probeer opnieuw.",
+      "not_granted_android": "Zorg ervoor dat Bluetooth aanstaat en dat u machtigingen geeft voor Locatie en Apparaten in de Buurt.\n U kunt dit doen via instellingen."
+    },
+    "camera_permission": {
+      "not_granted_ios": "Camera-machtigingen zijn niet verleend.\nZorg ervoor dat de app Camera-machtigingen heeft en probeer opnieuw.",
+      "not_granted_android": "Zorg ervoor dat Camera aanstaat.\nU kunt dit doen via instellingen."
     },
     "external_links": {
       "not_supported": "Uw smartphone biedt geen ondersteuning voor het openen van externe links.",
       "confirmation": {
         "title": "Externe link openen",
-        "description": "U staat op het punt een link buiten de applicatie te openen. Wil je doorgaan?\n\nURL: {{url}}",
+        "description": "U staat op het punt een link buiten de applicatie te openen. Wilt u doorgaan?\n\nURL: {{url}}",
         "confirm": "Open"
       }
     }
@@ -296,16 +449,29 @@
       }
     }
   },
+  "notifications": {
+    "ticker": "DataSource Offline",
+    "bigText": "Een of meer van uw DataSources hebben langdurig niet geupload en hun status is nu Offline.\nGraag onderzoeken!",
+    "subText": "NeedForHeat DataSources",
+    "title": "DataSource Waarschuwing",
+    "message": "Een of meer van uw DataSources hebben langdurig niet geupload en hun status is nu Offline.\nGraag onderzoeken!",
+    "alert": {
+      "title": "Melding machtiging",
+      "message": "Deze app stuurt meldingen om u te informeren als een DataSource langduring niet uploadt.\n\nWilt u deze machtiging verlenen?",
+      "button": "Oké, vraag maar!",
+      "enable_button": "Machtiging melding verlenen"
+    }
+  },
   "components": {
     "wifi_network_list": {
       "empty_collection": "Geen wifinetwerken gevonden."
     },
     "manual_content": {
       "loading": "Handleiding laden...",
-      "error": "De handleiding kon niet worden geladen. Neem contact op met de maker van het meetapparaatje voor meer informatie of ga verder op eigen risico."
+      "error": "De handleiding kon niet worden geladen. Neem contact op met de maker van het meetapparaatje en/of de helpdesk voor meer informatie of ga verder op eigen risico."
     },
     "status_indicator": {
-      "loading": "Aan het laden...",
+      "loading": "Aan het laden...\n Zorg ervoor dat u een internetverbinding heeft.",
       "error": "Er is een fout opgetreden."
     }
   },

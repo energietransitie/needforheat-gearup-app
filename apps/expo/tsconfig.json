@@ -15,10 +15,11 @@
     "allowSyntheticDefaultImports": true,
     "typeRoots": [
       "src/types",
-      "node_modules/@types"
+      "node_modules/@types",
+      "../../node_modules/@types"
     ],
     "types": [
-      "@types/jest",
+      "jest",
       "react-native",
       "react-test-renderer"
     ],

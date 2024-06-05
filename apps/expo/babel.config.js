@@ -20,9 +20,10 @@ module.exports = function (api) {
           },
         },
       ],
-      // "@babel/plugin-proposal-class-properties",
-      // "@babel/plugin-proposal-private-methods",
-      'react-native-reanimated/plugin'
+      //[DO NOT UNCOMMENT!] WILL CRASH THE APP - TESTING NOT POSSIBLE ON REACT NATIVE
+      //"@babel/plugin-proposal-class-properties",
+      //"@babel/plugin-proposal-private-methods",
+      "react-native-reanimated/plugin",
     ],
   };
 };

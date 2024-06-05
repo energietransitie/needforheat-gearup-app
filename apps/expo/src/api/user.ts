@@ -2,8 +2,8 @@ import { API_URL } from "@env";
 
 import { FETCH_HEADERS, getAuthToken } from "@/constants";
 import { accountSchema } from "@/types/api";
+import { handleRequestErrors } from "@/utils/handleRequestErrors";
 import { getJwtPayload } from "@/utils/jwt";
-import { handleRequestErrors } from "@/utils/tools";
 
 export async function fetchUser() {
   const authToken = await getAuthToken();
@@ -17,5 +17,6 @@ export async function fetchUser() {
 
   const data = await handleRequestErrors(response);
   const jsonData = await data.json();
+
   return accountSchema.parse(jsonData);
 }

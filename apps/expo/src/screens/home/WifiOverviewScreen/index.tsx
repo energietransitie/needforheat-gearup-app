@@ -10,7 +10,6 @@ import StatusIndicator from "@/components/common/StatusIndicator";
 import Box from "@/components/elements/Box";
 import Screen from "@/components/elements/Screen";
 import useTranslation from "@/hooks/translation/useTranslation";
-import { useDisableBackButton } from "@/hooks/useDisableBackButton";
 import useStoredWifiNetworks from "@/hooks/wifi/useStoredWifiNetworks";
 import useWifiNetworks from "@/hooks/wifi/useWifiNetworks";
 import { Maybe, WifiEntry } from "@/types";
@@ -19,7 +18,7 @@ import { HomeStackParamList } from "@/types/navigation";
 type WifiOverviewScreenProps = NativeStackScreenProps<HomeStackParamList, "WifiOverviewScreen">;
 
 export default function WifiOverviewScreen({ navigation, route }: WifiOverviewScreenProps) {
-  const { device, proofOfPossession, device_TypeName } = route.params;
+  const { device, proofOfPossession, device_TypeName, normalName } = route.params;
   const [selectedNetwork, setSelectedNetwork] = useState<Maybe<WifiEntry>>(null);
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const { t } = useTranslation();
@@ -43,7 +42,6 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
     return () => backHandler.remove();
   }, [navigation]);
 
-
   const onProvision = (network: WifiEntry, password?: string) => {
     bottomSheetRef.current?.close();
 
@@ -52,7 +50,8 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
       proofOfPossession,
       network,
       password,
-      device_TypeName
+      device_TypeName,
+      normalName,
     });
   };
 
@@ -60,7 +59,8 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
     navigation.navigate("SearchDeviceScreen", {
       deviceName: device.deviceName,
       proofOfPossession,
-      device_TypeName
+      device_TypeName,
+      normalName,
     });
   };
 
@@ -95,7 +95,7 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
 
     // If the network is open, navigate to the provisioning screen immediately
     if (network.security === 0) {
-      onProvision(network);
+      onProvision(network, "");
       return;
     }
 

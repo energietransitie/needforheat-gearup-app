@@ -17,6 +17,8 @@
     },
     "device_overview": {
       "title": "Data Sources",
+      "toast_message": "Disabled item. First complete the item(s) with a white background!",
+      "toast_title": "Locked item",
       "buttons": {
         "add_enelogic": "Connect Enelogic",
         "install_device": "Scan device"
@@ -27,17 +29,20 @@
           "no_data": "No data received yet"
         },
         "reset_device": "Reset",
-        "empty_collection": "No data sources added yet."
+        "empty_collection": "No Data Sources List found for this Campaign or there is no internet/wifi.",
+        "updating_now": "Now",
+        "late": "Late",
+        "super_late": "Offline",
+        "next_update": "Next in",
+        "hours": "h"
       },
-      "building_list": {
-        "placeholder": "Select a building",
-        "building_info": {
-          "name": "Building #{{id}}"
-        }
+      "explanation_sheet": {
+        "title": "Welcome to the NeedForHeat App!",
+        "description": "This screen displays a list of Data Sources that you need to complete.\n\nHere's what you need to know:\n- Open Data Sources are shown in white.\n- Locked Data Sources are shown in grey.\n- Onboarded Data Sources are shown in green.\n\nYour mission is to complete all Data Sources to fully participate in the campaign! You can track your progress with the progress bar at the top.\n\nTo proceed, tap on an open Data Source to begin. Use the ? icon for frequently asked questions.\n\nYou can reopen this explanation by tapping on the green ? icon at the bottom right of the screen when this explanation disappears."
       }
     },
     "home_stack": {
-      "title": "Sources",
+      "title": "Data Sources",
       "activate_device": {
         "title": "Activate device",
         "status_indicator": {
@@ -48,8 +53,8 @@
         "activated": "Device activated!",
         "alert": {
           "unknown_error": "An error occurred while activating the device.",
-          "no_building": "Your account is not associated with a building.",
-          "already_activated": "This measurement device was already activated on another account."
+          "already_activated": "This measurement device was already activated on another account.",
+          "mismatched_device_name": "The wrong device has been scanned. Please try again with the correct device."
         }
       },
       "already_invited": {
@@ -85,7 +90,7 @@
         },
         "authenticated": {
           "title": "Scan a QR code",
-          "description": "Scan the QR code of a measurement device. It can be found on the e-ink screen or on a sticker on (the back of) the device."
+          "description": "Scan the QR code of a measurement device. It can be found on the e-ink screen or on a sticker on the device."
         },
         "unauthenticated": {
           "title": "NeedForHeat",
@@ -131,7 +136,7 @@
         },
         "measurements_error": {
           "title": "No data was received",
-          "message": "Even after a long wait, no data was received from the device."
+          "message": "After a long period, no data was received from the device."
         }
       },
       "qr_scanner": {
@@ -139,8 +144,17 @@
         "errors": {
           "no_permission": "No camera permission",
           "invalid_qr": "The QR code is not a valid QR code for a measurement device.",
-          "mismatched_device_name": "The device name in the QR code does not match the name of the device you are trying to reset.",
-          "unknown_error": "An error occurred while scanning the QR code."
+          "mismatched_device_name": "You are scanning the wrong device. Please scan again with the right one.",
+          "unknown_error": "An error occurred while scanning the QR code.",
+          "camera_request_failed": "An error occurred while requesting camera permissions."
+        },
+        "camera": {
+          "alert": {
+            "title": "Camera permission",
+            "message": "This app uses the camera to scan QR codes from the device.\n\nDo you want to grant this permission?",
+            "button": "Okay, ask away!",
+            "enable_button": "Grant Camera Permission"
+          }
         }
       },
       "search_device": {
@@ -152,15 +166,23 @@
           }
         },
         "bluetooth": {
-          "enabling": "Enabling Bluetooth...",
+          "enabling": "Bluetooth is currently disabled. To proceed, please enable your Bluetooth.",
           "alert": {
-            "title": "Bluetooth permission",
-            "message": "This app uses Bluetooth, but does not register your location. On Android devices, Bluetooth is considered part of location services. That's why you will get a question about location.",
-            "button": "Okay, go ahead!"
+            "title": "Allow permissions",
+            "androidmessage": "To connect to the module, this app requires Bluetooth, Precise Location, and Nearby Devices permissions.\n\nYou will be prompted to enable these permissions when necessary.",
+            "iosmessage": "To establish a connection with the module, this app utilizes Bluetooth.\n\nYou will be prompted to enable Bluetooth when necessary.",
+            "button": "Okay, go ahead!",
+            "enable_button": "Enable Bluetooth",
+            "cancel": "Cancel",
+            "switch_on": "Switch on",
+            "disabled_bluetooth": "Bluetooth is disabled. Do you want to enable Bluetooth?"
           },
           "error": {
             "title": "An error occurred.",
-            "message": "Please make sure Bluetooth is enabled and try again."
+            "message": "Please make sure Bluetooth is enabled and try again.",
+            "cancel_message": "Bluetooth activation canceled",
+            "error_message": "Bluetooth activation failed.",
+            "status_check": "Error while checking Bluetooth status:"
           }
         },
         "scanning": {
@@ -168,7 +190,7 @@
           "found": "Device {{name}} found!",
           "not_found": {
             "title": "Device {{name}} was not found.",
-            "message": "Please make sure that the measurement device is near your smartphone. Searching again with the button below."
+            "message": "Please make sure that the measurement device is nearby your smartphone. Try searching again with the button below."
           }
         },
         "scan": "Scan",
@@ -205,8 +227,112 @@
             },
             "invalid_wifi": {
               "title": "Error",
-              "message": "This measurement device can not connect to WPA2 Enterprise or WPA3 networks."
+              "message": "This measurement device cannot connect to WPA2 Enterprise or WPA3 networks."
             }
+          }
+        }
+      },
+      "energy_query": {
+        "information_screen": {
+          "title": "EnergyQuery Information",
+          "button": "Understood!"
+        },
+        "homeselect_screen": {
+          "title": "Select your Home",
+          "subtitle": "Drag the map around and place the pin above your home",
+          "button": "Use this location!"
+        },
+        "homeaddress_screen": {
+          "title": "Fill in your address",
+          "subtitle": "Drag the map around and place the pin above your home.\nYou can also edit your address if you need to after.",
+          "button": "Use this address!",
+          "error": {
+            "title": "Incorrect address",
+            "message": "This is not an address we can ues.\nPlease try again and check the manual and FAQ for more info."
+          }
+        },
+        "weather_location_result_screen": {
+          "title": "Check Results",
+          "subtitle": "Is your home inside this weather zone?",
+          "send_button": "Send my query!",
+          "back_button": "Try again",
+          "marker": "Selected location",
+          "alert": {
+            "sending": {
+              "title": "Sending...",
+              "message": "Sending your Energy Query to the Energy Doctor"
+            },
+            "success": {
+              "title": "Success!",
+              "message": "Your Energy Query has been sent to the Energy Doctor"
+            },
+            "fail": {
+              "title": "Fail!",
+              "message": "An error occured when trying to send the query:"
+            }
+          }
+        },
+        "weather_location_posted_screen": {
+          "title": "Sent Result",
+          "subtitle": "You sent the following weather zone at",
+          "back_button": "Go back"
+        },
+        "location_permission": {
+          "alert": {
+            "title": "Locatie Permission",
+            "message": "This app uses GPS to get your location.\n\nDo you want to grant this permission?",
+            "button": "Sure, ask away!",
+            "enable_button": "Grant Location permission"
+          },
+          "errors": {
+            "request_failed": "An error occurred while requesting Location permissions."
+          }
+        },
+        "building_profile_progress":{
+          "title": "Processing Address",
+          "alert": {
+            "initial_data": {
+              "title": "Fetching initial data...",
+              "message": "Initial data is being retrieved for your home"
+            },
+            "data": {
+              "title": "Fetching data...",
+              "message": "Data is being retrieved for your home for the calculation"
+            },
+            "calculating": {
+              "title": "Calculating...",
+              "message": "Complex calculations are being performed with the data"
+            },
+            "sending": {
+              "title": "Sending your query...",
+              "message": "Your calculations are being sent to the energy doctor!"
+            },
+            "success": {
+              "title": "Success!",
+              "message": "Your calculations have been sent to the energy doctor!"
+            }
+          },
+          "fail":{
+            "title": "Error!",
+            "api": {
+              "message": "An error occurred while fetching keys to get data.\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+            },
+            "bag": {
+              "message": "An error occurred while fetching initial data.\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+            },
+            "3dbag": {
+              "message": "An error occurred while fetching data.\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+            },
+            "calculating": {
+              "message": "An error occurred while calcuating with found data.\nTry the query again, otherwise contact the helpdesk."
+            },
+            "sending": {
+              "message": "An error occurred while sending the EnergyQuery to the EnergyDoctor\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+            }
+          },
+          "success": {
+            "title": "Query sent!",
+            "message": "The Energy Query has been sent to the EnergyDoctor."
           }
         }
       }
@@ -218,7 +344,8 @@
         "unsuported_url_alert": {
           "title": "Unsupported URL",
           "message": "The URL {{url}} is not supported."
-        }
+        },
+        "campaign": "Campaign"
       },
       "about": {
         "title": "About"
@@ -239,6 +366,9 @@
           "title": "Delete stored Wi-Fi passwords",
           "message": "Are you sure? After removing the stored Wi-Fi passwords from this app, you will have to enter the password again when you want to add a new measurement device.",
           "toast": "Succesfully deleted stored Wi-Fi passwords"
+        },
+        "notifications": {
+          "title": "Open notification settings"
         },
         "session_token": {
           "title": "Reset session token",
@@ -262,13 +392,36 @@
   },
   "hooks": {
     "property_translation": {
-      "roomTemp": "Temperature",
+      "heartbeat": "Heartbeat",
+      "batteryVoltage": "Battery Voltage (V)",
+      "booted_fw": "Booted firmware",
+      "countPresence": "Presence counter",
       "CO2concentration": "CO₂ concentration",
-      "relativeHumidity": "Humidity",
-      "countPresence": "Presence"
+      "roomTemp": "Room temperature",
+      "relativeHumidity": "Relative humidity (%)",
+      "e_use_lo_cum__kWh": "Cumulative energy usage (Low) (kWh)",
+      "e_use_hi_cum__kWh": "Cumulative energy usage (High) (kWh)",
+      "e_ret_lo_cum__kWh": "Cumulative energy return (Low) (kWh)",
+      "e_ret_hi_cum__kWh": "Cumulative energy return (High) (kWh)",
+      "g_use_cum__m3": "Cumulative gas usage (m³)",
+      "battery_voltage__V": "Battery voltage (V)",
+      "occupancy__p": "Number of people present",
+      "co2__ppm": "CO₂ concentration (ppm)",
+      "temp_in__degC": "Temperature (˚C)",
+      "rel_humidity__0": "Relative humidity (%)",
+      "onboarded__p": "Number of people onboard",
+      "dsmr_version__0": "DSMR version",
+      "meter_code__str": "Meter code",
+      "e_ret_cum__kWh": "Cumulative energy return (kWh)",
+      "e_use_cum__kWh": "Cumulative energy usage (kWh)"
     },
     "bluetooth_permission": {
-      "not_granted": "Bluetooth permission is not granted. Please grant the permission and try again."
+      "not_granted_ios": "Bluetooth permission is not granted. Please grant the permission and try again.",
+      "not_granted_android": "Make sure Bluetooth is turned on and that you grant permissions for Precise Location and Nearby Devices.\nYou can do this through settings."
+    },
+    "camera_permission": {
+      "not_granted_ios": "Camera permission is not granted. Please grant the permission and try again.",
+      "not_granted_android": "Make sure Camera is turned on.\nYou can do this through settings."
     },
     "external_links": {
       "not_supported": "Your device does not support opening external links.",
@@ -295,6 +448,19 @@
       }
     }
   },
+  "notifications": {
+    "ticker": "DataSource Offline",
+    "bigText": "One or more of your DataSources hasn't been uploading for an extended period and its status is now Offline.\nPlease investigate!",
+    "subText": "NeedForHeat DataSources",
+    "title": "DataSource Alert",
+    "message": "One or more of your DataSources hasn't been uploading for an extended period and its status is now Offline.\nPlease investigate!",
+    "alert": {
+      "title": "Notification permission",
+      "message": "This app uses notifications to notify if a DataSource hasn't been uploading in a while.\n\nDo you want to grant this permission?",
+      "button": "Okay, ask away!",
+      "enable_button": "Grant Notification Permission"
+    }
+  },
   "components": {
     "wifi_network_list": {
       "empty_collection": "No Wi-Fi networks found."
@@ -304,7 +470,7 @@
       "error": "The manual could not be loaded. Contact the device manufacturer for more information or continue at your own risk."
     },
     "status_indicator": {
-      "loading": "Loading...",
+      "loading": "Loading...\nPlease make sure you have an internet connection available.",
       "error": "An error has occurred."
     }
   },
