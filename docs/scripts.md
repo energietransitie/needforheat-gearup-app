@@ -20,3 +20,6 @@
 | `app`     | dev:android:install     | Installs the dev APK to all ADB-connected devices.                                                        |
 | `app`     | ios:pod:annihilate      | Clean up caches and destroy pod                                                                           |
 | `app`     | ios:pod:install         | Create new pod, akin to `yarn install` but for iOS                                                        |
+| `app`     | eas:android:build       | Build a new Android binary with EAS for the App Store.|
+| `app`     | eas:ios:build       | Build a new iOS binary with EAS for the App Store.|
+| `app`     | eas:all:build       | Build all new binaries with EAS for the App Stores.|

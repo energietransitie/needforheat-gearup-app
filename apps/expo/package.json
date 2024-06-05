@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "2.11.0",
+  "version": "3.0.0",
   "scripts": {
     "dev": "expo start --dev-client",
     "dev:android": "expo run:android --device",
@@ -16,7 +16,10 @@
     "dev:android:build": "cd android && ./gradlew app:assembleRelease",
     "dev:android:install": "cd android/app/build/outputs/apk/debug && adb install app-debug.apk",
     "ios:pod:annihilate": "cd ios && pod cache clean --all && pod deintegrate",
-    "ios:pod:install": "cd ios && pod install"
+    "ios:pod:install": "cd ios && pod install",
+    "eas:android:build": "eas build --platform android",
+    "eas:ios:build": "eas build --platform ios",
+    "eas:all:build": "eas build --platform all"
   },
   "dependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",

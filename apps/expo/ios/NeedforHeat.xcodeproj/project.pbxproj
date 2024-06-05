@@ -389,7 +389,7 @@
 				CODE_SIGN_ENTITLEMENTS = NeedforHeat/NeedforHeat.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20026;
+				CURRENT_PROJECT_VERSION = 20027;
 				DEVELOPMENT_TEAM = 7CD4V7QB9J;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -406,7 +406,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = nl.windesheim.energietransitie.warmtewachter;
+				PRODUCT_BUNDLE_IDENTIFIER = nl.windesheim.energietransitie.needforheat;
 				PRODUCT_NAME = NeedforHeat;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -424,7 +424,7 @@
 				CODE_SIGN_ENTITLEMENTS = NeedforHeat/NeedforHeat.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20026;
+				CURRENT_PROJECT_VERSION = 20027;
 				DEVELOPMENT_TEAM = 7CD4V7QB9J;
 				INFOPLIST_FILE = NeedforHeat/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NeedForHeat;
@@ -436,7 +436,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = nl.windesheim.energietransitie.warmtewachter;
+				PRODUCT_BUNDLE_IDENTIFIER = nl.windesheim.energietransitie.needforheat;
 				PRODUCT_NAME = NeedforHeat;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
