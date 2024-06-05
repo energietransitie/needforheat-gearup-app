@@ -1,4 +1,4 @@
-# [2.12.0](https://github.com/energietransitie/needforheat-gearup-app/compare/v2.11.0...v2.12.0) (2024-06-05)
+# [3.0.0](https://github.com/energietransitie/needforheat-gearup-app/compare/v2.11.0...v3.0.0) (2024-06-05)
 
 
 ### Bug Fixes
