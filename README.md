@@ -123,5 +123,6 @@ We use and gratefully acknowlegde the efforts of the makers of the following sou
 -[react-native-push-notification](https://github.com/zo0r/react-native-push-notification), by zo0r (aka Dieam), licensed under [MIT](https://github.com/zo0r/react-native-push-notification/blob/master/LICENSE)
 - [lz-string](https://github.com/pieroxy/lz-string), by pieroxy, licensed under [MIT](https://github.com/pieroxy/lz-string/blob/master/LICENSE.md)
 - [react-native-localize](https://github.com/zoontek/react-native-localize), by Mathieu Acthernoene (aka zoontek), licensed under [MIT](https://github.com/zoontek/react-native-localize/blob/master/LICENSE)
+- [react-native-vector-icons/Ionicons](https://github.com/oblador/react-native-vector-icons), by Joel Arvidsson (aka oblador), licensed under [MIT](https://github.com/oblador/react-native-vector-icons/blob/master/LICENSE)
 
 This `README` uses [badges](https://github.com/badges/shields/blob/master/LICENSE), by [Shield.io](https://github.com/badges), licensed under [CC0 v1.0 Universal](https://github.com/badges/shields/blob/master/LICENSE)
