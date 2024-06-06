@@ -86,7 +86,6 @@
 	<string>Allow $(PRODUCT_NAME) to access your microphone</string>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>com.transistorsoft.fetch</string>
 		<string>fetch</string>
 		<string>processing</string>
 	</array>
