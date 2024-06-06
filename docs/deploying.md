@@ -31,9 +31,9 @@ Deploying is no mean feat. Having to rely on certificates, Firebase and Apple an
 Note that Google and Apple provide more extensive documentation for doing this. You should check them out too when you are doing this as limitations and rules change over time.
 
 ### 2.1. Prepare entries
-First thing is obvious. Pay for Google and/or Apple to be able to put an App on their stores. This first task is easy and all you need to do is make new entries. For Apple this quickly stops here as to do anything else requires the app to be sent for review. However, you can set up much more for Google:
-- Main store page listing with screenshots and descriptions in languages
-- Declarations about the app for Google. Including privacy, app access, etc.
+First thing is obvious. Pay for Google and/or Apple to be able to put an App on their stores. This second task is easy and all you need to do is make new entries.
+
+You can setup both store pages up to its entirety. Make sure to provide as much information as you can to help reviewers.
 
 After this, we can continue preparing the rest of the app.
 
@@ -52,7 +52,7 @@ After that you can create a new Expo organisation and/or a project. Essentially 
 
 In addition. Setup the environment variables in GitHub Secrets as shown in the workflow. Don't forget to create an [Expo Access Token](https://docs.expo.dev/accounts/programmatic-access/) and a GitHub SSH Key. Then you can set up the following variables:
 - `EXPO_TOKEN`
-- `GH_SSH_KEY`
+- `GH_SSH_KEY` (Also in Expo Secrets!)
 - `NFH_API_URL`
 - `GOOGLE_MAPS_API_KEY`
 - `NFH_MANUAL_URL`
@@ -63,7 +63,7 @@ In addition. Setup the environment variables in GitHub Secrets as shown in the w
 > **Note `GOOGLE_MAPS_API_KEY`** \
 > Make sure the Google Maps API Key is setup to allow the app identifier.
 
-#### Note about `GH_SSH_KEY`
+#### Note about `GH_SSH_KEY` in Expo Secrets
 This requires a bit more setting up to do. You need to generate a new key and add it to a GitHub account: \
 See [GitHub docs for creating one](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/) and [adding it to your account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
 
@@ -96,15 +96,17 @@ Expo should now be setup and we can create binaries later on.
 Now comes the hard part. We need to prepare the app to be sent over for review to Google and Apple. It is crucial that Firebase is working and you can get into the app with an invitation link.
 
 #### 2.4.1. Prepare accounts
-Step one is simple. Create a campaign and accounts for Google and Apple so the reviewer can log in. Ensure you tell the reviewer in the notes that they ideally should put the link in the notes app and then open it through the Chrome/Safari to make sure the dynamic link properly gets used.
+Step one is simple. Create a campaign and accounts for Google and Apple so the reviewer can log in.
+
+You should have provided as much information as possible already in the app entries, occasionally they won't even bother logging into the app.
 
 #### 2.4.2. Prepare binaries
 Now the second step is preparing the binaries for Google and Apple to review for. Google asks for `.aab` and Apple for an `.ipa`. These binaries need to be signed with the proper upload certificate.
 
 For Google, signing can be handled by Google themselves. See [Expo First Android Submission](https://github.com/expo/fyi/blob/main/first-android-submission.md)
 
-For Apple, which requires a Macbook, with a Distribution Certificate an Provisioning Profile. Finding the right documentation is hard but no worries, we can do it through Expo: [Submit iOS](https://docs.expo.dev/submit/ios/). \
-You should also be able to export and upload it with xCode. The  organisation might have the certificates already setup for you.
+For Apple, finding the right documentation is hard but no worries, we can do it through Expo: [Submit iOS](https://docs.expo.dev/submit/ios/). \
+You should also be able to export and upload it with xCode, which also can create the keys for you.
 
 ---
 ***Important Notice Regarding `eas-build-pre-install.sh`*** \
@@ -138,27 +140,16 @@ Now the binaries should be getting built on the [EAS NFH GearUp Project build pa
 Upload the binaries to their stores and put in the right notes so the reviewers know how to review it!
 It might take a bit and you might need to do some additional changes. But after that, you should have less issue with reviewers.
 
-You can then continue setting up the rest of the Store page up for Google and Apple and publish it for testing or public.
+See [3. Deploying to App Stores](#3-deploying-to-app-stores) on how to do this.
 
-### 2.5. Finish Expo Setup with certificates
-Now that we have our entries finished and ready. Expo should have set up the certificates for us, but doing it manually is possible too:
-
-For information on this, check out the [Expo Documentation](https://docs.expo.dev/app-signing/app-credentials/).
-
-> **Note** \
-> *For Google*: The keys and certificates should be available after uploading your first release. \
-> *For Apple*: You or your organisaiton can create a Distribution Certificate an Provisioning Profile to be added to Expo
-
-Whenever you push to main now, the binaries will be automatically be created and signed for you. This finished the manual for deploying first time. Check out [Deploying to App Stores after first time](#3-deploying-to-app-stores-after-first-time) on how you should deploy after.
-
-## 3. Deploying to App Stores after first time
+## 3. Deploying to App Stores
 After setting up everything, the workflow after pushing to main takes care most of the work now. \
 You can also manually start this workflow through GitHub Actions.
 
 Here is an explanation of how to deploy after doing it the first time for each store:
 
 ### 3.1. Apple App Store
-This build will be submitted to the App Store after the workflow finishes. This can take a while.
+This build will be submitted to the App Store after the workflow finishes **IF** an App Store Connect API Key is available. This can take a while, sometimes over 1 hour.
 
 When this is done, you can check the status of the submission in the [App Store Connect dashboard](https://appstoreconnect.apple.com/apps/6503364746/testflight/ios). This is where you can release the build to TestFlight users and/or App Store users.
 
@@ -171,8 +162,46 @@ eas submit -p ios --profile production
 
 This will ask you to log in to the Expo account. After logging in, select the option `Select a build from EAS` and select the most recent EAS build. 
 
-At the time of writing, the build cannot be automatically submitted to the App Store, since there is no App Store Connect API key available. \
-You'll have to use an app password, which can be generated in the [Apple ID settings](https://appleid.apple.com/account/manage).
+You can either generate a new App Store Connect API Key.Expo handles the API Key creation for you if it can. Otherwise, follow the below instructions for using App Password.
+
+##### Using Apple ID App Password
+You can generate an App Password in your [Apple ID settings](https://appleid.apple.com/account/manage). \
+We'll partly follow [Expo documentation](https://docs.expo.dev/submit/ios/#do-you-want-to-use-your-own).
+
+###### Step 1: Add the Apple ID
+Inside the eas.json file under `submit`, add your Apple ID under the "appleId" field. It should look something like this:
+```json
+{
+    "submit": {
+        "production": {
+            "ios": {
+            "appleId": "s1168716@student.windesheim.nl",
+            }
+        }
+    }
+}
+```
+>**Important notice when using App Password** \
+> MAKE SURE TO CLEAR THIS FIELD `EAS.JSON` AFTER USING IT. \
+> You (usually) do not want to expose your Apple ID when commiting!
+
+---
+
+###### Step 2: Add the Apple App Specific Password
+Set the `EXPO_APPLE_APP_SPECIFIC_PASSWORD` environment variable. The method varies depending on your operating system:
+- Windows: Open Command Prompt (and NOT PowerShell) and use the set command:
+```bash
+set EXPO_APPLE_APP_SPECIFIC_PASSWORD=your_app_specific_password
+```
+
+- Mac/Linux: Open Terminal and use the export command:
+```bash
+export EXPO_APPLE_APP_SPECIFIC_PASSWORD=your_app_specific_password
+```
+
+--- 
+
+You now have set yourself up to use App Password, run the submit command again.
 
 ### 3.2. Google Play Store
 The Play Store is updated using the Google Play Console, but not uploaded automatically to it. This is done using the following steps:
