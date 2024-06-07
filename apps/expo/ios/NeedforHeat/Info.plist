@@ -93,7 +93,7 @@
 	<string>SplashScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
-		<string>armv7</string>
+		<string>armv64</string>
 	</array>
 	<key>UIRequiresFullScreen</key>
 	<false/>

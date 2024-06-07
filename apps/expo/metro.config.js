@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-undef */
-// Learn more https://docs.expo.io/guides/customizing-metro
-const { getDefaultConfig } = require("expo/metro-config");
+const { getDefaultConfig, mergeConfig } = require("@react-native/metro-config");
 
-module.exports = getDefaultConfig(__dirname);
+/**
+ * Metro configuration
+ * https://reactnative.dev/docs/metro
+ *
+ * @type {import('metro-config').MetroConfig}
+ */
+const config = {};
+
+module.exports = mergeConfig(getDefaultConfig(__dirname), config);
