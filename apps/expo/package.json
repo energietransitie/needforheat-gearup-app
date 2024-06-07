@@ -121,7 +121,6 @@
     "@types/base-64": "1.0.0",
     "@types/jest": "^29.5.5",
     "@types/luxon": "^3.4.2",
-    "@types/react": "~18.2.6",
     "@types/react-native-push-notification": "^8.1.4",
     "@types/react-native-svg-charts": "5.0.12",
     "@types/react-native-vector-icons": "6.4.13",
