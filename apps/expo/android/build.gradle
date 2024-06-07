@@ -62,4 +62,3 @@ allprojects { repositories { maven { url(expoCameraMavenPath) } } }
   def useIntlJsc = true
 
 apply plugin: "com.facebook.react.rootproject"
-

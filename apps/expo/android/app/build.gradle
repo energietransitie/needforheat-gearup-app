@@ -7,7 +7,6 @@ def projectRoot = rootDir.getAbsoluteFile().getParentFile().getAbsolutePath()
 
 def reactNativeRoot = new File(["node", "--print", "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim()).getParentFile().getAbsolutePath()
 
-
 /**
 * This is the configuration block to customize your React Native Android app.
 * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -21,7 +20,7 @@ react {
     //   The folder where the react-native Codegen package is. Default is ../node_modules/@react-native/codegen
     // codegenDir = file("../node_modules/@react-native/codegen")
     //   The cli.js file which is the React Native CLI entrypoint. Default is ../node_modules/react-native/cli.js
-    cliFile = "${reactNativeRoot}/cli.js"
+    cliFile = file("${reactNativeRoot}/cli.js")
  
     /* Variants */
     //   The list of variants to that are debuggable. For those we're going to
@@ -43,7 +42,7 @@ react {
     // bundleAssetName = "MyApplication.android.bundle"
     //
     //   The entry file for bundle generation. Default is 'index.android.js' or 'index.js'
-    entryFile = ["node", "-e", "require('expo/scripts/resolveAppEntry')", projectRoot, "android"].execute(null, rootDir).text.trim()
+    entryFile = file(["node", "-e", "require('expo/scripts/resolveAppEntry')", projectRoot, "android"].execute(null, rootDir).text.trim())
     //
     //   A list of extra flags to pass to the 'bundle' commands.
     //   See https://github.com/react-native-community/cli/blob/main/docs/commands.md#bundle
@@ -51,7 +50,7 @@ react {
  
     /* Hermes Commands */
     //   The hermes compiler command to run. By default it is 'hermesc'
-    hermesCommand = new File(["node", "--print", "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim()).getParentFile().getAbsolutePath() + "/sdks/hermesc/%OS-BIN%/hermesc",
+    hermesCommand = new File(["node", "--print", "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim()).getParentFile().getAbsolutePath() + "/sdks/hermesc/%OS-BIN%/hermesc"
     //
     //   The list of flags to pass to the Hermes compiler. By default is "-O", "-output-source-map"
     // hermesFlags = ["-O", "-output-source-map"]
@@ -101,11 +100,6 @@ android {
         versionCode 20028
         versionName "3.0.0"
 
-        // Access the required environment variable
-        def googleMapsApiKey = envVariables['GOOGLE_MAPS_API_KEY']
-        manifestPlaceholders = [google_maps_api_key: googleMapsApiKey]
-        println "Manifest placeholders: ${manifestPlaceholders}"
-
         def envFile = file('../../../../.env')
         def envVariables = [:]
 
@@ -116,6 +110,12 @@ android {
                 envVariables[key.trim()] = value.trim()
             }
         }
+
+        // Access the required environment variable
+        def googleMapsApiKey = envVariables['GOOGLE_MAPS_API_KEY']
+        manifestPlaceholders = [google_maps_api_key: googleMapsApiKey]
+        println "Manifest placeholders: ${manifestPlaceholders}"
+    }
 
     signingConfigs {
         debug {
