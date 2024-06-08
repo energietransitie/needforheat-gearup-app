@@ -28,17 +28,10 @@ export default function WifiConnectBottomSheet(props: Props) {
   const { theme } = useTheme();
   const { t } = useTranslation();
 
-  const initialSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
-
-  const { animatedHandleHeight, animatedSnapPoints, animatedContentHeight, handleContentLayout } =
-    useBottomSheetDynamicSnapPoints(initialSnapPoints);
-
   return (
     <BottomSheetModal
       onDismiss={() => setPassword("")}
-      snapPoints={animatedSnapPoints}
-      handleHeight={animatedHandleHeight}
-      contentHeight={animatedContentHeight}
+      enableDynamicSizing 
       animateOnMount={false}
       enablePanDownToClose
       ref={bottomSheetRef}
@@ -46,7 +39,7 @@ export default function WifiConnectBottomSheet(props: Props) {
       android_keyboardInputMode="adjustResize"
       backdropComponent={props => <BottomSheetBackdrop {...props} pressBehavior="close" disappearsOnIndex={-1} />}
     >
-      <BottomSheetView onLayout={handleContentLayout}>
+      <BottomSheetView>
         <Box padded>
           <Text fontWeight={500}>
             {t("screens.home_stack.wifi_overview.alerts.connect.connect_to_network", { name: network?.name ?? "" })}
@@ -54,14 +47,14 @@ export default function WifiConnectBottomSheet(props: Props) {
           <BottomSheetTextInput
             containerStyle={{ marginVertical: theme.spacing.md }}
             autoFocus
-            placeholder={t("common.password")}
+            placeholder={t("common.password") as string}
             onChangeText={(text: string) => setPassword(text)}
             secureTextEntry={!showPassword}
             autoCapitalize="none"
             autoComplete="off"
             rightIcon={<WifiPasswordEyeIcon visible={showPassword} setVisible={setShowPassword} />}
           />
-          {network && <Button fullWidth title={t("common.connect")} onPress={() => onProvision(network, password)} />}
+          {network && <Button fullWidth title={t("common.connect") as string} onPress={() => onProvision(network, password)} />}
         </Box>
       </BottomSheetView>
     </BottomSheetModal>
