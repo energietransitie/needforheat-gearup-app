@@ -1,5 +1,5 @@
 import { makeStyles, useTheme } from "@rneui/themed";
-import { ActivityIndicator, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import useTranslation from "@/hooks/translation/useTranslation";
@@ -25,7 +25,7 @@ export default function StatusIndicator(props: StatusIndicatorProps) {
   if (isLoading) {
     return (
       <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" />
+        {/* <ActivityIndicator size="large" /> */}
         <Text style={styles.defaultText}>{loadingText}</Text>
       </View>
     );
