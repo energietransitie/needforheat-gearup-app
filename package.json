@@ -33,7 +33,8 @@
     "ci:eslint": "turbo run ci:eslint",
     "ci:tsc": "turbo run ci:tsc",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "postinstall": "node postinstall.js"
+    "postinstall": "node postinstall.js",
+    "postadd": "node postinstall.js"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.2",
