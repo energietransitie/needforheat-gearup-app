@@ -48,7 +48,7 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
     console.log("onRequestPermissionError", err);
     Alert.alert("Error", err, [
       {
-        text: t("screens.home_stack.search_device.open_settings"),
+        text: t("screens.home_stack.search_device.open_settings") as string,
         onPress: () => {
           // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
           openSettings().catch(e => {});
@@ -67,7 +67,7 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
 
         Alert.alert(title, message, [
           {
-            text: t("screens.home_stack.energy_query.location_permission.alert.button"),
+            text: t("screens.home_stack.energy_query.location_permission.alert.button") as string,
             onPress: async () => {
               try {
                 await requestPreciseLocationPermission();
@@ -190,7 +190,7 @@ export default function HomeSelectScreen({ navigation, route }: HomeSelectScreen
         <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
           <Button
             containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
-            title={t("screens.home_stack.energy_query.homeselect_screen.button")}
+            title={t("screens.home_stack.energy_query.homeselect_screen.button") as string}
             color="primary"
             onPress={onContinue}
             icon={{

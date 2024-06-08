@@ -310,7 +310,7 @@ export default function BuildingProfileProgressScreen({ navigation, route }: Bui
       <Box style={{ flex: 1, width: "100%", alignItems: "center", justifyContent: "flex-end" }}>
         {showButton ? (
           <Button
-            title={t("common.back_to_home")}
+            title={t("common.back_to_home") as string}
             containerStyle={{ width: "100%", marginTop: theme.spacing.md }}
             onPress={onLeave}
           />

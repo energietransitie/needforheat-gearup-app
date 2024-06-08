@@ -30,7 +30,7 @@ export default function InformationScreen({ navigation, route }: InformationScre
       <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
         <Button
           containerStyle={{ flex: 1 }}
-          title={t("common.cancel")}
+          title={t("common.cancel") as string}
           color="grey2"
           onPress={onCancel}
           icon={{
@@ -41,7 +41,7 @@ export default function InformationScreen({ navigation, route }: InformationScre
         />
         <Button
           containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
-          title={t("screens.home_stack.energy_query.information_screen.button")}
+          title={t("screens.home_stack.energy_query.information_screen.button") as string}
           color="primary"
           onPress={onExecuteQuery}
           icon={{

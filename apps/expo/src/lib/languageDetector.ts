@@ -13,7 +13,7 @@ export const LanguageDetector: LanguageDetectorAsyncModule = {
           callback(language);
         } else {
           const [{ languageCode }] = Localization.getLocales();
-          callback(languageCode);
+          callback(languageCode as string);
         }
       });
     } catch (error) {

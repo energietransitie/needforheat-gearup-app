@@ -107,10 +107,10 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
       } else {
         Alert.alert(
           t("screens.home_stack.energy_query.homeaddress_screen.error.title"),
-          t("screens.home_stack.energy_query.homeaddress_screen.error.message"),
+          t("screens.home_stack.energy_query.homeaddress_screen.error.message") as string,
           [
             {
-              text: t("common.retry"),
+              text: t("common.retry") as string,
             },
           ]
         );
@@ -119,10 +119,10 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
       console.error("Error: Address does not match the expected format.");
       Alert.alert(
         t("screens.home_stack.energy_query.homeaddress_screen.error.title"),
-        t("screens.home_stack.energy_query.homeaddress_screen.error.message"),
+        t("screens.home_stack.energy_query.homeaddress_screen.error.message") as string,
         [
           {
-            text: t("common.retry"),
+            text: t("common.retry") as string,
           },
         ]
       );
@@ -136,7 +136,7 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
     console.log("onRequestPermissionError", err);
     Alert.alert("Error", err, [
       {
-        text: t("screens.home_stack.search_device.open_settings"),
+        text: t("screens.home_stack.search_device.open_settings") as string,
         onPress: () => {
           // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
           openSettings().catch(e => {});
@@ -155,7 +155,7 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
 
         Alert.alert(title, message, [
           {
-            text: t("screens.home_stack.energy_query.location_permission.alert.button"),
+            text: t("screens.home_stack.energy_query.location_permission.alert.button") as string,
             onPress: async () => {
               try {
                 await requestPreciseLocationPermission();
@@ -288,7 +288,7 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
           </View>
           <Button
             containerStyle={{ width: "100%" }}
-            title={t("screens.home_stack.energy_query.homeaddress_screen.button")}
+            title={t("screens.home_stack.energy_query.homeaddress_screen.button") as string}
             color="primary"
             onPress={onContinue}
             icon={{

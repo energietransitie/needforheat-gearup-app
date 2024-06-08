@@ -1,6 +1,7 @@
 {
   "extends": ["tsconfig/expo.json", "@react-native/typescript-config/tsconfig.json"],
   "compilerOptions": {
+    "jsx": "react-native",
     "strict": true,
     "baseUrl": ".",
     "paths": {

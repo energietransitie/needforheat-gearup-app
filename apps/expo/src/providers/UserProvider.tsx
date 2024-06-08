@@ -51,7 +51,7 @@ export default function UserProvider({ children }: PropsWithChildren<unknown>) {
 
       Burnt.alert({
         title: t("providers.user_provider.activate.title"),
-        message: t("providers.user_provider.activate.message"),
+        message: t("providers.user_provider.activate.message") as string,
         preset: "spinner",
         duration: 10,
       });
@@ -61,7 +61,7 @@ export default function UserProvider({ children }: PropsWithChildren<unknown>) {
       Burnt.dismissAllAlerts();
       Burnt.alert({
         title: t("providers.user_provider.activate_success.title"),
-        message: t("providers.user_provider.activate_success.message"),
+        message: t("providers.user_provider.activate_success.message") as string,
         preset: "done",
       });
 

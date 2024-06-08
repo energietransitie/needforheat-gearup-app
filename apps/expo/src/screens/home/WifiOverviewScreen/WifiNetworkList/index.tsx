@@ -21,7 +21,7 @@ export default function WifiNetworkList(props: WifiNetworkListProps) {
       data={networks}
       keyExtractor={item => item.name}
       renderItem={({ item }) => <WifiNetworkListItem item={item} onConnect={onConnect} />}
-      ListEmptyComponent={<StatusIndicator isError errorText={t("components.wifi_network_list.empty_collection")} />}
+      ListEmptyComponent={<StatusIndicator isError errorText={t("components.wifi_network_list.empty_collection") as string} />}
       refreshing={refreshing}
       onRefresh={onRefresh}
     />
