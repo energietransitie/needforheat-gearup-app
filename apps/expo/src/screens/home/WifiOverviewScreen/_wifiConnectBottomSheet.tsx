@@ -2,12 +2,10 @@ import {
   BottomSheetBackdrop,
   BottomSheetModal,
   BottomSheetView,
-  useBottomSheetDynamicSnapPoints,
 } from "@gorhom/bottom-sheet";
 import { BottomSheetModalMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { Button, Text, useTheme } from "@rneui/themed";
-import { useMemo, useState } from "react";
-
+import { useState } from "react";
 import WifiPasswordEyeIcon from "./_wifiPasswordEyeIcon";
 
 import { BottomSheetTextInput } from "@/components/common/BottomSheetTextInput";
