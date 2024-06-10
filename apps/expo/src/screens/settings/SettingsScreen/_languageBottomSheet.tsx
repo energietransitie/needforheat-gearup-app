@@ -19,10 +19,8 @@ export default function LanguageBottomSheet({ bottomSheetRef }: Props) {
 
   return (
     <BottomSheetModal
-      //snapPoints={["25%", "70%"]}
       enableDynamicSizing
       ref={bottomSheetRef}
-      //enablePanDownToClose
       backdropComponent={props => <BottomSheetBackdrop {...props} pressBehavior="close" disappearsOnIndex={-1} />}
     >
       <BottomSheetScrollView>
