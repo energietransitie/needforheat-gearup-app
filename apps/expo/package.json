@@ -8,7 +8,7 @@
     "eas-build-pre-install": "chmod +x ./scripts/eas-build-pre-install.sh && ./scripts/eas-build-pre-install.sh",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
-    "ci:eslint": "yarn eslint -f compact './src/**/*.*' --quiet --no-ignore",
+    "ci:eslint": "yarn eslint -f compact ./src --quiet",
     "ci:tsc": "yarn tsc --noEmit --skipLibCheck",
     "test": "jest",
     "release:android:build": "cd android && ./gradlew app:assembleRelease",
@@ -139,7 +139,7 @@
     "semantic-release-react-native": "1.8.0",
     "ts-jest": "29.0.5",
     "ts-node": "10.9.1",
-    "typescript": "5.0.4"
+    "typescript": "^5.4.5"
   },
   "private": true
 }
