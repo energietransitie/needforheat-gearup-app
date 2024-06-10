@@ -42,8 +42,8 @@ react {
     // bundleAssetName = "MyApplication.android.bundle"
     //
     //   The entry file for bundle generation. Default is 'index.android.js' or 'index.js'
-    entryFile = file(["node", "-e", "require('expo/scripts/resolveAppEntry')", projectRoot, "android"].execute(null, rootDir).text.trim())
-    //
+    entryFile = file("../../index.js")
+
     //   A list of extra flags to pass to the 'bundle' commands.
     //   See https://github.com/react-native-community/cli/blob/main/docs/commands.md#bundle
     // extraPackagerArgs = []
@@ -210,3 +210,28 @@ apply from: new File(["node", "--print", "require.resolve('@react-native-communi
 applyNativeModulesAppBuildGradle(project)
 
 android.packagingOptions.jniLibs.useLegacyPackaging = true
+
+// Fonts for icons
+project.ext.vectoricons = [
+  iconFontsDir: "../../../../node_modules/react-native-vector-icons/Fonts",
+  iconFontNames: [
+    "AntDesign.ttf",
+    "Entypo.ttf",
+    "EvilIcons.ttf",
+    "Feather.ttf",
+    "FontAwesome.ttf",
+    "FontAwesome5_Brands.ttf",
+    "FontAwesome5_Regular.ttf",
+    "FontAwesome5_Solid.ttf",
+    "Fontisto.ttf",
+    "Foundation.ttf",
+    "Ionicons.ttf",
+    "MaterialCommunityIcons.ttf",
+    "MaterialIcons.ttf",
+    "Octicons.ttf",
+    "SimpleLineIcons.ttf",
+    "Zocial.ttf"
+  ]
+]
+
+apply from: file("../../../../node_modules/react-native-vector-icons/fonts.gradle")
