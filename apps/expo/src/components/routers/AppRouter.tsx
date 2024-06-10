@@ -39,7 +39,7 @@ export default function AppRouter({ fontsLoaded }: AppRouterProps) {
         name="Home"
         component={HomeRouter}
         options={{
-          title: t("screens.home_stack.title"),
+          title: t("screens.home_stack.title") as string,
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="list-outline" size={size} color={color} />;
           },
@@ -51,7 +51,7 @@ export default function AppRouter({ fontsLoaded }: AppRouterProps) {
             name="Measurements"
             component={MeasurementsScreen}
             options={{
-              title: t("screens.measurements.title"),
+              title: t("screens.measurements.title") as string,
               headerShown: true,
               tabBarIcon: ({ color, size }) => {
                 return <Ionicons name="stats-chart-outline" size={size} color={color} />;
@@ -64,7 +64,7 @@ export default function AppRouter({ fontsLoaded }: AppRouterProps) {
         name="Info"
         component={InfoRouter}
         options={{
-          title: t("screens.info_stack.title"),
+          title: t("screens.info_stack.title") as string,
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="information-outline" size={size} color={color} />;
           },
@@ -74,7 +74,7 @@ export default function AppRouter({ fontsLoaded }: AppRouterProps) {
         name="Settings"
         component={SettingsRouter}
         options={{
-          title: t("screens.settings_stack.title"),
+          title: t("screens.settings_stack.title") as string,
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="settings-outline" size={size} color={color} />;
           },
