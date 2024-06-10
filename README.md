@@ -31,7 +31,7 @@ The app currently supports the following languages:
 - English (American)
 
 ## Installing the app
-The LTS version of the app is available on the [Google Play Store (Android)](https://play.google.com/store/apps/details?id=nl.windesheim.energietransitie.needforheat) and [Apple App Store (iOS)](https://apps.apple.com/nl/app/needforheat/id1563201993).
+The LTS version of the app is available on the [Google Play Store (Android)](https://play.google.com/store/apps/details?id=nl.windesheim.energietransitie.needforheat) and [Apple App Store (iOS)](https://apps.apple.com/nl/app/needforheat-gearup/id6503364746).
 
 For beta versions an invite is required. To receive an invite please contact [@henriterhofte](https://github.com/henriterhofte). \
 Please include in your request the email address of the Apple ID or Google account that's being used on the device you wish to install the app.

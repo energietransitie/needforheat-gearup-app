@@ -100,12 +100,16 @@ Step one is simple. Create a campaign and accounts for Google and Apple so the r
 
 You should have provided as much information as possible already in the app entries, occasionally they won't even bother logging into the app.
 
+> **Note Apple** \
+> Make sure you fill in your `plist`'s as much as possible. \
+> In addition, make screenshots using the simulator.
+
 #### 2.4.2. Prepare binaries
 Now the second step is preparing the binaries for Google and Apple to review for. Google asks for `.aab` and Apple for an `.ipa`. These binaries need to be signed with the proper upload certificate.
 
 For Google, signing can be handled by Google themselves. See [Expo First Android Submission](https://github.com/expo/fyi/blob/main/first-android-submission.md)
 
-For Apple, finding the right documentation is hard but no worries, we can do it through Expo: [Submit iOS](https://docs.expo.dev/submit/ios/). \
+For Apple, finding the right documentation is hard but no worries, we can do it through Expo as well: [Submit iOS](https://docs.expo.dev/submit/ios/). \
 You should also be able to export and upload it with xCode, which also can create the keys for you.
 
 ---
@@ -132,7 +136,8 @@ yarn workspace app eas:ios:build
 Running these commands for the first time on a new project will make you go through a setup. Just let it do it thing and it will be smooth sailing. \
 If it mentions an existing project, make sure its the right one before proceeding.
 
-For iOS, make sure you use the `NeedforHeat Release` scheme as the other one is the `Expo Go` version.
+For iOS, make sure you use the `NeedforHeat Release` scheme as the other one is the `Expo Go` version. \
+_Though, it technically doesn't matter as Expo will build as `production`_
 
 Now the binaries should be getting built on the [EAS NFH GearUp Project build page](https://expo.dev/accounts/nfh/projects/needforheat-gearup/builds). You can download these to send over.
 
