@@ -77,7 +77,10 @@
             "kotlinVersion": "1.6.10"
           }
         }
-      ]
+      ],
+      "expo-font",
+      "expo-localization",
+      "expo-secure-store"
     ],
     "extra": {
       "eas": {

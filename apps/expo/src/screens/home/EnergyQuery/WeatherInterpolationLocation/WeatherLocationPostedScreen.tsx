@@ -167,7 +167,7 @@ export default function WeatherLocationPostedScreen({ navigation }: WeatherLocat
         <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
           <Button
             containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
-            title={t("screens.home_stack.energy_query.weather_location_posted_screen.back_button")}
+            title={t("screens.home_stack.energy_query.weather_location_posted_screen.back_button") as string}
             color="grey2"
             onPress={onBack}
             icon={{

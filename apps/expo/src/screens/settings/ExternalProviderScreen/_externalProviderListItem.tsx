@@ -39,7 +39,7 @@ export default function ExternalProviderListItem(props: ExternalProviderListItem
         disabled={item.connected || loading}
         title={t(
           `screens.settings_stack.external_provider_screen.state.${item.connected ? "connected" : "not_connected"}`
-        )}
+        ) as string}
         onPress={onPress}
         buttonStyle={{ backgroundColor: theme.colors.primary, width: "100%" }}
         containerStyle={{ width: "100%" }}

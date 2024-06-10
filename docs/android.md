@@ -4,7 +4,7 @@ This Android-specific development guide will explain how to setup an environment
 ## Table of contents
 - [1. Prerequisites](#1-prerequisites)
 - [2. Preparing a physical device](#2-preparing-a-physical-device)
-- [3. Starting the app with Expo Go](#3-starting-the-app-with-expo-go)
+- [3. Starting the development app](#3-starting-the-development-app)
 - [4. Compiling an APK for testing](#4-compiling-an-apk-for-testing)
 
 ## 1. Prerequisites
@@ -15,12 +15,8 @@ You should still check for updates after installing by opening the menu `Help` a
 
 You should read the [Expo documentation on Android Studio](https://docs.expo.io/workflow/android-studio-emulator/) as it explains how to set it up for development. Including how to setup an Android Emulator and how to add the platform-tools (including [Android Debug Bridge (ADB)](https://developer.android.com/tools/adb)) to the OS environment.
 
-It is IMPORTANT that `ANDROID_HOME` gets set to the Android SDK folder.
-
-### 1.1. Secure Folder issue
-Attempting to run Expo Go will crash due to a bug in Expo. ADB attempts to install the development app to all users, including the Secure Folder (User 150) on Samsung devices. This has not been accounted for yet.
-
-To fix this, do the workaround as explained in: <https://github.com/expo/expo/issues/22473#issuecomment-1546718389>
+It is IMPORTANT that `ANDROID_HOME` gets set to the Android SDK folder. \
+You should also [add `adb` to your path](https://theflutterist.medium.com/setting-up-adb-path-on-windows-android-tips-5b5cdaa9084b) if you wish to use `adb`features.
 
 ## 2. Preparing a physical device
 If you followed the [Expo documentation on Android Studio](https://docs.expo.io/workflow/android-studio-emulator/). You should have an Android emulator ready for development. However, it is recommended to use a real Android device due to performance and [Emulator limitations](#emulator-limitations).
@@ -32,7 +28,7 @@ The first step is to enable [Developer Options](https://developer.android.com/st
 
 With ADB ready, you can now send the app straight to your device for development.
 
-## 3. Starting the app with Expo Go
+## 3. Starting the development app
 After getting the prerequisites installed you can start the development server with the following command:
 
 ```bash
@@ -57,6 +53,8 @@ This means that specificly testing the `NeedForHeat` app that the emulator isn't
 
 ## 4. Compiling an APK for testing
 There are [Yarn scripts](./scripts.md) that can do this for you if you set everything up properly including [adding platform-tools](https://developer.android.com/tools/adb) to `PATH`. Otherwise, do the guide below.
+
+There is also a Yarn script to compile an `apk` through Expo, to ensure Expo can build it as well.
 
 ### 4.1. Manual compiling
 In the `apps\expo\android\` folder, run the following command in a Terminal window to build an APK:

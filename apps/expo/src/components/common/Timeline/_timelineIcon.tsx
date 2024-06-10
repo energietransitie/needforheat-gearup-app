@@ -12,7 +12,7 @@ export default function TimelineIcon(props: IconProps) {
   const { item } = props;
   const { theme } = useTheme();
   const bgColor = item.error ? theme.colors.error : item.finished ? theme.colors.success : theme.colors.grey4;
-  const iconName = item.error ? "ios-alert-outline" : "ios-checkmark-outline";
+  const iconName = item.error ? "close-circle-outline" : "checkmark";
   const iconColor = item.error || item.finished ? theme.colors.white : theme.colors.black;
   const styles = useStyles();
 

@@ -23,3 +23,4 @@
 | `app`     | eas:android:build       | Build a new Android binary with EAS for the App Store.|
 | `app`     | eas:ios:build       | Build a new iOS binary with EAS for the App Store.|
 | `app`     | eas:all:build       | Build all new binaries with EAS for the App Stores.|
+| `app`     | eas:android:build:preview | Build an Android APK binary for internal sharing/testing. |

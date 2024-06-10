@@ -69,12 +69,12 @@ export default function useSuperLateDataSourceNotifier() {
       if (Platform.OS === "android") {
         PushNotification.localNotification({
           channelId: "777",
-          ticker: t("notifications.ticker"),
+          ticker: t("notifications.ticker") as string,
           largeIcon: "ic_launcher",
           largeIconUrl: "./assets/Logo-WH-social-groen-800px.png",
           smallIcon: "ic_notification",
-          bigText: t("notifications.bigText"),
-          subText: t("notifications.subText"),
+          bigText: t("notifications.bigText") as string,
+          subText: t("notifications.subText") as string,
           bigPictureUrl: "./assets/Logo-WH-social-groen-800px.png",
           bigLargeIcon: "ic_launcher",
           bigLargeIconUrl: "./assets/Logo-WH-social-groen-800px.png",
@@ -94,7 +94,7 @@ export default function useSuperLateDataSourceNotifier() {
           category: "Windesheim",
 
           /* iOS and Android properties */
-          title: t("notifications.title"),
+          title: t("notifications.title") as string,
           message: t("notifications.message"),
           picture: "./assets/Logo-WH-social-groen-800px.png",
           playSound: silentNotification,
@@ -103,8 +103,8 @@ export default function useSuperLateDataSourceNotifier() {
       } else {
         PushNotificationIOS.addNotificationRequest({
           id: "777",
-          title: t("notifications.title"),
-          body: t("notifications.message"),
+          title: t("notifications.title") as string,
+          body: t("notifications.message") as string,
           badge: badgeCounter,
           category: "NeedForHeat",
           isSilent: silentNotification,

@@ -27,7 +27,7 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
   const errorAlert = (message: string, title = "Error") => {
     Alert.alert(title, message, [
       {
-        text: t("common.back_to_home"),
+        text: t("common.back_to_home") as string,
         onPress: () => navigation.navigate("HomeScreen"),
         style: "cancel",
       },
@@ -56,7 +56,7 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
     if (!dataSource.data_source || device.device_type.name !== dataSource.data_source.item.Name) {
       errorAlert(
         t("screens.home_stack.activate_device.alert.mismatched_device_name"),
-        t("screens.home_stack.activate_device.alert.unknown_error")
+        t("screens.home_stack.activate_device.alert.unknown_error") as string
       );
       return;
     }
@@ -107,10 +107,10 @@ export default function ActivateDeviceScreen({ navigation, route }: ActivateDevi
             isLoading={isLoading}
             loadingText={
               isFetching
-                ? t("screens.home_stack.activate_device.status_indicator.loading")
-                : t("screens.home_stack.activate_device.status_indicator.working")
+                ? t("screens.home_stack.activate_device.status_indicator.loading") as string
+                : t("screens.home_stack.activate_device.status_indicator.working") as string
             }
-            errorText={t("screens.home_stack.activate_device.status_indicator.error")}
+            errorText={t("screens.home_stack.activate_device.status_indicator.error") as string}
           />
         ) : (
           <>

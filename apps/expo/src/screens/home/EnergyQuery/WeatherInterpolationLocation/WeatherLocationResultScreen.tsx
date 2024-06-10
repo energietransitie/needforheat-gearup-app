@@ -50,7 +50,7 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
     setDisableButtons(true);
     Burnt.alert({
       title: t("screens.home_stack.energy_query.weather_location_result_screen.alert.sending.title"),
-      message: t("screens.home_stack.energy_query.weather_location_result_screen.alert.sending.message"),
+      message: t("screens.home_stack.energy_query.weather_location_result_screen.alert.sending.message") as string,
       preset: "spinner",
       duration: 10,
     });
@@ -98,7 +98,7 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
 
       Burnt.alert({
         title: t("screens.home_stack.energy_query.weather_location_result_screen.alert.success.title"),
-        message: t("screens.home_stack.energy_query.weather_location_result_screen.alert.success.message"),
+        message: t("screens.home_stack.energy_query.weather_location_result_screen.alert.success.message") as string,
         preset: "done",
       });
 
@@ -112,7 +112,7 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
           ` ${error ? `\n\n${error}` : ""}`,
         [
           {
-            text: t("common.back_to_home"),
+            text: t("common.back_to_home") as string,
             onPress: () => navigation.navigate("HomeScreen"),
             style: "cancel",
           },
@@ -223,7 +223,7 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
           <Button
             containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
             disabled={disableButtons}
-            title={t("screens.home_stack.energy_query.weather_location_result_screen.back_button")}
+            title={t("screens.home_stack.energy_query.weather_location_result_screen.back_button") as string}
             color="grey2"
             onPress={onBack}
             icon={{
@@ -235,7 +235,7 @@ export default function WeatherLocationResultScreen({ navigation, route }: Weath
           <Button
             containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
             disabled={disableButtons}
-            title={t("screens.home_stack.energy_query.weather_location_result_screen.send_button")}
+            title={t("screens.home_stack.energy_query.weather_location_result_screen.send_button") as string}
             color="primary"
             onPress={onSend}
             icon={{

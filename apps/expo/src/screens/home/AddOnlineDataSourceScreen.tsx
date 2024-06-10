@@ -153,7 +153,7 @@ export default function AddOnlineDataSourceScreen({ navigation, route }: AddOnli
       >
         {data?.some(item => !item.connected) && (
           <Button
-            title={t("common.cancel")}
+            title={t("common.cancel") as string}
             color="grey2"
             onPress={onCancel}
             icon={{

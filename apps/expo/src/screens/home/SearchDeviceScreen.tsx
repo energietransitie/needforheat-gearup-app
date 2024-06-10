@@ -57,7 +57,7 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
     } else {
       Alert.alert("Error", err, [
         {
-          text: t("screens.home_stack.search_device.open_settings"),
+          text: t("screens.home_stack.search_device.open_settings") as string,
           onPress: () => {
             // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
             openSettings().catch(e => {});
@@ -99,7 +99,7 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
 
       Alert.alert(title, message, [
         {
-          text: t("screens.home_stack.search_device.bluetooth.alert.button"),
+          text: t("screens.home_stack.search_device.bluetooth.alert.button") as string,
           onPress: async () => {
             try {
               await requestBluetoothPermission();
@@ -204,7 +204,7 @@ export default function SearchDeviceScreen({ navigation, route }: SearchDeviceSc
                 <View style={{ marginTop: 20 }} />
                 <Button
                   containerStyle={{ width: "100%" }}
-                  title={t("screens.home_stack.search_device.bluetooth.alert.enable_button")}
+                  title={t("screens.home_stack.search_device.bluetooth.alert.enable_button") as string}
                   onPress={() => BluetoothStateManager.openSettings()}
                 />
               </>

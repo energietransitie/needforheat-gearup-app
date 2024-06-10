@@ -8,7 +8,7 @@ export default function RemoteLoadingView() {
 
   return (
     <Box center>
-      <StatusIndicator isLoading loadingText={t("components.manual_content.loading")} />
+      <StatusIndicator isLoading loadingText={t("components.manual_content.loading") as string} />
     </Box>
   );
 }
