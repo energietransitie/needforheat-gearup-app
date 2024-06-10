@@ -31,6 +31,8 @@
   
   // [REQUIRED] Register BackgroundFetch
   [[TSBackgroundFetch sharedInstance] didFinishLaunching];
+
+  return YES;
 }
 
 //Called when a notification is delivered to a foreground app.
