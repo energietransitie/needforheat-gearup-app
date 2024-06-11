@@ -136,7 +136,7 @@
     "jest-transform-stub": "2.0.0",
     "react-test-renderer": "18.2.0",
     "semantic-release": "19.0.5",
-    "semantic-release-react-native": "1.8.0",
+    "semantic-release-react-native": "^1.10.0",
     "ts-jest": "29.0.5",
     "ts-node": "10.9.1",
     "typescript": "^5.4.5"
