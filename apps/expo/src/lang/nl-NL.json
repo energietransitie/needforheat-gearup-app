@@ -17,8 +17,8 @@
     },
     "device_overview": {
       "title": "Databronnen",
-      "toast_message": "Uitgeschakeld item. Werk eerst item(s) met witte achtergrond af!",
-      "toast_title": "Vergrendeld item",
+      "toast_message": "Deze bron kunt u nog niet activeren. Activeer eerst andere bronnen.",
+      "toast_title": "Bron niet beschikbaar",
       "buttons": {
         "add_enelogic": "Enelogic toevoegen",
         "install_device": "Meetapparaat scannen"
@@ -29,7 +29,7 @@
           "no_data": "Nog geen data ontvangen"
         },
         "reset_device": "Resetten",
-        "empty_collection": "Er is geen Databronnen lijst gevonden voor deze campagne of er is geen internet/wifi.",
+        "empty_collection": "Er is geen lijst met bronnen gevonden voor deze campagne of er is geen internet/wifi.",
         "updating_now": "Nu",
         "late": "Laat",
         "super_late": "Offline",
@@ -37,8 +37,8 @@
         "hours": "u"
       },
       "explanation_sheet": {
-        "title": "Welkom bij de NeedForHeat App!",
-        "description": "Dit scherm toont een lijst van Databronnen die u moet voltooien.\n\nDit moet u weten:\n- Open Databronnen zijn wit.\n- Vergrendelde Databronnen zijn grijs.\n- Onboarded Databronnen zijn groen.\n\nUw doel is om alle Databronnen te voltooien en volledig deel te nemen aan de campagne! Uw voortgang wordt weergegeven in de progressiebalk bovenaan.\n\nTik op een open Databron om te beginnen. Gebruik het ?-pictogram voor veelgestelde vragen.\n\nU kunt deze uitleg opnieuw openen door op het groene ?-pictogram rechtsonder op het scherm te drukken wanneer deze uitleg verdwijnt."
+        "title": "Korte uitleg",
+        "description": "Dit scherm toont een lijst met datbronnen die geactiveerd moeten worden: installeer apparaten, verleen toegang tot online bronnen, en beantwoord vragen.\n\nGroene bronnen zijn geactiveerd, grijze worden beschikbaar nadat één of meer witte bronne zijn geactiveerd.\n\nSelecteer het groene ?-pictogram rechtsonder om deze uitleg opnieuw te bekijken."
       }
     },
     "home_stack": {
@@ -234,55 +234,55 @@
       },
       "energy_query": {
         "information_screen": {
-          "title": "EnergyQuery Informatie",
+          "title": "Toelichting",
           "button": "Begrepen!"
         },
         "homeselect_screen": {
-          "title": "Selecteer uw woning",
-          "subtitle": "Sleep de kaart rond en plaats de pin boven uw huis",
-          "button": "Deze locatie gebruiken!"
+          "title": "Waar staat uw woning?",
+          "subtitle": "Sleep en zoom de kaart en zet zo de pin op uw huis",
+          "button": "Gebruik deze locatie"
         },
         "homeaddress_screen": {
-          "title": "Vul je adres in",
-          "subtitle": "Sleep de kaart rond en plaats de pin boven je woning.\nJe adres kan je later nog aanpassen.",
-          "button": "Gebruik dit adres!",
+          "title": "Wat is uw adres?",
+          "subtitle": "Sleep en zoom de kaart, zet zo de pin op uw huis of wijzig het adres.",
+          "button": "Gebruik dit adres",
           "error": {
             "title": "Ongeldig adres",
-            "message": "Dit is geen adres dat we kunnen herkennen.\nProbeer het opnieuw en check eventueel de handleiding of FAQ voor meer informatie."
+            "message": "Dit lijkt geen geldig adres.\nProbeer het opnieuw. Check de handleiding of FAQ voor meer informatie."
           }
         },
         "weather_location_result_screen": {
-          "title": "Resultaten",
-          "subtitle": "Bevindt jouw huis zich in deze weerzone?",
-          "send_button": "Verzenden",
-          "back_button": "Opnieuw",
+          "title": "Te verzenden weerzone",
+          "subtitle": "Staat uw huis in deze weerzone?",
+          "send_button": "Ja (verzenden)",
+          "back_button": "Nee (opnieuw)",
           "marker": "Geselecteerde locatie",
           "alert": {
             "sending": {
               "title": "Bezig met verzenden...",
-              "message": "Uw Energy Query wordt naar de energiedokter gestuurd"
+              "message": "Uw weerzone wordt verstuurd."
             },
             "success": {
               "title": "Succes!",
-              "message": "Uw Energy Query is naar de energiedokter gestuurd"
+              "message": "Uw weerzone is verstuurd."
             },
             "fail": {
               "title": "Fout!",
-              "message": "Er is een fout opgetreden bij het verzenden van de query:"
+              "message": "Tijdens het verzenden van uw weerzone ging iets fout:"
             }
           }
         },
         "weather_location_posted_screen": {
-          "title": "Verzonden resultaat",
-          "subtitle": "U heeft de volgende weerzone verzonden op",
+          "title": "Verzonden weerzone",
+          "subtitle": "U heeft onderstaande weerzone verzonden op",
           "back_button": "Ga terug"
         },
         "location_permission": {
           "alert": {
-            "title": "Locatie machtiging",
-            "message": "Deze app maakt gebruik van uw GPS om uw locatie op te halen.\n\nWilt u deze machtiging verlenen?",
+            "title": "Locatiemachtiging",
+            "message": "Deze app kan GPS gebruiken om uw locatie op te halen. Zo kunt u makkelijker uw woning op de kaart aanwijzen.",
             "button": "Oké, vraag maar!",
-            "enable_button": "Machtiging locatie verlenen"
+            "enable_button": "Verleen locatiemachtiging"
           },
           "errors": {
             "request_failed": "Een fout is opgetreden bij het aanvragen van de locatie-machtigingen."
@@ -292,47 +292,47 @@
           "title": "Adres verwerken",
           "alert": {
             "initial_data": {
-              "title": "Initiële gegevens ophalen...",
-              "message": "Initiële gegevens voor uw woning worden opgehaald"
+              "title": "Gegevens ophalen...",
+              "message": "Initiële gegevens van uw woning worden opgehaald"
             },
             "data": {
-              "title": "Gegevens ophalen...",
-              "message": "Er worden gegevens opgehaald over uw woning voor de berekening"
+              "title": "Meer gegevens ophalen...",
+              "message": "Meer gegevens van uw woning worden opgehaald"
             },
             "calculating": {
               "title": "Berekenen...",
-              "message": "Er worden complexe berekeningen uitgevoerd met de gegevens"
+              "message": "Energieprofiel van uw woning wordt berekend"
             },
             "sending": {
-              "title": "Uw query verzenden...",
-              "message": "Uw berekeningen worden naar de EnergyDokter gestuurd!"
+              "title": "Profiel verzenden...",
+              "message": "Energieprofiel van uw woning wordt verzonden"
             },
             "success": {
               "title": "Succes!",
-              "message": "Uw berekeningen zijn naar de EnergyDokter gestuurd!"
+              "message": "Energieprofiel van uw woning is verzonden"
             }
           },
           "fail": {
             "title": "Fout!",
             "api": {
-              "message": "Er is een fout opgetreden tijdens het ophalen van sleutels om gegevens te verkrijgen.\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+              "message": "Fout bij het ophalen van sleutels. Zorg voor internet/wifi of neem contact op met de helpdesk."
             },
             "bag": {
-              "message": "Er is een fout opgetreden tijdens het ophalen van initiële gegevens.\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+              "message": "Fout bij het ophalen van initiële gegevens. Zorg voor internet/wifi of neem contact op met de helpdesk."
             },
             "3dbag": {
-              "message": "Er is een fout opgetreden tijdens het ophalen van gegevens.\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+              "message": "Fout bij het ophalen van gegevens. Zorg voor internet/wifi of neem contact op met de helpdesk."
             },
             "calculating": {
-              "message": "Er is een fout opgetreden tijdens het berekenen met gevonden gegevens.\nProbeer de query opnieuw, anders neemt u contact op met de helpdesk."
+              "message": "Fout bij het berekenen. Probeer opnieuw of neem contact op met de helpdesk."
             },
             "sending": {
-              "message": "Er is een fout opgetreden tijdens het verzenden van de EnergieQuery naar de EnergyDoctor\nProbeer het opnieuw en zorg ervoor dat u internet/wifi hebt, anders neemt u contact op met de helpdesk."
+              "message": "Fout bij het verzenden van gegevens. Zorg voor internet/wifi of neem contact op met de helpdesk."
             }
           },
           "success": {
-            "title": "Query verstuurd!",
-            "message": "De EnergyQuery is naar de EnergyDokter verzonden."
+            "title": "Succes!",
+            "message": "De gegevens zijn succesvol verzonden."
           }
         }
       }
@@ -393,28 +393,23 @@
   },
   "hooks": {
     "property_translation": {
-      "heartbeat": "Hartslag",
-      "batteryVoltage": "Batterijspanning (V)",
+      "heartbeat__0": "Hartslag",
       "booted_fw": "Opgestarte firmware",
-      "countPresence": "Aanwezigheidsteller",
-      "CO2concentration": "CO₂-concentratie",
-      "roomTemp": "Kamertemperatuur",
-      "relativeHumidity": "Relatieve luchtvochtigheid (%)",
-      "e_use_lo_cum__kWh": "Cumulatief energieverbruik (Laag) (kWh)",
-      "e_use_hi_cum__kWh": "Cumulatief energieverbruik (Hoog) (kWh)",
-      "e_ret_lo_cum__kWh": "Cumulatief energieteruglevering (Laag) (kWh)",
-      "e_ret_hi_cum__kWh": "Cumulatief energieteruglevering (Hoog) (kWh)",
-      "g_use_cum__m3": "Cumulatief gasverbruik (m³)",
+      "e_use_lo_cum__kWh": "Meterstand elektriciteit, levering dal (kWh)",
+      "e_use_hi_cum__kWh": "Meterstand elektriciteit, levering piek (kWh)",
+      "e_ret_lo_cum__kWh": "Meterstand elektriciteit, teruglevering dal (kWh)",
+      "e_ret_hi_cum__kWh": "Meterstand elektriciteit, teruglevering piek (kWh)",
+      "g_use_cum__m3": "Meterstand gasverbruik (m³)",
       "battery_voltage__V": "Batterijspanning (V)",
       "occupancy__p": "Aantal personen aanwezig",
       "co2__ppm": "CO₂-concentratie (ppm)",
       "temp_in__degC": "Temperatuur (˚C)",
-      "rel_humidity__0": "Relatieve luchtvochtigheid (%)",
-      "onboarded__p": "Aantal personen aan boord",
+      "rel_humidity__0": "Relatieve luchtvochtigheid",
+      "onboarded__p": "Aantal personen geregistreerd",
       "dsmr_version__0": "DSMR Versie",
       "meter_code__str": "Metercode",
-      "e_ret_cum__kWh": "Cumulatief energieteruglevering (kWh)",
-      "e_use_cum__kWh": "Cumulatief energieverbruik (kWh)"
+      "e_ret_cum__kWh": "Meterstand elektriciteit, teruglevering (kWh)",
+      "e_use_cum__kWh": "Meterstand elektriciteit, levering (kWh)"
     },
     "bluetooth_permission": {
       "not_granted_ios": "Bluetooth-machtigingen zijn niet verleend.\nZorg ervoor dat de app Bluetooth-machtigingen heeft en probeer opnieuw.",
@@ -450,17 +445,18 @@
     }
   },
   "notifications": {
-    "ticker": "DataSource Offline",
-    "bigText": "Een of meer van uw DataSources hebben langdurig niet geupload en hun status is nu Offline.\nGraag onderzoeken!",
-    "subText": "NeedForHeat DataSources",
-    "title": "DataSource Waarschuwing",
-    "message": "Een of meer van uw DataSources hebben langdurig niet geupload en hun status is nu Offline.\nGraag onderzoeken!",
+    "ticker": "Databron offline",
+    "bigText": "Een of meer databronnen zijn offline omdat er al een tijdje geen uploads zijn geweest. Onderzoek dit alstublieft.",
+    "subText": "NeedForHeat databronnen",
+    "title": "Databron waarschuwing",
+    "message": "Een of meer databronnen zijn offline omdat er al een tijdje geen uploads zijn geweest. Onderzoek dit alstublieft.",
     "alert": {
-      "title": "Melding machtiging",
-      "message": "Deze app stuurt meldingen om u te informeren als een DataSource langduring niet uploadt.\n\nWilt u deze machtiging verlenen?",
+      "title": "Meldingstoestemming",
+      "message": "Deze app heeft meldingen nodig om u te waarschuwen als een databron stopt met uploaden.\n\nWilt u deze toestemming verlenen?",
       "button": "Oké, vraag maar!",
-      "enable_button": "Machtiging melding verlenen"
+      "enable_button": "Meldingstoestemming Verlenen"
     }
+}
   },
   "components": {
     "wifi_network_list": {

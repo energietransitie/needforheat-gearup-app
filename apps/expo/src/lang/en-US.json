@@ -16,9 +16,9 @@
       }
     },
     "device_overview": {
-      "title": "Data Sources",
-      "toast_message": "Disabled item. First complete the item(s) with a white background!",
-      "toast_title": "Locked item",
+      "title": "Data sources",
+      "toast_message": "Disabled data source. First activate other data sources.",
+      "toast_title": "Disabled data source",
       "buttons": {
         "add_enelogic": "Connect Enelogic",
         "install_device": "Scan device"
@@ -29,7 +29,7 @@
           "no_data": "No data received yet"
         },
         "reset_device": "Reset",
-        "empty_collection": "No Data Sources List found for this Campaign or there is no internet/wifi.",
+        "empty_collection": "No items found for this campaign or there is no internet/Wi-Fi.",
         "updating_now": "Now",
         "late": "Late",
         "super_late": "Offline",
@@ -37,12 +37,13 @@
         "hours": "h"
       },
       "explanation_sheet": {
-        "title": "Welcome to the NeedForHeat App!",
-        "description": "This screen displays a list of Data Sources that you need to complete.\n\nHere's what you need to know:\n- Open Data Sources are shown in white.\n- Locked Data Sources are shown in grey.\n- Onboarded Data Sources are shown in green.\n\nYour mission is to complete all Data Sources to fully participate in the campaign! You can track your progress with the progress bar at the top.\n\nTo proceed, tap on an open Data Source to begin. Use the ? icon for frequently asked questions.\n\nYou can reopen this explanation by tapping on the green ? icon at the bottom right of the screen when this explanation disappears."
-      }
+      "explanation_sheet": {
+          "title": "Brief explanation",
+          "description": "This screen lists data sources to activate: install devices, grant access to online sources, and answer questions.\n\nGreen sources are activated, gray ones become enabled after one or more white ones are activated.\n\nSelect the green ?-icon at the bottom right to view again."
+        }
     },
     "home_stack": {
-      "title": "Data Sources",
+      "title": "Data sources",
       "activate_device": {
         "title": "Activate device",
         "status_indicator": {
@@ -234,52 +235,52 @@
       },
       "energy_query": {
         "information_screen": {
-          "title": "EnergyQuery Information",
-          "button": "Understood!"
+          "title": "Clarification",
+          "button": "Ok"
         },
         "homeselect_screen": {
           "title": "Select your Home",
-          "subtitle": "Drag the map around and place the pin above your home",
-          "button": "Use this location!"
+          "subtitle": "Drag and zoom the map to place the pin on your home",
+          "button": "Use this location"
         },
         "homeaddress_screen": {
           "title": "Fill in your address",
-          "subtitle": "Drag the map around and place the pin above your home.\nYou can also edit your address if you need to after.",
-          "button": "Use this address!",
+          "subtitle": "Drag and zoom the map to place the pin on your home or edit the address.",
+          "button": "Use this address",
           "error": {
             "title": "Incorrect address",
-            "message": "This is not an address we can ues.\nPlease try again and check the manual and FAQ for more info."
+            "message": "This does not seem a valid address.\nPlease try again. Check the manual or FAQ for more info."
           }
         },
         "weather_location_result_screen": {
-          "title": "Check Results",
-          "subtitle": "Is your home inside this weather zone?",
-          "send_button": "Send my query!",
-          "back_button": "Try again",
+          "title": "Weather zone to send",
+          "subtitle": "Is your home located in this weather zone?",
+          "send_button": "Yes (send this zone)",
+          "back_button": "No (go back)",
           "marker": "Selected location",
           "alert": {
             "sending": {
               "title": "Sending...",
-              "message": "Sending your Energy Query to the Energy Doctor"
+              "message": "Sending your weather zone"
             },
             "success": {
               "title": "Success!",
-              "message": "Your Energy Query has been sent to the Energy Doctor"
+              "message": "Your weather zone was sent"
             },
             "fail": {
               "title": "Fail!",
-              "message": "An error occured when trying to send the query:"
+              "message": "An error occured while sending the zone:"
             }
           }
         },
         "weather_location_posted_screen": {
-          "title": "Sent Result",
-          "subtitle": "You sent the following weather zone at",
+          "title": "Weather Zone Sent",
+          "subtitle": "You sent this weather zone at",
           "back_button": "Go back"
         },
         "location_permission": {
           "alert": {
-            "title": "Locatie Permission",
+            "title": "Location Permission",
             "message": "This app uses GPS to get your location.\n\nDo you want to grant this permission?",
             "button": "Sure, ask away!",
             "enable_button": "Grant Location permission"
@@ -293,46 +294,46 @@
           "alert": {
             "initial_data": {
               "title": "Fetching initial data...",
-              "message": "Initial data is being retrieved for your home"
+              "message": "Retrieving initial data about your home"
             },
             "data": {
               "title": "Fetching data...",
-              "message": "Data is being retrieved for your home for the calculation"
+              "message": "Retrieving more data about your home"
             },
             "calculating": {
               "title": "Calculating...",
-              "message": "Complex calculations are being performed with the data"
+              "message": "Calculating your buiding energy profile"
             },
             "sending": {
-              "title": "Sending your query...",
-              "message": "Your calculations are being sent to the energy doctor!"
+              "title": "Sending energy profile...",
+              "message": "Sending your building energy profile"
             },
             "success": {
               "title": "Success!",
-              "message": "Your calculations have been sent to the energy doctor!"
+              "message": "Your building energy profile was sent"
             }
           },
-          "fail":{
+          "fail": {
             "title": "Error!",
             "api": {
-              "message": "An error occurred while fetching keys to get data.\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+              "message": "Error fetching keys. Ensure you have internet/Wi-Fi or contact support."
             },
             "bag": {
-              "message": "An error occurred while fetching initial data.\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+              "message": "Error fetching initial data. Ensure you have internet/Wi-Fi or contact support."
             },
             "3dbag": {
-              "message": "An error occurred while fetching data.\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+              "message": "Error fetching data. Ensure you have internet/Wi-Fi or contact support."
             },
             "calculating": {
-              "message": "An error occurred while calcuating with found data.\nTry the query again, otherwise contact the helpdesk."
+              "message": "Error calculating data. Try again or contact support."
             },
             "sending": {
-              "message": "An error occurred while sending the EnergyQuery to the EnergyDoctor\nTry again and make sure you have internet/wifi, otherwise contact the helpdesk."
+              "message": "Error sending data. Ensure you have internet/Wi-Fi or contact support."
             }
           },
           "success": {
-            "title": "Query sent!",
-            "message": "The Energy Query has been sent to the EnergyDoctor."
+            "title": "Success!",
+            "message": "Data sent successfully."
           }
         }
       }
@@ -392,28 +393,23 @@
   },
   "hooks": {
     "property_translation": {
-      "heartbeat": "Heartbeat",
-      "batteryVoltage": "Battery Voltage (V)",
+      "heartbeat__0": "Heartbeat",
       "booted_fw": "Booted firmware",
-      "countPresence": "Presence counter",
-      "CO2concentration": "CO₂ concentration",
-      "roomTemp": "Room temperature",
-      "relativeHumidity": "Relative humidity (%)",
-      "e_use_lo_cum__kWh": "Cumulative energy usage (Low) (kWh)",
-      "e_use_hi_cum__kWh": "Cumulative energy usage (High) (kWh)",
-      "e_ret_lo_cum__kWh": "Cumulative energy return (Low) (kWh)",
-      "e_ret_hi_cum__kWh": "Cumulative energy return (High) (kWh)",
-      "g_use_cum__m3": "Cumulative gas usage (m³)",
+      "e_use_lo_cum__kWh": "Electricity meter, off-peak use (kWh)",
+      "e_use_hi_cum__kWh": "Electricity meter, peak use (kWh)",
+      "e_ret_lo_cum__kWh": "Electricity meter, off-peak return (kWh)",
+      "e_ret_hi_cum__kWh": "Electricity meter, peak return  (kWh)",
+      "g_use_cum__m3": "Gas meter (m³)",
       "battery_voltage__V": "Battery voltage (V)",
-      "occupancy__p": "Number of people present",
+      "occupancy__p": "Occupants present (p)",
       "co2__ppm": "CO₂ concentration (ppm)",
       "temp_in__degC": "Temperature (˚C)",
-      "rel_humidity__0": "Relative humidity (%)",
-      "onboarded__p": "Number of people onboard",
+      "rel_humidity__0": "Relative humidity",
+      "onboarded__p": "Occupants registered (p)",
       "dsmr_version__0": "DSMR version",
       "meter_code__str": "Meter code",
-      "e_ret_cum__kWh": "Cumulative energy return (kWh)",
-      "e_use_cum__kWh": "Cumulative energy usage (kWh)"
+      "e_ret_cum__kWh": "Electricity meter, use (kWh)",
+      "e_use_cum__kWh": "Electricity meter, return (kWh)"
     },
     "bluetooth_permission": {
       "not_granted_ios": "Bluetooth permission is not granted. Please grant the permission and try again.",
@@ -449,14 +445,14 @@
     }
   },
   "notifications": {
-    "ticker": "DataSource Offline",
-    "bigText": "One or more of your DataSources hasn't been uploading for an extended period and its status is now Offline.\nPlease investigate!",
-    "subText": "NeedForHeat DataSources",
-    "title": "DataSource Alert",
-    "message": "One or more of your DataSources hasn't been uploading for an extended period and its status is now Offline.\nPlease investigate!",
+    "ticker": "Data source offline",
+    "bigText": "One or more data sources are offline due to no uploads for a while. Please investigate.",
+    "subText": "NeedForHeat data sources",
+    "title": "Data source alert",
+    "message": "One or more data sources are offline due to no uploads for a while. Please investigate.",
     "alert": {
       "title": "Notification permission",
-      "message": "This app uses notifications to notify if a DataSource hasn't been uploading in a while.\n\nDo you want to grant this permission?",
+      "message": "This app needs notifications to alert you if a data source stops uploading.\n\nGrant permission?",
       "button": "Okay, ask away!",
       "enable_button": "Grant Notification Permission"
     }
