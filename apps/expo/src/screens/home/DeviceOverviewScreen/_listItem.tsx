@@ -80,7 +80,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
     } else {
       Burnt.toast({
         title: t("screens.device_overview.toast_title"),
-        message: t("screens.device_overview.toast_message"),
+        message: t("screens.device_overview.toast_message") as string,
         preset: "error",
       });
     }
@@ -236,7 +236,7 @@ export default function DeviceListItem(props: WifiNetworkListItemProps) {
           !(item.data_source?.category === "energy_query_type")
             ? close => (
                 <Button
-                  title={t("screens.device_overview.device_list.reset_device")}
+                  title={t("screens.device_overview.device_list.reset_device") as string}
                   onPress={() => onReset(close)}
                   buttonStyle={{ minHeight: "100%", backgroundColor: theme.colors.primary }}
                 />

@@ -16,18 +16,18 @@ export default function InfoStackScreen() {
     <InfoStack.Navigator initialRouteName="InfoScreen">
       <InfoStack.Screen
         name="InfoScreen"
-        options={{ title: t("screens.info_stack.info.title") }}
+        options={{ title: t("screens.info_stack.info.title") as string }}
         component={InfoScreen}
       />
       <InfoStack.Screen
         name="AboutScreen"
-        options={{ title: t("screens.info_stack.about.title") }}
+        options={{ title: t("screens.info_stack.about.title") as string }}
         component={AboutScreen}
       />
-      <InfoStack.Screen name="FAQScreen" options={{ title: t("screens.info_stack.faq.title") }} component={FAQScreen} />
+      <InfoStack.Screen name="FAQScreen" options={{ title: t("screens.info_stack.faq.title") as string }} component={FAQScreen} />
       <InfoStack.Screen
         name="PrivacyScreen"
-        options={{ title: t("screens.info_stack.privacy.title") }}
+        options={{ title: t("screens.info_stack.privacy.title") as string }}
         component={PrivacyScreen}
       />
     </InfoStack.Navigator>

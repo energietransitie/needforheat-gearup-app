@@ -20,7 +20,7 @@ export default function AlreadyInvitedScreen() {
         <Text style={styles.title}>{t("screens.home_stack.already_invited.expanded_title")}</Text>
         <Text style={styles.description}>{t("screens.home_stack.already_invited.description")}</Text>
       </Box>
-      <Button fullWidth title={t("common.go_back")} onPress={onPressGoBack} />
+      <Button fullWidth title={t("common.go_back") as string} onPress={onPressGoBack} />
     </Box>
   );
 }

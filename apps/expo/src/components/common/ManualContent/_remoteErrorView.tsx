@@ -8,7 +8,7 @@ export default function RemoteErrorView() {
 
   return (
     <Box center>
-      <StatusIndicator isError errorText={t("components.manual_content.error")} />
+      <StatusIndicator isError errorText={t("components.manual_content.error") as string} />
     </Box>
   );
 }

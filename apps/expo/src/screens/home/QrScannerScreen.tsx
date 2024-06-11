@@ -1,8 +1,7 @@
 import { useIsFocused } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { makeStyles, Button } from "@rneui/themed";
-import { BarCodeScanner } from "expo-barcode-scanner";
-import { BarCodeScanningResult, Camera } from "expo-camera";
+import { CameraView, BarcodeScanningResult } from "expo-camera";
 import { useEffect, useState } from "react";
 import { Alert, Text } from "react-native";
 import { openSettings } from "react-native-permissions";
@@ -30,7 +29,7 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
     console.log("onRequestPermissionError", err);
     Alert.alert("Error", err, [
       {
-        text: t("screens.home_stack.search_device.open_settings"),
+        text: t("screens.home_stack.search_device.open_settings") as string,
         onPress: () => {
           // eslint-disable-next-line node/handle-callback-err, @typescript-eslint/no-empty-function
           openSettings().catch(e => {});
@@ -50,7 +49,7 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
 
         Alert.alert(title, message, [
           {
-            text: t("screens.home_stack.qr_scanner.camera.alert.button"),
+            text: t("screens.home_stack.qr_scanner.camera.alert.button") as string,
             onPress: async () => {
               try {
                 await requestCameraPermission();
@@ -70,7 +69,7 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
   };
 
   const onError = (error?: string) => {
-    Alert.alert("Error", error ?? t("screens.home_stack.qr_scanner.errors.unknown_error"), [
+    Alert.alert("Error", error ?? t("screens.home_stack.qr_scanner.errors.unknown_error") as string, [
       {
         text: "OK",
         onPress: () => setScanned(false),
@@ -78,22 +77,22 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
     ]);
   };
 
-  const onBarCodeScanned = (scanned: BarCodeScanningResult) => {
+  const onBarCodeScanned = ({ data } : BarcodeScanningResult) => {
     setScanned(true);
 
     try {
-      const data = JSON.parse(scanned.data) as SensorQrCode;
+      const qrdata = JSON.parse(data) as SensorQrCode;
 
-      if (!data?.name || !data?.pop || data?.transport !== "ble") {
+      if (!qrdata?.name || !qrdata?.pop || qrdata?.transport !== "ble") {
         throw new InvalidQrCodeException();
       }
 
-      if (expectedDeviceName && expectedDeviceName !== data.name) {
+      if (expectedDeviceName && expectedDeviceName !== qrdata.name) {
         throw new MismatchedDeviceNameException();
       }
 
       navigation.navigate("ActivateDeviceScreen", {
-        qrData: data,
+        qrData: qrdata,
         device_TypeName,
         dataSourceType: dataSource.data_source?.category ? dataSource.data_source?.category : "",
         normalName,
@@ -101,9 +100,9 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
       });
     } catch (e) {
       if (e instanceof InvalidQrCodeException) {
-        onError(t("screens.home_stack.qr_scanner.errors.invalid_qr"));
+        onError(t("screens.home_stack.qr_scanner.errors.invalid_qr") as string);
       } else if (e instanceof MismatchedDeviceNameException) {
-        onError(t("screens.home_stack.qr_scanner.errors.mismatched_device_name"));
+        onError(t("screens.home_stack.qr_scanner.errors.mismatched_device_name") as string);
       } else {
         onError();
       }
@@ -124,12 +123,11 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
           <Text style={styles.title}>{t("screens.home_stack.home.authenticated.title")}</Text>
           <Text style={styles.description}>{t("screens.home_stack.home.authenticated.description")}</Text>
           {focused && (
-            <Camera
-              onBarCodeScanned={scanned ? undefined : onBarCodeScanned}
-              barCodeScannerSettings={{
-                barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
+            <CameraView
+              onBarcodeScanned={scanned ? undefined : onBarCodeScanned}
+              barcodeScannerSettings={{
+                barcodeTypes: ["qr"],
               }}
-              ratio="16:9"
               style={{ flex: 1, width: "100%", height: "100%" }}
             />
           )}
@@ -139,7 +137,7 @@ export default function QrScannerScreen({ navigation, route }: QrScannerScreenPr
           <Text>{t("screens.home_stack.qr_scanner.errors.no_permission")}</Text>
           <Button
             containerStyle={{ width: "100%" }}
-            title={t("screens.home_stack.qr_scanner.camera.alert.enable_button")}
+            title={t("screens.home_stack.qr_scanner.camera.alert.enable_button") as string}
             onPress={() => askForCameraPermission()}
           />
         </>

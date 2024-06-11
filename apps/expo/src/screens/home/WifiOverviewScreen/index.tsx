@@ -69,15 +69,15 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
   const onFetchError = () => {
     Alert.alert(
       t("screens.home_stack.wifi_overview.alerts.fetch_error.title"),
-      t("screens.home_stack.wifi_overview.alerts.fetch_error.message"),
+      t("screens.home_stack.wifi_overview.alerts.fetch_error.message") as string,
       [
         {
-          text: t("common.back_to_home"),
+          text: t("common.back_to_home") as string,
           onPress: onLeave,
           style: "cancel",
         },
         {
-          text: t("common.retry"),
+          text: t("common.retry") as string,
           onPress: onReconnect,
         },
       ]
@@ -88,7 +88,7 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
     if (!network.name) {
       Alert.alert(
         t("screens.home_stack.wifi_overview.alerts.connect.hidden_wifi.title"),
-        t("screens.home_stack.wifi_overview.alerts.connect.hidden_wifi.message")
+        t("screens.home_stack.wifi_overview.alerts.connect.hidden_wifi.message") as string
       );
       return;
     }
@@ -102,7 +102,7 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
     if (network.security && network.security > 4) {
       Alert.alert(
         t("screens.home_stack.wifi_overview.alerts.connect.invalid_wifi.title"),
-        t("screens.home_stack.wifi_overview.alerts.connect.invalid_wifi.message")
+        t("screens.home_stack.wifi_overview.alerts.connect.invalid_wifi.message") as string
       );
 
       return;
@@ -124,12 +124,12 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
       t("screens.home_stack.wifi_overview.alerts.known_network.message", { name: network.name }),
       [
         {
-          text: t("common.no"),
+          text: t("common.no") as string,
           style: "cancel",
           onPress: () => promptForPassword(network),
         },
         {
-          text: t("screens.home_stack.wifi_overview.alerts.known_network.buttons.yes"),
+          text: t("screens.home_stack.wifi_overview.alerts.known_network.buttons.yes") as string,
           onPress: () => {
             onProvision(network, network.password);
           },
@@ -158,10 +158,10 @@ export default function WifiOverviewScreen({ navigation, route }: WifiOverviewSc
           isError={isError}
           loadingText={
             failureCount > 0
-              ? t("screens.home_stack.wifi_overview.status_indicator.unexpected_loading")
-              : t("screens.home_stack.wifi_overview.status_indicator.loading")
+              ? t("screens.home_stack.wifi_overview.status_indicator.unexpected_loading") as string
+              : t("screens.home_stack.wifi_overview.status_indicator.loading") as string
           }
-          errorText={t("screens.home_stack.wifi_overview.status_indicator.error")}
+          errorText={t("screens.home_stack.wifi_overview.status_indicator.error") as string}
         />
       </Box>
     </Screen>

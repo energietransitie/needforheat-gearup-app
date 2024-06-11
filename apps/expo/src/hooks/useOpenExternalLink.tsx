@@ -7,7 +7,7 @@ export function useOpenExternalLink() {
 
   const openUrl = async (url: string, confirmation = true) => {
     if (!(await Linking.canOpenURL(url))) {
-      Alert.alert(t("common.error"), t("hooks.external_links.not_supported"));
+      Alert.alert(t("common.error"), t("hooks.external_links.not_supported") as string);
       return;
     }
 
@@ -22,11 +22,11 @@ export function useOpenExternalLink() {
       t("hooks.external_links.confirmation.description", { url }),
       [
         {
-          text: t("common.cancel"),
+          text: t("common.cancel") as string,
           style: "cancel",
         },
         {
-          text: t("hooks.external_links.confirmation.confirm"),
+          text: t("hooks.external_links.confirmation.confirm") as string,
           onPress: async () => await Linking.openURL(url),
         },
       ]

@@ -39,12 +39,12 @@ export default function ConnectScreen({ navigation, route }: ConnectScreenProps)
 
     Alert.alert("Error", `${t("screens.home_stack.connect.alert.unknown_error")}${error ? `\n\n${error}` : ""}`, [
       {
-        text: t("common.back_to_home"),
+        text: t("common.back_to_home") as string,
         onPress: () => navigation.navigate("HomeScreen"),
         style: "cancel",
       },
       {
-        text: t("screens.home_stack.connect.alert.retry"),
+        text: t("screens.home_stack.connect.alert.retry") as string,
         onPress: onSearch,
       },
     ]);
@@ -92,7 +92,7 @@ export default function ConnectScreen({ navigation, route }: ConnectScreenProps)
             `${t("screens.home_stack.connect.alert.timeout")}`,
             [
               {
-                text: t("screens.home_stack.connect.alert.Exit"),
+                text: t("screens.home_stack.connect.alert.Exit") as string,
                 onPress: () => {
                   exitTheApp();
                 },

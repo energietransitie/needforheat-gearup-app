@@ -8,20 +8,20 @@ This guide will explain how to prepare the local enviroment to start developing 
 - [3. Install dependencies](#3-install-dependencies)
 - [4. Add environment variable](#4-add-environment-variable)
 - [5. Setup Java](#5-setup-java)
-- [6. Prepare and Running with Expo Go](#6-prepare-and-running-with-expo-go)
+- [6. Prepare and Running with the development app](#6-prepare-and-running-with-the-development-app)
 - [7. Compiling binaries for testing](#7-compiling-binaries-for-testing)
 - [8. Ready!](#8-ready)
 
 ## Prerequisites
 -	[Node.js](https://yarnpkg.com/) (>= 16.0.0)
--	[Yarn](https://yarnpkg.com/) (>= 1.22.0)
+-	[Yarn](https://yarnpkg.com/) (1.22.0)
 -   [Git](https://git-scm.com/)
 - Android
     -	OpenJDK 17
         - You can get OpenJDK from [Microsoft](https://learn.microsoft.com/nl-nl/java/openjdk/download#openjdk-17) or [Adoptium](https://adoptium.net/temurin/releases/?version=17)
     -	[Android Studio](https://developer.android.com/studio) (>= 4.2.0)
 - iOS
-    - [Xcode](https://developer.apple.com/xcode/) (>= 13.0.0)
+    - [Xcode](https://developer.apple.com/xcode/) (>= 15.3.0)
     - [Ruby](https://www.ruby-lang.org/en/) (>= 3.1.0)
     - [Cocaopods](https://cocoapods.org/) (>=1.15.2)
 
@@ -89,13 +89,16 @@ It is recommeded to remove other versions of Java that you no longer use.
 In addition, make sure you also remove the `/Program Files/Java` folder. \
 Otherwise, the Java JDK inside this folder will be used when building which is most likely not the right version. 
 
-## 6. Prepare and Running with Expo Go
+## 6. Prepare and Running with the development app
 You SHOULD read the guides for [Android](./android.md) and [iOS](./ios.md) for the OS-specific guide. These guides will explain how to prepare your environment to build the development app on either a emulator or a physical device.
 
 Do note that you should not exclusively develop on Expo Go. Mainly because icons will not load and because of React Native Bindings that get used from [needforheat-gearup-app-eup](needforheat-gearup-app-eup). 
 
 In addition, Expo Go requires that the network is a **private** network with a firewall that allows the Expo Go ports to go through on the PC hosting the Expo Go server. This means you will be unable to use Expo Go on public networks like `eduroam`. \
 You *can* fix this by running through a hotspot or and/or setting the network to private for [Windows](https://support.microsoft.com/en-us/windows/make-a-wi-fi-network-public-or-private-in-windows-0460117d-8d3e-a7ac-f003-7a0da607448d). MacOS has no public/private network setting and should work fine on private networks.
+
+>**Note**
+> As of Expo SDK 51. You may not require to be on the same network as it will instead create a private connection between the devices.
 
 You should do [Step 7](#7-compiling-binaries-for-testing) to properly develop and test the app.
 <br><br>
@@ -122,6 +125,9 @@ yarn workspace app release:android:build
 ```bash
 yarn workspace app release:android:install
 ```
+
+For iOS: \
+Open XCode and select the `NeedforHeat Release` scheme, select a device and then build it.
 
 ## 8. Ready!
 You're now ready to add and change code! \

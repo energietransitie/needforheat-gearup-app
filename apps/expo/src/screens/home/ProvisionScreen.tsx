@@ -162,7 +162,7 @@ export default function ProvisionScreen({ navigation, route }: ProvisionScreenPr
               />
             )}
             <Button
-              title={t("common.back_to_home")}
+              title={t("common.back_to_home") as string}
               containerStyle={{ width: "100%", marginTop: theme.spacing.md }}
               onPress={onLeave}
             />

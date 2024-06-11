@@ -14,12 +14,12 @@ export default function InfoStackScreen() {
     <SettingsStack.Navigator initialRouteName="SettingsScreen">
       <SettingsStack.Screen
         name="SettingsScreen"
-        options={{ title: t("screens.settings_stack.settings_screen.title") }}
+        options={{ title: t("screens.settings_stack.settings_screen.title") as string }}
         component={SettingsScreen}
       />
       <SettingsStack.Screen
         name="ExternalProviderScreen"
-        options={{ title: t("screens.settings_stack.external_provider_screen.title") }}
+        options={{ title: t("screens.settings_stack.external_provider_screen.title") as string }}
         component={ExternalProviderScreen}
       />
     </SettingsStack.Navigator>

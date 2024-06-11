@@ -21,14 +21,14 @@ export default function SettingsScreen() {
   const onDeleteWifiPasswords = () => {
     Alert.alert(
       t("screens.settings_stack.settings_screen.wifi_passwords.title"),
-      t("screens.settings_stack.settings_screen.wifi_passwords.message"),
+      t("screens.settings_stack.settings_screen.wifi_passwords.message") as string,
       [
         {
-          text: t("common.cancel"),
+          text: t("common.cancel") as string,
           style: "cancel",
         },
         {
-          text: t("common.delete"),
+          text: t("common.delete") as string,
           style: "destructive",
           onPress: async () => {
             await deleteWifiNetworks();
@@ -73,7 +73,7 @@ export default function SettingsScreen() {
       <Box fullWidth style={styles.centerContainer}>
         <Text>
           {t("screens.settings_stack.settings_screen.app_info", {
-            version: Constants.manifest?.version ?? "N/A",
+            version: Constants.expoConfig?.version ?? "N/A",
             build: nativeBuildVersion,
           })}
         </Text>

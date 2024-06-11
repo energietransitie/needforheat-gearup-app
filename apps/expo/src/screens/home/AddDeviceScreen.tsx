@@ -33,7 +33,7 @@ export default function AddDeviceScreen({ navigation, route }: AddDeviceScreenPr
       <Box style={{ flexDirection: "row", marginTop: 16, width: "100%" }}>
         <Button
           containerStyle={{ flex: 1 }}
-          title={t("common.cancel")}
+          title={t("common.cancel") as string}
           color="grey2"
           onPress={onCancel}
           icon={{
@@ -44,7 +44,7 @@ export default function AddDeviceScreen({ navigation, route }: AddDeviceScreenPr
         />
         <Button
           containerStyle={{ flex: 1, marginLeft: theme.spacing.md }}
-          title={t("common.connect")}
+          title={t("common.connect") as string}
           color="primary"
           onPress={onAddDevice}
           icon={{

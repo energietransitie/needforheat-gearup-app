@@ -20,9 +20,9 @@ export default function usePreciseLocationPermission() {
     const requestStatusses = await requestMultiple(LOCATION_PERMISSIONS);
     if (Object.values(requestStatusses).some(status => status !== "granted")) {
       if (Platform.OS === "ios") {
-        throw new Error(t("hooks.camera_permission.not_granted_ios"));
+        throw new Error(t("hooks.camera_permission.not_granted_ios") as string);
       } else {
-        throw new Error(t("hooks.camera_permission.not_granted_android"));
+        throw new Error(t("hooks.camera_permission.not_granted_android") as string);
       }
     }
   };
