@@ -97,6 +97,24 @@
         }
       }
     },
+    "NSLocationWhenInUseUsageDescription" : {
+      "comment" : "Privacy - Location When In Use Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This app requires location access for accurate weather and energy calculations, as well as to detect nearby Wi-Fi networks, all while maintaining your privacy."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deze app vereist locatie-toegang voor nauwkeurige weers- en energiecalculaties, evenals om nabijgelegen Wi-Fi-netwerken te detecteren, terwijl uw privacy behouden blijft."
+          }
+        }
+      }
+    },
     "NSMicrophoneUsageDescription" : {
       "comment" : "Privacy - Microphone Usage Description",
       "extractionState" : "extracted_with_value",
