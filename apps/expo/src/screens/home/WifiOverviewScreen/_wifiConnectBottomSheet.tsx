@@ -1,11 +1,8 @@
-import {
-  BottomSheetBackdrop,
-  BottomSheetModal,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import { BottomSheetModalMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { Button, Text, useTheme } from "@rneui/themed";
 import { useState } from "react";
+
 import WifiPasswordEyeIcon from "./_wifiPasswordEyeIcon";
 
 import { BottomSheetTextInput } from "@/components/common/BottomSheetTextInput";
@@ -29,7 +26,7 @@ export default function WifiConnectBottomSheet(props: Props) {
   return (
     <BottomSheetModal
       onDismiss={() => setPassword("")}
-      enableDynamicSizing 
+      enableDynamicSizing
       animateOnMount={false}
       enablePanDownToClose
       ref={bottomSheetRef}
@@ -52,7 +49,9 @@ export default function WifiConnectBottomSheet(props: Props) {
             autoComplete="off"
             rightIcon={<WifiPasswordEyeIcon visible={showPassword} setVisible={setShowPassword} />}
           />
-          {network && <Button fullWidth title={t("common.connect") as string} onPress={() => onProvision(network, password)} />}
+          {network && (
+            <Button fullWidth title={t("common.connect") as string} onPress={() => onProvision(network, password)} />
+          )}
         </Box>
       </BottomSheetView>
     </BottomSheetModal>

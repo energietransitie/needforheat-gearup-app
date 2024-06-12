@@ -38,7 +38,7 @@
       },
       "explanation_sheet": {
         "title": "Korte uitleg",
-        "description": "Dit scherm toont een lijst met datbronnen die geactiveerd moeten worden: installeer apparaten, verleen toegang tot online bronnen, en beantwoord vragen.\n\nGroene bronnen zijn geactiveerd, grijze worden beschikbaar nadat één of meer witte bronnen zijn geactiveerd.\n\nSelecteer het groene ?-pictogram rechtsonder om deze uitleg opnieuw te bekijken."
+        "description": "Dit scherm toont een lijst met databronnen die geactiveerd moeten worden: installeer apparaten, verleen toegang tot online bronnen, en beantwoord vragen.\n\nGroene bronnen zijn geactiveerd, grijze worden beschikbaar nadat één of meer witte bronnen zijn geactiveerd.\n\nSelecteer het groene ?-pictogram rechtsonder om deze uitleg opnieuw te bekijken."
       }
     },
     "home_stack": {
