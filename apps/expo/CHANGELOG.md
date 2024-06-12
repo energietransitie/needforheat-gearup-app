@@ -1,3 +1,13 @@
+# [3.1.0](https://github.com/energietransitie/needforheat-gearup-app/compare/v3.0.0...v3.1.0) (2024-06-11)
+
+
+### Features
+
+* bump semantic release version up ([0a15d74](https://github.com/energietransitie/needforheat-gearup-app/commit/0a15d74363a70f66eb48fad8dd98e095cd035b55))
+* bump semantic-release-react-native version up ([a079466](https://github.com/energietransitie/needforheat-gearup-app/commit/a079466a2b7634a0f89e36ed40fd3e662547d639))
+* readd eslint ignore, also trigger new release? ([46b020f](https://github.com/energietransitie/needforheat-gearup-app/commit/46b020f2f49c15b10125d0eaddd8d9be99c2bc0f))
+* try to fix semantics ([d9a9069](https://github.com/energietransitie/needforheat-gearup-app/commit/d9a906944b7b110905c3e70dd2b47efc5be8baff))
+
 # [3.0.0](https://github.com/energietransitie/needforheat-gearup-app/compare/v2.11.0...v3.0.0) (2024-06-05)
 
 
