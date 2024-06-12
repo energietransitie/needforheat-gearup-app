@@ -14,6 +14,7 @@
 		16EEA360B07F488BBD321D77 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDF74A3215647149E040C25 /* noop-file.swift */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		3F1C8EA12BD6F3B200CCAC1C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3F1C8EA02BD6F3B200CCAC1C /* PrivacyInfo.xcprivacy */; };
+		3FAF23AB2C19C0A50044632B /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 3FAF23AA2C19C0A50044632B /* InfoPlist.xcstrings */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		D358AFB329B9E80500122755 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D358AFB229B9E80500122755 /* GoogleService-Info.plist */; };
@@ -48,6 +49,7 @@
 		3FA2352E2C170983004CACF9 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../../../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		3FA2352F2C170983004CACF9 /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Foundation.ttf; path = "../../../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		3FA235302C170983004CACF9 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Feather.ttf; path = "../../../../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		3FAF23AA2C19C0A50044632B /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		81AE2EBB19022922CBF467EC /* Pods-NeedforHeat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeedforHeat.release.xcconfig"; path = "Target Support Files/Pods-NeedforHeat/Pods-NeedforHeat.release.xcconfig"; sourceTree = "<group>"; };
 		A2BFCFDEDEE4443747DFC0F1 /* Pods_NeedforHeat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NeedforHeat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = NeedforHeat/SplashScreen.storyboard; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
 				1BDF74A3215647149E040C25 /* noop-file.swift */,
 				D358AFB229B9E80500122755 /* GoogleService-Info.plist */,
+				3FAF23AA2C19C0A50044632B /* InfoPlist.xcstrings */,
 			);
 			name = NeedforHeat;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 			knownRegions = (
 				en,
 				Base,
+				nl,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -253,6 +257,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FAF23AB2C19C0A50044632B /* InfoPlist.xcstrings in Resources */,
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				D358AFB329B9E80500122755 /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
