@@ -199,11 +199,11 @@
 				FD10A7F022414F080027D42C /* Start Packager */,
 				4F20EA2D319C4A63123DADBA /* [Expo] Configure project */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
-				13B07F871A680F5B00A75B9A /* Sources */,
+				8246EA52B5D77D8845DE06C7 /* [CP] Embed Pods Frameworks */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				8246EA52B5D77D8845DE06C7 /* [CP] Embed Pods Frameworks */,
 				5848A8445ED0E33E8A981E53 /* [CP] Copy Pods Resources */,
+				13B07F871A680F5B00A75B9A /* Sources */,
 				08F002FDFDFE921C1AF7E942 /* [CP-User] [RNFB] Core Configuration */,
 			);
 			buildRules = (
