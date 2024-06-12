@@ -95,7 +95,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs camera access to scan QR codes.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app requires location access for accurate weather and energy calculations, as well as to detect nearby WiFi networks, all while maintaining your privacy.</string>
+	<string>This app requires location access for accurate weather and energy calculations, as well as to detect nearby Wi-Fi networks, all while maintaining your privacy.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow $(PRODUCT_NAME) to access your microphone</string>
 	<key>UIBackgroundModes</key>
