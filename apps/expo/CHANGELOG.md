@@ -1,3 +1,17 @@
+# [3.2.0](https://github.com/energietransitie/needforheat-gearup-app/compare/v3.1.0...v3.2.0) (2024-06-12)
+
+
+### Bug Fixes
+
+* add margins to explanation and improve snappoints ([4abf449](https://github.com/energietransitie/needforheat-gearup-app/commit/4abf44974d998ffa2d2a1341a1ecaac28b184fdc))
+* backslashes in ios project ([8684ea5](https://github.com/energietransitie/needforheat-gearup-app/commit/8684ea50db111f4a60bbbaab1b50bc6c94644e02))
+* missing plist key resulting in iOS fault ([5871588](https://github.com/energietransitie/needforheat-gearup-app/commit/587158895d15727fbd8d61d354ea44264a5c6ff9))
+
+
+### Features
+
+* Dutch translations for PList Keys ([1be8a44](https://github.com/energietransitie/needforheat-gearup-app/commit/1be8a442979bbebb1baf55a97685241e561f2e02))
+
 # [3.1.0](https://github.com/energietransitie/needforheat-gearup-app/compare/v3.0.0...v3.1.0) (2024-06-11)
 
 
