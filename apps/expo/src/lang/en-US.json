@@ -254,7 +254,7 @@
         "weather_location_result_screen": {
           "title": "Weather zone to send",
           "subtitle": "Is your home located in this weather zone?",
-          "send_button": "Yes (send this zone)",
+          "send_button": "Yes (send zone)",
           "back_button": "No (go back)",
           "marker": "Selected location",
           "alert": {
