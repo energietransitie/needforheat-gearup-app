@@ -184,7 +184,7 @@ Inside the eas.json file under `submit`, add your Apple ID under the "appleId" f
     "submit": {
         "production": {
             "ios": {
-            "appleId": "s1168716@student.windesheim.nl",
+            "appleId": "s1234567@student.windesheim.nl",
             }
         }
     }
