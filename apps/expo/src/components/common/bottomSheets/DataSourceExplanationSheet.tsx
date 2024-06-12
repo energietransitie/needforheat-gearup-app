@@ -16,13 +16,15 @@ export default function DataSourceExplanationSheet({ bottomSheetRef }: HomeSelec
     <View style={style.container}>
       <BottomSheetModal
         ref={bottomSheetRef}
-        snapPoints={["60%", "100%"]}
+        snapPoints={["40%", "100%"]}
         enablePanDownToClose
         backdropComponent={props => <BottomSheetBackdrop {...props} pressBehavior="close" disappearsOnIndex={-1} />}
       >
         <BottomSheetView style={style.contentContainer}>
           <Text style={{ fontWeight: "bold" }}>{t("screens.device_overview.explanation_sheet.title")}</Text>
-          <Text>{t("screens.device_overview.explanation_sheet.description")}</Text>
+          <Text style={{ marginLeft: 10, marginRight: 10 }}>
+            {t("screens.device_overview.explanation_sheet.description")}
+          </Text>
         </BottomSheetView>
       </BottomSheetModal>
     </View>
