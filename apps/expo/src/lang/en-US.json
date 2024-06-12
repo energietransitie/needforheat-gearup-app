@@ -37,7 +37,6 @@
         "hours": "h"
       },
       "explanation_sheet": {
-      "explanation_sheet": {
           "title": "Brief explanation",
           "description": "This screen lists data sources to activate: install devices, grant access to online sources, and answer questions.\n\nGreen sources are activated, gray ones become enabled after one or more white ones are activated.\n\nSelect the green ?-icon at the bottom right to view again."
         }
