@@ -151,6 +151,10 @@ See [3. Deploying to App Stores](#3-deploying-to-app-stores) on how to do this.
 After setting up everything, the workflow after pushing to main takes care most of the work now. \
 You can also manually start this workflow through GitHub Actions.
 
+> **Note workflow** \
+> If it gives an error related to backslashes: \
+> Check the iOS `project.pbxproject` file for them, remove them and add `"` around the script so it will still be able to run with spaces.
+
 Here is an explanation of how to deploy after doing it the first time for each store:
 
 ### 3.1. Apple App Store
