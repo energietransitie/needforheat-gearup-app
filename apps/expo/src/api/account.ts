@@ -38,8 +38,5 @@ export async function activateCloudFeed({ cloudFeedId, authCode }: { cloudFeedId
     body: JSON.stringify({ cloud_feed_id: cloudFeedId, auth_grant_token: authCode }),
   });
 
-  // Response does not return a body on 200 OK.
-  if (!response.ok) {
-    await handleRequestErrors(response);
-  }
+  await handleRequestErrors(response);
 }

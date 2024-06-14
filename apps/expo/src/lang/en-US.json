@@ -386,6 +386,9 @@
         "description": {
           "not_connected": "Connect to {{name}}",
           "connected": "Connected to {{name}}"
+        },
+        "error": {
+          "message": "An error occured.\nPlease try again."
         }
       }
     }

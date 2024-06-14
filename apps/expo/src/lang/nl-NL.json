@@ -387,6 +387,9 @@
         "description": {
           "not_connected": "Verbinden met {{name}}",
           "connected": "Verbonden met {{name}}"
+        },
+        "error": {
+          "message": "Er is een fout opgetreden.\nProbeer opnieuw te verbinden."
         }
       }
     }
