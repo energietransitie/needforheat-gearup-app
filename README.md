@@ -111,18 +111,69 @@ Product owners:
 
 We use and gratefully acknowlegde the efforts of the makers of the following source code and libraries:
 
-- [Typescript](https://github.com/microsoft/TypeScript), by Microsoft, licensed under [Apache 2.0](https://github.com/microsoft/TypeScript/blob/master/LICENSE.txt)
-- [React Native](https://github.com/facebook/react-native), by Meta Platforms, Inc. and affiliates, licensed under [MIT](https://github.com/facebook/react/blob/master/LICENSE)
-- [Expo](https://github.com/expo/expo), by 2015-present 650 Industries, Inc. (aka Expo), licensed under [MIT](https://github.com/expo/expo/blob/main/LICENSE)
-- [react-i18next](https://github.com/i18next/react-i18next/tree/master), by i18next, licensed under [MIT](https://github.com/i18next/react-i18next/blob/master/LICENSE)
+- [Typescript](https://github.com/microsoft/TypeScript), by Microsoft, licensed under [Apache 2.0](https://github.com/microsoft/TypeScript/blob/master/LICENSE.txt).
+- [React Native](https://github.com/facebook/react-native), by Meta Platforms, Inc. and affiliates, licensed under [MIT](https://github.com/facebook/react/blob/master/LICENSE).
+- [Expo](https://github.com/expo/expo), by 2015-present 650 Industries, Inc. (aka Expo), licensed under [MIT](https://github.com/expo/expo/blob/main/LICENSE).
+- [Babel](https://github.com/babel/babel), by Babel, licensed under [MIT](https://github.com/babel/babel/blob/main/LICENSE).
+- [Jest](https://github.com/facebook/jest), by Meta Platforms, Inc., licensed under [MIT](https://github.com/facebook/jest/blob/main/LICENSE).
+- [Turbo](https://github.com/vercel/turbo), by Vercel, licensed under [Apache 2.0](https://github.com/vercel/turbo/blob/main/LICENSE).
+- [Eslint](https://github.com/eslint/eslint), by Nicholas C. Zakas, licensed under [MIT](https://github.com/eslint/eslint/blob/main/LICENSE).
+- [Prettier](https://github.com/prettier/prettier), by Prettier, licensed under [MIT](https://github.com/prettier/prettier/blob/main/LICENSE).
+- [Node](https://github.com/nodejs/node), by Node.js with their own [license](https://github.com/nodejs/node/blob/main/LICENSE).
+- [Yarn](https://github.com/yarnpkg/berry), by Yarn, licensed under [BSD 2-Clause "Simplified"](https://github.com/yarnpkg/berry/blob/master/LICENSE.md).
+
+---
+
+- [h3](https://github.com/uber/h3), by Uber, licensed under [Apache 2.0](https://github.com/uber/h3/blob/master/LICENSE)
+- [cron-parser](https://github.com/harrisiirak/cron-parser/), by Harri Siirak, licensed under [MIT](https://github.com/harrisiirak/cron-parser/blob/master/LICENSE)
+- [lz-string](https://github.com/pieroxy/lz-string), by pieroxy, licensed under [MIT](https://github.com/pieroxy/lz-string/blob/master/LICENSE.md)
+- [zod](https://github.com/colinhacks/zod), by Colin McDonnell, licensed under [MIT](https://github.com/colinhacks/zod/blob/master/LICENSE)
+- [burnt](https://github.com/thesephist/burnt), by Linus Lee (aka thesephist), licensed under [MIT](https://github.com/thesephist/burnt/blob/main/LICENSE)
+- [base-64](https://github.com/mathiasbynens/base64), by Mathias Bynens, licensed under [MIT](https://github.com/mathiasbynens/base64/blob/master/LICENSE-MIT.txt)
+- [braces](https://github.com/micromatch/braces), by Jon Schlinkert, licensed under [MIT](https://github.com/micromatch/braces/blob/master/LICENSE)
+- [crc](https://github.com/alexgorbatchev/node-crc), by Alex Gorbatchev, licensed under [MIT](https://github.com/alexgorbatchev/node-crc/blob/master/LICENSE)
+- [date-fns](https://github.com/date-fns/date-fns), by Sasha Koss and contributors, licensed under [MIT](https://github.com/date-fns/date-fns/blob/main/LICENSE)
+- [dayjs](https://github.com/iamkun/dayjs), by iamkun and contributors, licensed under [MIT](https://github.com/iamkun/dayjs/blob/dev/LICENSE)
+- [html-entities](https://github.com/mdevils/html-entities), by Alexander Simonov, licensed under [MIT](https://github.com/mdevils/html-entities/blob/main/LICENSE)
+- [html-minifier](https://github.com/kangax/html-minifier), by Kangax, licensed under [MIT](https://github.com/kangax/html-minifier/blob/gh-pages/LICENSE)
+- [i18next](https://github.com/i18next/i18next), by Jan Mühlemann, licensed under [MIT](https://github.com/i18next/i18next/blob/master/LICENSE)
+- [intl](https://github.com/andyearnshaw/Intl.js), by Andy Earnshaw, licensed under [MIT](https://github.com/andyearnshaw/Intl.js/blob/master/LICENSE.txt)
+- [json5](https://github.com/json5/json5), by Aseem Kishore and Jordan Harband, licensed under [MIT](https://github.com/json5/json5/blob/main/LICENSE.md)
+- [luxon](https://github.com/moment/luxon), by Isaac Cambron, licensed under [MIT](https://github.com/moment/luxon/blob/master/license.md)
+- [mathjs](https://github.com/josdejong/mathjs), by Jos de Jong, licensed under [Apache 2.0](https://github.com/josdejong/mathjs/blob/develop/LICENSE)
+
+---
+
 - [React Native Bottom Sheet](https://github.com/gorhom/react-native-bottom-sheet), by Mo Gorhom, licensed under [MIT](https://github.com/gorhom/react-native-bottom-sheet/blob/master/LICENSE)
 - [React Native Network Info](https://github.com/react-native-netinfo/react-native-netinfo), by react-native-netinfo, licensed under [MIT](https://github.com/react-native-netinfo/react-native-netinfo/blob/master/LICENSE)
 - [React Native Maps](https://github.com/react-native-maps/react-native-maps), by Airbnb, licensed under [MIT](https://github.com/react-native-maps/react-native-maps/blob/master/LICENSE)
-- [h3](https://github.com/uber/h3), by Uber, licensed under [Apache 2.0](https://github.com/uber/h3/blob/master/LICENSE)
-- [cron-parser](https://github.com/harrisiirak/cron-parser/), by Harri Siirak, licensed under [MIT](https://github.com/harrisiirak/cron-parser/blob/master/LICENSE)
--[react-native-push-notification](https://github.com/zo0r/react-native-push-notification), by zo0r (aka Dieam), licensed under [MIT](https://github.com/zo0r/react-native-push-notification/blob/master/LICENSE)
-- [lz-string](https://github.com/pieroxy/lz-string), by pieroxy, licensed under [MIT](https://github.com/pieroxy/lz-string/blob/master/LICENSE.md)
-- [react-native-localize](https://github.com/zoontek/react-native-localize), by Mathieu Acthernoene (aka zoontek), licensed under [MIT](https://github.com/zoontek/react-native-localize/blob/master/LICENSE)
+- [react-native-background-fetch](https://github.com/transistorsoft/react-native-background-fetch), by Transistor Software, licensed under [Apache 2.0](https://github.com/transistorsoft/react-native-background-fetch/blob/master/LICENSE)
+- [react-native-bluetooth-state-manager](https://github.com/ccoenraets/react-native-bluetooth-state-manager), by Christophe Coenraets, licensed under [MIT](https://github.com/ccoenraets/react-native-bluetooth-state-manager/blob/master/LICENSE)
+- [react-native-chart-kit](https://github.com/indiespirit/react-native-chart-kit), by Catalin Miron, licensed under [MIT](https://github.com/indiespirit/react-native-chart-kit/blob/master/LICENSE)
+- [react-native-dotenv](https://github.com/goatandsheep/react-native-dotenv), by Juhan Aasaru, licensed under [MIT](https://github.com/goatandsheep/react-native-dotenv/blob/main/LICENSE)
+- [react-native-esp-idf-provisioning](https://github.com/espressif/react-native-esp-idf-provisioning), by Espressif Systems, licensed under [Apache 2.0](https://github.com/espressif/react-native-esp-idf-provisioning/blob/master/LICENSE)
+- [react-native-exit-app](https://github.com/wumke/react-native-exit-app), by Wumke, licensed under [MIT](https://github.com/wumke/react-native-exit-app/blob/master/LICENSE)
+- [react-native-geocoding](https://github.com/marlove/react-native-geocoding), by Marlove, licensed under [MIT](https://github.com/marlove/react-native-geocoding/blob/master/LICENSE)
+- [react-native-gesture-handler](https://github.com/software-mansion/react-native-gesture-handler), by Software Mansion, licensed under [MIT](https://github.com/software-mansion/react-native-gesture-handler/blob/main/LICENSE)
+- [react-native-google-places-autocomplete](https://github.com/FaridSafi/react-native-google-places-autocomplete), by Farid Safi, licensed under [MIT](https://github.com/FaridSafi/react-native-google-places-autocomplete/blob/master/LICENSE)
 - [react-native-vector-icons/Ionicons](https://github.com/oblador/react-native-vector-icons), by Joel Arvidsson (aka oblador), licensed under [MIT](https://github.com/oblador/react-native-vector-icons/blob/master/LICENSE)
+- [react-native-localize](https://github.com/zoontek/react-native-localize), by Mathieu Acthernoene (aka zoontek), licensed under [MIT](https://github.com/zoontek/react-native-localize/blob/master/LICENSE)
+- [react-native-maps](https://github.com/react-native-maps/react-native-maps), by Airbnb, licensed under [MIT](https://github.com/react-native-maps/react-native-maps/blob/master/LICENSE)
+- [react-native-permissions](https://github.com/zoontek/react-native-permissions), by Mathieu Acthernoene (aka zoontek), licensed under [MIT](https://github.com/zoontek/react-native-permissions/blob/master/LICENSE.md)
+- [react-native-prompt-android](https://github.com/naoufal/react-native-prompt-android), by Naoufal, licensed under [MIT](https://github.com/naoufal/react-native-prompt-android/blob/master/LICENSE)
+- [react-native-push-notification](https://github.com/zo0r/react-native-push-notification), by zo0r (aka Dieam), licensed under [MIT](https://github.com/zo0r/react-native-push-notification/blob/master/LICENSE)
+- [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated), by Software Mansion, licensed under [MIT](https://github.com/software-mansion/react-native-reanimated/blob/master/LICENSE)
+- [react-native-render-html](https://github.com/meliorence/react-native-render-html), by Pierre-Marc Airoldi, licensed under [MIT](https://github.com/meliorence/react-native-render-html/blob/master/LICENSE)
+- [react-native-safe-area-context](https://github.com/th3rdwave/react-native-safe-area-context), by Th3rd Wave, licensed under [MIT](https://github.com/th3rdwave/react-native-safe-area-context/blob/main/LICENSE.md)
+- [react-native-screens](https://github.com/software-mansion/react-native-screens), by Software Mansion, licensed under [MIT](https://github.com/software-mansion/react-native-screens/blob/main/LICENSE)
+- [react-native-svg](https://github.com/react-native-svg/react-native-svg), by React Native Community, licensed under [MIT](https://github.com/react-native-svg/react-native-svg/blob/main/LICENSE)
+- [react-native-tab-view](https://github.com/satya164/react-native-tab-view), by Satya Sahoo, licensed under [MIT](https://github.com/satya164/react-native-tab-view/blob/main/LICENSE)
+- [react-native-url-polyfill](https://github.com/charpeni/react-native-url-polyfill), by Henri CHARPENTIER, licensed under [MIT](https://github.com/charpeni/react-native-url-polyfill/blob/main/LICENSE)
+- [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons), by Joel Arvidsson (aka oblador), licensed under [MIT](https://github.com/oblador/react-native-vector-icons/blob/master/LICENSE)
+- [react-native-web](https://github.com/necolas/react-native-web), by Nicolas Gallagher, licensed under [MIT](https://github.com/necolas/react-native-web/blob/main/LICENSE)
+- [react-native-wifi-reborn](https://github.com/JuanSeBestia/react-native-wifi-reborn), by Juan Sebastian Saborio, licensed under [MIT](https://github.com/JuanSeBestia/react-native-wifi-reborn/blob/main/LICENSE)
+- [react-i18next](https://github.com/i18next/react-i18next/tree/master), by i18next, licensed under [MIT](https://github.com/i18next/react-i18next/blob/master/LICENSE)
+
+---
 
 This `README` uses [badges](https://github.com/badges/shields/blob/master/LICENSE), by [Shield.io](https://github.com/badges), licensed under [CC0 v1.0 Universal](https://github.com/badges/shields/blob/master/LICENSE)
