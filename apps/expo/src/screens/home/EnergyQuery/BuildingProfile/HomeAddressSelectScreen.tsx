@@ -93,6 +93,12 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
       setLocationPermission(permission);
     };
     checkPermission();
+    const updateLocation = async () => {
+      await updateAddress();
+      console.log(location.latitude.toString());
+      await onPressMyLocation();
+    };
+    updateLocation();
   }, []);
 
   const onContinue = () => {
@@ -187,8 +193,8 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
           setLocation({
             longitude: position.coords.longitude,
             latitude: position.coords.latitude,
-            longitudeDelta: location.longitudeDelta,
-            latitudeDelta: location.latitudeDelta,
+            longitudeDelta: 0.0008,
+            latitudeDelta: 0.0008,
           });
           refMap.current?.animateToRegion(
             {
@@ -302,7 +308,6 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
     </>
   );
 }
-
 const useStyles = makeStyles(theme => ({
   mapcontainer: {
     flex: 1,
