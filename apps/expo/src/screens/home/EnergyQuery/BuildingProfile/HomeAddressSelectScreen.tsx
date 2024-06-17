@@ -87,18 +87,15 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
       setSelectedAddress(""); // Als er een fout optreedt, leeg het adres
     }
   };
+
   useEffect(() => {
     const checkPermission = async () => {
       const permission = await checkPreciseLocationPermission();
       setLocationPermission(permission);
+      if (!permission) askForPreciseLocationPermission(false);
+      else onPressMyLocation();
     };
     checkPermission();
-    const updateLocation = async () => {
-      await updateAddress();
-      console.log(location.latitude.toString());
-      await onPressMyLocation();
-    };
-    updateLocation();
   }, []);
 
   const onContinue = () => {
@@ -151,34 +148,48 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
     ]);
   };
 
-  const askForPreciseLocationPermission = async (): Promise<null> => {
+  const askForPreciseLocationPermission = async (shouldPester = true): Promise<null> => {
     let permission = await checkPreciseLocationPermission();
     setLocationPermission(permission);
+
     return new Promise((resolve, reject) => {
       if (!permission) {
         const title = t("screens.home_stack.energy_query.location_permission.alert.title");
         const message = t("screens.home_stack.energy_query.location_permission.alert.message");
 
-        Alert.alert(title, message, [
-          {
-            text: t("screens.home_stack.energy_query.location_permission.alert.button") as string,
-            onPress: async () => {
-              try {
-                await requestPreciseLocationPermission();
-                permission = await checkPreciseLocationPermission();
-                setLocationPermission(permission);
-                resolve(null);
-              } catch (err: unknown) {
-                const errorMsg =
-                  err instanceof Error
-                    ? err.message
-                    : t("screens.home_stack.energy_query.location_permission.errors.request_failed");
-                onRequestPreciseLocationError(errorMsg);
-                reject(err);
-              }
+        const requestPermission = async () => {
+          try {
+            await requestPreciseLocationPermission();
+            permission = await checkPreciseLocationPermission();
+            setLocationPermission(permission);
+            if (permission) {
+              onPressMyLocation();
+            }
+            resolve(null);
+          } catch (err: unknown) {
+            if (shouldPester) {
+              const errorMsg =
+                err instanceof Error
+                  ? err.message
+                  : t("screens.home_stack.energy_query.location_permission.errors.request_failed");
+              onRequestPreciseLocationError(errorMsg);
+            }
+            reject(err);
+          }
+        };
+
+        if (shouldPester) {
+          Alert.alert(title, message, [
+            {
+              text: t("screens.home_stack.energy_query.location_permission.alert.button") as string,
+              onPress: requestPermission,
             },
-          },
-        ]);
+          ]);
+        } else {
+          requestPermission();
+        }
+      } else {
+        resolve(null);
       }
     });
   };
@@ -205,6 +216,7 @@ export default function HomeAddressSelectScreen({ navigation, route }: HomeAddre
             },
             20
           );
+          getAddressFromCoordinates(position.coords.latitude, position.coords.longitude);
         }
       };
     } else {
