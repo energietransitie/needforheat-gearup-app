@@ -422,6 +422,10 @@
       "not_granted_ios": "Camera-machtigingen zijn niet verleend.\nZorg ervoor dat de app Camera-machtigingen heeft en probeer opnieuw.",
       "not_granted_android": "Zorg ervoor dat Camera aanstaat.\nU kunt dit doen via instellingen."
     },
+    "location_permission": {
+      "not_granted_ios": "Locatie-machtigingen zijn niet verleend.\nZorg ervoor dat de app Locatie-machtigingen heeft en probeer opnieuw.",
+      "not_granted_android": "Locatie-machtigingen zijn niet verleend.\nU kunt deze verlenen via instellingen."
+    },
     "external_links": {
       "not_supported": "Uw smartphone biedt geen ondersteuning voor het openen van externe links.",
       "confirmation": {
