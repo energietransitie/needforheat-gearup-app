@@ -1,3 +1,16 @@
+# [3.3.0](https://github.com/energietransitie/needforheat-gearup-app/compare/v3.2.0...v3.3.0) (2024-06-25)
+
+
+### Bug Fixes
+
+* wrong error message ([8cf1063](https://github.com/energietransitie/needforheat-gearup-app/commit/8cf106332f8aa600b6e97a34d3cbb1bbdb7134a3))
+
+
+### Features
+
+* improved address selection for the other query too ([17ae359](https://github.com/energietransitie/needforheat-gearup-app/commit/17ae35911cfc84b0af183c153283ed200b1a1ea5))
+* improved selection for weatherinterpolation ([8571fd6](https://github.com/energietransitie/needforheat-gearup-app/commit/8571fd6ed22f91e1ff8f957504cccead5164052b))
+
 # [3.2.0](https://github.com/energietransitie/needforheat-gearup-app/compare/v3.1.0...v3.2.0) (2024-06-12)
 
 

@@ -97,8 +97,8 @@ android {
         applicationId 'nl.windesheim.energietransitie.needforheat'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 20030
-        versionName "3.2.0"
+        versionCode 20031
+        versionName "3.3.0"
 
         def envFile = file('../../../../.env')
         def envVariables = [:]
