@@ -386,6 +386,9 @@
         "description": {
           "not_connected": "Connect to {{name}}",
           "connected": "Connected to {{name}}"
+        },
+        "error": {
+          "message": "An error occured.\nPlease try again."
         }
       }
     }
@@ -417,6 +420,10 @@
     "camera_permission": {
       "not_granted_ios": "Camera permission is not granted. Please grant the permission and try again.",
       "not_granted_android": "Make sure Camera is turned on.\nYou can do this through settings."
+    },
+    "location_permission": {
+      "not_granted_ios": "Location permission is not granted. Please grant the permission and try again.",
+      "not_granted_android": "Make sure the Location permission is granted.\nYou can do this through settings."
     },
     "external_links": {
       "not_supported": "Your device does not support opening external links.",

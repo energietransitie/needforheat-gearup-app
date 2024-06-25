@@ -111,16 +111,12 @@ export default function AddOnlineDataSourceScreen({ navigation, route }: AddOnli
       if (providerName) {
         await createDevice(providerName);
       }
-    } catch (error) {
-      const errorMsg = `${t("common.unknown_error")}${
-        (error as Error)?.message ? `\n\n${(error as Error).message}` : ""
-      }`;
-
+    } catch {
       Burnt.dismissAllAlerts();
 
       const alertData = {
         title: t("common.error"),
-        message: errorMsg,
+        message: t("screens.settings_stack.external_provider_screen.error.message"),
       };
 
       if (Platform.OS === "android") {

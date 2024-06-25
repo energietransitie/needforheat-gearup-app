@@ -115,7 +115,6 @@ android {
                     value = value.trim()
 
                     envVariables[key] = value
-                    println("Parsed environment variable: $key=$value")
                 } catch (Exception e) {
                     println("Error parsing line: $line. ${e.message}")
                 }
