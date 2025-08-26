@@ -122,13 +122,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Allow NeedforHeat to access your microphone"
+            "value" : "Allow NeedForHeat to access your microphone"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sta NeedforHeat toe om toegang te krijgen tot uw microfoon."
+            "value" : "Sta NeedForHeat toe om toegang te krijgen tot uw microfoon."
           }
         }
       }
