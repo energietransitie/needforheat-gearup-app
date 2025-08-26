@@ -8,9 +8,11 @@ This repository contains the source code for the GearUp version of the NeedForHe
 ## Table of contents<!-- omit in toc -->
 - [General info](#general-info)
 - [Installing the app](#installing-the-app)
-- [Deploying](#deploying)
-- [Developing](#developing)
-- [Contributing](#contributing)
+- [Documentation](#documentation)
+  - [EnergyDoctor](#energydoctor)
+  - [Deploying](#deploying)
+  - [Developing](#developing)
+  - [Contributing](#contributing)
 - [Features](#features)
 - [License](#license)
 - [Credits](#credits)
@@ -53,26 +55,36 @@ For contributing, please see the [Contribution Guidelines](./docs/contributing.m
 For adding or updating a language or translation see [Translating - Getting Started](./docs/translating.md).
 
 ## Features
-List of features in the NeedForHeat app:
 
+**Ready and field tested:**
 - Account activation using Firebase Dynamic Links.
-- Provisioning of NFH measurement devices.
-  - Scanning of QR codes of any NFH measurement device.
-  - Present device specific installation instructions provided by the API.
-  - Connect via Bluetooth Low Energy (BLE) to a NFH measurement device to provision internet connectivity.
+- Provisioning of NeedForHeat measurement devices.
+  - Scanning of QR codes of any NeedForHeat measurement device.
+  - Present device-specific installation instructions provided by the API.
+  - Connect via Bluetooth Low Energy (BLE) to a NeedForHeat measurement device to provision internet connectivity.
   - Verification of successful device provisioning by checking for a device heartbeat.
-- Multi-language support  
-- DataSourceList
-  - Setup a list of items that need to be completed for a campaign
-- Monitoring
-  - Get a GREEN, YELLOW or RED status depending on how late uploads are for a DataSource
+- Multi-language support.
+
+**Ready but not field tested:**
+- **DataSourceList**
+  - Setup a list of items that need to be completed for a campaign.
+- **Monitoring**
+  - Get a GREEN, YELLOW, or RED status depending on how late uploads are for a DataSource.
   - See how long it takes until the next upload should happen.
-  - Send a notification locally if a DataSource is READ
-- EnergyQueries
-  - WeatherInterpolationLocation
-    - Use a map to put a marker on your home and calculate the WeatherZone
-  - BuildingProfile
-    - Use a map to get your home address and perform calculcations using BAG APIs 
+  - Send a notification locally if a DataSource is RED.
+- **EnergyQueries**
+  - **WeatherInterpolationLocation**
+    - Use a map to put a marker on your home and calculate the WeatherZone.
+  - **BuildingProfile**
+    - Use a map to get your home address and perform calculations using BAG APIs.
+
+** To-Do **
+- **Technical Debt**
+  - **Replace Firebase Dynamic Links**: Firebase Dynamic Links is deprecated and will be sunset on August 25, 2025 ([Firebase FAQ](https://firebase.google.com/support/dynamic-links-faq)). Consider using React Native's `Linking.getInitialURL()` combined with website content to handle account activation invites.
+  - **Target Android 15 (API Level 35)**: Update the app to target Android 15 (API Level 35) by August 31, 2025, to comply with Google Play’s requirement for apps to target within one year of the latest Android release. Current target is Android 14 (API Level 34). Deadline for updates is August 31, 2025, with an option to request an extension until November 1, 2025 ([Google Play Policy](https://support.google.com/googleplay/android-developer/answer/11926878)).
+
+- **Functional Improvements**
+  - see [TODO-DESIRED.md](TODO-DESIRED.md).
 
 ## License
 This software is available under the [Apache 2.0 license](./LICENSE), Copyright 2023 [Research group Energy Transition, Windesheim University of Applied Sciences](https://windesheim.nl/energietransitie)
