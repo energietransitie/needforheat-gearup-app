@@ -110,7 +110,7 @@ Thanks also go to the developers of previous versions of NeedForHeat and WarmteW
 * Joël Kuijper - [@joehoel](https://github.com/Joehoel)
 * Marco Prins · [@mk-prins](https://github.com/mk-prins)
 * Matthias Verweij - [@MatthiasVerweij](https://github.com/MatthiasVerweij)
-* Mattijs Noordhof - [@Matthijsn](https://github.com/Matthijsn)
+* Matthijs Noordhof - [@Matthijsn](https://github.com/Matthijsn)
 * Rick Klaasboer - [@rickklaasboer](https://github.com/rickklaasboer)
 * Rowan van der Zande - [@RowanvdZ](https://github.com/RowanvdZ)
 * Ward Pieters - [@wardpieters](https://github.com/wardpieters)
@@ -118,7 +118,7 @@ Thanks also go to the developers of previous versions of NeedForHeat and WarmteW
 
 Product owners:
 
-- Henri ter Hofte - [@henriterhofte](https://github.com/henriterhofte) - Twitter [@HeNRGi](https://twitter.com/HeNRGi)
+- Henri ter Hofte - [@henriterhofte](https://github.com/henriterhofte)
 - (Formely) Nick van Ravenzwaaij - [@n-vr](https://github.com/n-vr)
 
 We use and gratefully acknowlegde the efforts of the makers of the following source code and libraries:
