@@ -56,7 +56,7 @@ For adding or updating a language or translation see [Translating - Getting Star
 
 ## Features
 
-**Ready and field tested:**
+### **Ready and field tested:**
 - Account activation using Firebase Dynamic Links.
 - Provisioning of NeedForHeat measurement devices.
   - Scanning of QR codes of any NeedForHeat measurement device.
@@ -65,7 +65,7 @@ For adding or updating a language or translation see [Translating - Getting Star
   - Verification of successful device provisioning by checking for a device heartbeat.
 - Multi-language support.
 
-**Ready but not field tested:**
+### **Ready but not field tested:**
 - **DataSourceList**
   - Setup a list of items that need to be completed for a campaign.
 - **Monitoring**
@@ -78,7 +78,7 @@ For adding or updating a language or translation see [Translating - Getting Star
   - **BuildingProfile**
     - Use a map to get your home address and perform calculations using BAG APIs.
 
-**To-Do**
+### **To-Do**
 - **Technical Debt**
   - **Replace Firebase Dynamic Links**: Firebase Dynamic Links is deprecated and will be sunset on August 25, 2025 ([Firebase FAQ](https://firebase.google.com/support/dynamic-links-faq)). Consider using React Native's `Linking.getInitialURL()` combined with website content to handle account activation invites.
   - **Target Android 15 (API Level 35)**: Update the app to target Android 15 (API Level 35) by August 31, 2025, to comply with Google Play’s requirement for apps to target within one year of the latest Android release. Current target is Android 14 (API Level 34). Deadline for updates is August 31, 2025, with an option to request an extension until November 1, 2025 ([Google Play Policy](https://support.google.com/googleplay/android-developer/answer/11926878)).
