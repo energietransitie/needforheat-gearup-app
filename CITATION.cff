@@ -14,6 +14,7 @@ url: "https://arxiv.org/abs/2509.06927"
 repository: "https://github.com/energietransitie"
 repository-artifact: "https://github.com/energietransitie/needforheat-datagear"
 keywords:
+  - "arXiv: Computers and Society (cs.CY)"
   - "CCS: Computer systems organization → Embedded systems"
   - "CCS: Human-centered computing → Ubiquitous and mobile computing"
   - "CCS: Networks → Sensor networks"
@@ -32,10 +33,7 @@ keywords:
   - "Open Hardware"
   - "Open Software"
 license: "Apache-2.0"
-subjects:
-  - "Computers and Society (cs.CY)"
 preferred-citation:
   type: "article"
   doi: "10.48550/arXiv.2509.06927"
-  status: "pre-print"
-  notes: "Submitted on 8 Sep 2025; 10 pages + 3 pages appendices"
+  notes: "Submitted on 8 Sep 2025; 10 pages + 3 pages appendices. Pre-print (not peer-reviewed)."
