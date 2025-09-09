@@ -15,6 +15,7 @@ This repository contains the source code for the GearUp version of the NeedForHe
   - [Contributing](#contributing)
 - [Features](#features)
 - [License](#license)
+- [Citation](#citation)
 - [Credits](#credits)
 
 ## General info
@@ -88,6 +89,14 @@ For adding or updating a language or translation see [Translating - Getting Star
 
 ## License
 This software is available under the [Apache 2.0 license](./LICENSE), Copyright 2023 [Research group Energy Transition, Windesheim University of Applied Sciences](https://windesheim.nl/energietransitie)
+
+## Citation
+
+If you use this repository in your research or work, please cite the following pre-print, which describes the overall NeedForHeat DataGear system of which this repository is a part:
+
+> Ter Hofte, H., & van Ravenzwaaij, N. (2025). *NeedForHeat DataGear: An Open Monitoring System to Accelerate the Residential Heating Transition*. arXiv preprint arXiv:2509.06927. https://doi.org/10.48550/arXiv.2509.06927
+
+**Note:** This is a pre-print submitted on 8 Sep 2025 and has not yet been peer-reviewed. For the full paper, see [https://arxiv.org/abs/2509.06927](https://arxiv.org/abs/2509.06927).
 
 ## Credits
 This version of the NeedForHeat app was created with the help of:
